@@ -3,6 +3,7 @@
 namespace Victoire\Tests\Features\Context;
 
 use Behat\Mink\Element\Element;
+use Behat\Mink\Exception\ExpectationException;
 use Knp\FriendlyContexts\Context\MinkContext as KFMinkContext;
 
 /**
@@ -63,6 +64,23 @@ class MinkContext extends KFMinkContext
             $this->getSession()->wait(100);
 
             return $this->assertElementContainsText($element, $text, $timeout - 100);
+        }
+    }
+
+    /**
+     * @param Element   $page
+     * @param float|int $timeout
+     */
+    public function assertPageAddress($page, $timeout = 10000)
+    {
+        try {
+            $this->assertSession()->addressEquals($this->locatePath($page));
+        } catch (ExpectationException $e) {
+            if ($timeout >= 0) {
+                $this->getSession()->wait(100);
+
+                return $this->assertPageAddress($page, $timeout - 100);
+            }
         }
     }
 
