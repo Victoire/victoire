@@ -17,7 +17,7 @@ class ModeDrop {
     }
 
     get drop() {
-        return document.querySelector(this.trigger.getAttribute('data-href'));
+        return document.querySelector(this.trigger.getAttribute('data-droptarget'));
     }
 
     get dropAnchors() {

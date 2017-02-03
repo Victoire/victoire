@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="v-flex-col">
-                    <a class="v-btn v-btn--transparent v-btn--sm" data-flag="v-drop" data-position="bottomout rightin" data-href="#header-drop-profile">
+                    <a class="v-btn v-btn--transparent v-btn--sm" data-flag="v-drop" data-position="bottomout rightin" data-droptarget="#header-drop-profile">
                         <img class="v-image--profile" src="https://www.gravatar.com/avatar/{{ app.user.email|hash }}?s=70&d={{ 'https://fr.gravatar.com/userimage/63937294/1d5eaaa346a27c5915344db44177b469.png?size=70'|url_encode }}">
                     </a>
 
@@ -66,7 +66,7 @@
                                 {% set tooltip = "victoire.menu.publication.unpublished.tooltip"|trans({}, 'victoire') %}
                             {% endif %}
 
-                            <a class="v-btn v-btn--sm v-btn--{{ theme|default('success') }}" href="{{ path('victoire_core_page_settings', {'id' : view.id }) }}" data-toggle="vic-modal" {% if tooltip is defined %}data-flag="v-drop" data-position="topout center" data-href="#view-status-dropdown" data-behavior="hover"{% endif %}>
+                            <a class="v-btn v-btn--sm v-btn--{{ theme|default('success') }}" href="{{ path('victoire_core_page_settings', {'id' : view.id }) }}" data-toggle="vic-modal" {% if tooltip is defined %}data-flag="v-drop" data-position="topout center" data-droptarget="#view-status-dropdown" data-behavior="hover"{% endif %}>
                                 <i class="fa fa-{{ icon }} fa-2x"></i>
                             </a>
 
