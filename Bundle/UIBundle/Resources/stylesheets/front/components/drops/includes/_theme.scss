@@ -107,6 +107,12 @@ $drops-anchor--text-decoration:  (
 $drops-anchor--color: (
   'default': color('grey', 'darker'),
   '~disabled': color('grey'),
+  '~active': (
+    'default': color('orange'),
+    ':hover': color('orange'),
+    ':focus': color('orange'),
+    ':active': color('orange'),
+  ),
   '<a': (
     ':hover': color('grey', 'darker'),
     ':focus': color('grey', 'darker'),
@@ -131,7 +137,7 @@ $drops-anchor--background-color:  (
       ':focus': transparent,
       ':active': transparent,
     )
-  )
+  ),
 );
 
 $drops-header--padding-y: 0.5rem !default;
