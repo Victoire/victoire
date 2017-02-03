@@ -179,26 +179,6 @@ $vic(document).on('click', '.v-modal--widget a.vic-confirmed, .vic-hover-widget-
 });
 
 
-$vic(document).on('click', '.quantum-tab-name', function(event) {
-    $vic('#victoire-modal-label').html($vic(this).data('tabName'));
-
-});
-$vic(document).on('click', '.quantum-tab-name i.edit', function(event) {
-    event.preventDefault();
-    var value = $vic('#'+$vic(this).parents('a').first().prop('id')+"-pane").find('input[name$="[quantum]"]').val();
-    var input = '<input class="quantum-edit-field" type="text" value="'+value+'"></input>';
-    $vic(this).parent().children('span').first().html(input);
-    $vic(input).focus();
-
-});
-$vic(document).on('focusout', '.quantum-edit-field', function(event) {
-    event.preventDefault();
-    var value = $vic(this).val();
-    $vic('#'+$vic(this).parents('a').first().prop('id')+"-pane").find('input[name$="[quantum]"]').val(value);
-    $vic(this).parent().prepend('<span>'+value+'</span>');
-    $vic(this).remove();
-
-});
 function generateNewWidgetUrl(select){
     var slotId = $vic(select).parents('.vic-slot').first().data('name');
     var container = $vic(select).parents('new-widget-button');
