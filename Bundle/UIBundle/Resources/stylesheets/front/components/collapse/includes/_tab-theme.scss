@@ -49,6 +49,18 @@ $tabsnavs-anchor--color: (
     ':focus': color('white'),
     ':active': color('white'),
   ),
+  '-spread': (
+    'default': color('grey'),
+    ':hover': color('grey', 'dark'),
+    ':focus': color('grey', 'dark'),
+    ':active': color('grey', 'dark'),
+    '~active': (
+      'default': color('grey', 'darker'),
+      ':hover': color('grey', 'darker'),
+      ':focus': color('grey', 'darker'),
+      ':active': color('grey', 'darker'),
+    ),
+  )
 ) !default;
 $tabsnavs-anchor--box-shadow: null !default;
 $tabsnavs-anchor--background: (
@@ -57,6 +69,7 @@ $tabsnavs-anchor--background: (
 $tabsnavs-anchor--background-color: null !default;
 $tabsnavs-anchor--padding: (
   'default': null,
+  '-spread': rem(0.5) rem(1),
 );
 
 
