@@ -31,7 +31,7 @@
                                         {{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}
                                     </span>
                                 {% else %}
-                                    <a class="v-drop__anchor {% if widget.businessEntityId == class|lower %} v-drop__anchor--active{% endif %}" data-href="#picker-{{ class|lower }}-{{ quantum }}" data-collapse="show">
+                                    <a class="v-drop__anchor {% if widget.businessEntityId == class|lower %} v-drop__anchor--active{% endif %}" data-href="#picker-{{ class|lower }}-{{ quantum }}" data-collapse="show" data-activeclass="v-drop__anchor--active">
                                         {{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}
                                     </a>
                                 {% endif %}
