@@ -34,12 +34,12 @@ export default class TrowelDrops {
 class TrowelDrop {
     constructor(trigger, options = {}) {
         if (window.Tether === undefined) {
-            throw new Error('Bootstrap tooltips require Tether (http://tether.io/)')
+            throw new Error('Trowel drops require Tether (http://tether.io/)')
         }
 
         if (typeof(trigger) == 'object') {
             this._trigger = trigger;
-            this._drop = document.querySelector(this._trigger.getAttribute('data-href'));
+            this._drop = document.querySelector(this._trigger.getAttribute('data-droptarget'));
             this._options = this.setOptions(options);
             this._tether = new Tether(this.getTetherOptions(this._options));
             this._visible = this._options.visible;

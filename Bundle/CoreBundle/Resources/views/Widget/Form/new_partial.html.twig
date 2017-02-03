@@ -14,7 +14,7 @@
             </div>
 
             <div class="v-tabs-nav__item">
-                <a class="v-tabs-nav__anchor" data-flag="v-drop" data-position="bottomout center" data-href="#picker-entities-{{ quantum }}">
+                <a class="v-tabs-nav__anchor" data-flag="v-drop" data-position="bottomout center" data-droptarget="#picker-entities-{{ quantum }}">
                     {{ ('form.widget.tab.entities.label')|trans({}, 'victoire') }}
 
                     <svg style="margin-left: 0.4em;" xmlns="http://www.w3.org/2000/svg" width="8" height="6" viewBox="65 6 8 6">
@@ -49,7 +49,7 @@
         <div class="v-collapse" id="picker-{{ class|lower }}-{{ quantum }}" data-group="picker-{{ quantum }}" data-flag="v-collapse"{% if isActive %} data-state="visible"{% endif %}>
             <div class="v-widget-form">
                 {% if class != constant('MODE_STATIC', widget) and is_granted('ROLE_VICTOIRE_DEVELOPER') %}
-                    <button class="v-btn v-btn--info / v-mode-trigger / v-widget-form__mode-btn" data-flag="v-drop v-mode-drop" data-href="#picker-modes-{{ class|lower }}-{{ quantum }}">
+                    <button class="v-btn v-btn--info / v-mode-trigger / v-widget-form__mode-btn" data-flag="v-drop v-mode-drop" data-droptarget="#picker-modes-{{ class|lower }}-{{ quantum }}">
                         <span class="v-mode-trigger__placeholder-label">
                             {{ ('form.widget.tab.mode.label')|trans({}, 'victoire') }}
                         </span>
