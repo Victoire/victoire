@@ -13,11 +13,11 @@ default:
                  - Tests/Features/Widget
                  - Tests/Features/WidgetMap
              contexts:
+                 - Victoire\Tests\Features\Context\CoverageContext
                  - Victoire\Tests\Features\Context\FeatureContext
                  - Victoire\Tests\Features\Context\JavascriptContext
+                 - Victoire\Tests\Features\Context\MinkContext
                  - Victoire\Tests\Features\Context\VictoireContext
-                 - Victoire\Tests\Features\Context\CoverageContext
-                 - Knp\FriendlyContexts\Context\MinkContext
                  - Knp\FriendlyContexts\Context\AliceContext
                  - Knp\FriendlyContexts\Context\EntityContext
                  - Knp\FriendlyContexts\Context\TableContext
@@ -34,13 +34,13 @@ default:
              screenshot: true
          Behat\MinkExtension\ServiceContainer\MinkExtension:
              base_url:           'http://anakin@victoire.io:test@fr.victoire.io:8000/app_ci.php'
-             selenium2:          ~
-             goutte:             ~
+             selenium2: ~
+             goutte: ~
              symfony2: ~
              default_session:    symfony2
              javascript_session: selenium2
              browser_name: firefox
-             files_path:         Tests/Features/
+             files_path: Tests/Features/
          Knp\FriendlyContexts\Extension:
              entities:
                  namespaces:

@@ -85,12 +85,6 @@
             "Victoire\\Widget\\": "Tests/Functionnal/src/Victoire/Widget"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/lenybernard/mink"
-        }
-    ],
     "extra": {
         "branch-alias": {
             "dev-master": "2.2.x-dev"
