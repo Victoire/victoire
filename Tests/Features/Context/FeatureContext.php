@@ -4,6 +4,7 @@ namespace Victoire\Tests\Features\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Mink\Element\Element;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Behat\Symfony2Extension\Context\KernelDictionary;
@@ -91,5 +92,17 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
             $message = sprintf('"%s" is not the title of the page', $title);
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
+    }
+
+    /**
+     * Returns fixed step argument (with \\" replaced back to ").
+     *
+     * @param string $argument
+     *
+     * @return string
+     */
+    protected function fixStepArgument($argument)
+    {
+        return str_replace('\\"', '"', $argument);
     }
 }
