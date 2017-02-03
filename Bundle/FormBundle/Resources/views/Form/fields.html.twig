@@ -11,13 +11,13 @@
 
 
 {% block criteria_collection_row %}
-    <a class="v-btn v-btn--warning" data-collapse="toggle" data-href="#collapse-{{ id }}">
+    <a class="v-btn v-btn--warning / v-widget-form__quantum-btn" data-collapse="toggle" data-href="#collapse-{{ id }}">
         {% include '@SVG/quantum.html.twig' with { class: 'v-btn__ic v-btn__ic--before' } %}
         {{ 'victoire.widget.type.criterias.label'|trans({}, 'victoire') }}
         {% include '@SVG/caret.html.twig' with { class: 'v-btn__ic v-btn__ic--after' } %}
     </a>
 
-    <div class="v-collapse v-collapse--plain" id="collapse-{{ id }}" data-flag="v-collapse">
+    <div class="v-collapse v-collapse--plain v-collapse--criteria" id="collapse-{{ id }}" data-flag="v-collapse">
         <div class="v-container">
             {{ form_row(form.parent.quantum) }}
             {{ form_widget(form) }}
@@ -329,6 +329,32 @@
         {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}</div>{{ block('form_message') }}{% endif %}
     {% endspaceless %}
 {% endblock checkbox_widget %}
+
+{% block radio_widget %}
+    {% spaceless %}
+        {% if label is not same as(false) and label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+
+        {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}<div>{% endif %}
+            <label class="v-radio {% if not vic_horizontal %} vic-radio-inline{% endif %}">
+                {% set attr = attr|merge({'class': attr.class|default('') ~ ' v-radio__native'}) %}
+                <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}/>
+                <span class="v-radio__indicator"></span>
+
+                {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
+                    {% if vic_label_render and vic_widget_vic_checkbox_label in ['both', 'widget'] %}
+                        {{ label|trans({}, translation_domain) }}
+                    {% endif %}
+                {% endif %}
+
+                {% if choiceLabel|default(false) %}
+                    {{ choiceLabel }}
+                {% endif %}
+            </label>
+        {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}</div>{{ block('form_message') }}{% endif %}
+    {% endspaceless %}
+{% endblock radio_widget %}
 
 {% block date_widget %}
 {% spaceless %}
