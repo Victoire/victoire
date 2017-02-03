@@ -5,6 +5,10 @@
 <div class="v-flex-col">
     <button
         class="v-btn v-btn--square v-btn--quantum"
+        data-flag="v-drop"
+        data-position="middle rightout"
+        data-droptarget="#tooltip-quantum-{{ id }}-name"
+        data-behavior="hover"
         data-collapse="show"
         data-href="#widget-{{ id }}-tab-pane"
         data-activeclass="v-btn--quantum-active"
@@ -12,4 +16,10 @@
         {% include "@SVG/quantum.html.twig" with { class: 'v-btn--quantum__ic' } %}
         {{ name|truncate(2, false, '') }}
     </button>
+
+    <div class="v-drop v-drop--tooltip" id="tooltip-quantum-{{ id }}-name">
+        <div class="v-drop__content">
+            {{ name }}
+        </div>
+    </div>
 </div>
