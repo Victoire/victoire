@@ -4,6 +4,70 @@
 
 {% embed '@styleguide/ui/snippet.html.twig' with {
     'snippets': {
+        'html': '<div class="v-tabs-nav v-tabs-nav--spread">\n    <div class="v-tabs-nav__item">\n        <a class="v-tabs-nav__anchor" data-collapse="show" data-href="#collapse-ex-4-1" data-activeclass="v-tabs-nav__anchor--active">\n            {% include "@SVG/browser.html.twig" with { "width": 30 } %}\n        </a>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a class="v-tabs-nav__anchor" data-collapse="show" data-href="#collapse-ex-4-2" data-activeclass="v-tabs-nav__anchor--active">\n            {% include "@SVG/mobile.html.twig" with { "width": 30 } %}\n        </a>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a class="v-tabs-nav__anchor" data-collapse="show" data-href="#collapse-ex-4-3" data-activeclass="v-tabs-nav__anchor--active">\n            {% include "@SVG/tablet.html.twig" with { "width": 30 } %}\n        </a>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a class="v-tabs-nav__anchor" data-collapse="show" data-href="#collapse-ex-4-4" data-activeclass="v-tabs-nav__anchor--active">\n            {% include "@SVG/laptop.html.twig" with { "width": 30 } %}\n        </a>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a class="v-tabs-nav__anchor" data-collapse="show" data-href="#collapse-ex-4-5" data-activeclass="v-tabs-nav__anchor--active">\n            {% include "@SVG/desktop.html.twig" with { "width": 30 } %}\n        </a>\n    </div>\n</div>\n\n<div class="v-tabs-collapses">\n    <div class="v-collapse" id="collapse-ex-4-1" data-flag="v-collapse" data-group="tab-ex-4" data-state="visible">\n        tab 1\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-2" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 2\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-3" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 3\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-4" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 4\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-5" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 5\n    </div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-tabs-nav v-tabs-nav--spread">
+            <div class="v-tabs-nav__item">
+                <a class="v-tabs-nav__anchor" data-collapse="show" data-href="#collapse-ex-4-1" data-activeclass="v-tabs-nav__anchor--active">
+                    {% include "@SVG/browser.html.twig" with { "width": 30 } %}
+                </a>
+            </div>
+
+            <div class="v-tabs-nav__item">
+                <a class="v-tabs-nav__anchor" data-collapse="show" data-href="#collapse-ex-4-2" data-activeclass="v-tabs-nav__anchor--active">
+                    {% include "@SVG/mobile.html.twig" with { "width": 30 } %}
+                </a>
+            </div>
+
+            <div class="v-tabs-nav__item">
+                <a class="v-tabs-nav__anchor" data-collapse="show" data-href="#collapse-ex-4-3" data-activeclass="v-tabs-nav__anchor--active">
+                    {% include "@SVG/tablet.html.twig" with { "width": 30 } %}
+                </a>
+            </div>
+
+            <div class="v-tabs-nav__item">
+                <a class="v-tabs-nav__anchor" data-collapse="show" data-href="#collapse-ex-4-4" data-activeclass="v-tabs-nav__anchor--active">
+                    {% include "@SVG/laptop.html.twig" with { "width": 30 } %}
+                </a>
+            </div>
+
+            <div class="v-tabs-nav__item">
+                <a class="v-tabs-nav__anchor" data-collapse="show" data-href="#collapse-ex-4-5" data-activeclass="v-tabs-nav__anchor--active">
+                    {% include "@SVG/desktop.html.twig" with { "width": 30 } %}
+                </a>
+            </div>
+        </div>
+
+        <div class="v-tabs-collapses">
+            <div class="v-collapse" id="collapse-ex-4-1" data-flag="v-collapse" data-group="tab-ex-4" data-state="visible">
+                tab 1
+            </div>
+
+            <div class="v-collapse" id="collapse-ex-4-2" data-flag="v-collapse" data-group="tab-ex-4">
+                tab 2
+            </div>
+
+            <div class="v-collapse" id="collapse-ex-4-3" data-flag="v-collapse" data-group="tab-ex-4">
+                tab 3
+            </div>
+
+            <div class="v-collapse" id="collapse-ex-4-4" data-flag="v-collapse" data-group="tab-ex-4">
+                tab 4
+            </div>
+
+            <div class="v-collapse" id="collapse-ex-4-5" data-flag="v-collapse" data-group="tab-ex-4">
+                tab 5
+            </div>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+
+
+{% embed '@styleguide/ui/snippet.html.twig' with {
+    'snippets': {
         'html': '<a class="v-btn v-btn--warning" data-collapse="toggle" data-href="#collapse-ex-1-1">quantum</a>\n<a class="v-btn v-btn--info" data-collapse="toggle" data-href="#collapse-ex-1-2">style</a>\n\n<div>\n    <div class="v-collapse v-collapse--plain" id="collapse-ex-1-1" data-flag="v-collapse" data-group="collapse-group-1">\n        <div class="v-container">\n            quantum\n        </div>\n    </div>\n\n    <div class="v-collapse v-collapse--plain" id="collapse-ex-1-2" data-flag="v-collapse" data-group="collapse-group-1">\n        <div class="v-container">\n            style\n        </div>\n    </div>\n</div>',
     }
 } %}

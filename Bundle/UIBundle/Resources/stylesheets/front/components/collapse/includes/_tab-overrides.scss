@@ -5,6 +5,11 @@
   height: value($navbars--height);
 }
 
+.#{$app--prefix}-tabs-nav--spread {
+  justify-content: space-between;
+  height: auto;
+}
+
 .#{$app--prefix}-tabs-nav__anchor {
   display: inline-flex;
   align-items: center;
