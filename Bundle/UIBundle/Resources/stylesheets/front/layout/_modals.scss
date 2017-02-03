@@ -1,4 +1,5 @@
 .#{$app--prefix}-drop[id^="picker-entities"],
-.#{$app--prefix}-drop[id^="picker-modes"] {
+.#{$app--prefix}-drop[id^="picker-modes"],
+.#{$app--prefix}-drop[id^="tooltip-quantum"] {
   z-index: z-index(3);
 }
