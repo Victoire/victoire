@@ -6,7 +6,9 @@ $tabsnavs--letter-spacing: null !default;
 $tabsnavs--line-height: null !default;
 $tabsnavs--text-align: null !default;
 $tabsnavs--text-decoration: null !default;
-$tabsnavs--margin: null !default;
+$tabsnavs--margin: (
+  '-spread': 0 0 rem(2),
+);
 $tabsnavs--border-width: null !default;
 $tabsnavs--border-style: null !default;
 $tabsnavs--border-color: null !default;

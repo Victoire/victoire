@@ -1,22 +1,30 @@
 {% trans_default_domain "victoire" %}
 
-<h3 class="vic-h3">
-    {{ 'victoire.widget.stylize.layout.heading'|trans() }}
-</h3>
+{% set widgetId = form.vars.value.id %}
 
-<div class="vic-col-md-12 vic-well">
-    <ul class="vic-nav-group" id="vic-stylize-nav-group" style="margin-top: 5px;">
-        {% for key, responsive_config in victoire_twig_responsive %}
-            {% include 'VictoireCoreBundle:Widget/Form/stylize:_responsiveTab.html.twig' with {'config': responsive_config, 'widgetId' : form.vars.value.id } %}
-        {% endfor %}
-    </ul>
+<div class="v-tabs-nav v-tabs-nav--spread" id="v-style-tab">
+    {% include 'VictoireCoreBundle:Widget/Form/stylize:_responsiveTab.html.twig' with {
+        'widgetId': widgetId,
+    } %}
 
-    <div class="vic-tab-content">
-        {% for key, responsive_config in victoire_twig_responsive %}
-            {% set active = (form.vicActiveTab.vars.data is defined and form.vicActiveTab.vars.data) ? form.vicActiveTab.vars.data : loop.first ? key : false %}
-            <div role="tabpanel" class="vic-tab-pane{{ key == active ? ' vic-active' }}" id="vic-widget-layout-{{ form.vars.value.id}}-{{ key }}">
-                {% include 'VictoireCoreBundle:Widget/Form/stylize:_fields.html.twig' %}
-            </div>
-        {% endfor %}
+    {% for key, responsive_config in victoire_twig_responsive %}
+        {% include 'VictoireCoreBundle:Widget/Form/stylize:_responsiveTab.html.twig' with {
+            'config': responsive_config,
+            'widgetId': widgetId,
+        } %}
+    {% endfor %}
+</div>
+
+<div class="vic-tab-content">
+    {% set active = (form.vicActiveTab.vars.data is defined and form.vicActiveTab.vars.data) ? form.vicActiveTab.vars.data : loop.first ? 'static' : false %}
+    <div class="v-collapse" id="vic-widget-layout-{{ widgetId }}-static" data-flag="v-collapse" data-group="vic-widget-layout-{{ widgetId }}"{{ active ? ' data-state="visible"' }}>
+        {% include 'VictoireCoreBundle:Widget/Form/stylize:_fields.html.twig' %}
     </div>
+
+    {% for key, responsive_config in victoire_twig_responsive %}
+        {% set active = (form.vicActiveTab.vars.data is defined and form.vicActiveTab.vars.data) ? form.vicActiveTab.vars.data : loop.first ? key : false %}
+        <div class="v-collapse" id="vic-widget-layout-{{ widgetId }}-{{ key }}" data-flag="v-collapse" data-group="vic-widget-layout-{{ widgetId }}"{{ active ? ' data-state="visible"' }}>
+            {% include 'VictoireCoreBundle:Widget/Form/stylize:_fields.html.twig' %}
+        </div>
+    {% endfor %}
 </div>
