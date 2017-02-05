@@ -32,6 +32,8 @@ function openModal(url) {
         }
         loading(false);
         $vic(document).trigger('victoire_modal_open_after');
+    }).fail(function() {
+        loading(false);
     });
 
     return $vic('#vic-modal');

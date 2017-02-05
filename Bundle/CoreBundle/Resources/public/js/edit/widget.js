@@ -89,6 +89,8 @@ $vic(document).on('click', '.v-modal--widget a[data-modal="update"], .v-modal--w
             contentType : contentType
         }).done(function(response) {
             $vic(form).trigger("victoire_widget_form_update_postsubmit");
+        }).fail(function() {
+            loading(false);
         })
         );
     });
@@ -148,6 +150,8 @@ $vic(document).on('click', 'a#widget-new-tab', function(event) {
 
             loading(false);
         }
+    }).fail(function() {
+        loading(false);
     });
     $vic(document).trigger("victoire_widget_delete_postsubmit");
 });
@@ -174,6 +178,8 @@ $vic(document).on('click', '.v-modal--widget a.vic-confirmed, .vic-hover-widget-
                 console.info('An error occured during the deletion of the widget.');
                 console.log(response.message);
             }
+        }).fail(function() {
+            loading(false);
         });
         $vic(document).trigger("victoire_widget_delete_postsubmit");
 });
