@@ -174,19 +174,7 @@
         <source>victoire.login.meta.title</source>
         <target>Embarquement imminent</target>
       </trans-unit>
-      <trans-unit id="58893b9964741" resname="victoire.widget.stylize.container.heading">
-        <source>victoire.widget.stylize.container.heading</source>
-        <target>Général</target>
-      </trans-unit>
-      <trans-unit id="58893b996483a" resname="victoire.widget.stylize.layout.heading">
-        <source>victoire.widget.stylize.layout.heading</source>
-        <target>Spécifique</target>
-      </trans-unit>
-      <trans-unit id="58893b99648c4" resname="victoire.widget.stylize.global.heading">
-        <source>victoire.widget.stylize.global.heading</source>
-        <target>Avancé</target>
-      </trans-unit>
-      <trans-unit id="58893b99649e4" resname="hamburger_menu.backend.back_home">
+      <trans-unit id="58893b9964741" resname="hamburger_menu.backend.back_home">
         <source>hamburger_menu.backend.back_home</source>
         <target>Retour sur le site</target>
       </trans-unit>

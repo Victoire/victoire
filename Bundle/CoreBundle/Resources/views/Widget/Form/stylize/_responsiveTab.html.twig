@@ -1,14 +1,30 @@
 {% trans_default_domain "victoire" %}
 
+{% set key = key|default('static') %}
 {% set active = (form.vicActiveTab.vars.data is defined and form.vicActiveTab.vars.data) ? form.vicActiveTab.vars.data : loop.first ? key : false %}
-<li class="item{{ key == active ? ' vic-active' }}">
+
+<div class="v-tabs-nav__item">
     <a
-        href="#vic-widget-layout-{{ widgetId }}-{{ key }}"
-        role="tab"
-        data-toggle="vic-tab"
+        class="v-tabs-nav__anchor {{ active ? ' v-tabs-nav__anchor--active' }}"
+        data-collapse="show"
+        data-href="#vic-widget-layout-{{ widgetId }}-{{ key }}"
+        data-activeclass="v-tabs-nav__anchor--active"
+        data-flag="v-drop"
+        data-position="topout center"
+        data-droptarget="#style-anchor-drop-{{ widgetId }}-{{ key }}"
+        data-behavior="hover"
         data-key="{{ key }}"
-        data-title="{{ config.min is defined ? "#{config.min}px" }}{{ config.min is defined and config.max is defined ? " - " }}{{ config.max is defined ? "#{config.max}px" }}"
     >
         {{ ('widget_layout.tab.containerMargin.' ~ key|upper ~ '.label' )|trans({}, 'victoire')|raw }}
     </a>
-</li>
+
+    <div class="v-drop v-drop--tooltip" id="style-anchor-drop-{{ widgetId }}-{{ key }}">
+        <div class="v-drop__content">
+            {% if config|default(false) %}
+                {{ config.min is defined ? "#{config.min}px" }}{{ config.min is defined and config.max is defined ? " - " }}{{ config.max is defined ? "#{config.max}px" }}
+            {% else %}
+                {{ ('widget_layout.tab.tooltip.' ~ key|upper ~ '.label' )|trans({}, 'victoire')|raw }}
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -58,21 +58,25 @@
         <source>widget_layout.form.containerPaddingLG.label</source>
         <target>Padding</target>
       </trans-unit>
+      <trans-unit id="6b5958893b9a1" resname="widget_layout.tab.containerMargin.STATIC.label">
+          <source>widget_layout.tab.containerMargin.STATIC.label</source>
+          <target><![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="16 0 27 23"><path fill="currentColor" fill-rule="evenodd" d="M41.0714 0H17.9286C16.864 0 16 .8577 16 1.9167v19.1666C16 22.1413 16.864 23 17.9286 23h23.1428C42.137 23 43 22.1413 43 21.0833V1.9167C43 .8577 42.137 0 41.0714 0zm-15.85 1.4375c.5324 0 .9653.4293.9653.9583s-.433.9584-.9652.9584c-.5323 0-.9634-.4294-.9634-.9584s.4318-.9583.964-.9583zm-2.9535 0c.533 0 .964.4293.964.9583s-.431.9584-.964.9584c-.533 0-.965-.4294-.965-.9584s.432-.9583.9643-.9583zm-2.893 0c.533 0 .964.4293.964.9583s-.431.9584-.9646.9584c-.5324 0-.9644-.4294-.9644-.9584s.432-.9583.9644-.9583zm-1.447 3.3743h23.143v16.2715H17.9286V4.8118zm9.6427-2.875h13.5v.9583h-13.5v-.958z"></path></svg>]]></target>
+      </trans-unit>
       <trans-unit id="58893b9a16b59" resname="widget_layout.tab.containerMargin.XS.label">
         <source>widget_layout.tab.containerMargin.XS.label</source>
-        <target><![CDATA[<svg width="13" height="23" viewBox="0 0 13 23" xmlns="http://www.w3.org/2000/svg"><title>Smartphones</title><path d="M11.1115455 0L1.8787411.00329607C.8400371 0-.0021553.95586127.0000041 2.1347569L.012961 20.8784274C.012961 22.0518296.8475952 23 1.887379 23l9.2284854-.0043948C12.159967 23 12.9989203 22.0496322 13 20.8740327l-.0107973-18.7535588C12.9848837.94707175 12.1459305.00219738 11.1115455 0zM6.5334738 22.6583071c-.5754981-.0054935-1.0419432-.4779307-1.0408634-1.0569409-.0010798-.5888984.4621261-1.0591382 1.0365445-1.0602369.5819765.0010987 1.0419432.4713385 1.0419432 1.0536448.0021594.5877997-.4621261 1.0591382-1.0376243 1.063533zM.5452698 20.257667L.5312332 1.7787809l11.9278201-.0065921.0107974 18.4755899-11.9245809.0098883zm5.5142009.8811502l-.004319.9921181.97392.0032961-.0021595-.9910194-.9674415-.0043948z" fill-rule="evenodd"/></svg>]]></target>
+        <target><![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="30" height="23" viewBox="0 0 13 23"><path fill="currentColor" fill-rule="evenodd" d="M11.1115 0L1.8787.0033C.84 0-.0023.956 0 2.1348l.013 18.7436C.013 22.0518.8476 23 1.8874 23l9.2285-.0044C12.16 23 12.999 22.0496 13 20.874l-.0108-18.7535C12.985.947 12.146.0022 11.1115 0zm-4.578 22.6583c-.5755-.0055-1.042-.478-1.041-1.057-.001-.5888.4622-1.059 1.0367-1.0602.582.0014 1.042.4717 1.042 1.054.002.5878-.4622 1.059-1.0377 1.0635zM.5453 20.2577l-.014-18.479 11.9278-.0065.011 18.4756-11.9245.01zm5.5142.881l.9674.0045.002.991-.974-.0033.0043-.9924z"></path></svg>]]></target>
       </trans-unit>
       <trans-unit id="58893b9a16b6c" resname="widget_layout.tab.containerMargin.SM.label">
         <source>widget_layout.tab.containerMargin.SM.label</source>
-        <target><![CDATA[<svg width="18" height="23" viewBox="0 0 18 23" xmlns="http://www.w3.org/2000/svg"><title>Tablets</title><path d="M17.9557536 1.5815343c-.0034034-.8778425-.6820441-1.58345827-1.5151997-1.58153036L1.5104598.0179978C.6732201.01735514-.0047398.73261046.000025 1.6136662L.042908 21.41782c.0013613.8771999.6779599 1.5847436 1.516561 1.582173l14.9253293-.0192791c.8413238.0012853 1.516561-.7107569 1.5151996-1.5892421l-.0442443-19.8099375zM9.0034149 22.7365117c-.465587-.0032132-.8413238-.3553784-.8399625-.7885159-.0034034-.4408492.3696107-.7930145.8317943-.7949424.469671.0012853.8406431.3489521.8420045.7859454.0027227.4408492-.3696107.7936571-.8338363.7975129zM1.4267359 1.3212662H16.573287V20.409522H1.4267359V1.3212662zm7.181883 20.2527146h.7827851v.7422461h-.7827851v-.7422461z" fill-rule="evenodd"/></svg>]]></target>
+        <target><![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 0 18 24"><path fill="currentColor" fill-rule="evenodd" d="M17.9558 1.5815C17.9524.7037 17.2738-.002 16.4406 0l-14.93.018C.673.0174-.0048.7326 0 1.6137l.043 19.804c.0013.8773.678 1.585 1.5165 1.5823l14.9253-.0193c.8413.0013 1.5166-.7107 1.5152-1.5892l-.0442-19.81zm-8.9524 21.155c-.4656-.0032-.8413-.3554-.84-.7885-.0034-.441.3697-.793.8318-.795.4697.0013.8407.349.842.786.0028.4408-.3696.7937-.8338.7975zM1.4267 1.3213h15.1466v19.0882H1.4267V1.3213zm7.182 20.2527h.7827v.7422h-.7828v-.7422z"></path></svg>]]></target>
       </trans-unit>
       <trans-unit id="58893b9a16b80" resname="widget_layout.tab.containerMargin.MD.label">
         <source>widget_layout.tab.containerMargin.MD.label</source>
-        <target><![CDATA[<svg width="43" height="23" viewBox="0 0 43 23" xmlns="http://www.w3.org/2000/svg"><title>Laptops</title><path d="M4.5354521 21.1329546V1.4925593C4.5354521.66673077 5.250199 0 6.0886891 0h30.8162225c.8410765 0 1.5532352.66667072 1.553237 1.4925593v19.6403953h4.3555251c.1032592 0 .1863263.0652653.1863263.1461847v.8506767C42.9995651 22.3426507 42.0064875 23 39.8133168 23h-36.62682C1.2824146 23 0 22.3668543 0 22.0976048v-.8184655c0-.0809194.0829429-.1461847.1860778-.1461847h4.3493743zM5.9023007 2.3481061v17.5812334H37.033759V2.3481061H5.9023007zm15.6566291-.9633256c.1372527 0 .2485179-.1078239.2485179-.2408314s-.1112652-.24083138-.2485179-.24083138c-.1372526 0-.2485179.10782388-.2485179.24083138s.1112653.2408314.2485179.2408314zm4.5975816 19.808382v.1858616c0 .1325175-.2692245.1725385-.4730092.1725385h-8.3608533c-.2144088 0-.4855596-.0399608-.4855596-.1725385v-.1858616h9.3194221z" fill-rule="evenodd"/></svg>]]></target>
+        <target><![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="30" height="19" viewBox="0 0 34 19"><path fill="currentColor" fill-rule="evenodd" d="M30.4088 16.7098h3.444c.0815 0 .1472.0516.1472.1156v.6726c-.0003.1683-.7856.688-2.5197.688H2.5196C1.014 18.186 0 17.6854 0 17.4725v-.647c0-.064.0656-.1157.147-.1157h3.4392V1.1802C3.5862.5272 4.1512 0 4.8142 0h24.3664c.665 0 1.2282.527 1.2282 1.1802v15.5296zM4.6668 1.8566V15.758h24.6157V1.8567H4.667zm12.3798-.7617c.1085 0 .1965-.0854.1965-.1906S17.155.714 17.0468.714c-.1085 0-.1965.0853-.1965.1905s.088.1904.1966.1904zm3.6353 15.6623h-7.369v.147c0 .1048.2143.1364.384.1364h6.611c.161 0 .374-.0317.374-.1365v-.147z"></path></svg>]]></target>
       </trans-unit>
       <trans-unit id="58893b9a16b93" resname="widget_layout.tab.containerMargin.LG.label">
         <source>widget_layout.tab.containerMargin.LG.label</source>
-        <target><![CDATA[<svg width="34" height="23" viewBox="0 0 34 23" xmlns="http://www.w3.org/2000/svg"><title>Desktop</title><path d="M32.3099465 0H1.9257778C1.1387744 0 .5.61231947.5 1.3687141v16.9581811c0 .7555053.6387744 1.3687141 1.4257778 1.3687141h12.8685946v1.8409605c0 .092048.0314986.1805386.0870845.2654718h-2.2651246c-.3450957 0-.6239515.2685846-.6239515.5989792 0 .3303946.2788558.5989792.6239515.5989792h9.029463c.3455589 0 .6253412-.2685846.6253412-.5989792 0-.3303946-.2797823-.5989792-.6253412-.5989792h-2.266051c.0560491-.0849332.0884742-.1734238.0884742-.2654718v-1.8409605h12.841728c.7879299 0 1.4257778-.6132088 1.4257778-1.3687141V1.3687141C33.7357243.61231947 33.0978764 0 32.3099465 0zM17.1312954 17.5816175c-.2959948 0-.5345509-.2298978-.5345509-.5136013 0-.2837036.2385561-.5122673.5345509-.5122673.2955316 0 .5336245.2285637.5336245.5122673 0 .2837035-.2380929.5136013-.5336245.5136013zM1.6446059 1.0796744h30.9738422v14.3919533H1.6446059V1.0796744z" fill-rule="evenodd"/></svg>]]></target>
+        <target><![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="30" height="23" viewBox="0 0 33 23"><path fill="currentColor" fill-rule="evenodd" d="M31.0435 0H1.3915C.6235 0 0 .5976 0 1.3357v16.5496c0 .7373.6234 1.3358 1.3914 1.3358H13.95v1.7968c0 .0898.0307.176.085.259h-2.2106c-.3368 0-.609.262-.609.5846 0 .3224.2722.5845.609.5845h8.812c.337 0 .6102-.262.6102-.5846s-.273-.5846-.6103-.5846h-2.2115c.0547-.083.0864-.1692.0864-.259V19.221h12.5323c.769 0 1.3914-.5984 1.3914-1.3357V1.3357C32.435.5977 31.8123 0 31.0433 0zm-14.813 17.158c-.2888 0-.5216-.2244-.5216-.5012 0-.277.2326-.5.5215-.5.2884 0 .5207.223.5207.5 0 .2768-.2323.5012-.5207.5012zM1.117 1.0537h30.2276v14.045H1.117V1.0537z"></path></svg>]]></target>
       </trans-unit>
       <trans-unit id="58893b9a16ba5" resname="widget_layout.form.containerBackground.label">
         <source>widget_layout.form.containerBackground.label</source>
@@ -82,6 +86,7 @@
         <source>widget_layout.form.containerTag.help_block</source>
         <target><![CDATA[More information about this choice <a href="http://www.w3.org/wiki/HTML_structural_elements" target="_blank">here</a>]]></target>
       </trans-unit>
+<<<<<<< acd9c98ccfd6f6ad80913b74a7048c1377fdfa50
       <trans-unit id="58893b9a16bcb" resname="widget_layout.form.containerMargin.placeholder">
         <source>widget_layout.form.containerMargin.placeholder</source>
         <target>units : pixels, % or "auto"</target>
@@ -91,6 +96,9 @@
         <target>units : pixels, % or "auto"</target>
       </trans-unit>
      <trans-unit id="58893b9a16bf1" resname="widget_layout.form.containerMargin.help_block">
+=======
+     <trans-unit id="22" resname="widget_layout.form.containerMargin.help_block">
+>>>>>>> style modal redesign
         <source>widget_layout.form.containerMargin.help_block</source>
         <target><![CDATA[Eg : 10px 10px 10px 10px (top; right; bottom; left)</br><a href="hhttp://www.w3schools.com/css/css_padding.asp" target="_blank">more info</a>]]></target>
       </trans-unit>
@@ -405,6 +413,10 @@
       <trans-unit id="58893b9a171f5" resname="widget_layout.form.containerBackground.help_block">
         <source>widget_layout.form.containerBackground.help_block</source>
         <target>This field is deprecated and will be removed soon. Thank you not to use it.</target>
+      </trans-unit>
+      <trans-unit id="103" resname="widget_layout.tab.tooltip.STATIC.label">
+        <source>widget_layout.tab.tooltip.STATIC.label</source>
+        <target>General</target>
       </trans-unit>
     </body>
   </file>

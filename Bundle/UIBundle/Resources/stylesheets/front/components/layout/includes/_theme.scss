@@ -7,7 +7,10 @@ $container--width: (
 );
 
 $grid--enable: true !default; // not a trowel variable
-$grid--gutter: rem();
+$grid--gutter: (
+  'default': rem(),
+  '-large': rem(2),
+);
 $grid--columns: 12 !default; // not a trowel variable
 
 $flexgrid--enable: true !default; // not a trowel variable
