@@ -32,7 +32,7 @@ class WidgetRepository extends EntityRepository
 
         return $this->createQueryBuilder('widget')
             ->join('widget.widgetMap', 'widgetMap')
-            ->where('widgetMap IN (:widgetMaps)')
+            ->andWhere('widgetMap IN (:widgetMaps)')
             ->setParameter('widgetMaps', $widgetMapsToSearch);
     }
 
