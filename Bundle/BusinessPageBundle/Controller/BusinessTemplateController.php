@@ -56,11 +56,11 @@ class BusinessTemplateController extends Controller
         }
 
         return new JsonResponse([
-                'html'    => $this->container->get('templating')->render(
+                'html' => $this->container->get('templating')->render(
                     'VictoireBusinessPageBundle:BusinessEntity:index.html.twig',
                     [
-                        'businessEntities'           => $businessEntities,
-                        'BusinessTemplates'          => $BusinessTemplates,
+                        'businessEntities' => $businessEntities,
+                        'BusinessTemplates' => $BusinessTemplates,
                     ]
                 ),
                 'success' => true,
@@ -156,8 +156,8 @@ class BusinessTemplateController extends Controller
             BusinessTemplateType::class,
             $view,
             [
-                'action'                  => $this->generateUrl('victoire_business_template_create', ['id' => $id]),
-                'method'                  => 'POST',
+                'action' => $this->generateUrl('victoire_business_template_create', ['id' => $id]),
+                'method' => 'POST',
                 'vic_business_properties' => $businessProperties,
             ]
         );
@@ -188,8 +188,8 @@ class BusinessTemplateController extends Controller
         $form = $this->createCreateForm($view);
 
         $parameters = [
-            'entity'             => $view,
-            'form'               => $form->createView(),
+            'entity' => $view,
+            'form' => $form->createView(),
         ];
 
         return new JsonResponse([
@@ -221,9 +221,9 @@ class BusinessTemplateController extends Controller
         $deleteForm = $this->createDeleteForm($view->getId());
 
         $parameters = [
-            'entity'             => $view,
-            'form'               => $editForm->createView(),
-            'delete_form'        => $deleteForm->createView(),
+            'entity' => $view,
+            'form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
         ];
 
         return new JsonResponse([
@@ -247,8 +247,8 @@ class BusinessTemplateController extends Controller
         $businessProperties = $this->getBusinessProperties($view);
 
         $form = $this->createForm(BusinessTemplateType::class, $view, [
-            'action'                  => $this->generateUrl('victoire_business_template_update', ['id' => $view->getId()]),
-            'method'                  => 'PUT',
+            'action' => $this->generateUrl('victoire_business_template_update', ['id' => $view->getId()]),
+            'method' => 'PUT',
             'vic_business_properties' => $businessProperties,
         ]);
 
@@ -299,7 +299,7 @@ class BusinessTemplateController extends Controller
 
         return new JsonResponse([
             'success' => $success,
-            'url'     => $completeUrl,
+            'url' => $completeUrl,
             'message' => $message,
         ]);
     }
@@ -373,8 +373,8 @@ class BusinessTemplateController extends Controller
 
         //parameters for the view
         return [
-            'BusinessTemplate'          => $view,
-            'items'                     => $bepHelper->getEntitiesAllowed($view, $this->get('doctrine.orm.entity_manager')),
+            'BusinessTemplate' => $view,
+            'items' => $bepHelper->getEntitiesAllowed($view, $this->get('doctrine.orm.entity_manager')),
         ];
     }
 

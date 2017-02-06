@@ -38,8 +38,8 @@ class WidgetLightSaberType extends WidgetType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'data_class'         => 'Victoire\Widget\LightSaberBundle\Entity\WidgetLightSaber',
-            'widget'             => 'LightSaber',
+            'data_class' => 'Victoire\Widget\LightSaberBundle\Entity\WidgetLightSaber',
+            'widget' => 'LightSaber',
             'translation_domain' => 'victoire',
         ]);
     }

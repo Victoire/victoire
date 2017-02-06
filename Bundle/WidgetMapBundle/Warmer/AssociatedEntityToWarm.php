@@ -4,7 +4,6 @@ namespace Victoire\Bundle\WidgetMapBundle\Warmer;
 
 class AssociatedEntityToWarm
 {
-
     const TYPE_MANY_TO_ONE = 'many_to_one';
     const TYPE_ONE_TO_MANY = 'one_to_many';
 
@@ -21,7 +20,7 @@ class AssociatedEntityToWarm
      * @param null $inheritorEntity
      * @param null $inheritorPropertyName
      * @param null $entityId
-     * @param null $mappedBy for OneToMany type only
+     * @param null $mappedBy              for OneToMany type only
      */
     public function __construct(
         $type = null,
@@ -37,9 +36,6 @@ class AssociatedEntityToWarm
         $this->mappedBy = $mappedBy;
     }
 
-    /**
-     * @return null
-     */
     public function getType()
     {
         return $this->type;
@@ -119,9 +115,6 @@ class AssociatedEntityToWarm
         return $this;
     }
 
-    /**
-     * @return null
-     */
     public function getMappedBy()
     {
         return $this->mappedBy;

@@ -58,11 +58,11 @@ class WidgetResolver
 
             /** @var Criteria $criteria */
             foreach ($_widget->getCriterias() as $criteria) {
-                 $value = $this->dataSourceChain->getData($criteria->getName());
-                 if (!$this->assert($value(), $criteria->getOperator(), $criteria->getValue())) {
-                     continue 2; //try with break
-                 }
-             }
+                $value = $this->dataSourceChain->getData($criteria->getName());
+                if (!$this->assert($value(), $criteria->getOperator(), $criteria->getValue())) {
+                    continue 2; //try with break
+                }
+            }
 
             return $_widget;
         }

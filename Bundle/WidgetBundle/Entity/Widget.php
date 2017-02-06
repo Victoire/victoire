@@ -443,7 +443,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
 
     /**
      * @deprecated
-     * Get view.
+     * Get view
      *
      * @return string
      */

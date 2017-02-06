@@ -36,8 +36,8 @@ class WidgetForceType extends WidgetType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'data_class'         => 'Victoire\Widget\ForceBundle\Entity\WidgetForce',
-            'widget'             => 'Force',
+            'data_class' => 'Victoire\Widget\ForceBundle\Entity\WidgetForce',
+            'widget' => 'Force',
             'translation_domain' => 'victoire',
         ]);
     }

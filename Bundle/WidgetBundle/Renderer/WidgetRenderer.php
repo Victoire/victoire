@@ -93,7 +93,7 @@ class WidgetRenderer
          * into the real business entity id, then if in the rendered action, we need to flush, it would persist the
          * modified widget which really uncomfortable ;)
          */
-        if($widget->getMode() == Widget::MODE_BUSINESS_ENTITY) {
+        if ($widget->getMode() == Widget::MODE_BUSINESS_ENTITY) {
             $this->container->get('doctrine.orm.entity_manager')->refresh($widget);
         }
 
@@ -138,7 +138,6 @@ class WidgetRenderer
                 $this->victoireCollector->addCachedWidget($widget);
             }
         } else {
-
             $content = $this->render($widget, $view);
         }
         $html .= $content;
@@ -179,7 +178,7 @@ class WidgetRenderer
             'VictoireCoreBundle:Widget:widgetUnlinkAction.html.twig',
             [
                 'widgetId' => $widgetId,
-                'view'     => $view,
+                'view' => $view,
             ]
         );
     }

@@ -253,7 +253,7 @@ class PageHelper
      * @param BusinessPageReference $viewReference
      *
      * @return BusinessPage
-     *                      read the cache to find entity according tu given url.
+     *                      read the cache to find entity according tu given url
      * @return object|null
      */
     protected function findEntityByReference(ViewReference $viewReference)
@@ -276,13 +276,13 @@ class PageHelper
             if ($viewReference->getViewId()) { //BusinessPage
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                     ->findOneBy([
-                        'id'     => $viewReference->getViewId(),
+                        'id' => $viewReference->getViewId(),
                     ]);
                 $page->setCurrentLocale($viewReference->getLocale());
             } else { //VirtualBusinessPage
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                     ->findOneBy([
-                        'id'     => $viewReference->getTemplateId(),
+                        'id' => $viewReference->getTemplateId(),
                     ]);
                 if ($entity = $this->findEntityByReference($viewReference)) {
                     if ($page instanceof BusinessTemplate) {
@@ -299,7 +299,7 @@ class PageHelper
         } elseif ($viewReference instanceof ViewReference) {
             $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                 ->findOneBy([
-                    'id'     => $viewReference->getViewId(),
+                    'id' => $viewReference->getViewId(),
                 ]);
             $page->setCurrentLocale($viewReference->getLocale());
         } else {

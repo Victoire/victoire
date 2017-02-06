@@ -223,7 +223,7 @@ class WidgetMap
     }
 
     /**
-     * Get the current View context
+     * Get the current View context.
      *
      * @return View
      */
@@ -233,7 +233,7 @@ class WidgetMap
     }
 
     /**
-     * Store the current View context
+     * Store the current View context.
      *
      * @param View $viewContext
      *
@@ -362,7 +362,6 @@ class WidgetMap
      */
     public function getChild($position)
     {
-
         $child = null;
         foreach ($this->children as $_child) {
             if ($_child && $_child->getPosition() == $position) {
@@ -374,7 +373,7 @@ class WidgetMap
     }
 
     /**
-     * Return all chlidren from ViewContext (already loaded WidgetMaps)
+     * Return all children from ViewContext (already loaded WidgetMaps).
      *
      * @return WidgetMap[]
      */
@@ -383,8 +382,8 @@ class WidgetMap
         $childsWidgetMaps = [];
         $viewWidgetMaps = $this->getViewContext()->getWidgetMapsForViewAndTemplates();
 
-        foreach($viewWidgetMaps as $viewWidgetMap) {
-            if($viewWidgetMap->getParent() == $this && $viewWidgetMap->getPosition() == $position) {
+        foreach ($viewWidgetMaps as $viewWidgetMap) {
+            if ($viewWidgetMap->getParent() == $this && $viewWidgetMap->getPosition() == $position) {
                 $childsWidgetMaps[] = $viewWidgetMap;
             }
         }
@@ -400,9 +399,6 @@ class WidgetMap
         $this->children = $children;
     }
 
-    /**
-     * @return void
-     */
     public function removeChildren()
     {
         foreach ($this->children as $child) {
@@ -466,7 +462,7 @@ class WidgetMap
 
     /**
      * Return all substitutes from ViewContext (already loaded WidgetMaps)
-     * Ideally must return only one WidgetMap per View
+     * Ideally must return only one WidgetMap per View.
      *
      * @return WidgetMap[]
      */
@@ -475,8 +471,8 @@ class WidgetMap
         $substitutesWidgetMaps = [];
         $viewWidgetMaps = $this->getViewContext()->getWidgetMapsForViewAndTemplates();
 
-        foreach($viewWidgetMaps as $viewWidgetMap) {
-            if($viewWidgetMap->getReplaced() == $this) {
+        foreach ($viewWidgetMaps as $viewWidgetMap) {
+            if ($viewWidgetMap->getReplaced() == $this) {
                 $substitutesWidgetMaps[] = $viewWidgetMap;
             }
         }
@@ -485,7 +481,7 @@ class WidgetMap
     }
 
     /**
-     * Return substitute if used in View
+     * Return substitute if used in View.
      *
      * @return WidgetMap|null
      */
@@ -496,8 +492,6 @@ class WidgetMap
                 return $substitute;
             }
         }
-
-        return null;
     }
 
     /**
