@@ -13,13 +13,13 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
-use Victoire\Bundle\WidgetBundle\Entity\Traits\LinkTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Repository\WidgetRepository;
-use Victoire\Widget\ListingBundle\Entity\WidgetListingItem;
 
 /**
  * WidgetDataWarmer.
+ *
  * This class prepare all widgets with their associated entities for the current View
  * to reduce queries during page rendering.
  * Only OneToMany and ManyToOne associations are handled because no OneToOne or ManyToMany
@@ -31,6 +31,7 @@ class WidgetDataWarmer
 {
     protected $reader;
     protected $viewReferenceRepository;
+    protected $widgetHelper;
     protected $em;
     protected $accessor;
     protected $forbiddenManyToOne;
@@ -40,12 +41,19 @@ class WidgetDataWarmer
      *
      * @param Reader                  $reader
      * @param ViewReferenceRepository $viewReferenceRepository
+     * @param WidgetHelper            $widgetHelper
      * @param array                   $forbiddenManyToOne
      */
-    public function __construct(Reader $reader, ViewReferenceRepository $viewReferenceRepository, array $forbiddenManyToOne)
+    public function __construct(
+        Reader $reader,
+        ViewReferenceRepository $viewReferenceRepository,
+        WidgetHelper $widgetHelper,
+        array $forbiddenManyToOne
+    )
     {
         $this->reader = $reader;
         $this->viewReferenceRepository = $viewReferenceRepository;
+        $this->widgetHelper = $widgetHelper;
         $this->accessor = PropertyAccess::createPropertyAccessor();
         $this->forbiddenManyToOne = $forbiddenManyToOne;
     }
@@ -98,7 +106,7 @@ class WidgetDataWarmer
     }
 
     /**
-     * Pass throw all widgets and associated entities to extract all missing associations,
+     * Pass through all widgets and associated entities to extract all missing associations,
      * store it by repository to group queries by entity type.
      *
      * @param Widget[] $entities Widgets and associated entities
@@ -110,15 +118,15 @@ class WidgetDataWarmer
         foreach ($entities as $entity) {
             $reflect = new \ReflectionClass($entity);
 
+            //If Widget is already in cache, extract only its Criterias (used outside Widget rendering)
+            $widgetCached = ($entity instanceof Widget && $this->widgetHelper->isCacheEnabled($entity));
+
             //If Widget has LinkTrait, store the entity link id
-            if ($this->hasLinkTrait($reflect) && ($entity instanceof Widget || $entity instanceof WidgetListingItem)) {
-                /* @var $entity LinkTrait */
-                if ($entity->getLink()) {
-                    $linkIds[] = $entity->getLink()->getId();
-                }
+            if (!$widgetCached && $this->hasLinkTrait($reflect) && $entity->getLink()) {
+                $linkIds[] = $entity->getLink()->getId();
             }
 
-            //Pass throw all properties annotations
+            //Pass through all properties annotations
             $properties = $this->getAvailableProperties($reflect);
             foreach ($properties as $property) {
                 $annotations = $this->reader->getPropertyAnnotations($property);
@@ -128,6 +136,7 @@ class WidgetDataWarmer
                     //a single query for this entity type
                     if ($annotationObj instanceof ManyToOne
                         && !$this->isForbiddenManyToOne($reflect->getShortName(), $annotationObj->targetEntity)
+                        && !$widgetCached
                     ) {
                         //If target Entity is not null, treat it
                         if ($targetEntity = $this->accessor->getValue($entity, $property->getName())) {
@@ -143,22 +152,25 @@ class WidgetDataWarmer
 
                     //If Widget has OneToMany association, store owner entity id and mappedBy value
                     //to construct a single query for this entity type
-                    elseif ($annotationObj instanceof OneToMany) {
-                        //If Collection is not null, treat it
-                        if ($this->accessor->getValue($entity, $property->getName())) {
+                    else if ($annotationObj instanceof OneToMany) {
+                        $targetClass = $this->resolveNamespace($reflect, $annotationObj->targetEntity);
 
-                            //Override Collection default behaviour to avoid useless query
-                            $getter = 'get'.ucwords($property->getName());
-                            $entity->$getter()->setDirty(false);
-                            $entity->$getter()->setInitialized(true);
+                        if(!$widgetCached || $targetClass == '\Victoire\Bundle\CriteriaBundle\Entity\Criteria') {
+                            //If Collection is not null, treat it
+                            if ($this->accessor->getValue($entity, $property->getName())) {
 
-                            $targetClass = $this->resolveNamespace($reflect, $annotationObj->targetEntity);
-                            $associatedEntities[$targetClass][$annotationObj->mappedBy][] = new AssociatedEntityToWarm(
-                                AssociatedEntityToWarm::TYPE_ONE_TO_MANY,
-                                $entity,
-                                $property->getName(),
-                                $entity->getId()
-                            );
+                                //Override Collection default behaviour to avoid useless query
+                                $getter = 'get' . ucwords($property->getName());
+                                $entity->$getter()->setDirty(false);
+                                $entity->$getter()->setInitialized(true);
+
+                                $associatedEntities[$targetClass][$annotationObj->mappedBy][] = new AssociatedEntityToWarm(
+                                    AssociatedEntityToWarm::TYPE_ONE_TO_MANY,
+                                    $entity,
+                                    $property->getName(),
+                                    $entity->getId()
+                                );
+                            }
                         }
                     }
                 }
@@ -191,7 +203,7 @@ class WidgetDataWarmer
         foreach ($repositories as $repositoryName => $findMethods) {
             foreach ($findMethods as $findMethod => $associatedEntitiesToWarm) {
 
-                //Find by id for ManyToOn eassociations  based on target entity id
+                //Find by id for ManyToOne associations based on target entity id
                 //Find by mappedBy value for OneToMany associations based on owner entity id
                 $idsToSearch = $this->extractAssociatedEntitiesIds($associatedEntitiesToWarm);
                 $foundEntities = $this->em->getRepository($repositoryName)->findBy([
@@ -366,7 +378,7 @@ class WidgetDataWarmer
     }
 
     /**
-     * Avoid passing throw all Widget properties.
+     * Avoid passing through all Widget properties.
      * Only property "criterias" is used for this class.
      *
      * @param \ReflectionClass $reflect

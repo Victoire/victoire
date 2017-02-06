@@ -5,8 +5,9 @@ services:
     victoire_widget_map.widget_data_warmer:
         class: Victoire\Bundle\WidgetMapBundle\Warmer\WidgetDataWarmer
         arguments:
-            - "@annotation_reader"
-            - "@victoire_view_reference.repository"
+            - @annotation_reader
+            - @victoire_view_reference.repository
+            - @victoire_widget.widget_helper
             - WidgetSliderItem: WidgetSlider
               WidgetSocialButtonsItem: WidgetSocialButtons
               WidgetTabItem: WidgetTab
