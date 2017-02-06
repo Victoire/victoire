@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="58893bce99d6b" resname="acme.app.jedi.form.side.label">
         <source>acme.app.jedi.form.side.label</source>
-        <target>Coté de la force</target>
+        <target>Côté de la force</target>
       </trans-unit>
       <trans-unit id="58893bce99d7a" resname="acme.app.jedi.form.action.new">
         <source>acme.app.jedi.form.action.new</source>
