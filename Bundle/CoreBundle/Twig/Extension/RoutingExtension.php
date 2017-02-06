@@ -14,7 +14,7 @@ use Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException
 /**
  * class RoutingExtension.
  */
-class RoutingExtention extends BaseRoutingExtension
+class RoutingExtension extends BaseRoutingExtension
 {
     private $pageHelper;
     private $generator;
