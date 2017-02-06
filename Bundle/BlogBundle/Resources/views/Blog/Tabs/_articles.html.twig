@@ -2,7 +2,7 @@
 
 {% if blog.articles|length %}
 
-<a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_blog_article_newBlogArticle', {'id' : blog.id}) }}">
+<a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_blog_article_new', {'id' : blog.id}) }}">
     {{'modal.blog.list.articlesList.new_article'|trans({}, 'victoire')|raw}}
 </a>
 
@@ -42,6 +42,6 @@
         {{ 'modal.blog.list.articlesList.empty.notice'|trans }}
     </p>
 
-    <a data-toggle="vic-modal" href="{{ path('victoire_blog_article_newBlogArticle', {'id' : blog.id}) }}" class="vic-btn vic-btn-info">{{ 'modal.blog.list.articlesList.empty.notice.label'|trans }}</a>
+    <a data-toggle="vic-modal" href="{{ path('victoire_blog_article_new', {'id' : blog.id}) }}" class="vic-btn vic-btn-info">{{ 'modal.blog.list.articlesList.empty.notice.label'|trans }}</a>
 </div>
 {% endif %}
