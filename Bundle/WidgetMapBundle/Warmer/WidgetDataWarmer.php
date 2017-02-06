@@ -49,8 +49,7 @@ class WidgetDataWarmer
         ViewReferenceRepository $viewReferenceRepository,
         WidgetHelper $widgetHelper,
         array $forbiddenManyToOne
-    )
-    {
+    ) {
         $this->reader = $reader;
         $this->viewReferenceRepository = $viewReferenceRepository;
         $this->widgetHelper = $widgetHelper;
@@ -152,15 +151,15 @@ class WidgetDataWarmer
 
                     //If Widget has OneToMany association, store owner entity id and mappedBy value
                     //to construct a single query for this entity type
-                    else if ($annotationObj instanceof OneToMany) {
+                    elseif ($annotationObj instanceof OneToMany) {
                         $targetClass = $this->resolveNamespace($reflect, $annotationObj->targetEntity);
 
-                        if(!$widgetCached || $targetClass == '\Victoire\Bundle\CriteriaBundle\Entity\Criteria') {
+                        if (!$widgetCached || $targetClass == '\Victoire\Bundle\CriteriaBundle\Entity\Criteria') {
                             //If Collection is not null, treat it
                             if ($this->accessor->getValue($entity, $property->getName())) {
 
                                 //Override Collection default behaviour to avoid useless query
-                                $getter = 'get' . ucwords($property->getName());
+                                $getter = 'get'.ucwords($property->getName());
                                 $entity->$getter()->setDirty(false);
                                 $entity->$getter()->setInitialized(true);
 
