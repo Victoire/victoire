@@ -92,7 +92,7 @@ class WidgetMapBuilder
 
     /**
      * Get the children of given WidgetMap and place them recursively in the "builtWidgetMap" array at the right place
-     * depending of the children parents and positions
+     * depending of the children parents and positions.
      *
      * @param WidgetMap $currentWidgetMap
      * @param $builtWidgetMap

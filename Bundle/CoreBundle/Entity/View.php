@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
@@ -745,7 +744,7 @@ abstract class View
 
     /**
      * @param View $view
-     * 
+     *
      * @return bool
      */
     public function isTemplateOf(View $view)

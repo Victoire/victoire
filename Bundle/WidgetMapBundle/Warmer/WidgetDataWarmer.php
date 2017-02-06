@@ -38,9 +38,9 @@ class WidgetDataWarmer
     /**
      * Constructor.
      *
-     * @param Reader $reader
+     * @param Reader                  $reader
      * @param ViewReferenceRepository $viewReferenceRepository
-     * @param array $forbiddenManyToOne
+     * @param array                   $forbiddenManyToOne
      */
     public function __construct(Reader $reader, ViewReferenceRepository $viewReferenceRepository, array $forbiddenManyToOne)
     {
@@ -54,7 +54,7 @@ class WidgetDataWarmer
      * Find all Widgets for current View, inject them in WidgetMap and warm associated entities.
      *
      * @param EntityManager $em
-     * @param View $view
+     * @param View          $view
      */
     public function warm(EntityManager $em, View $view)
     {
@@ -70,7 +70,7 @@ class WidgetDataWarmer
     }
 
     /**
-     * Inject Widgets in View's builtWidgetMap
+     * Inject Widgets in View's builtWidgetMap.
      *
      * @param View $view
      * @param $viewWidgets
@@ -108,7 +108,6 @@ class WidgetDataWarmer
         $linkIds = $associatedEntities = [];
 
         foreach ($entities as $entity) {
-
             $reflect = new \ReflectionClass($entity);
 
             //If Widget has LinkTrait, store the entity link id
@@ -144,12 +143,12 @@ class WidgetDataWarmer
 
                     //If Widget has OneToMany association, store owner entity id and mappedBy value
                     //to construct a single query for this entity type
-                    else if ($annotationObj instanceof OneToMany) {
+                    elseif ($annotationObj instanceof OneToMany) {
                         //If Collection is not null, treat it
                         if ($this->accessor->getValue($entity, $property->getName())) {
 
                             //Override Collection default behaviour to avoid useless query
-                            $getter = 'get' . ucwords($property->getName());
+                            $getter = 'get'.ucwords($property->getName());
                             $entity->$getter()->setDirty(false);
                             $entity->$getter()->setInitialized(true);
 
@@ -164,7 +163,6 @@ class WidgetDataWarmer
                     }
                 }
             }
-
         }
 
         $newEntities = $this->setAssociatedEntities($associatedEntities);
@@ -181,10 +179,10 @@ class WidgetDataWarmer
      *
      * @param array $repositories
      *
-     * @return array
-     *
      * @throws \Throwable
      * @throws \TypeError
+     *
+     * @return array
      */
     private function setAssociatedEntities(array $repositories)
     {
@@ -197,14 +195,12 @@ class WidgetDataWarmer
                 //Find by mappedBy value for OneToMany associations based on owner entity id
                 $idsToSearch = $this->extractAssociatedEntitiesIds($associatedEntitiesToWarm);
                 $foundEntities = $this->em->getRepository($repositoryName)->findBy([
-                    $findMethod => array_values($idsToSearch)
+                    $findMethod => array_values($idsToSearch),
                 ]);
 
                 /* @var AssociatedEntityToWarm[] $associatedEntitiesToWarm */
                 foreach ($associatedEntitiesToWarm as $associatedEntityToWarm) {
-
                     foreach ($foundEntities as $foundEntity) {
-
                         if ($associatedEntityToWarm->getType() == AssociatedEntityToWarm::TYPE_MANY_TO_ONE
                             && $foundEntity->getId() == $associatedEntityToWarm->getEntityId()
                         ) {
@@ -212,14 +208,14 @@ class WidgetDataWarmer
                             $inheritorPropertyName = $associatedEntityToWarm->getInheritorPropertyName();
                             $this->accessor->setValue($inheritorEntity, $inheritorPropertyName, $foundEntity);
                             continue;
-                        } else if ($associatedEntityToWarm->getType() == AssociatedEntityToWarm::TYPE_ONE_TO_MANY
+                        } elseif ($associatedEntityToWarm->getType() == AssociatedEntityToWarm::TYPE_ONE_TO_MANY
                             && $this->accessor->getValue($foundEntity, $findMethod) == $associatedEntityToWarm->getInheritorEntity()
                         ) {
                             $inheritorEntity = $associatedEntityToWarm->getInheritorEntity();
                             $inheritorPropertyName = $associatedEntityToWarm->getInheritorPropertyName();
 
                             //Override Collection default behaviour to avoid useless query
-                            $getter = 'get' . ucwords($inheritorPropertyName);
+                            $getter = 'get'.ucwords($inheritorPropertyName);
                             $inheritorEntity->$getter()->add($foundEntity);
                             $inheritorEntity->$getter()->setDirty(false);
                             $inheritorEntity->$getter()->setInitialized(true);
@@ -251,7 +247,7 @@ class WidgetDataWarmer
         foreach ($links as $link) {
             if ($link->getParameters()['linkType'] == 'viewReference') {
                 $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters([
-                    'id' => $link->getParameters()['viewReference'],
+                    'id'     => $link->getParameters()['viewReference'],
                     'locale' => $link->getParameters()['locale'],
                 ]);
 
@@ -385,6 +381,7 @@ class WidgetDataWarmer
             ) {
                 return false;
             }
+
             return true;
         });
     }
