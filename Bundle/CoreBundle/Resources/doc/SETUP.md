@@ -157,12 +157,6 @@ stof_doctrine_extensions:
             tree: true
 ```
 
-- Install FOSJSRouting:
-
-```bash
-composer require friendsofsymfony/jsrouting-bundle
-```
-
 - Enable the `localizeddate` filter:
 
 ```yml
@@ -181,12 +175,13 @@ imports:
 
 - Install Redis:
 
+On Mac OS X:
+
 ```bash
-wget http://download.redis.io/redis-stable.tar.gz
-tar xvzf redis-stable.tar.gz
-cd redis-stable
-make
+brew install redis
 ```
+
+On Ubuntu: https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-redis-on-ubuntu-16-04
 
 - Setup Redis:
 
