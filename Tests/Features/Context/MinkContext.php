@@ -14,7 +14,7 @@ class MinkContext extends KFMinkContext
     /**
      * Checks, that page contains specified text
      * Example: Then I should see "Who is the Batman?"
-     * Example: And I should see "Who is the Batman?"
+     * Example: And I should see "Who is the Batman?".
      */
     public function assertPageContainsText($text, $timeout = 10000)
     {
@@ -28,7 +28,7 @@ class MinkContext extends KFMinkContext
     /**
      * Checks, that page doesn't contain specified text
      * Example: Then I should not see "Batman is Bruce Wayne"
-     * Example: And I should not see "Batman is Bruce Wayne"
+     * Example: And I should not see "Batman is Bruce Wayne".
      */
     public function assertPageNotContainsText($text, $timeout = 10000)
     {
@@ -42,8 +42,7 @@ class MinkContext extends KFMinkContext
     /**
      * Checks, that element with specified CSS contains specified text
      * Example: Then I should see "Batman" in the "heroes_list" element
-     * Example: And I should see "Batman" in the "heroes_list" element
-     *
+     * Example: And I should see "Batman" in the "heroes_list" element.
      */
     public function assertElementContainsText($element, $text, $timeout = 10000)
     {
@@ -85,10 +84,11 @@ class MinkContext extends KFMinkContext
     }
 
     /**
-     * Try to find value in element and retry for a given time
+     * Try to find value in element and retry for a given time.
+     *
      * @param Element $element
      * @param string  $value
-     * @param integer $timeout
+     * @param int     $timeout
      */
     protected function findOrRetry(Element $element, $value, $timeout = 10000)
     {
@@ -96,11 +96,9 @@ class MinkContext extends KFMinkContext
             return false;
         }
 
-        // Hack to do an insensitive case search
-        $alphabetLower = '"'.implode('', range('a', 'z')).'"';
-        $alphabetUpper = '"'.implode('', range('A', 'Z')).'"';
-
-        $item = $element->find('xpath', '/descendant-or-self::*[contains(translate(text(), '.$alphabetUpper.', '.$alphabetLower.'), translate("'.$value.'", '.$alphabetUpper.', '.$alphabetLower.'))]');
+        // Sensitive case search
+        /** @see http://stackoverflow.com/questions/3655549/xpath-containstext-some-string-doesnt-work-when-used-with-node-with-more/3655588#3655588 */
+        $item = $element->find('xpath', '//*[text()[contains(., "'.$value.'")]]');
 
         if ($item) {
             return $item;
@@ -109,6 +107,5 @@ class MinkContext extends KFMinkContext
 
             return $this->findOrRetry($element, $value, $timeout - 100);
         }
-
     }
 }

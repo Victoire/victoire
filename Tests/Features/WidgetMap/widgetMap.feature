@@ -69,7 +69,7 @@ Scenario: I move down a widget from simple page
 @reset-schema
 Scenario: I add widget in a position from simple page
   Then I switch to "layout" mode
-  Then I should see "Nouveau Contenu"
+  Then I should see "Nouveau contenu"
   When I select "Force" from the "1" select of "main_content" slot
   Then I should see "Créer"
   When I fill in "Côté de la force" with "obscur"
@@ -77,7 +77,7 @@ Scenario: I add widget in a position from simple page
   And I wait 2 seconds
   And I should see "Le côté obscur de la force"
 
-  Then I should see "Nouveau Contenu"
+  Then I should see "Nouveau contenu"
   When I select "Force" from the "2" select of "main_content" slot
   Then I should see "Créer"
   When I fill in "Côté de la force" with "Lumineux"
@@ -88,7 +88,7 @@ Scenario: I add widget in a position from simple page
   Given I reload the page
   Then "Le côté obscur de la force" should precede "Le côté Lumineux de la force"
 
-  Then I should see "Nouveau Contenu"
+  Then I should see "Nouveau contenu"
   Given I select "Force" from the "2" select of "main_content" slot
   Then I should see "Créer"
   When I fill in "Côté de la force" with "Double"
@@ -119,7 +119,8 @@ Scenario: I delete widget from simple page
   And I edit the "Text" widget
   Then I should see "Supprimer"
   Given I follow "Supprimer"
-  Then I should see "Cette action va définitivement supprimer ce contenu. Cette action est irréversible. Êtes-vous sûr ?"
+  Then I should see "Cette action va définitivement supprimer ce contenu. Cette action est irréversible."
+  And I should see "Êtes-vous sûr ?"
   Given I press "J'ai bien compris, je confirme la suppression"
   And I reload the page
   And "Widget 3" should precede "Widget 2"

@@ -42,11 +42,11 @@ Feature: Create business entity pages
         And I follow "Objet courant"
         And I select "side" from "jedi_a_businessEntity_widget_force[fields][side]"
         And I submit the widget
-        Then I should see "Le Côté obscur de la force"
+        Then I should see "Le côté obscur de la force"
         Given I am on "/fr/fiche-jedi-anakin"
-        Then I should see "Le Côté obscur de la force"
+        Then I should see "Le côté obscur de la force"
         Given I am on "/fr/fiche-jedi-yoda"
-        Then I should see "Le Côté lumineux de la force"
+        Then I should see "Le côté lumineux de la force"
 
     Scenario: I can create two Business entity page patterns differentiated by queries and access to their related Business Entity pages
         Given the following BusinessTemplate:
@@ -64,11 +64,11 @@ Feature: Create business entity pages
         Given I am on "/fr/fiche-jedi-dark-anakin"
         Then I should see "Static Widget - Fiche Jedi Dark"
         Given I am on "/fr/fiche-jedi-bright-anakin"
-        Then I should see "404 not found"
+        Then I should see "404 Not Found"
         Given I am on "/fr/fiche-jedi-bright-yoda"
         Then I should see "Static Widget - Fiche Jedi Bright"
         Given I am on "/fr/fiche-jedi-dark-yoda"
-        Then I should see "404 not found"
+        Then I should see "404 Not Found"
 
     Scenario: I can override a pattern to add some specific content
         Given the following BusinessTemplate:
@@ -82,9 +82,9 @@ Feature: Create business entity pages
         When I fill in "Côté de la force" with "Nouveau"
         And I submit the widget
         And I wait 5 seconds
-        Then I should see "Le Côté Nouveau de la force"
+        Then I should see "Le côté Nouveau de la force"
         Given I am on "/fr/victoire-dcms/business-template/show/4"
-        Then I should not see "Le Côté Nouveau de la force"
+        Then I should not see "Le côté Nouveau de la force"
 
     Scenario: I add a BusinessEntity and check if its representation is accessible
         Given the following BusinessTemplate:
@@ -97,7 +97,7 @@ Feature: Create business entity pages
             | widgetMap                | fields                       | mode           | businessEntityId |
             | fiche-jedi-{{item.slug}} | a:1:{s:4:"side";s:4:"side";} | businessEntity | jedi             |
         Then I am on "/fr/victoire-dcms/business-template/show/4"
-        Then I should see "Le Côté obscur de la force"
+        Then I should see "Le côté obscur de la force"
         Given I am on "/victoire-dcms/backend/jedi/"
         When I follow "Nouveau jedi"
         Then I should be on "/victoire-dcms/backend/jedi/new"
@@ -105,10 +105,10 @@ Feature: Create business entity pages
         When I fill in "Nom" with "Mace Windu"
         And I fill in "MediChloriens" with "20000"
         And I fill in "Identifiant" with "mace-windu"
-        And I select "obscur" from "Coté de la force"
+        And I select "obscur" from "Côté de la force"
         And I press "Créer"
         Given I am on "/fr/fiche-jedi-mace-windu"
-        Then I should see "Le Côté obscur de la force"
+        Then I should see "Le côté obscur de la force"
 
     Scenario: I can create businessPage of the same entity on different businessTemplates
         Given the following BusinessTemplate:
@@ -149,11 +149,11 @@ Feature: Create business entity pages
         And I submit the widget
         Then I wait 2 seconds
         Given I am on "/fr/fiche-jedi-yoda"
-        Then I should see "Le Côté lumineux de la force"
+        Then I should see "Le côté lumineux de la force"
         And I am on "/fr/fiche-jedi-anakin"
-        Then I should see "Le Côté obscur de la force"
+        Then I should see "Le côté obscur de la force"
         Given I login as visitor
         Given I am on "/fr/fiche-jedi-yoda"
-        Then I should see "Le Côté lumineux de la force"
+        Then I should see "Le côté lumineux de la force"
         And I am on "/fr/fiche-jedi-anakin"
-        Then I should not see "Le Côté obscur de la force"
+        Then I should not see "Le côté obscur de la force"
