@@ -23,8 +23,8 @@ class PageController extends BasePageController
     /**
      * Display a form to create a new Page.
      *
-     * @param Request  $request
-     * @param bool $isHomepage Is the page a homepage
+     * @param Request $request
+     * @param bool    $isHomepage Is the page a homepage
      *
      * @Route("/new", name="victoire_core_page_new", defaults={"isHomepage" : false})
      * @Route("/homepage/new", name="victoire_core_homepage_new", defaults={"isHomepage" : true})
@@ -37,11 +37,11 @@ class PageController extends BasePageController
     {
         return new JsonResponse(parent::newAction($request, $isHomepage));
     }
-    
+
     /**
      * Create a new Page.
      *
-     * @param Request  $request
+     * @param Request $request
      *
      * @Route("/new", name="victoire_core_page_new_post")
      * @Route("/homepage/new", name="victoire_core_homepage_new")

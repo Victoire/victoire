@@ -24,16 +24,15 @@ class SitemapExportHandler
     /**
      * SitemapExportHandler constructor.
      *
-     * @param EntityManager $entityManager
-     * @param PageHelper $pageHelper
+     * @param EntityManager           $entityManager
+     * @param PageHelper              $pageHelper
      * @param ViewReferenceRepository $viewReferenceRepository
      */
     public function __construct(
         EntityManager $entityManager,
         PageHelper $pageHelper,
         ViewReferenceRepository $viewReferenceRepository
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->pageHelper = $pageHelper;
         $this->viewReferenceRepository = $viewReferenceRepository;
@@ -87,11 +86,11 @@ class SitemapExportHandler
      * Get all BusinessPages recursively.
      *
      * @param ViewReference $tree
-     * @param array $businessPages
-     *
-     * @return array
+     * @param array         $businessPages
      *
      * @throws \Exception
+     *
+     * @return array
      */
     private function getBusinessPages(ViewReference $tree, $businessPages = [])
     {

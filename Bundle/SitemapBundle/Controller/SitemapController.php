@@ -8,13 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
-use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 use Victoire\Bundle\SitemapBundle\Form\SitemapPriorityPageSeoType;
-use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
-use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * Victoire sitemap controller.

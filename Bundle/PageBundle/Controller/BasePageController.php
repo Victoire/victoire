@@ -25,7 +25,7 @@ class BasePageController extends Controller
      * Route for this action is defined in RouteLoader.
      *
      * @param Request $request
-     * @param string $url
+     * @param string  $url
      *
      * @return mixed
      */
@@ -36,6 +36,7 @@ class BasePageController extends Controller
             $request->getLocale(),
             $request->isXmlHttpRequest() ? $request->query->get('modalLayout', null) : null
         );
+
         return $response;
     }
 
@@ -109,7 +110,7 @@ class BasePageController extends Controller
      * Route is defined in inherited controllers.
      *
      * @param Request $request
-     * @param bool $isHomepage
+     * @param bool    $isHomepage
      *
      * @return array
      */
@@ -161,8 +162,8 @@ class BasePageController extends Controller
             }
 
             $this->congrat($this->get('translator')->trans('victoire_page.create.success', [], 'victoire'));
-            return $this->getViewReferenceRedirect($request, $page);
 
+            return $this->getViewReferenceRedirect($request, $page);
         }
 
         return [
@@ -222,6 +223,7 @@ class BasePageController extends Controller
             $entityManager->flush();
 
             $this->congrat($this->get('translator')->trans('victoire_page.update.success', [], 'victoire'));
+
             return $this->getViewReferenceRedirect($request, $page);
         }
 
@@ -275,7 +277,7 @@ class BasePageController extends Controller
     /**
      * Return an array for JsonResponse redirecting to a ViewReference.
      *
-     * @param Request $request
+     * @param Request  $request
      * @param BasePage $page
      *
      * @return array
@@ -283,10 +285,10 @@ class BasePageController extends Controller
     protected function getViewReferenceRedirect(Request $request, BasePage $page)
     {
         $parameters = [
-            'viewId' => $page->getId()
+            'viewId' => $page->getId(),
         ];
 
-        if(!($page instanceof Blog)) {
+        if (!($page instanceof Blog)) {
             $parameters['locale'] = $request->getLocale();
         }
 

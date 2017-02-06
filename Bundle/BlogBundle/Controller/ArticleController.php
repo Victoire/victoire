@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
-use Victoire\Bundle\BlogBundle\Entity\Tag;
 use Victoire\Bundle\BlogBundle\Event\ArticleEvent;
 use Victoire\Bundle\BlogBundle\Form\ArticleSettingsType;
 use Victoire\Bundle\BlogBundle\Form\ArticleType;
@@ -46,8 +45,8 @@ class ArticleController extends Controller
                 'html' => $this->container->get('templating')->render(
                     'VictoireBlogBundle:Article:new.html.twig',
                     [
-                        'form' => $form->createView(),
-                        'blogId' => $blog->getId()
+                        'form'   => $form->createView(),
+                        'blogId' => $blog->getId(),
                     ]
                 ),
             ]);
@@ -88,9 +87,9 @@ class ArticleController extends Controller
             if (null === $response = $event->getResponse()) {
                 $response = new JsonResponse([
                     'success' => true,
-                    'url' => $this->generateUrl('victoire_core_page_show', [
+                    'url'     => $this->generateUrl('victoire_core_page_show', [
                         '_locale' => $request->getLocale(),
-                        'url' => $this->container->get('victoire_core.url_builder')->buildUrl($page)
+                        'url'     => $this->container->get('victoire_core.url_builder')->buildUrl($page),
                     ]),
                 ]);
             }
@@ -101,10 +100,10 @@ class ArticleController extends Controller
         return new JsonResponse([
             'success' => false,
             'message' => $this->container->get('victoire_form.error_helper')->getRecursiveReadableErrors($form),
-            'html' => $this->container->get('templating')->render(
+            'html'    => $this->container->get('templating')->render(
                 'VictoireBlogBundle:Article:new.html.twig',
                 [
-                    'form' => $form->createView(),
+                    'form'   => $form->createView(),
                     'blogId' => $blog->getId(),
                 ]
             ),
@@ -166,9 +165,9 @@ class ArticleController extends Controller
 
             $response = [
                 'success' => true,
-                'url' => $this->generateUrl('victoire_core_page_show', [
+                'url'     => $this->generateUrl('victoire_core_page_show', [
                     '_locale' => $page->getCurrentLocale(),
-                    'url' => $page->getReference()->getUrl(),
+                    'url'     => $page->getReference()->getUrl(),
                 ]),
             ];
         } else {
@@ -201,7 +200,7 @@ class ArticleController extends Controller
 
         $response = [
             'success' => true,
-            'url' => $this->generateUrl('victoire_core_page_show', [
+            'url'     => $this->generateUrl('victoire_core_page_show', [
                     'url' => $blogViewReference->getUrl(),
                 ]
             ),
@@ -212,10 +211,10 @@ class ArticleController extends Controller
     }
 
     /**
-     * Get JsonResponse array for Settings novalidate and form display
+     * Get JsonResponse array for Settings novalidate and form display.
      *
      * @param FormInterface $form
-     * @param Article $article
+     * @param Article       $article
      * @param $novalidate
      *
      * @return array
@@ -229,20 +228,20 @@ class ArticleController extends Controller
         );
 
         $page = $this->get('victoire_page.page_helper')->findPageByParameters([
-            'viewId' => $article->getTemplate()->getId(),
+            'viewId'   => $article->getTemplate()->getId(),
             'entityId' => $article->getId(),
         ]);
 
         return [
             'success' => !$form->isSubmitted(),
-            'html' => $this->get('templating')->render($template, [
+            'html'    => $this->get('templating')->render($template, [
                 'action' => $this->generateUrl('victoire_blog_article_settings_post', [
                     'id' => $article->getId(),
                 ]),
-                'article' => $article,
-                'form' => $form->createView(),
+                'article'            => $article,
+                'form'               => $form->createView(),
                 'businessProperties' => [],
-                'page' => $page,
+                'page'               => $page,
             ]),
         ];
     }
