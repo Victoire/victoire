@@ -93,16 +93,4 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }
-
-    /**
-     * Returns fixed step argument (with \\" replaced back to ").
-     *
-     * @param string $argument
-     *
-     * @return string
-     */
-    protected function fixStepArgument($argument)
-    {
-        return str_replace('\\"', '"', $argument);
-    }
 }
