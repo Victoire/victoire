@@ -13,7 +13,6 @@ default:
                  - Tests/Features/Widget
                  - Tests/Features/WidgetMap
              contexts:
-                 - Victoire\Tests\Features\Context\CoverageContext
                  - Victoire\Tests\Features\Context\FeatureContext
                  - Victoire\Tests\Features\Context\JavascriptContext
                  - Victoire\Tests\Features\Context\MinkContext
