@@ -22,17 +22,17 @@ class WidgetRepository extends EntityRepository
     public function getAllForView(View $view)
     {
         //Get all WidgetMaps ids for this View
-        $widgetMapsToSearch = [];
+        $widgetMapsIdsToSearch = [];
         foreach ($view->getBuiltWidgetMap() as $widgetMaps) {
             foreach ($widgetMaps as $widgetMap) {
-                $widgetMapsToSearch[] = $widgetMap;
+                $widgetMapsIdsToSearch[] = $widgetMap->getId();
             }
         }
 
         return $this->createQueryBuilder('widget')
             ->join('widget.widgetMap', 'widgetMap')
-            ->andWhere('widgetMap IN (:widgetMaps)')
-            ->setParameter('widgetMaps', $widgetMapsToSearch);
+            ->andWhere('widgetMap.id IN (:widgetMapsIds)')
+            ->setParameter('widgetMapsIds', $widgetMapsIdsToSearch);
     }
 
     /**
