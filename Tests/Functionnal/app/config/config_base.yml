@@ -95,6 +95,9 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Victoire\Bundle\UserBundle\Entity\User
+    from_email:
+        address: noreply@victoire.io
+        sender_name: Victoire
 
 security:
     encoders:
