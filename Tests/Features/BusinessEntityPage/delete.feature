@@ -21,11 +21,11 @@ Feature: Create business entity pages
         When I fill in "Côté de la force" with "Nouveau"
         And I submit the widget
         And I wait 5 seconds
-        Then I should see "Le Côté Nouveau de la force"
+        Then I should see "Le côté Nouveau de la force"
 
         Given I am on "/victoire-dcms/backend/jedi/1/edit"
         And I press "Supprimer"
         And I should be on "victoire-dcms/backend/jedi/"
 
         Given I am on "/fr/fiche-jedi-anakin"
-        Then I should see "404 not found"
+        Then I should see "404 Not Found"
