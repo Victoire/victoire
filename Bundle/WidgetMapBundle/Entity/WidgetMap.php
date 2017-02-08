@@ -328,6 +328,12 @@ class WidgetMap
         return $this->children;
     }
 
+    /**
+     * @param $position
+     * @param View|null $view
+     *
+     * @return bool
+     */
     public function hasChild($position, View $view = null)
     {
         foreach ($this->getChildren($view) as $child) {
@@ -474,6 +480,18 @@ class WidgetMap
                 return $substitute;
             }
         }
+
+        return null;
+    }
+
+    /**
+     * Return all Substitutes (not based on ViewContext)
+     *
+     * @return ArrayCollection
+     */
+    public function getAllSubstitutes()
+    {
+        return $this->substitutes;
     }
 
     /**
