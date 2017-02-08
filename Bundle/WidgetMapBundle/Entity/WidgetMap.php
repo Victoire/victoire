@@ -480,12 +480,10 @@ class WidgetMap
                 return $substitute;
             }
         }
-
-        return null;
     }
 
     /**
-     * Return all Substitutes (not based on ViewContext)
+     * Return all Substitutes (not based on ViewContext).
      *
      * @return ArrayCollection
      */

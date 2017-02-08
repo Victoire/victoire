@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\WidgetMapBundle\Builder;
 
-use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
