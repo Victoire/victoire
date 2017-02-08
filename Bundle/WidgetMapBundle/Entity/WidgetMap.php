@@ -282,53 +282,35 @@ class WidgetMap
     }
 
     /**
+     * Return "after" and "before" children,
+     * based on ViewContext and its Templates.
+     *
      * @return mixed
      */
     public function getChildren(View $view = null)
     {
         $positions = [self::POSITION_BEFORE, self::POSITION_AFTER];
         $children = [];
-        $widgetMap = $this;
         foreach ($positions as $position) {
+
+            //Position is null by default
             $children[$position] = null;
-            if (($childs = $widgetMap->getChilds($position)) && !empty($childs)) {
-                foreach ($childs as $_child) {
-                    // found child must belongs to the given view or one of it's templates
-                    if ($view) {
-                        // if child view is same as given view or the child view is a template of given view
-                        if ($_child->getView() && ($view === $_child->getView() || $_child->getView()->isTemplateOf($view))) {
-                            // if child is a substitute in view
-                            if ($substitute = $_child->getSubstituteForView($view)) {
-                                // if i'm not the parent of the substitute or i does not have the same position, child is not valid
-                                if ($substitute->getParent() !== $this || $substitute->getPosition() !== $position) {
-                                    $_child = null;
-                                }
-                            }
-                            $children[$position] = $_child;
-                        }
-                    } else {
-                        $children[$position] = $_child;
-                    }
+
+            //Pass through all current WidgetMap children for a given position
+            foreach ($this->getChilds($position) as $_child) {
+                //If child don't have a substitute for this View and Templates, this is the one
+                if (null === $_child->getSubstituteForView($view)) {
+                    $children[$position] = $_child;
                 }
             }
-            // If I am replaced and my replacement has children for the position
-            if (!$children[$position]
-                && ($replaced = $this->getReplaced())
-                && !empty($this->getReplaced()->getChilds($position))) {
+
+            //If children has not been found for this position
+            //and current WidgetMap is a substitute
+            if (!$children[$position] && $this->getReplaced()) {
+                //Pass through all replaced WidgetMap children for a given position
                 foreach ($this->getReplaced()->getChilds($position) as $_child) {
-                    if ($view) {
-                        // if child view is same as given view or the child view is a template of given view
-                        if ($_child->getView() && ($view === $_child->getView() || $_child->getView()->isTemplateOf($view))) {
-                            // if child is a substitute in view
-                            if ($substitute = $_child->getSubstituteForView($view)) {
-                                // if i'm not the parent of the substitute or i does not have the same position, child is not valid
-                                if ($substitute->getParent() != $this || $substitute->getPosition() != $position) {
-                                    $_child = null;
-                                }
-                            }
-                            $children[$position] = $_child;
-                        }
-                    } else {
+                    //If child don't have a substitute for this View and Templates, this is the one
+                    if (null === $_child->getSubstituteForView($view)) {
                         $children[$position] = $_child;
                     }
                 }
