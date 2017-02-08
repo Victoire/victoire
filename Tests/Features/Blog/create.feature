@@ -27,7 +27,7 @@ Background:
         Given I open the hamburger menu
         Then I should see "Blog"
         When I follow "Blog"
-        Then I should see "The Jedi network"
+        Then I should see "The Jedi Network"
         And I should see "Créer un article maintenant"
         When I follow "Créer un article maintenant"
         Then I should see "Créer un nouvel article"
@@ -44,7 +44,7 @@ Background:
         Given I open the hamburger menu
         Then I should see "Blog"
         When I follow "Blog"
-        Then I should see "The Jedi network"
+        Then I should see "The Jedi Network"
         And I should see "Créer un article maintenant"
         When I follow "Créer un article maintenant"
         Then I should see "Créer un nouvel article"

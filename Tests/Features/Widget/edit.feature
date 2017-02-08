@@ -19,13 +19,13 @@ Feature: Edit a widget
             | widgetMap                | fields                       | mode           | businessEntityId |
             | fiche-jedi-{{item.slug}} | a:1:{s:4:"side";s:4:"side";} | businessEntity | jedi             |
         Given I am on "/fr/victoire-dcms/business-template/show/4"
-        And I should see "Le Côté obscur de la force"
+        And I should see "Le côté obscur de la force"
         When I switch to "edit" mode
         And I edit the "Force" widget
         Then I should see "Mettre à jour"
         When I select "slug" from "jedi_a_businessEntity_widget_force[fields][side]"
         And I submit the widget
-        And I should see "Le Côté anakin de la force"
+        And I should see "Le côté anakin de la force"
 
     Scenario: I can create a new Business entity page pattern, create a static widget and edit this widget in query mode
         Given the following WidgetMap:
@@ -35,7 +35,7 @@ Feature: Edit a widget
             | widgetMap                | side |
             | fiche-jedi-{{item.slug}} | Obscur |
         Given I am on "/fr/victoire-dcms/business-template/show/4"
-        And I should see "Le Côté Obscur de la force"
+        And I should see "Le côté Obscur de la force"
         When I switch to "edit" mode
         And I edit the "Force" widget
         Then I should see "Mettre à jour"
@@ -44,7 +44,7 @@ Feature: Edit a widget
         And I follow "Requête"
         When I select "side" from "jedi_a_query_widget_force[fields][side]"
         And I submit the widget
-        And I should see "Le Côté Obscur de la force"
+        And I should see "Le côté obscur de la force"
 
     Scenario: I cannot edit widget for an entity with missing business parameter
         Given I am on "/fr/victoire-dcms/business-template/show/4"
@@ -65,17 +65,20 @@ Feature: Edit a widget
             | widgetMap                | side |
             | fiche-jedi-{{item.slug}} | Obscur |
         Given I am on "/fr/victoire-dcms/business-template/show/4"
-        And I should see "Le Côté Obscur de la force"
+        And I should see "Le côté Obscur de la force"
         Given I am on "/fr/fiche-jedi-anakin"
-        And I should see "Le Côté Obscur de la force"
+        And I should see "Le côté Obscur de la force"
         When I switch to "edit" mode
         And I edit the "Force" widget
-        Then I should see "Attention ! Ce contenu appartient à un modèle parent"
+        And I wait 3 seconds
+        Then I should see "Attention !"
+        And I should see "Ce contenu appartient à un modèle parent"
         And I follow "modifier le contenu original"
         And I wait 5 seconds
-        Then I should not see "Attention ! Ce contenu appartient à un modèle parent"
+        Then I should not see "Attention !"
+        And I should not see "Ce contenu appartient à un modèle parent"
         When I fill in "Côté de la force" with "Dark"
         And I submit the widget
         Given I am on "/fr/victoire-dcms/business-template/show/4"
-        Then I should see "Le Côté Dark de la force"
+        Then I should see "Le côté Dark de la force"
 

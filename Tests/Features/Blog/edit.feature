@@ -11,7 +11,7 @@ Background:
         Given I open the hamburger menu
         Then I should see "Blog"
         When I follow "Blog"
-        Then I should see "The Jedi network"
+        Then I should see "The Jedi Network"
         And I should see "Créer un article maintenant"
         When I follow "Créer un article maintenant"
         Then I should see "Créer un nouvel article"
@@ -25,7 +25,8 @@ Background:
         And I wait 3 seconds
         When I select the option "Paramètres de la page" in the dropdown "Page"
         And I wait 3 seconds
-        Then I should see "Paramètres de l'article I'm your father."
+        Then I should see "Paramètres de l'article"
+        And I should see "I'm your father"
         And I should not see "Si ce champ est vide, le slug sera auto-généré"
         When I fill in "article_settings_translations_fr_slug" with "new-custom-slug"
         And I follow "Mettre à jour"

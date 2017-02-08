@@ -5,7 +5,6 @@ namespace Victoire\Tests\Features\Context;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Mink\Element\Element;
 use Behat\Symfony2Extension\Context\KernelDictionary;
-use Knp\FriendlyContexts\Context\MinkContext;
 use Knp\FriendlyContexts\Context\RawMinkContext;
 
 /**
@@ -22,7 +21,7 @@ class VictoireContext extends RawMinkContext
     public function gatherContexts(BeforeScenarioScope $scope)
     {
         $environment = $scope->getEnvironment();
-        $this->minkContext = $environment->getContext('Knp\FriendlyContexts\Context\MinkContext');
+        $this->minkContext = $environment->getContext('Victoire\Tests\Features\Context\MinkContext');
     }
 
     /**

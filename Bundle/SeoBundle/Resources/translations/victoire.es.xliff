@@ -1,312 +1,308 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file date="2014-07-10T11:24:40Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
-    <header>
-      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
-      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
-    </header>
     <body>
-      <trans-unit id="923aba5bd6faee45cae298942b6f495b06dbdbd8" resname="form.pageSeo.fbAdmins.label">
+      <trans-unit id="58893b9a00afa" resname="form.pageSeo.fbAdmins.label">
         <source>form.pageSeo.fbAdmins.label</source>
         <target>ID de los administradores de la página Facebook</target>
       </trans-unit>
-      <trans-unit id="4c4f990524dc7e0381ae6cdda138667b41f74beb" resname="form.pageSeo.keyword.label">
+      <trans-unit id="58893b9a00b27" resname="form.pageSeo.keyword.label">
         <source>form.pageSeo.keyword.label</source>
         <target>Meta etiqueta "Keywords"</target>
       </trans-unit>
-      <trans-unit id="a75bc323a866d5065225cf0337d03778c9368210" resname="form.pageSeo.metaDescription.label">
+      <trans-unit id="58893b9a00b45" resname="form.pageSeo.metaDescription.label">
         <source>form.pageSeo.metaDescription.label</source>
         <target>Meta etiqueta "Description"</target>
       </trans-unit>
-      <trans-unit id="8785e80490a7e12295c668b1fd7e05f96cec55d0" resname="form.pageSeo.metaRobotsAdvanced.label">
+      <trans-unit id="58893b9a00b64" resname="form.pageSeo.metaRobotsAdvanced.label">
         <source>form.pageSeo.metaRobotsAdvanced.label</source>
         <target>Avanzado</target>
       </trans-unit>
-      <trans-unit id="a23d6aa0fc85ecac379c8b2b77db7c37b0dbe249" resname="form.pageSeo.metaRobotsFollow.label">
+      <trans-unit id="58893b9a00b8e" resname="form.pageSeo.metaRobotsFollow.label">
         <source>form.pageSeo.metaRobotsFollow.label</source>
         <target>Follow / NoFollow</target>
       </trans-unit>
-      <trans-unit id="45ac24c8cdb3ba2851ecc63fbbaa8eb63d46d258" resname="form.pageSeo.metaRobotsIndex.label">
+      <trans-unit id="58893b9a00bae" resname="form.pageSeo.metaRobotsIndex.label">
         <source>form.pageSeo.metaRobotsIndex.label</source>
         <target>Index / NoIndex</target>
       </trans-unit>
-      <trans-unit id="2c7ab4736e80d548511eca8323815287ef91d2f9" resname="form.pageSeo.metaTitle.label">
+      <trans-unit id="58893b9a00bd0" resname="form.pageSeo.metaTitle.label">
         <source>form.pageSeo.metaTitle.label</source>
         <target>Meta etiqueta "Title"</target>
       </trans-unit>
-      <trans-unit id="72731a4116742dc25b0edf1e76d87f5da98d7149" resname="form.pageSeo.ogDescription.label">
+      <trans-unit id="58893b9a00be5" resname="form.pageSeo.ogDescription.label">
         <source>form.pageSeo.ogDescription.label</source>
         <target>Open Graph Descripción</target>
       </trans-unit>
-      <trans-unit id="dfd1691fcc06ee08b299d84081ac21ccdf3a154f" resname="form.pageSeo.ogImage.label">
+      <trans-unit id="58893b9a00c14" resname="form.pageSeo.ogImage.label">
         <source>form.pageSeo.ogImage.label</source>
         <target>Open Graph Imagen</target>
       </trans-unit>
-      <trans-unit id="fd776a6ac301728d22d0a7a20418db1106e9f6fa" resname="form.pageSeo.ogTitle.label">
+      <trans-unit id="58893b9a00c2b" resname="form.pageSeo.ogTitle.label">
         <source>form.pageSeo.ogTitle.label</source>
         <target>Open Graph Título</target>
       </trans-unit>
-      <trans-unit id="53017428f32ab59a56a3519944a2463ad7c7ac72" resname="form.pageSeo.ogType.label">
+      <trans-unit id="58893b9a00c43" resname="form.pageSeo.ogType.label">
         <source>form.pageSeo.ogType.label</source>
         <target>Open Graph Tipo</target>
       </trans-unit>
-      <trans-unit id="d084d59f0054ba45287438d260be97530e51eb8a" resname="form.pageSeo.ogUrl.label">
+      <trans-unit id="58893b9a00c58" resname="form.pageSeo.ogUrl.label">
         <source>form.pageSeo.ogUrl.label</source>
         <target>Open Graph URL</target>
       </trans-unit>
-      <trans-unit id="a92b7f221fdf5f74410d2205a4318f7845cb7ab5" resname="form.pageSeo.page.label">
+      <trans-unit id="58893b9a00c6d" resname="form.pageSeo.page.label">
         <source>form.pageSeo.page.label</source>
         <target>Página relacionada</target>
       </trans-unit>
-      <trans-unit id="80a407248802ef25ba49a89d78c518bc37036f8b" resname="form.pageSeo.redirectTo.vic_help_block">
+      <trans-unit id="58893b9a00c81" resname="form.pageSeo.redirectTo.vic_help_block">
         <source>form.pageSeo.redirectTo.vic_help_block</source>
         <target>Redirección permanente</target>
       </trans-unit>
-      <trans-unit id="16a1310d9050a9320cccdcbfb4d64533ad75d054" resname="form.pageSeo.redirectTo.label">
+      <trans-unit id="58893b9a00d49" resname="form.pageSeo.redirectTo.label">
         <source>form.pageSeo.redirectTo.label</source>
         <target>Redirección automática</target>
       </trans-unit>
-      <trans-unit id="0e032dac458cf41f55badd9a3d3cc21f9d561908" resname="form.pageSeo.relAuthor.label">
+      <trans-unit id="58893b9a00d6b" resname="form.pageSeo.relAuthor.label">
         <source>form.pageSeo.relAuthor.label</source>
         <target>Authorship</target>
       </trans-unit>
-      <trans-unit id="90bb98cbd87d27c93a9cb98a2851db23ba8d55ba" resname="form.pageSeo.relCanonical.label">
+      <trans-unit id="58893b9a00d89" resname="form.pageSeo.relCanonical.label">
         <source>form.pageSeo.relCanonical.label</source>
         <target>URL canónica</target>
       </trans-unit>
-      <trans-unit id="455949e3f6b365160f0f6d94080c91fd20d42d53" resname="form.pageSeo.relPublisher.label">
+      <trans-unit id="58893b9a00dbc" resname="form.pageSeo.relPublisher.label">
         <source>form.pageSeo.relPublisher.label</source>
         <target>Publisher</target>
       </trans-unit>
-      <trans-unit id="60fabb75dd6b492257fdca6488e713e9223f1163" resname="form.pageSeo.schemaDescription.label">
+      <trans-unit id="58893b9a00df6" resname="form.pageSeo.schemaDescription.label">
         <source>form.pageSeo.schemaDescription.label</source>
         <target>Descripción</target>
       </trans-unit>
-      <trans-unit id="4a8ad47fa32349a8d933561c5580cf378563368a" resname="form.pageSeo.schemaImage.label">
+      <trans-unit id="58893b9a00e18" resname="form.pageSeo.schemaImage.label">
         <source>form.pageSeo.schemaImage.label</source>
         <target>Imagen</target>
       </trans-unit>
-      <trans-unit id="e2aa02dc1ba7c5830b546eb803f17586eb6a3e0d" resname="form.pageSeo.schemaName.label">
+      <trans-unit id="58893b9a00e2a" resname="form.pageSeo.schemaName.label">
         <source>form.pageSeo.schemaName.label</source>
         <target>Nombre</target>
       </trans-unit>
-      <trans-unit id="196fd098123f9eb766592a74c0d326af6df122d4" resname="form.pageSeo.schemaPageType.label">
+      <trans-unit id="58893b9a00e3c" resname="form.pageSeo.schemaPageType.label">
         <source>form.pageSeo.schemaPageType.label</source>
         <target>Tipo</target>
       </trans-unit>
-      <trans-unit id="e3d1541cc16fb43cf5ac248c1b9a6ff57c8e2d36" resname="form.pageSeo.sitemapIndexed.label">
+      <trans-unit id="58893b9a00e4e" resname="form.pageSeo.sitemapIndexed.label">
         <source>form.pageSeo.sitemapIndexed.label</source>
         <target>URL indexado</target>
       </trans-unit>
-      <trans-unit id="6498935ea3debc26701e707f71a8dc9fec72a385" resname="form.pageSeo.sitemapPriority.label">
+      <trans-unit id="58893b9a00e5f" resname="form.pageSeo.sitemapPriority.label">
         <source>form.pageSeo.sitemapPriority.label</source>
         <target>Prioridad</target>
       </trans-unit>
-      <trans-unit id="df44e71281b87399f0293a79d8155c3491415011" resname="form.pageSeo.twitterCard.vic_help_block">
+      <trans-unit id="58893b9a00e74" resname="form.pageSeo.twitterCard.vic_help_block">
         <source>form.pageSeo.twitterCard.vic_help_block</source>
         <target><![CDATA[<a href="https://dev.twitter.com/cards/markup" target="_blank">más información aquí</a>]]></target>
       </trans-unit>
-      <trans-unit id="15c542c8b3d81dbb50ec4aa75921437eadc46619" resname="form.pageSeo.twitterCard.label">
+      <trans-unit id="58893b9a00e8f" resname="form.pageSeo.twitterCard.label">
         <source>form.pageSeo.twitterCard.label</source>
         <target>Tipo de Card</target>
       </trans-unit>
-      <trans-unit id="3984e5d2a5d8690dd07512bbfc7aa646dd0ecc09" resname="form.pageSeo.twitterDescription.label">
+      <trans-unit id="58893b9a00ea2" resname="form.pageSeo.twitterDescription.label">
         <source>form.pageSeo.twitterDescription.label</source>
         <target>Descripción</target>
       </trans-unit>
-      <trans-unit id="3908a9a547a27cca279353153a04367d2e9bb6da" resname="form.pageSeo.twitterImage.label">
+      <trans-unit id="58893b9a00ebe" resname="form.pageSeo.twitterImage.label">
         <source>form.pageSeo.twitterImage.label</source>
         <target>Imagen (debe ser inferior a 1 MB)</target>
       </trans-unit>
-      <trans-unit id="3948672f4553296b61ed0240a6d0b9b105c49ac4" resname="form.pageSeo.twitterTitle.label">
+      <trans-unit id="58893b9a00ed1" resname="form.pageSeo.twitterTitle.label">
         <source>form.pageSeo.twitterTitle.label</source>
         <target>Título de la Card</target>
       </trans-unit>
-      <trans-unit id="0ad25b71ed32cd64b3cb5cc5bef497ea807f5e3e" resname="form.pageSeo.twitterUrl.label">
+      <trans-unit id="58893b9a00ee3" resname="form.pageSeo.twitterUrl.label">
         <source>form.pageSeo.twitterUrl.label</source>
         <target>@twittername de la página web</target>
       </trans-unit>
-      <trans-unit id="9d2f0c1f4734ad4a0f123dc51744de25ebb2a5e1" resname="menu.page.seoSettings">
+      <trans-unit id="58893b9a00f01" resname="menu.page.seoSettings">
         <source>menu.page.seoSettings</source>
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-target"></i> SEO]]></target>
       </trans-unit>
-      <trans-unit id="02cfca5e484be77e623b5ff8be9ef843c02cf8b1" resname="modal.form.pageSeo.settings.title">
-        <source>modal.form.pageSeo.settings.title></source>
+      <trans-unit id="58893b9a00f1e" resname="modal.form.pageSeo.settings.title">
+        <source>modal.form.pageSeo.settings.title&gt;</source>
         <target><![CDATA[SEO Ajustes - <strong>%pageName%</strong>]]></target>
       </trans-unit>
-      <trans-unit id="9a84dc1132d73a2f0abce302a49337045c823482" resname="modal.mandatory_fields.label">
+      <trans-unit id="58893b9a00f36" resname="modal.mandatory_fields.label">
         <source>Mandatory fields</source>
         <target>Campos obligatorios</target>
       </trans-unit>
-      <trans-unit id="1" resname="modal.form.pageSeo.general.title">
+      <trans-unit id="58893b9a00f4c" resname="modal.form.pageSeo.general.title">
         <source>modal.form.pageSeo.general.title</source>
         <target>Meta Etiquetas</target>
       </trans-unit>
-      <trans-unit id="5" resname="form.pageSeo.metaRobotsIndex.values.index">
+      <trans-unit id="58893b9a00f66" resname="form.pageSeo.metaRobotsIndex.values.index">
         <source>form.pageSeo.metaRobotsIndex.values.index</source>
         <target>Index</target>
       </trans-unit>
-      <trans-unit id="2" resname="form.pageSeo.metaRobotsIndex.values.noindex">
+      <trans-unit id="58893b9a00f7b" resname="form.pageSeo.metaRobotsIndex.values.noindex">
         <source>form.pageSeo.metaRobotsIndex.values.noindex</source>
         <target>NoIndex</target>
       </trans-unit>
-      <trans-unit id="3" resname="form.pageSeo.metaRobotsFollow.values.follow">
+      <trans-unit id="58893b9a00f93" resname="form.pageSeo.metaRobotsFollow.values.follow">
         <source>form.pageSeo.metaRobotsFollow.values.follow</source>
         <target>Follow</target>
       </trans-unit>
-      <trans-unit id="4" resname="form.pageSeo.metaRobotsFollow.values.nofollow">
+      <trans-unit id="58893b9a00fb1" resname="form.pageSeo.metaRobotsFollow.values.nofollow">
         <source>form.pageSeo.metaRobotsFollow.values.nofollow</source>
         <target>NoFollow</target>
       </trans-unit>
-      <trans-unit id="fdsfdsfdsfdsfdshhgf6be270be" resname="victoire_seo.save.success">
+      <trans-unit id="58893b9a00fc9" resname="victoire_seo.save.success">
         <source>victoire_seo.save.success</source>
         <target>Parámetros SEO actualizado correctamente</target>
       </trans-unit>
-      <trans-unit id="6" resname="modal.form.pageSeo.socialmedia.title">
+      <trans-unit id="58893b9a00fe4" resname="modal.form.pageSeo.socialmedia.title">
         <source>modal.form.pageSeo.socialmedia.title</source>
         <target>Social Media Optimization</target>
       </trans-unit>
-      <trans-unit id="7" resname="modal.form.pageSeo.advanced.title">
+      <trans-unit id="58893b9a00fff" resname="modal.form.pageSeo.advanced.title">
         <source>modal.form.pageSeo.advanced.title</source>
         <target>Avanzado</target>
       </trans-unit>
-      <trans-unit id="8" resname="modal.form.pageSeo.OpenGraph.title">
+      <trans-unit id="58893b9a01012" resname="modal.form.pageSeo.OpenGraph.title">
         <source>modal.form.pageSeo.OpenGraph.title</source>
         <target>OpenGraph Ajustes (Facebook, Linkedin, ...)</target>
       </trans-unit>
-      <trans-unit id="9" resname="modal.form.pageSeo.twitter.title">
+      <trans-unit id="58893b9a01024" resname="modal.form.pageSeo.twitter.title">
         <source>modal.form.pageSeo.twitter.title</source>
         <target>Twitter Cards</target>
       </trans-unit>
-      <trans-unit id="10" resname="modal.form.pageSeo.schema.title">
+      <trans-unit id="58893b9a0103e" resname="modal.form.pageSeo.schema.title">
         <source>modal.form.pageSeo.schema.title</source>
         <target>Schema.org Ajustes</target>
       </trans-unit>
-      <trans-unit id="11" resname="modal.form.pageSeo.sitemap.title">
+      <trans-unit id="58893b9a01059" resname="modal.form.pageSeo.sitemap.title">
         <source>modal.form.pageSeo.sitemap.title</source>
         <target>Sitemap Ajustes</target>
       </trans-unit>
-      <trans-unit id="12" resname="modal.form.pageSeo.robots.title">
+      <trans-unit id="58893b9a0106f" resname="modal.form.pageSeo.robots.title">
         <source>modal.form.pageSeo.robots.title</source>
         <target>Robots Ajustes</target>
       </trans-unit>
-      <trans-unit id="13" resname="form.pageSeo.metaTitle.placeholder">
+      <trans-unit id="58893b9a01088" resname="form.pageSeo.metaTitle.placeholder">
         <source>form.pageSeo.metaTitle.placeholder</source>
         <target>Limitado a 60 signos</target>
       </trans-unit>
-      <trans-unit id="14" resname="form.pageSeo.metaDescription.placeholder">
+      <trans-unit id="58893b9a0109a" resname="form.pageSeo.metaDescription.placeholder">
         <source>form.pageSeo.metaDescription.placeholder</source>
         <target>Limitado a 155 signos</target>
       </trans-unit>
-      <trans-unit id="15" resname="form.pageSeo.fbAdmins.placeholder">
+      <trans-unit id="58893b9a010b4" resname="form.pageSeo.fbAdmins.placeholder">
         <source>form.pageSeo.fbAdmins.placeholder</source>
         <target>Utilice el ID de los administradores de la página Facebook, separados con coma</target>
       </trans-unit>
-      <trans-unit id="16" resname="form.pageSeo.relAuthor.placeholder">
+      <trans-unit id="58893b9a010d0" resname="form.pageSeo.relAuthor.placeholder">
         <source>form.pageSeo.relAuthor.placeholder</source>
         <target>Autor's G+ URL</target>
       </trans-unit>
-      <trans-unit id="17" resname="form.pageSeo.relPublisher.placeholder">
+      <trans-unit id="58893b9a010f5" resname="form.pageSeo.relPublisher.placeholder">
         <source>form.pageSeo.relPublisher.placeholder</source>
         <target>Compañía's G+ URL</target>
       </trans-unit>
-      <trans-unit id="18" resname="form.pageSeo.ogType.placeholder">
+      <trans-unit id="58893b9a01106" resname="form.pageSeo.ogType.placeholder">
         <source>form.pageSeo.ogType.placeholder</source>
         <target>por defecto : website</target>
       </trans-unit>
-      <trans-unit id="19" resname="form.pageSeo.ogUrl.placeholder">
+      <trans-unit id="58893b9a0111f" resname="form.pageSeo.ogUrl.placeholder">
         <source>form.pageSeo.ogUrl.placeholder</source>
         <target>por defecto : active page URL</target>
       </trans-unit>
-      <trans-unit id="20" resname="form.pageSeo.sitemapChangeFreq.label">
+      <trans-unit id="58893b9a0112c" resname="form.pageSeo.sitemapChangeFreq.label">
         <source>form.pageSeo.sitemapChangeFreq.label</source>
         <target>Frecuencia de cambio</target>
       </trans-unit>
-      <trans-unit id="22" resname="form.pageSeo.schemaPageType.vic_help_block">
+      <trans-unit id="58893b9a01136" resname="form.pageSeo.schemaPageType.vic_help_block">
         <source>form.pageSeo.schemaPageType.vic_help_block</source>
         <target><![CDATA[<a href="http://schema.org/" target="_blank">más información aquí</a>]]></target>
       </trans-unit>
-      <trans-unit id="23" resname="form.pageSeo.ogTitle.vic_help_block">
+      <trans-unit id="58893b9a01141" resname="form.pageSeo.ogTitle.vic_help_block">
         <source>form.pageSeo.ogTitle.vic_help_block</source>
         <target><![CDATA[<a href="http://ogp.me/" target="_blank">más información aquí</a>]]></target>
       </trans-unit>
-      <trans-unit id="24" resname="form.pageSeo.twitterCard.placeholder">
+      <trans-unit id="58893b9a0116e" resname="form.pageSeo.twitterCard.placeholder">
         <source>form.pageSeo.twitterCard.placeholder</source>
         <target>summary, summary_large_image, photo, app, ... </target>
       </trans-unit>
-      <trans-unit id="25" resname="form.pageSeo.twitterTitle.placeholder">
+      <trans-unit id="58893b9a01177" resname="form.pageSeo.twitterTitle.placeholder">
         <source>form.pageSeo.twitterTitle.placeholder</source>
         <target>Limitado a 70 signos</target>
       </trans-unit>
-      <trans-unit id="26" resname="form.pageSeo.twitterUrl.placeholder">
+      <trans-unit id="58893b9a01180" resname="form.pageSeo.twitterUrl.placeholder">
         <source>form.pageSeo.twitterUrl.placeholder</source>
         <target>e.g. @TroopersAgency</target>
       </trans-unit>
-      <trans-unit id="27" resname="form.pageSeo.twitterCreator.label">
+      <trans-unit id="58893b9a0118a" resname="form.pageSeo.twitterCreator.label">
         <source>form.pageSeo.twitterCreator.label</source>
         <target>@twittername del creador de contenido</target>
       </trans-unit>
-      <trans-unit id="28" resname="form.pageSeo.twitterCreator.placeholder">
+      <trans-unit id="58893b9a01194" resname="form.pageSeo.twitterCreator.placeholder">
         <source>form.pageSeo.twitterCreator.placeholder</source>
         <target>e.g. @victoiredcms</target>
       </trans-unit>
-      <trans-unit id="29" resname="form.pageSeo.twitterDescription.placeholder">
+      <trans-unit id="58893b9a0119d" resname="form.pageSeo.twitterDescription.placeholder">
         <source>form.pageSeo.twitterDescription.placeholder</source>
         <target>Limitado a 200 signos</target>
       </trans-unit>
-      <trans-unit id="21" resname="form.pageSeo.sitemapChangeFreq.format.choices.monthly.label">
+      <trans-unit id="58893b9a011a7" resname="form.pageSeo.sitemapChangeFreq.format.choices.monthly.label">
         <source>form.pageSeo.sitemapChangeFreq.format.choices.monthly.label</source>
         <target>Mensual</target>
       </trans-unit>
-      <trans-unit id="30" resname="form.pageSeo.sitemapChangeFreq.format.choices.always.label">
+      <trans-unit id="58893b9a011b1" resname="form.pageSeo.sitemapChangeFreq.format.choices.always.label">
         <source>form.pageSeo.sitemapChangeFreq.format.choices.always.label</source>
         <target>Siempre</target>
       </trans-unit>
-      <trans-unit id="31" resname="form.pageSeo.sitemapChangeFreq.format.choices.hourly.label">
+      <trans-unit id="58893b9a011bb" resname="form.pageSeo.sitemapChangeFreq.format.choices.hourly.label">
         <source>form.pageSeo.sitemapChangeFreq.format.choices.hourly.label</source>
         <target>Cada hora</target>
       </trans-unit>
-      <trans-unit id="32" resname="form.pageSeo.sitemapChangeFreq.format.choices.daily.label">
+      <trans-unit id="58893b9a011c5" resname="form.pageSeo.sitemapChangeFreq.format.choices.daily.label">
         <source>form.pageSeo.sitemapChangeFreq.format.choices.daily.label</source>
         <target>Diariamente</target>
       </trans-unit>
-      <trans-unit id="33" resname="form.pageSeo.sitemapChangeFreq.format.choices.weekly.label">
+      <trans-unit id="58893b9a011ce" resname="form.pageSeo.sitemapChangeFreq.format.choices.weekly.label">
         <source>form.pageSeo.sitemapChangeFreq.format.choices.weekly.label</source>
         <target>Semanal</target>
       </trans-unit>
-      <trans-unit id="34" resname="form.pageSeo.sitemapChangeFreq.format.choices.yearly.label">
+      <trans-unit id="58893b9a011d8" resname="form.pageSeo.sitemapChangeFreq.format.choices.yearly.label">
         <source>form.pageSeo.sitemapChangeFreq.format.choices.yearly.label</source>
         <target>Anualm</target>
       </trans-unit>
-      <trans-unit id="35" resname="form.pageSeo.sitemapChangeFreq.format.choices.never.label">
+      <trans-unit id="58893b9a011e2" resname="form.pageSeo.sitemapChangeFreq.format.choices.never.label">
         <source>form.pageSeo.sitemapChangeFreq.format.choices.never.label</source>
         <target>Nunca</target>
       </trans-unit>
-      <trans-unit id="36" resname="form.pageSeo.twitterCard.summary.label">
+      <trans-unit id="58893b9a011ec" resname="form.pageSeo.twitterCard.summary.label">
         <source>form.pageSeo.twitterCard.summary.label</source>
         <target>Summary Card</target>
       </trans-unit>
-      <trans-unit id="37" resname="form.pageSeo.twitterCard.summary_large_image.label">
+      <trans-unit id="58893b9a011f6" resname="form.pageSeo.twitterCard.summary_large_image.label">
         <source>form.pageSeo.twitterCard.summary_large_image.label</source>
         <target>Summary Card with large image</target>
       </trans-unit>
-      <trans-unit id="38" resname="form.pageSeo.twitterCard.photo.label">
+      <trans-unit id="58893b9a011ff" resname="form.pageSeo.twitterCard.photo.label">
         <source>form.pageSeo.twitterCard.photo.label</source>
         <target>Photo Card</target>
       </trans-unit>
-      <trans-unit id="39" resname="form.pageSeo.twitterCard.app.label">
+      <trans-unit id="58893b9a01209" resname="form.pageSeo.twitterCard.app.label">
         <source>form.pageSeo.twitterCard.app.label</source>
         <target>App Card</target>
       </trans-unit>
-      <trans-unit id="40" resname="form.pageSeo.twitterCard.player.label">
+      <trans-unit id="58893b9a01212" resname="form.pageSeo.twitterCard.player.label">
         <source>form.pageSeo.twitterCard.player.label</source>
         <target>Player Card</target>
       </trans-unit>
-      <trans-unit id="41" resname="form.pageSeo.twitterCard.product.label">
+      <trans-unit id="58893b9a0121c" resname="form.pageSeo.twitterCard.product.label">
         <source>form.pageSeo.twitterCard.product.label</source>
         <target>Product Card</target>
       </trans-unit>
-      <trans-unit id="42" resname="form.pageSeo.keyword.placeholder">
+      <trans-unit id="58893b9a01225" resname="form.pageSeo.keyword.placeholder">
         <source>form.pageSeo.keyword.placeholder</source>
         <target>especificar las palabras claves, separadas por comas</target>
       </trans-unit>

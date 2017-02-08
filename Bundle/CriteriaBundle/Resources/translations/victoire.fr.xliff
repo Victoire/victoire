@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
     <file source-language="en" target-language="fr" datatype="plaintext" original="not.available">
         <header>
-            <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
-            <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+
+
         </header>
         <body>
-            <trans-unit id="1" resname="victoire_criteria.request_locale.criteria.label">
+            <trans-unit id="58893b996eb60" resname="victoire_criteria.request_locale.criteria.label">
                 <source>victoire_criteria.request_locale.criteria.label</source>
                 <target>Langue</target>
             </trans-unit>
-            <trans-unit id="2" resname="victoire_criteria.request_scheme.criteria.label">
+            <trans-unit id="58893b996eb91" resname="victoire_criteria.request_scheme.criteria.label">
                 <source>victoire_criteria.request_scheme.criteria.label</source>
                 <target>SSL</target>
             </trans-unit>
-            <trans-unit id="3" resname="victoire_criteria.request_roles.criteria.label">
+            <trans-unit id="58893b996eba7" resname="victoire_criteria.request_roles.criteria.label">
                 <source>victoire_criteria.request_roles.criteria.label</source>
                 <target>Rôles</target>
             </trans-unit>
-            <trans-unit id="4" resname="victoire_criteria.request_user.is.connected.criteria.label">
+            <trans-unit id="58893b996ebb9" resname="victoire_criteria.request_user.is.connected.criteria.label">
                 <source>victoire_criteria.request_user.is.connected.criteria.label</source>
                 <target>Connecté</target>
             </trans-unit>
-            <trans-unit id="5" resname="victoire_criteria.request_user.is.not.connected.criteria.label">
+            <trans-unit id="58893b996ebca" resname="victoire_criteria.request_user.is.not.connected.criteria.label">
                 <source>victoire_criteria.request_user.is.not.connected.criteria.label</source>
                 <target>Non connecté</target>
             </trans-unit>
-            <trans-unit id="6" resname="victoire_criteria.request_user.criteria.label">
+            <trans-unit id="58893b996ebdd" resname="victoire_criteria.request_user.criteria.label">
                 <source>victoire_criteria.request_user.criteria.label</source>
                 <target>Est connecté</target>
             </trans-unit>
-            <trans-unit id="7" resname="victoire_criteria.criteria.operator.help_block">
+            <trans-unit id="58893b996ebee" resname="victoire_criteria.criteria.operator.help_block">
                 <source>victoire_criteria.criteria.operator.help_block</source>
                 <target>Valeurs prises en charge: equal, true, false, is_granted, is_not_granted</target>
             </trans-unit>
-            <trans-unit id="8" resname="victoire_criteria.request_domain_name.criteria.label">
+            <trans-unit id="58893b996ebff" resname="victoire_criteria.request_domain_name.criteria.label">
                 <source>victoire_criteria.request_domain_name.criteria.label</source>
                 <target>Nom de domaine</target>
             </trans-unit>
         </body>
     </file>
 </xliff>
-
