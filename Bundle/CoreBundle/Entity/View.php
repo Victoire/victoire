@@ -167,6 +167,11 @@ abstract class View
     protected $roles;
 
     /**
+     * @var array
+     */
+    protected $builtWidgetMap;
+
+    /**
      * Construct.
      **/
     public function __construct()
@@ -553,7 +558,8 @@ abstract class View
     }
 
     /**
-     * Get WidgetMaps for View and Templates.
+     * Get WidgetMaps for View and Templates,
+     * and set the current View context to avoid useless queries.
      *
      * @return WidgetMap[]
      */
@@ -570,8 +576,8 @@ abstract class View
         }
 
         if ($template = $this->getTemplate()) {
-            $templateWigetMaps = $template->getWidgetMapsForViewAndTemplates($viewContext);
-            $widgetMaps = array_merge($widgetMaps, $templateWigetMaps);
+            $templateWidgetMaps = $template->getWidgetMapsForViewAndTemplates($viewContext);
+            $widgetMaps = array_merge($widgetMaps, $templateWidgetMaps);
         }
 
         return $widgetMaps;
@@ -590,7 +596,7 @@ abstract class View
     /**
      * Set builtWidgetMap.
      *
-     * @param string $builtWidgetMap
+     * @param array $builtWidgetMap
      *
      * @return $this
      */
