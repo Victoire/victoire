@@ -16,19 +16,16 @@ class WidgetMapBuilder
     /**
      * This method build widgetmaps relativly to given view and it's templates.
      *
-     * @param View          $view
-     * @param EntityManager $em
-     * @param bool          $updatePage
+     * @param View $view
+     * @param bool $updatePage
      *
      * @return array
      */
-    public function build(View $view, EntityManager $em = null, $updatePage = true)
+    public function build(View $view, $updatePage = true)
     {
         $builtWidgetMap = [];
 
         $widgetMaps = $view->getWidgetMapsForViewAndTemplates($view);
-
-        $view->setBuiltWidgetMap($builtWidgetMap);
 
         $slots = $this->removeOverwritedWidgetMaps($widgetMaps);
 

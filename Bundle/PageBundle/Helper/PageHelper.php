@@ -197,7 +197,7 @@ class PageHelper
         $this->eventDispatcher->dispatch('victoire.on_render_page', $pageRenderEvent);
 
         //Build WidgetMap
-        $this->widgetMapBuilder->build($view, $this->entityManager, true);
+        $this->widgetMapBuilder->build($view, true);
 
         //Populate widgets with their data
         $this->widgetDataWarmer->warm($this->entityManager, $view);
