@@ -173,7 +173,6 @@ class PageHelper
                 return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl($link->getParameters()));
             }
 
-
             return $this->renderPage($page, $layout);
         } else {
             throw new NotFoundHttpException(sprintf('Page not found (url: "%s", locale: "%s")', $url, $locale));

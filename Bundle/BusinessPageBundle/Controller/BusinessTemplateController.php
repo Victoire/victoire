@@ -220,7 +220,6 @@ class BusinessTemplateController extends Controller
         $editForm = $this->createEditForm($view);
         $deleteForm = $this->createDeleteForm($view->getId());
 
-
         $parameters = [
             'entity'             => $view,
             'form'               => $editForm->createView(),

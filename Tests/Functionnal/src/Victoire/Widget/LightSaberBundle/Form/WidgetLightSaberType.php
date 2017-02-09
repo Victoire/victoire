@@ -14,7 +14,7 @@ class WidgetLightSaberType extends WidgetType
     /**
      * define form fields.
      *
-     * @param FormBuilderInterface $builder
+     * @param FormBuilderInterface $builder
      *
      * @param array $options
      */
