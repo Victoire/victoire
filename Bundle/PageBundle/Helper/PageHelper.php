@@ -173,7 +173,6 @@ class PageHelper
                 return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl($link->getParameters()));
             }
 
-
             return $this->renderPage($page, $layout);
         } else {
             throw new NotFoundHttpException(sprintf('Page not found (url: "%s", locale: "%s")', $url, $locale));
@@ -466,5 +465,26 @@ class PageHelper
         if ($roles) {
             return array_unique(explode(',', $roles));
         }
+    }
+
+    /**
+     * Set Page position.
+     *
+     * @param BasePage $page
+     *
+     * @return BasePage $page
+     */
+    public function setPosition(BasePage $page)
+    {
+        if ($page->getParent()) {
+            $pageNb = count($page->getParent()->getChildren());
+        } else {
+            $pageNb = count($this->entityManager->getRepository('VictoirePageBundle:BasePage')->findByParent(null));
+        }
+
+        // + 1 because position start at 1, not 0
+        $page->setPosition($pageNb + 1);
+
+        return $page;
     }
 }
