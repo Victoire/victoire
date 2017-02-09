@@ -47,7 +47,6 @@
         "knplabs/knp-menu-bundle": "^2.1",
         "liip/imagine-bundle": "^1.4",
         "predis/predis": "^1.1",
-        "sensio/distribution-bundle": "^2.3",
         "sensio/framework-extra-bundle": "~3.0",
         "snc/redis-bundle": "~2.0",
         "stof/doctrine-extensions-bundle": "~1.2",
