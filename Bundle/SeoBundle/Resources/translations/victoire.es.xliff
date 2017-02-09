@@ -188,7 +188,7 @@
       </trans-unit>
       <trans-unit id="58893b9a01088" resname="form.pageSeo.metaTitle.placeholder">
         <source>form.pageSeo.metaTitle.placeholder</source>
-        <target>Limitado a 60 signos</target>
+        <target>Limitado a 65 signos</target>
       </trans-unit>
       <trans-unit id="58893b9a0109a" resname="form.pageSeo.metaDescription.placeholder">
         <source>form.pageSeo.metaDescription.placeholder</source>
