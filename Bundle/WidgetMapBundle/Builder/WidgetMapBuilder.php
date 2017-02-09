@@ -4,6 +4,7 @@ namespace Victoire\Bundle\WidgetMapBundle\Builder;
 
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
+use Victoire\Bundle\WidgetMapBundle\Warmer\ContextualViewWarmer;
 
 /**
  * View WidgetMap builder.
@@ -12,6 +13,18 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
  */
 class WidgetMapBuilder
 {
+    private $contextualViewWarmer;
+
+    /**
+     * WidgetMapBuilder constructor.
+     *
+     * @param ContextualViewWarmer $contextualViewWarmer
+     */
+    public function __construct(ContextualViewWarmer $contextualViewWarmer)
+    {
+        $this->contextualViewWarmer = $contextualViewWarmer;
+    }
+
     /**
      * This method build widgetmaps relativly to given view and it's templates.
      *
@@ -24,7 +37,7 @@ class WidgetMapBuilder
     {
         $builtWidgetMap = [];
 
-        $widgetMaps = $view->getWidgetMapsForViewAndTemplates($view);
+        $widgetMaps = $this->contextualViewWarmer->warm($view);
 
         $slots = $this->removeOverwritedWidgetMaps($widgetMaps);
 

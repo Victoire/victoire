@@ -46,9 +46,14 @@ class WidgetMap
     protected $view;
 
     /**
+     * A WidgetMap has a View but also a contextualView (not persisted).
+     * This contextualView is set when WidgetMap is build.
+     * When getChilds and getSubstitutes are called, we use this contextualView to retrieve
+     * concerned WidgetMaps in order to avoid useless Doctrine queries.
+     * 
      * @var View
      */
-    protected $viewContext;
+    protected $contextualView;
 
     /**
      * @var [Widget]
@@ -227,21 +232,21 @@ class WidgetMap
      *
      * @return View
      */
-    public function getViewContext()
+    public function getContextualView()
     {
-        return $this->viewContext;
+        return $this->contextualView;
     }
 
     /**
      * Store the current View context.
      *
-     * @param View $viewContext
+     * @param View $contextualView
      *
      * @return $this
      */
-    public function setViewContext(View $viewContext)
+    public function setContextualView(View $contextualView)
     {
-        $this->viewContext = $viewContext;
+        $this->contextualView = $contextualView;
 
         return $this;
     }
@@ -283,7 +288,7 @@ class WidgetMap
 
     /**
      * Return "after" and "before" children,
-     * based on ViewContext and its Templates.
+     * based on contextual View and its Templates.
      *
      * @return mixed
      */
@@ -361,14 +366,14 @@ class WidgetMap
     }
 
     /**
-     * Return all children from ViewContext (already loaded WidgetMaps).
+     * Return all children from contextual View (already loaded WidgetMaps).
      *
      * @return WidgetMap[]
      */
     public function getChilds($position)
     {
         $childsWidgetMaps = [];
-        $viewWidgetMaps = $this->getViewContext()->getWidgetMapsForViewAndTemplates();
+        $viewWidgetMaps = $this->getContextualView()->getWidgetMapsForViewAndTemplates();
 
         foreach ($viewWidgetMaps as $viewWidgetMap) {
             if ($viewWidgetMap->getParent() == $this && $viewWidgetMap->getPosition() == $position) {
@@ -449,7 +454,7 @@ class WidgetMap
     }
 
     /**
-     * Return all substitutes from ViewContext (already loaded WidgetMaps)
+     * Return all substitutes from contextual View (already loaded WidgetMaps)
      * Ideally must return only one WidgetMap per View.
      *
      * @return WidgetMap[]
@@ -457,7 +462,7 @@ class WidgetMap
     public function getSubstitutes()
     {
         $substitutesWidgetMaps = [];
-        $viewWidgetMaps = $this->getViewContext()->getWidgetMapsForViewAndTemplates();
+        $viewWidgetMaps = $this->getContextualView()->getWidgetMapsForViewAndTemplates();
 
         foreach ($viewWidgetMaps as $viewWidgetMap) {
             if ($viewWidgetMap->getReplaced() == $this) {
@@ -483,7 +488,7 @@ class WidgetMap
     }
 
     /**
-     * Return all Substitutes (not based on ViewContext).
+     * Return all Substitutes (not based on contextual View).
      *
      * @return ArrayCollection
      */
