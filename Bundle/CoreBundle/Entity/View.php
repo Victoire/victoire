@@ -558,7 +558,7 @@ abstract class View
     }
 
     /**
-     * Get WidgetMaps for View and its Templates
+     * Get WidgetMaps for View and its Templates.
      *
      * @return WidgetMap[]
      */

@@ -50,7 +50,7 @@ class WidgetMap
      * This contextualView is set when WidgetMap is build.
      * When getChilds and getSubstitutes are called, we use this contextualView to retrieve
      * concerned WidgetMaps in order to avoid useless Doctrine queries.
-     * 
+     *
      * @var View
      */
     protected $contextualView;

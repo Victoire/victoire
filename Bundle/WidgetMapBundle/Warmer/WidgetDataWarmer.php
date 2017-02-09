@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\WidgetMapBundle\Warmer;
 
-use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
@@ -110,7 +109,6 @@ class WidgetDataWarmer
         $linkIds = $associatedEntities = [];
 
         foreach ($entities as $entity) {
-
             $reflect = new \ReflectionClass($entity);
 
             //If Widget is already in cache, extract only its Criterias (used outside Widget rendering)
@@ -124,7 +122,6 @@ class WidgetDataWarmer
             //Pass through all entity associations
             $metaData = $this->em->getClassMetadata(get_class($entity));
             foreach ($metaData->getAssociationMappings() as $association) {
-
                 $targetClass = $association['targetEntity'];
 
                 //If Widget has OneToOne or ManyToOne association, store target entity id to construct
@@ -198,7 +195,7 @@ class WidgetDataWarmer
             foreach ($findMethods as $findMethod => $associatedEntitiesToWarm) {
 
                 //Extract ids to search
-                $idsToSearch = array_map(function( $associatedEntityToWarm) {
+                $idsToSearch = array_map(function ($associatedEntityToWarm) {
                     return $associatedEntityToWarm->getEntityId();
                 }, $associatedEntitiesToWarm);
 
@@ -289,7 +286,6 @@ class WidgetDataWarmer
      */
     private function hasLinkTrait(\ReflectionClass $reflect)
     {
-
         $traits = $reflect->getTraits();
         foreach ($traits as $trait) {
             if ($trait->getName() == LinkTrait::class) {
