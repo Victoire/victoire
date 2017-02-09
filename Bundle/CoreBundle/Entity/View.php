@@ -558,25 +558,20 @@ abstract class View
     }
 
     /**
-     * Get WidgetMaps for View and Templates,
-     * and set the current View context to avoid useless queries.
+     * Get WidgetMaps for View and its Templates
      *
      * @return WidgetMap[]
      */
-    public function getWidgetMapsForViewAndTemplates($viewContext = null)
+    public function getWidgetMapsForViewAndTemplates()
     {
         $widgetMaps = [];
 
         foreach ($this->getWidgetMaps() as $_widgetMap) {
-            if ($viewContext) {
-                $_widgetMap->setViewContext($viewContext);
-            }
-
             $widgetMaps[] = $_widgetMap;
         }
 
         if ($template = $this->getTemplate()) {
-            $templateWidgetMaps = $template->getWidgetMapsForViewAndTemplates($viewContext);
+            $templateWidgetMaps = $template->getWidgetMapsForViewAndTemplates();
             $widgetMaps = array_merge($widgetMaps, $templateWidgetMaps);
         }
 
