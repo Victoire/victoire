@@ -1,25 +1,20 @@
 services:
     victoire_widget_map.builder:
         class: Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder
+        arguments:
+            - "@victoire_widget_map.contextual_view_warmer"
 
     victoire_widget_map.widget_data_warmer:
         class: Victoire\Bundle\WidgetMapBundle\Warmer\WidgetDataWarmer
         arguments:
-            - @annotation_reader
-            - @victoire_view_reference.repository
-            - @victoire_widget.widget_helper
-            - WidgetSliderItem: WidgetSlider
-              WidgetSocialButtonsItem: WidgetSocialButtons
-              WidgetTabItem: WidgetTab
-              WidgetListingItem: WidgetListing
-              WidgetListingItem: WidgetArticleList
-              MenuItem: WidgetMenu
-              WidgetFormQuestion: WidgetForm
-              MenuItem: MenuItem
+            - "@victoire_view_reference.repository"
+            - "@victoire_widget.widget_helper"
+
+    victoire_widget_map.contextual_view_warmer:
+        class: Victoire\Bundle\WidgetMapBundle\Warmer\ContextualViewWarmer
 
     victoire_widget_map.manager:
         class: Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@victoire_widget_map.builder"
-
