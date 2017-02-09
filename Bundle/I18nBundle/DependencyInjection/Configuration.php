@@ -50,6 +50,7 @@ class Configuration implements ConfigurationInterface
                     ->useAttributeAsKey(true)
                     ->prototype('scalar')
                     ->end()
+                ->defaultValue(['%locale%'])
                 ->end()
             ->end();
 
