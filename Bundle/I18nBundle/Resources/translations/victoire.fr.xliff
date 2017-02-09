@@ -1,36 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fr" datatype="plaintext" original="not.available">
-    <header>
-      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
-      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
-    </header>
     <body>
-      <trans-unit id="49rcgyxQhptjDvkJZfJ2hUr5CyuFD9SF8DSFDS9F" resname="victoire.i18n.viewType.locale.fr">
+      <trans-unit id="58893b9984a18" resname="victoire.i18n.viewType.locale.fr">
         <source>victoire.i18n.viewType.locale.fr</source>
         <target>Français</target>
       </trans-unit>
-      <trans-unit id="1" resname="victoire.i18n.viewType.locale.en">
+      <trans-unit id="58893b9984a4c" resname="victoire.i18n.viewType.locale.en">
         <source>victoire.i18n.viewType.locale.en</source>
         <target>Anglais</target>
       </trans-unit>
-      <trans-unit id="2" resname="victoire.i18n.viewType.locale.es">
+      <trans-unit id="58893b9984a6c" resname="victoire.i18n.viewType.locale.es">
         <source>victoire.i18n.viewType.locale.es</source>
         <target>Espagnol</target>
       </trans-unit>
-      <trans-unit id="3" resname="form.view.type.locale.label">
+      <trans-unit id="58893b9984a7e" resname="form.view.type.locale.label">
         <source>form.view.type.locale.label</source>
         <target>Langue</target>
       </trans-unit>
-      <trans-unit id="4" resname="victoire.i18n.viewType.locale.de">
+      <trans-unit id="58893b9984a8e" resname="victoire.i18n.viewType.locale.de">
         <source>victoire.i18n.viewType.locale.de</source>
         <target>Allemand</target>
       </trans-unit>
-      <trans-unit id="5" resname="victoire.i18n.viewType.locale.nl">
+      <trans-unit id="58893b9984a9f" resname="victoire.i18n.viewType.locale.nl">
         <source>victoire.i18n.viewType.locale.nl</source>
         <target>Néerlandais</target>
       </trans-unit>
-      <trans-unit id="6" resname="victoire.i18n.viewType.locale.it">
+      <trans-unit id="58893b9984ab0" resname="victoire.i18n.viewType.locale.it">
         <source>victoire.i18n.viewType.locale.it</source>
         <target>Italien</target>
       </trans-unit>
