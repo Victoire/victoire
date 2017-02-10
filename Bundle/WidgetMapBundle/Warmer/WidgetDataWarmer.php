@@ -3,8 +3,6 @@
 namespace Victoire\Bundle\WidgetMapBundle\Warmer;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\OneToMany;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\Link;
