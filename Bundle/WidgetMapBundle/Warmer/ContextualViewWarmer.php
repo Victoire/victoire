@@ -15,7 +15,7 @@ class ContextualViewWarmer
     /**
      * Give a contextual View to each WidgetMap used in a View and its Templates.
      *
-     * @param View $viewToWarm
+     * @param View      $viewToWarm
      * @param View|null $contextualView Used in recursive call only
      *
      * @return WidgetMap[]
@@ -24,7 +24,7 @@ class ContextualViewWarmer
     {
         $widgetMaps = [];
 
-        if(null === $contextualView) {
+        if (null === $contextualView) {
             $contextualView = $viewToWarm;
         }
 
