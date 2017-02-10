@@ -25,7 +25,9 @@
                 <a class="vic-panelBlog-title" href="{{vic_business_link(article)}}">
                     {{ article.name }}
                 </a>
-                <em>{{ article.author.firstname }} {{ article.author.lastname }}</em>
+                {% if article.author %}
+                    <em>{{ article.author.firstname }} {{ article.author.lastname }}</em>
+                {% endif %}
 
                 <time datetime="{{ article.publishedAt|date("Y-m-d") }}" class="vic-panelBlog-date">{{ article.publishedAt|localizeddate("medium", "none", null, null, "cccc d LLLL yyyy") }}</time>
 
