@@ -15,21 +15,26 @@ class ContextualViewWarmer
     /**
      * Give a contextual View to each WidgetMap used in a View and its Templates.
      *
-     * @param View $view
+     * @param View $viewToWarm
+     * @param View|null $contextualView Used in recursive call only
      *
      * @return WidgetMap[]
      */
-    public function warm(View $view)
+    public function warm(View $viewToWarm, View $contextualView = null)
     {
         $widgetMaps = [];
 
-        foreach ($view->getWidgetMaps() as $_widgetMap) {
-            $_widgetMap->setContextualView($view);
+        if(null === $contextualView) {
+            $contextualView = $viewToWarm;
+        }
+
+        foreach ($viewToWarm->getWidgetMaps() as $_widgetMap) {
+            $_widgetMap->setContextualView($contextualView);
             $widgetMaps[] = $_widgetMap;
         }
 
-        if ($template = $view->getTemplate()) {
-            $templateWidgetMaps = $this->warm($template);
+        if ($template = $viewToWarm->getTemplate()) {
+            $templateWidgetMaps = $this->warm($template, $contextualView);
             $widgetMaps = array_merge($widgetMaps, $templateWidgetMaps);
         }
 
