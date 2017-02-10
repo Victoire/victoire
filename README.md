@@ -38,7 +38,7 @@ You can see the list of our lovely [contributors](https://github.com/Victoire/Vi
 
 ##Install Victoire
 
-To do so, follow the [setup guide](http://github.com/Victoire/victoire/blob/2.2/Bundle/CoreBundle/Resources/doc/SETUP.md).
+To do so, follow the [setup guide](http://github.com/Victoire/victoire/blob/2.2/doc/setup.md).
 
 ##What's inside?
 
