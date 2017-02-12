@@ -178,7 +178,7 @@ class WidgetRenderer
             'VictoireCoreBundle:Widget:widgetUnlinkAction.html.twig',
             [
                 'widgetId' => $widgetId,
-                'view' => $view,
+                'view'     => $view,
             ]
         );
     }

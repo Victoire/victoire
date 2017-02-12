@@ -137,12 +137,12 @@ class CategoryFilter extends BaseFilter
         $builder
             ->add(
                 'category', 'choice', [
-                    'label' => false,
-                    'choices' => $categoriesChoices,
-                    'required' => false,
-                    'expanded' => true,
+                    'label'       => false,
+                    'choices'     => $categoriesChoices,
+                    'required'    => false,
+                    'expanded'    => true,
                     'empty_value' => $this->translator->trans('blog.category_filter.empty_value.label'),
-                    'data' => $data,
+                    'data'        => $data,
                 ]
             );
     }

@@ -253,7 +253,7 @@ class WidgetDataWarmer
         foreach ($links as $link) {
             if ($link->getParameters()['linkType'] == 'viewReference') {
                 $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters([
-                    'id' => $link->getParameters()['viewReference'],
+                    'id'     => $link->getParameters()['viewReference'],
                     'locale' => $link->getParameters()['locale'],
                 ]);
 

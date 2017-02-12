@@ -28,11 +28,11 @@ class WidgetMapManager
     public function insert(Widget $widget, View $view, $slotId, $position, $widgetReference)
     {
         $quantum = $this->em->getRepository('VictoireWidgetMapBundle:WidgetMap')->findOneBy([
-            'view' => $view,
-            'slot' => $slotId,
+            'view'     => $view,
+            'slot'     => $slotId,
             'position' => $position,
-            'parent' => $widgetReference,
-            'action' => [
+            'parent'   => $widgetReference,
+            'action'   => [
                 WidgetMap::ACTION_CREATE,
                 WidgetMap::ACTION_OVERWRITE,
             ],
