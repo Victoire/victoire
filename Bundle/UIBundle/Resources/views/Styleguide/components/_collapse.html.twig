@@ -1,8 +1,8 @@
-{% include "@styleguide/ui/section-header.html.twig" with {
+{% include "VictoireUIBundle:Styleguide:ui/section-header.html.twig" with {
     "name": "collapse"
 } %}
 
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<a class="v-btn v-btn--warning" data-collapse="toggle" data-href="#collapse-ex-1-1">quantum</a>\n<a class="v-btn v-btn--info" data-collapse="toggle" data-href="#collapse-ex-1-2">style</a>\n\n<div>\n    <div class="v-collapse v-collapse--plain" id="collapse-ex-1-1" data-flag="v-collapse" data-group="collapse-group-1">\n        <div class="v-container">\n            quantum\n        </div>\n    </div>\n\n    <div class="v-collapse v-collapse--plain" id="collapse-ex-1-2" data-flag="v-collapse" data-group="collapse-group-1">\n        <div class="v-container">\n            style\n        </div>\n    </div>\n</div>',
     }
@@ -27,7 +27,7 @@
     {% endblock snippet_preview %}
 {% endembed %}
 
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'preview': {
         'background-color': 'rgb(47, 60, 89)',
     },
@@ -76,9 +76,9 @@
 {% endembed %}
 
 
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
-        'html': '<div class="v-tabs-nav v-tabs-nav--spread">\n    <div class="v-tabs-nav__item">\n        <a\n            class="v-tabs-nav__anchor"\n            data-collapse="show"\n            data-href="#collapse-ex-4-1"\n            data-activeclass="v-tabs-nav__anchor--active"\n            data-flag="v-drop"\n            data-position="topout center"\n            data-droptarget="#ex-tab-anchor-drop-1"\n            data-behavior="hover"\n        >\n            {% include "@SVG/browser.html.twig" with { "width": 30 } %}\n        </a>\n\n        <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-1">\n            <div class="v-drop__content">\n                Général\n            </div>\n        </div>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a\n            class="v-tabs-nav__anchor"\n            data-collapse="show"\n            data-href="#collapse-ex-4-2"\n            data-activeclass="v-tabs-nav__anchor--active"\n            data-flag="v-drop"\n            data-position="topout center"\n            data-droptarget="#ex-tab-anchor-drop-2"\n            data-behavior="hover"\n        >\n            {% include "@SVG/mobile.html.twig" with { "width": 30 } %}\n        </a>\n\n        <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-2">\n            <div class="v-drop__content">\n                Mobile\n            </div>\n        </div>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a\n            class="v-tabs-nav__anchor"\n            data-collapse="show"\n            data-href="#collapse-ex-4-3"\n            data-activeclass="v-tabs-nav__anchor--active"\n            data-flag="v-drop"\n            data-position="topout center"\n            data-droptarget="#ex-tab-anchor-drop-3"\n            data-behavior="hover"\n        >\n            {% include "@SVG/tablet.html.twig" with { "width": 30 } %}\n        </a>\n\n        <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-3">\n            <div class="v-drop__content">\n                Tablet\n            </div>\n        </div>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a\n            class="v-tabs-nav__anchor"\n            data-collapse="show"\n            data-href="#collapse-ex-4-4"\n            data-activeclass="v-tabs-nav__anchor--active"\n            data-flag="v-drop"\n            data-position="topout center"\n            data-droptarget="#ex-tab-anchor-drop-4"\n            data-behavior="hover"\n        >\n            {% include "@SVG/laptop.html.twig" with { "width": 30 } %}\n        </a>\n\n        <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-4">\n            <div class="v-drop__content">\n                Laptop\n            </div>\n        </div>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a\n            class="v-tabs-nav__anchor"\n            data-collapse="show"\n            data-href="#collapse-ex-4-5"\n            data-activeclass="v-tabs-nav__anchor--active"\n            data-flag="v-drop"\n            data-position="topout center"\n            data-droptarget="#ex-tab-anchor-drop-5"\n            data-behavior="hover"\n        >\n            {% include "@SVG/desktop.html.twig" with { "width": 30 } %}\n        </a>\n\n        <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-5">\n            <div class="v-drop__content">\n                Desktop\n            </div>\n        </div>\n    </div>\n</div>\n\n<div class="v-tabs-collapses">\n    <div class="v-collapse" id="collapse-ex-4-1" data-flag="v-collapse" data-group="tab-ex-4" data-state="visible">\n        tab 1\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-2" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 2\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-3" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 3\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-4" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 4\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-5" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 5\n    </div>\n</div>',
+        'html': '<div class="v-tabs-nav v-tabs-nav--spread">\n    <div class="v-tabs-nav__item">\n        <a\n            class="v-tabs-nav__anchor"\n            data-collapse="show"\n            data-href="#collapse-ex-4-1"\n            data-activeclass="v-tabs-nav__anchor--active"\n            data-flag="v-drop"\n            data-position="topout center"\n            data-droptarget="#ex-tab-anchor-drop-1"\n            data-behavior="hover"\n        >\n            {% include "VictoireUIBundle:SVG:browser.html.twig" with { "width": 30 } %}\n        </a>\n\n        <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-1">\n            <div class="v-drop__content">\n                Général\n            </div>\n        </div>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a\n            class="v-tabs-nav__anchor"\n            data-collapse="show"\n            data-href="#collapse-ex-4-2"\n            data-activeclass="v-tabs-nav__anchor--active"\n            data-flag="v-drop"\n            data-position="topout center"\n            data-droptarget="#ex-tab-anchor-drop-2"\n            data-behavior="hover"\n        >\n            {% include "VictoireUIBundle:SVG:mobile.html.twig" with { "width": 30 } %}\n        </a>\n\n        <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-2">\n            <div class="v-drop__content">\n                Mobile\n            </div>\n        </div>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a\n            class="v-tabs-nav__anchor"\n            data-collapse="show"\n            data-href="#collapse-ex-4-3"\n            data-activeclass="v-tabs-nav__anchor--active"\n            data-flag="v-drop"\n            data-position="topout center"\n            data-droptarget="#ex-tab-anchor-drop-3"\n            data-behavior="hover"\n        >\n            {% include "VictoireUIBundle:SVG:tablet.html.twig" with { "width": 30 } %}\n        </a>\n\n        <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-3">\n            <div class="v-drop__content">\n                Tablet\n            </div>\n        </div>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a\n            class="v-tabs-nav__anchor"\n            data-collapse="show"\n            data-href="#collapse-ex-4-4"\n            data-activeclass="v-tabs-nav__anchor--active"\n            data-flag="v-drop"\n            data-position="topout center"\n            data-droptarget="#ex-tab-anchor-drop-4"\n            data-behavior="hover"\n        >\n            {% include "VictoireUIBundle:SVG:laptop.html.twig" with { "width": 30 } %}\n        </a>\n\n        <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-4">\n            <div class="v-drop__content">\n                Laptop\n            </div>\n        </div>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a\n            class="v-tabs-nav__anchor"\n            data-collapse="show"\n            data-href="#collapse-ex-4-5"\n            data-activeclass="v-tabs-nav__anchor--active"\n            data-flag="v-drop"\n            data-position="topout center"\n            data-droptarget="#ex-tab-anchor-drop-5"\n            data-behavior="hover"\n        >\n            {% include "VictoireUIBundle:SVG:desktop.html.twig" with { "width": 30 } %}\n        </a>\n\n        <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-5">\n            <div class="v-drop__content">\n                Desktop\n            </div>\n        </div>\n    </div>\n</div>\n\n<div class="v-tabs-collapses">\n    <div class="v-collapse" id="collapse-ex-4-1" data-flag="v-collapse" data-group="tab-ex-4" data-state="visible">\n        tab 1\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-2" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 2\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-3" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 3\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-4" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 4\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-5" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 5\n    </div>\n</div>',
     }
 } %}
     {% block snippet_preview %}
@@ -94,7 +94,7 @@
                     data-droptarget="#ex-tab-anchor-drop-1"
                     data-behavior="hover"
                 >
-                    {% include "@SVG/browser.html.twig" with { "width": 30 } %}
+                    {% include "VictoireUIBundle:SVG:browser.html.twig" with { "width": 30 } %}
                 </a>
 
                 <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-1">
@@ -115,7 +115,7 @@
                     data-droptarget="#ex-tab-anchor-drop-2"
                     data-behavior="hover"
                 >
-                    {% include "@SVG/mobile.html.twig" with { "width": 30 } %}
+                    {% include "VictoireUIBundle:SVG:mobile.html.twig" with { "width": 30 } %}
                 </a>
 
                 <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-2">
@@ -136,7 +136,7 @@
                     data-droptarget="#ex-tab-anchor-drop-3"
                     data-behavior="hover"
                 >
-                    {% include "@SVG/tablet.html.twig" with { "width": 30 } %}
+                    {% include "VictoireUIBundle:SVG:tablet.html.twig" with { "width": 30 } %}
                 </a>
 
                 <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-3">
@@ -157,7 +157,7 @@
                     data-droptarget="#ex-tab-anchor-drop-4"
                     data-behavior="hover"
                 >
-                    {% include "@SVG/laptop.html.twig" with { "width": 30 } %}
+                    {% include "VictoireUIBundle:SVG:laptop.html.twig" with { "width": 30 } %}
                 </a>
 
                 <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-4">
@@ -178,7 +178,7 @@
                     data-droptarget="#ex-tab-anchor-drop-5"
                     data-behavior="hover"
                 >
-                    {% include "@SVG/desktop.html.twig" with { "width": 30 } %}
+                    {% include "VictoireUIBundle:SVG:desktop.html.twig" with { "width": 30 } %}
                 </a>
 
                 <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-5">

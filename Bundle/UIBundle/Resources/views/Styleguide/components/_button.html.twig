@@ -1,4 +1,4 @@
-{% include "@styleguide/ui/section-header.html.twig" with {
+{% include "VictoireUIBundle:Styleguide:ui/section-header.html.twig" with {
     "name": "Button",
     "framework": {
         "name": "trowel-button",
@@ -6,7 +6,7 @@
     }
 } %}
 
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<a class="v-btn" href="#" role="button">Anchor</a>\n<button class="v-btn" type="submit">Button</button>\n<input class="v-btn" type="button" value="Input">\n<input class="v-btn" type="submit" value="Submit">',
     }
@@ -20,7 +20,7 @@
 {% endembed %}
 
 <h2 class="ts-section__sub-heading">Colors</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<button class="v-btn">Default</button>\n<button class="v-btn v-btn--info">Info</button>\n<button class="v-btn v-btn--success">Success</button>\n<button class="v-btn v-btn--warning">Danger</button>\n<button class="v-btn v-btn--danger">Danger</button>\n',
     }
@@ -35,7 +35,7 @@
 {% endembed %}
 
 <h2 class="ts-section__sub-heading">Transparent</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'preview': {
         'background-color': '#172138',
         'color': '#fff',
@@ -51,7 +51,7 @@
 {% endembed %}
 
 <h2 class="ts-section__sub-heading">Sizes</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<button class="v-btn v-btn--lg">large</button>\n<button class="v-btn">medium</button>\n<button class="v-btn v-btn--sm">small</button>\n<button class="v-btn v-btn--xs">xsmall</button>',
     }
@@ -65,7 +65,7 @@
 {% endembed %}
 
 <h2 class="ts-section__sub-heading">Square</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<button class="v-btn v-btn--square v-btn--lg">I</button>\n<button class="v-btn v-btn--square">I</button>\n<button class="v-btn v-btn--square v-btn--sm">I</button>',
     }
@@ -78,7 +78,7 @@
 {% endembed %}
 
 <h2 class="ts-section__sub-heading">Radiusless</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<button class="v-btn v-btn--radiusless">radiusless</button>',
     }
@@ -89,7 +89,7 @@
 {% endembed %}
 
 <h2 class="ts-section__sub-heading">Framed</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<button class="v-btn v-btn--framed v-btn--transparent">framed</button>',
     }

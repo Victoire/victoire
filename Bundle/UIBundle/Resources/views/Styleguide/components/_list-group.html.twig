@@ -1,9 +1,9 @@
-{% include "@styleguide/ui/section-header.html.twig" with {
+{% include "VictoireUIBundle:Styleguide:ui/section-header.html.twig" with {
     "name": "List-group",
 } %}
 
 
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<ul class="v-list-group v-list-group--main">\n    <li class="v-list-group__item">lorem</li>\n    <li class="v-list-group__item">ipsum</li>\n\n    <li class="v-list-group__sub-list">\n        <ul class="v-list-group">\n            <li class="v-list-group__item">dolor</li>\n\n            <li class="v-list-group__sub-list">\n                <ul class="v-list-group">\n                    <li class="v-list-group__item">sit</li>\n                </ul>\n            </li>\n\n            <li class="v-list-group__item">amet</li>\n        </ul>\n    </li>\n</ul>',
     }

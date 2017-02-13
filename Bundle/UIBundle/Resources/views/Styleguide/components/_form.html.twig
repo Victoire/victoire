@@ -1,4 +1,4 @@
-{% include "@styleguide/ui/section-header.html.twig" with {
+{% include "VictoireUIBundle:Styleguide:ui/section-header.html.twig" with {
     "name": "Form",
     "framework": {
         "name": "trowel-form",
@@ -6,7 +6,7 @@
     }
 } %}
 
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-form-group">\n    <label class="v-form-group__label">label</label>\n    <input class="v-form-group__input" type="text" value="hello world !">\n    <small class="v-form-group__help">This is a help message</small>\n</div>',
     }
@@ -23,7 +23,7 @@
 
 <h2 class="ts-section__sub-heading">Input themes</h2>
 
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-form-group v-form-group--info">\n    <label class="v-form-group__label">label</label>\n    <input class="v-form-group__input" type="text" value="hello world !">\n    <small class="v-form-group__help">This is a help message</small>\n</div>\n\n<div class="v-form-group v-form-group--error">\n    <label class="v-form-group__label">label</label>\n    <input class="v-form-group__input" type="text" value="hello world !">\n    <small class="v-form-group__help">This is a help message</small>\n</div>\n\n<div class="v-form-group v-form-group--success">\n    <label class="v-form-group__label">label</label>\n    <input class="v-form-group__input" type="text" value="hello world !">\n    <small class="v-form-group__help">This is a help message</small>\n</div>',
     }
@@ -52,7 +52,7 @@
 
 <h2 class="ts-section__sub-heading">With material design effect</h2>
 
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-form-group v-form-group--md" data-flag="v-mdForm">\n    <label class="v-form-group__label" for="input-example-md" data-flag="mdf-label">label</label>\n    <input class="v-form-group__input" id="input-example-md" type="text" data-flag="mdf-input" value="hello world !">\n</div>',
     }
@@ -68,7 +68,7 @@
 <hr>
 
 <h2 class="ts-section__sub-heading">Select</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-form-group">\n    <div class="v-select">\n        <select class="v-select__native">\n            <option selected>Open this select menu</option>\n            <option value="1">One</option>\n            <option value="2">Two</option>\n            <option value="3">Three</option>\n        </select>\n    </div>\n</div>',
     }
@@ -88,7 +88,7 @@
 {% endembed %}
 
 <h2 class="ts-section__sub-heading">Checkbox</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-form-group">\n    <label class="v-checkbox">\n        <input class="v-checkbox__native" type="checkbox">\n        <span class="v-checkbox__indicator"></span>\n        Hello world !\n    </label>\n</div>',
     }
@@ -106,7 +106,7 @@
 
 
 <h2 class="ts-section__sub-heading">Radio</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-form-group">\n    <label class="v-radio">\n        <input class="v-radio__native" type="radio" name="radio-example">\n        <span class="v-radio__indicator"></span>\n        Option 1\n    </label>\n</div>\n\n<div class="v-form-group">\n    <label class="v-radio">\n        <input class="v-radio__native" type="radio" name="radio-example">\n        <span class="v-radio__indicator"></span>\n        Option 2\n    </label>\n</div>',
     }
