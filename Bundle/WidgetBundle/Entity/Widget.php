@@ -110,6 +110,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      * @ORM\JoinColumn(name="view_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $view;
+
     /**
      * @var WidgetMap
      *
@@ -442,7 +443,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
 
     /**
      * @deprecated
-     * Get view.
+     * Get view
      *
      * @return string
      */

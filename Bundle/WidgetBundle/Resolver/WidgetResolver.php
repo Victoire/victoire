@@ -47,14 +47,15 @@ class WidgetResolver
     public function resolve(WidgetMap $widgetMap)
     {
         //TODO: orderize it
-
         $widgets = $widgetMap->getWidgets();
         // if the widgetmap is linked to no widgets, it seems that it is an overwrite of the position so keep the replaced widgets for display
+
         if ($widgetMap->getReplaced() && count($widgets) === 0) {
             $widgets = $widgetMap->getReplaced()->getWidgets();
         }
         /* @var Widget $widget */
         foreach ($widgets as $_widget) {
+
             /** @var Criteria $criteria */
             foreach ($_widget->getCriterias() as $criteria) {
                 $value = $this->dataSourceChain->getData($criteria->getName());
