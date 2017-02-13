@@ -38,10 +38,6 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    paths:
-        "%kernel.root_dir%/../../../Bundle/UIBundle/Resources/views/Styleguide": styleguide
-        "%kernel.root_dir%/../../../Bundle/UIBundle/Resources/views/SVG": SVG
-        "%kernel.root_dir%/../../../Bundle/UIBundle/Resources/views/Bricks": bricks
 
 # Assetic Configuration
 assetic:

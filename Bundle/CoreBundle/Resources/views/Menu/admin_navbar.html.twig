@@ -4,7 +4,7 @@
             <div class="v-flex-grid v-flex-grid--gutter-lg  v-flex-grid--align-center">
                 <div class="v-flex-col">
                     {% block brand %}
-                        {% include "@SVG/logo.html.twig" with {
+                        {% include "VictoireUIBundle:SVG:logo.html.twig" with {
                             "height": 60,
                         } %}
                     {% endblock brand %}
@@ -42,7 +42,7 @@
             </div>
 
             <div class="v-flex-col v-flex-col--grow-1 v-flex-col--shrink-0 v-flex-col--basis-0 v-text--center">
-                {% include "@bricks/mode-switcher.html.twig" with {
+                {% include "VictoireUIBundle:Bricks:mode-switcher.html.twig" with {
                     "name": "mode-switcher",
                     "startMode": edit_mode,
                 } %}

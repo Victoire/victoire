@@ -1,8 +1,8 @@
-{% include "@styleguide/ui/section-header.html.twig" with {
+{% include "VictoireUIBundle:Styleguide:ui/section-header.html.twig" with {
     "name": "Text",
 } %}
 
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-text--center">\n    ...\n</div>',
     }
@@ -14,7 +14,7 @@
     {% endblock snippet_preview %}
 {% endembed %}
 
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-text--left">\n    ...\n</div>',
     }
@@ -26,7 +26,7 @@
     {% endblock snippet_preview %}
 {% endembed %}
 
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-text--right">\n    ...\n</div>',
     }

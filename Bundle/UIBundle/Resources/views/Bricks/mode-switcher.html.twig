@@ -25,7 +25,7 @@
 
     {% for mode in modes %}
         <label class="v-mode-switcher__item" for="{{ name }}--{{ mode.name }}" data-flag="v-drop" data-position="topout center" data-droptarget="#{{ name }}--{{ mode.name }}-popover" data-position="middle rightout" data-behavior="hover">
-            {% include '@SVG/' ~ mode.svg ~ '.html.twig' %}
+            {% include 'VictoireUIBundle:SVG:' ~ mode.svg ~ '.html.twig' %}
         </label>
 
         <div class="v-drop v-drop--tooltip" id="{{ name }}--{{ mode.name }}-popover">

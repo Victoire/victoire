@@ -1,4 +1,4 @@
-{% include "@styleguide/ui/section-header.html.twig" with {
+{% include "VictoireUIBundle:Styleguide:ui/section-header.html.twig" with {
     "name": "Layout",
     "framework": {
         "name": "trowel-layout",
@@ -7,7 +7,7 @@
 } %}
 
 <h2 class="ts-section__sub-heading">Container</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-container">\n    ...\n</div>',
     }
@@ -20,7 +20,7 @@
 {% endembed %}
 
 <h2 class="ts-section__sub-heading">Container fluid</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-container v-container--fluid">\n    ...\n</div>',
     }
@@ -46,7 +46,7 @@
 
 
 <h2 class="ts-section__sub-heading">Grid</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-grid">\n    <div class="v-col v-col--xs-6 v-col--md-6">\n        .v-col .v-col--xs-6 .v-col--md-6\n    </div>\n\n    <div class="v-col v-col--xs-6 v-col--md-4">\n        .v-col .v-col--xs-6 .v-col--md-4\n    </div>\n\n    <div class="v-col v-col--xs-12 v-col--md-2">\n        .v-col .v-col--xs-12 .v-col--md-2\n    </div>\n\n    <div class="v-col v-col--xs-12">\n        .v-col .v-col--xs-12\n    </div>\n</div>',
     }
@@ -82,7 +82,7 @@
 
 
 <h2 class="ts-section__sub-heading">Flexbox grid</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-flex-grid">\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col v-flex-col--grow-1">flex col</div>\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col">flex col</div>\n</div>',
     }
@@ -101,7 +101,7 @@
 {% endembed %}
 
 <h2 class="ts-section__sub-heading">Flexbox grid / large gutter</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-flex-grid v-flex-grid--gutter-lg">\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col v-flex-col--grow-1">flex col</div>\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col">flex col</div>\n</div>',
     }
@@ -120,7 +120,7 @@
 {% endembed %}
 
 <h2 class="ts-section__sub-heading">Flexbox grid / aligned center</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-flex-grid v-flex-grid--align-center">\n    ...\n</div>',
     }
@@ -139,7 +139,7 @@
 {% endembed %}
 
 <h2 class="ts-section__sub-heading">Flexbox grid / justify between</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-flex-grid v-flex-grid--justify-between">\n    ...\n</div>',
     }
@@ -158,7 +158,7 @@
 {% endembed %}
 
 <h2 class="ts-section__sub-heading">Flexbox grid / justify center</h2>
-{% embed '@styleguide/ui/snippet.html.twig' with {
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
         'html': '<div class="v-flex-grid v-flex-grid--justify-center">\n    ...\n</div>',
     }

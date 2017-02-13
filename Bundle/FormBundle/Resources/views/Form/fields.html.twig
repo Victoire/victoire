@@ -12,9 +12,9 @@
 
 {% block criteria_collection_row %}
     <a class="v-btn v-btn--warning / v-widget-form__quantum-btn" data-collapse="toggle" data-href="#collapse-{{ id }}">
-        {% include '@SVG/quantum.html.twig' with { class: 'v-btn__ic v-btn__ic--before' } %}
+        {% include 'VictoireUIBundle:SVG:quantum.html.twig' with { class: 'v-btn__ic v-btn__ic--before' } %}
         {{ 'victoire.widget.type.criterias.label'|trans({}, 'victoire') }}
-        {% include '@SVG/caret.html.twig' with { class: 'v-btn__ic v-btn__ic--after' } %}
+        {% include 'VictoireUIBundle:SVG:caret.html.twig' with { class: 'v-btn__ic v-btn__ic--after' } %}
     </a>
 
     <div class="v-collapse v-collapse--plain v-collapse--criteria" id="collapse-{{ id }}" data-flag="v-collapse">
