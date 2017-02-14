@@ -21,7 +21,9 @@ $tabsnavs--padding: (
   'default': null,
 );
 
-$tabsnavs-item--gutter: 2.5em;
+$tabsnavs-item--gutter: (
+  'default': 2.5em,
+);
 
 $tabsnavs-anchor--font-size: null !default;
 $tabsnavs-anchor--font-family: null !default;
@@ -40,6 +42,7 @@ $tabsnavs-anchor--border-width: null !default;
 $tabsnavs-anchor--border-style: null !default;
 $tabsnavs-anchor--border-color: null !default;
 $tabsnavs-anchor--border-radius: trwl-theme('border-radius') trwl-theme('border-radius') 0 0;
+
 $tabsnavs-anchor--color: (
   'default': color('grey'),
   ':hover': color('white'),
@@ -62,16 +65,43 @@ $tabsnavs-anchor--color: (
       ':focus': color('grey', 'darker'),
       ':active': color('grey', 'darker'),
     ),
+  ),
+  '-insert': (
+    'default': color('white'),
+    ':hover': color('white'),
+    ':active': color('white'),
+    ':focus': color('white'),
+    '~active': (
+      'default': color('grey', 'darker'),
+      ':hover': color('grey', 'darker'),
+      ':focus': color('grey', 'darker'),
+      ':active': color('grey', 'darker'),
+    ),
   )
 ) !default;
+
 $tabsnavs-anchor--box-shadow: null !default;
 $tabsnavs-anchor--background: (
   'default': null,
 ) !default;
-$tabsnavs-anchor--background-color: null !default;
+$tabsnavs-anchor--background-color: (
+  '-insert': (
+    'default': color('grey', 'darker'),
+    ':hover': color('grey', 'dark'),
+    ':active': color('grey', 'dark'),
+    ':focus': color('grey', 'dark'),
+    '~active': (
+      'default': color('white', 'dark'),
+      ':hover': color('white', 'dark'),
+      ':focus': color('white', 'dark'),
+      ':active': color('white', 'dark'),
+    ),
+  )
+) !default;
 $tabsnavs-anchor--padding: (
   'default': null,
   '-spread': rem(0.5) rem(1),
+  '-insert': 0 rem(1.875),
 );
 
 
@@ -91,5 +121,10 @@ $tabscollapses--border-radius: null !default;
 $tabscollapses--color: null !default;
 $tabscollapses--box-shadow: null !default;
 $tabscollapses--background: null !default;
-$tabscollapses--background-color: null !default;
-$tabscollapses--padding: trwl-theme('padding-y') 0 !default;
+$tabscollapses--background-color: (
+  '-insert': color('white', 'dark'),
+);
+$tabscollapses--padding: (
+  'default': trwl-theme('padding-y') 0,
+  '-insert': rem(1.25),
+);
