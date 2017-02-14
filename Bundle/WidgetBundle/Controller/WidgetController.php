@@ -231,6 +231,8 @@ class WidgetController extends Controller
     }
 
     /**
+     * @TODO Simplify Action when reorganize with editAction
+     * 
      * Stylize a widget.
      *
      * @param Widget $widget        The widget to stylize
