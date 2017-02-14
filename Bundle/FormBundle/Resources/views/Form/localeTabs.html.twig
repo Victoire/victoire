@@ -1,29 +1,39 @@
 {% block a2lix_translations_widget %}
     {{ form_errors(form) }}
+
     <div class="a2lix_translations tabbable">
-        <ul class="a2lix_translationsLocales vic-nav vic-nav-tabs">
-        {% for translationsFields in form %}
-            {% set locale = translationsFields.vars.name %}
+        <div class="a2lix_translationsLocales v-tabs-nav v-tabs-nav--insert">
+            {% for translationsFields in form %}
+                {% set locale = translationsFields.vars.name %}
 
-            <li {% if app.request.locale == locale %}class="vic-active"{% endif %}>
-                <a href="#" data-toggle="vic-tab" data-target=".{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }}">
-                    {{ translationsFields.vars.label|default(locale|humanize)|trans }}
-                    {% if form.vars.default_locale == locale %}{{ form.vars.default_label|default('[Default]')|trans }}{% endif %}
-                    {% if translationsFields.vars.required %}*{% endif %}
-                </a>
-            </li>
-        {% endfor %}
-        </ul>
+                <div class="v-tabs-nav__item">
+                    <a class="v-tabs-nav__anchor{{ app.request.locale == locale ? ' v-tabs-nav__anchor--active' }}"
+                       data-collapse="show"
+                       data-href="#{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }}"
+                       data-activeclass="v-tabs-nav__anchor--active"
+                    >
+                        {{ translationsFields.vars.label|default(locale|humanize)|trans }}
+                        {% if form.vars.default_locale == locale %}{{ form.vars.default_label|default('[Default]')|trans }}{% endif %}
+                        {% if translationsFields.vars.required %}*{% endif %}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
 
-        <div class="a2lix_translationsFields vic-tab-content">
-        {% for translationsFields in form %}
-            {% set locale = translationsFields.vars.name %}
+        <div class="a2lix_translationsFields v-tabs-collapses v-tabs-collapses--insert">
+            {% for translationsFields in form %}
+                {% set locale = translationsFields.vars.name %}
 
-            <div class="{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }} vic-tab-pane {% if app.request.locale == locale %}vic-active{% endif %} {% if not form.vars.valid %}sonata-ba-field-error{% endif %}">
-                {{ form_errors(translationsFields) }}
-                {{ form_widget(translationsFields) }}
-            </div>
-        {% endfor %}
+                <div id="{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }}"
+                     class="{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }} {% if not form.vars.valid %}sonata-ba-field-error{% endif %} v-collapse"
+                     data-flag="v-collapse"
+                     data-group="a2lix_translationsFields"
+                     {% if app.request.locale == locale %}data-state="visible"{% endif %}
+                >
+                    {{ form_errors(translationsFields) }}
+                    {{ form_widget(translationsFields) }}
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
