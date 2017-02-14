@@ -12,8 +12,8 @@
                        data-href="#{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }}"
                        data-activeclass="v-tabs-nav__anchor--active"
                     >
-                        {{ translationsFields.vars.label|default(locale|humanize)|trans }}
-                        {% if form.vars.default_locale == locale %}{{ form.vars.default_label|default('[Default]')|trans }}{% endif %}
+                        {{ translationsFields.vars.label|default(locale|humanize)|trans|upper }}
+                        {% if form.vars.default_locale == locale %}{{ form.vars.default_label|default('(default)')|trans }}{% endif %}
                         {% if translationsFields.vars.required %}*{% endif %}
                     </a>
                 </div>

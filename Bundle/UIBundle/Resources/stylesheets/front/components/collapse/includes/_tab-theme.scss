@@ -28,7 +28,10 @@ $tabsnavs-item--gutter: (
 $tabsnavs-anchor--font-size: null !default;
 $tabsnavs-anchor--font-family: null !default;
 $tabsnavs-anchor--font-weight: font-weight('bold');
-$tabsnavs-anchor--text-transform: uppercase !default;
+$tabsnavs-anchor--text-transform: (
+  'default': uppercase,
+  '-insert': none,
+);
 $tabsnavs-anchor--letter-spacing: null !default;
 $tabsnavs-anchor--line-height: null !default;
 $tabsnavs-anchor--text-align: null !default;
