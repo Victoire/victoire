@@ -16,7 +16,6 @@ use Victoire\Bundle\BlogBundle\Form\BlogSettingsType;
 use Victoire\Bundle\BlogBundle\Form\BlogType;
 use Victoire\Bundle\BlogBundle\Form\ChooseBlogType;
 use Victoire\Bundle\BlogBundle\Repository\BlogRepository;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\PageBundle\Controller\BasePageController;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 
@@ -41,7 +40,7 @@ class BlogController extends BasePageController
         $blog = $this->getBlog($request, $blogId);
         $template = $this->getBaseTemplatePath().':index.html.twig';
         $chooseBlogForm = $this->createForm(ChooseBlogType::class, null, [
-            'blog' => $blog,
+            'blog'   => $blog,
             'locale' => $request->getLocale(),
         ]);
 
@@ -165,11 +164,11 @@ class BlogController extends BasePageController
         return new JsonResponse([
             'success' => false,
             'message' => $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form),
-            'html' => $this->container->get('templating')->render(
-                $this->getBaseTemplatePath() . ':Tabs/_settings.html.twig',
+            'html'    => $this->container->get('templating')->render(
+                $this->getBaseTemplatePath().':Tabs/_settings.html.twig',
                 [
-                    'blog' => $blog,
-                    'form' => $form->createView(),
+                    'blog'               => $blog,
+                    'form'               => $form->createView(),
                     'businessProperties' => [],
                 ]
             ),

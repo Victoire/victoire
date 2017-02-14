@@ -29,7 +29,7 @@ class PageSeoController extends Controller
      * Display a form to edit Seo settings.
      *
      * @param Request $request
-     * @param View $view
+     * @param View    $view
      *
      * @Route("/{id}/settings", name="victoire_seo_pageSeo_settings")
      * @Method("GET")
@@ -57,7 +57,7 @@ class PageSeoController extends Controller
      * Save Seo settings.
      *
      * @param Request $request
-     * @param View $view
+     * @param View    $view
      *
      * @Route("/{id}/settings", name="victoire_seo_pageSeo_settings_post")
      * @Method("POST")
@@ -86,7 +86,7 @@ class PageSeoController extends Controller
 
             $response = [
                 'success' => true,
-                'url' => $this->getViewUrl($view),
+                'url'     => $this->getViewUrl($view),
             ];
         } else {
             $response = $this->getNotPersistedSettingsResponse($form, $view, $novalidate);
@@ -99,7 +99,7 @@ class PageSeoController extends Controller
      * Create PageSeo Form.
      *
      * @param PageSeo $pageSeo
-     * @param View $view
+     * @param View    $view
      *
      * @return FormInterface
      */
@@ -118,10 +118,10 @@ class PageSeoController extends Controller
     }
 
     /**
-     * Get JsonResponse array for Settings novalidate and form display
+     * Get JsonResponse array for Settings novalidate and form display.
      *
      * @param FormInterface $form
-     * @param View $view
+     * @param View          $view
      * @param $novalidate
      *
      * @return array
@@ -136,11 +136,11 @@ class PageSeoController extends Controller
 
         return [
             'success' => !$form->isSubmitted(),
-            'html' => $this->container->get('templating')->render(
+            'html'    => $this->container->get('templating')->render(
                 $template,
                 [
-                    'page' => $view,
-                    'form' => $form->createView(),
+                    'page'               => $view,
+                    'form'               => $form->createView(),
                     'businessProperties' => $this->getBusinessProperties($view),
                 ]
             ),

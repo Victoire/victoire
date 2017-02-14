@@ -16,7 +16,7 @@ use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException;
 
 /**
- * Article Manager
+ * Article Manager.
  *
  * ref. victoire_blog.manager.article.
  */
@@ -34,8 +34,7 @@ class ArticleManager
         VirtualToBusinessPageTransformer $virtualToBusinessPageTransformer,
         PageHelper $pageHelper,
         ViewReferenceRepository $viewReferenceRepo
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->businessPageBuilder = $businessPageBuilder;
         $this->virtualToBusinessPageTransformer = $virtualToBusinessPageTransformer;
@@ -48,7 +47,7 @@ class ArticleManager
      * Create BusinessPage for this Article.
      *
      * @param Article $article
-     * @param User $author
+     * @param User    $author
      *
      * @return BusinessPage
      */
@@ -87,12 +86,12 @@ class ArticleManager
 
     /**
      * Update Blog Article settings.
-     * 
+     *
      * @param Article $article
      *
-     * @return View
-     *
      * @throws ViewReferenceNotFoundException
+     *
+     * @return View
      */
     public function updateSettings(Article $article)
     {
@@ -144,7 +143,7 @@ class ArticleManager
         $bep = $this->pageHelper->findPageByParameters(
             [
                 'templateId' => $article->getTemplate()->getId(),
-                'entityId' => $article->getId(),
+                'entityId'   => $article->getId(),
             ]
         );
         $this->entityManager->remove($bep);
