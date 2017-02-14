@@ -79,6 +79,21 @@
     {% endblock snippet_preview %}
 {% endembed %}
 
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-form-group">\n    <div class="v-form-group__input-group">\n        <span class="v-form-group__addon v-form-group__addon--url-slug">http://troopers.com/</span>\n        <input class="v-form-group__input" type="text" value="blog">\n    </div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-form-group">
+            <div class="v-form-group__input-group">
+                <span class="v-form-group__addon v-form-group__addon--url-slug">http://troopers.com/</span>
+                <input class="v-form-group__input" type="text" value="blog">
+            </div>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
 
 <h2 class="ts-section__sub-heading">With material design effect</h2>
 

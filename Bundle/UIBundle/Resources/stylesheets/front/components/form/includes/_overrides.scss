@@ -1,4 +1,5 @@
 @import '../../../globals/utils/synthax';
+@import '../../../globals/utils/color';
 
 // Select
 // ------
@@ -39,4 +40,9 @@
     margin-right: 0;
     margin-left: $gutter;
   }
+}
+
+.#{$app--prefix}-form-group__addon--url-slug {
+  color: color('grey');
+  padding-bottom: calc(0.5em + 1px);
 }
