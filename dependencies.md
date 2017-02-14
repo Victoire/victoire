@@ -1,4 +1,20 @@
-# Composer log
+# System Requirements
+
+* A webserver like Apache or Nginx
+* PHP from 5.4
+    * JSON needs to be enabled
+    * ctype needs to be enabled
+    * php.ini recommended settings
+        * short_open_tag = Off
+        * magic_quotes_gpc = Off
+        * register_globals = Off
+        * session.auto_start = Off
+        * date.timezone should be configured
+* MySQL 5.x
+* Redis from 2.0 to 3.2
+* Less 2.x
+
+# Composer
 
 | Name                                 | Version      | Comment                     |
 | -------------------------------------|--------------|---------------------------- |
