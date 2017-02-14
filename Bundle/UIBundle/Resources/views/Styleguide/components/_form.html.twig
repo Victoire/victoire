@@ -49,6 +49,36 @@
     {% endblock snippet_preview %}
 {% endembed %}
 
+<h2 class="ts-section__sub-heading">Input form group</h2>
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'twig': '<div class="v-form-group">\n    <div class="v-form-group__input-group">\n        <span class="v-form-group__addon">\n            {% include "VictoireUIBundle:SVG:calendar.html.twig" %}\n        </span>\n        <input class="v-form-group__input" type="text" value="hello world !">\n    </div>\n</div>\n\n<div class="v-form-group">\n    <div class="v-form-group__input-group">\n        <input class="v-form-group__input" type="text" value="hello world !">\n        <span class="v-form-group__addon">\n            {% include "VictoireUIBundle:SVG:calendar.html.twig" %}\n        </span>\n    </div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-form-group">
+            <div class="v-form-group__input-group">
+                <span class="v-form-group__addon">
+                    {% include 'VictoireUIBundle:SVG:calendar.html.twig' %}
+                </span>
+
+                <input class="v-form-group__input" type="text" value="hello world !">
+            </div>
+        </div>
+
+        <div class="v-form-group">
+            <div class="v-form-group__input-group">
+                <input class="v-form-group__input" type="text" value="hello world !">
+
+                <span class="v-form-group__addon">
+                    {% include 'VictoireUIBundle:SVG:calendar.html.twig' %}
+                </span>
+            </div>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
 
 <h2 class="ts-section__sub-heading">With material design effect</h2>
 
