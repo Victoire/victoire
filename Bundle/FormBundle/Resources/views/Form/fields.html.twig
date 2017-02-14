@@ -2,9 +2,17 @@
 {% use 'form_div_layout.html.twig' %}
 {% use 'VictoireFormBundle:Form:localeTabs.html.twig' %}
 
+{% block urlvalidated_row %}
+    <div class="form-group">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}
+
 {% block urlvalidated_widget %}
-    <div class="vic-form-url-slug">
-        {{ base_url }}
+    <div class="v-form-group__input-group">
+        <div class="v-form-group__addon v-form-group__addon--url-slug">{{ base_url }}</div>
         {{ block('slug_widget') }}
     </div>
 {% endblock urlvalidated_widget %}
@@ -68,8 +76,14 @@
 
 {% block slug_widget %}
     {{ block('form_widget') }}
-    <i id="{{id}}-correct" class="fa fa-check slug-is-correct vic-hidden"></i>
-    <i id="{{id}}-not-correct" class="fa fa-remove slug-is-not-correct vic-hidden"></i>
+    <span id="{{ id }}-correct" class="v-form-group__addon v-color--green v-hidden">
+        {% include 'VictoireUIBundle:SVG:check.html.twig' %}
+    </span>
+
+    <span id="{{ id }}-not-correct" class="v-form-group__addon v-color--pink v-hidden">
+        {% include 'VictoireUIBundle:SVG:close.html.twig' %}
+    </span>
+
     <script>
         <!--
         addSlugValidation($vic('#{{id}}'),{% if allow_empty %}true{% else %}false{% endif %});
