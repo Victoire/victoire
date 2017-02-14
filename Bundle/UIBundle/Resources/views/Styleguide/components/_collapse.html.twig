@@ -212,3 +212,44 @@
         </div>
     {% endblock snippet_preview %}
 {% endembed %}
+
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-tabs-nav v-tabs-nav--insert">\n    <div class="v-tabs-nav__item">\n        <a class="v-tabs-nav__anchor"\n           data-collapse="show"\n           data-href="#collapse-ex-5-1"\n           data-activeclass="v-tabs-nav__anchor--active"\n        >\n            FR\n        </a>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a class="v-tabs-nav__anchor"\n           data-collapse="show"\n           data-href="#collapse-ex-5-2"\n           data-activeclass="v-tabs-nav__anchor--active"\n        >\n            EN\n        </a>\n    </div>\n</div>\n\n<div class="v-tabs-collapses v-tabs-collapses--insert">\n    <div class="v-collapse" id="collapse-ex-5-1" data-flag="v-collapse" data-group="tab-ex-5" data-state="visible">\n        tab 1\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-5-2" data-flag="v-collapse" data-group="tab-ex-5">\n        tab 2\n    </div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-tabs-nav v-tabs-nav--insert">
+            <div class="v-tabs-nav__item">
+                <a class="v-tabs-nav__anchor"
+                   data-collapse="show"
+                   data-href="#collapse-ex-5-1"
+                   data-activeclass="v-tabs-nav__anchor--active"
+                >
+                    FR
+                </a>
+            </div>
+
+            <div class="v-tabs-nav__item">
+                <a class="v-tabs-nav__anchor"
+                   data-collapse="show"
+                   data-href="#collapse-ex-5-2"
+                   data-activeclass="v-tabs-nav__anchor--active"
+                >
+                    EN
+                </a>
+            </div>
+        </div>
+
+        <div class="v-tabs-collapses v-tabs-collapses--insert">
+            <div class="v-collapse" id="collapse-ex-5-1" data-flag="v-collapse" data-group="tab-ex-5" data-state="visible">
+                tab 1
+            </div>
+
+            <div class="v-collapse" id="collapse-ex-5-2" data-flag="v-collapse" data-group="tab-ex-5">
+                tab 2
+            </div>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
