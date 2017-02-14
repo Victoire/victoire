@@ -11,7 +11,7 @@
 {% endblock modal_header_title %}
 
 {% block modal_body_content %}
-    <form method="POST" action="{{ path('victoire_blog_new') }}">
+    <form method="POST" action="{{ path('victoire_blog_new_post') }}">
         {{form_widget(form)}}
     </form>
 {% endblock modal_body_content %}
