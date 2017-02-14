@@ -103,7 +103,7 @@ class PageSeoController extends Controller
      *
      * @return FormInterface
      */
-    public function createSettingsForm(PageSeo $pageSeo, View $view)
+    private function createSettingsForm(PageSeo $pageSeo, View $view)
     {
         return $this->get('form.factory')->create(PageSeoType::class, $pageSeo,
             [
