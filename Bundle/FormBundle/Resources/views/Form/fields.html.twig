@@ -412,10 +412,13 @@
 {% spaceless %}
     {% if widget == 'single_text' %}
         {% if vic_datetimepicker is defined %}
-            <div data-provider="datetimepicker" class="vic-input-group vic-date" data-date="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}" data-link-field="{{ id }}" data-link-format="dd-mm-yyyy hh:ii">
+            <div data-provider="datetimepicker" class="v-form-group__input-group v-date" data-date="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}" data-link-field="{{ id }}" data-link-format="dd-mm-yyyy hh:ii">
+                <span class="v-form-group__addon">
+                    {% include 'VictoireUIBundle:SVG:calendar.html.twig' %}
+                </span>
+
                 <input class="v-form-group__input" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %} value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}">
                 <input type="hidden" value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}" {{ block('widget_attributes') }}>
-                <span class="vic-input-group-addon">{{ victoire_icon('th') }}</span>
             </div>
         {% else %}
             {{ block('form_widget_simple') }}

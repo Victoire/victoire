@@ -791,6 +791,332 @@ button.v-btn {
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%); }
 
+/*!
+* Datetimepicker for Bootstrap
+*
+* Copyright 2012 Stefan Petre
+* Improvements by Andrew Rowls
+* Improvements by Sébastien Malot
+* Improvements by Troopers for Victoire
+* Licensed under the Apache License v2.0
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+*/
+.v-datetimepicker {
+  padding: 4px;
+  margin-top: 1px;
+  white-space: normal;
+  border-radius: 4px;
+  direction: ltr;
+  position: absolute;
+  float: left;
+  min-width: 160px;
+  background-color: white;
+  display: none;
+  font-size: 14px;
+  list-style: none;
+  border: 1px solid rgba(23, 33, 56, 0.15);
+  box-shadow: 0 6px 12px rgba(23, 33, 56, 0.175); }
+  .v-datetimepicker.v-datetimepicker-rtl {
+    direction: rtl; }
+
+.v-datetimepicker.v-datetimepicker-rtl table tr td span {
+  float: right; }
+
+.v-datetimepicker > div {
+  display: none; }
+
+.v-datetimepicker.v-minutes div.v-datetimepicker-minutes {
+  display: block; }
+
+.v-datetimepicker.v-hours div.v-datetimepicker-hours {
+  display: block; }
+
+.v-datetimepicker.v-days div.v-datetimepicker-days {
+  display: block; }
+
+.v-datetimepicker.v-months div.v-datetimepicker-months {
+  display: block; }
+
+.v-datetimepicker.v-years div.v-datetimepicker-years {
+  display: block; }
+
+.v-datetimepicker table {
+  margin: 0; }
+
+.v-datetimepicker table tr td.v-minute:hover,
+.v-datetimepicker table tr td.v-hour:hover,
+.v-datetimepicker table tr td.v-day:hover {
+  background-color: #dfe4ea;
+  cursor: pointer; }
+
+.v-datetimepicker table tr td span {
+  display: block;
+  width: 23%;
+  height: 54px;
+  line-height: 54px;
+  float: left;
+  margin: 1%;
+  cursor: pointer;
+  border-radius: 4px; }
+  .v-datetimepicker table tr td span:hover {
+    background-color: #dfe4ea; }
+  .v-datetimepicker table tr td span.v-old {
+    color: #8ca0b3; }
+
+.v-datetimepicker .v-datetimepicker-hours span,
+.v-datetimepicker .v-datetimepicker-minutes span {
+  height: 26px;
+  line-height: 26px; }
+
+.v-datetimepicker th.v-switch {
+  width: 145px; }
+
+.v-datetimepicker-inline {
+  width: 220px; }
+
+.v-datetimepicker-dropdown,
+.v-datetimepicker-dropdown-left {
+  top: 0;
+  left: 0; }
+
+[class*="datetimepicker-dropdown"]::before {
+  content: '';
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #172138;
+  border-left: 7px solid transparent;
+  position: absolute; }
+
+[class*="datetimepicker-dropdown"]::after {
+  content: '';
+  display: inline-block;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid white;
+  position: absolute; }
+
+[class*="datetimepicker-dropdown-top"]::before {
+  content: '';
+  display: inline-block;
+  border-top: 7px solid rgba(23, 33, 56, 0.2);
+  border-right: 7px solid transparent;
+  border-bottom-width: 0;
+  border-left: 7px solid transparent; }
+
+[class*="datetimepicker-dropdown-top"]::after {
+  content: '';
+  display: inline-block;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid white;
+  border-bottom: 0; }
+
+.v-datetimepicker-dropdown-bottom-left::before {
+  top: -7px;
+  right: 6px; }
+
+.v-datetimepicker-dropdown-bottom-left::after {
+  top: -6px;
+  right: 7px; }
+
+.v-datetimepicker-dropdown-bottom-right::before {
+  top: -7px;
+  left: 6px; }
+
+.v-datetimepicker-dropdown-bottom-right::after {
+  top: -6px;
+  left: 7px; }
+
+.v-datetimepicker-dropdown-top-left::before {
+  bottom: -7px;
+  right: 6px; }
+
+.v-datetimepicker-dropdown-top-left::after {
+  bottom: -6px;
+  right: 7px; }
+
+.v-datetimepicker-dropdown-top-right::before {
+  bottom: -7px;
+  left: 6px; }
+
+.v-datetimepicker-dropdown-top-right::after {
+  bottom: -6px;
+  left: 7px; }
+
+.v-datetimepicker td,
+.v-datetimepicker th {
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 0; }
+
+.v-table-striped .v-datetimepicker table tr td,
+.v-table-striped .v-datetimepicker table tr th {
+  background-color: transparent; }
+
+.v-datetimepicker table tr td.v-old,
+.v-datetimepicker table tr td.v-new {
+  color: #8ca0b3; }
+
+.v-datetimepicker table tr td.v-disabled,
+.v-datetimepicker table tr td.v-disabled:hover {
+  background: none;
+  color: #8ca0b3;
+  cursor: default; }
+
+.v-datetimepicker table tr td.v-today,
+.v-datetimepicker table tr td.v-today:hover,
+.v-datetimepicker table tr td.v-today.v-disabled,
+.v-datetimepicker table tr td.v-today.v-disabled:hover {
+  background: #f4a260 linear-gradient(top, #f7be90, #f4a260) repeat-x;
+  border-color: rgba(23, 33, 56, 0.1) rgba(23, 33, 56, 0.1) rgba(23, 33, 56, 0.25); }
+
+.v-datetimepicker table tr td.v-today:hover,
+.v-datetimepicker table tr td.v-today:hover:hover,
+.v-datetimepicker table tr td.v-today.v-disabled:hover,
+.v-datetimepicker table tr td.v-today.v-disabled:hover:hover,
+.v-datetimepicker table tr td.v-today:active,
+.v-datetimepicker table tr td.v-today:hover:active,
+.v-datetimepicker table tr td.v-today.v-disabled:active,
+.v-datetimepicker table tr td.v-today.v-disabled:hover:active,
+.v-datetimepicker table tr td.v-today.v-active,
+.v-datetimepicker table tr td.v-today:hover.v-active,
+.v-datetimepicker table tr td.v-today.v-disabled.v-active,
+.v-datetimepicker table tr td.v-today.v-disabled:hover.v-active,
+.v-datetimepicker table tr td.v-today.v-disabled,
+.v-datetimepicker table tr td.v-today:hover.v-disabled,
+.v-datetimepicker table tr td.v-today.v-disabled.v-disabled,
+.v-datetimepicker table tr td.v-today.v-disabled:hover.v-disabled,
+.v-datetimepicker table tr td.v-today[disabled],
+.v-datetimepicker table tr td.v-today:hover[disabled],
+.v-datetimepicker table tr td.v-today.v-disabled[disabled],
+.v-datetimepicker table tr td.v-today.v-disabled:hover[disabled] {
+  background-color: #f7be90; }
+
+.v-datetimepicker table tr td.v-today:active,
+.v-datetimepicker table tr td.v-today:hover:active,
+.v-datetimepicker table tr td.v-today.v-disabled:active,
+.v-datetimepicker table tr td.v-today.v-disabled:hover:active,
+.v-datetimepicker table tr td.v-today.v-active,
+.v-datetimepicker table tr td.v-today:hover.v-active,
+.v-datetimepicker table tr td.v-today.v-disabled.v-active,
+.v-datetimepicker table tr td.v-today.v-disabled:hover.v-active {
+  background-color: #f4a260; }
+
+.v-datetimepicker table tr td.v-active,
+.v-datetimepicker table tr td.v-active:hover,
+.v-datetimepicker table tr td.v-active.v-disabled,
+.v-datetimepicker table tr td.v-active.v-disabled:hover {
+  background: #5bb3ee linear-gradient(top, #89c8f3, #5bb3ee);
+  border-color: rgba(23, 33, 56, 0.1) rgba(23, 33, 56, 0.1) rgba(23, 33, 56, 0.25);
+  color: white;
+  text-shadow: 0 -1px 0 rgba(23, 33, 56, 0.25); }
+
+.v-datetimepicker table tr td.v-active:hover,
+.v-datetimepicker table tr td.v-active:hover:hover,
+.v-datetimepicker table tr td.v-active.v-disabled:hover,
+.v-datetimepicker table tr td.v-active.v-disabled:hover:hover,
+.v-datetimepicker table tr td.v-active:active,
+.v-datetimepicker table tr td.v-active:hover:active,
+.v-datetimepicker table tr td.v-active.v-disabled:active,
+.v-datetimepicker table tr td.v-active.v-disabled:hover:active,
+.v-datetimepicker table tr td.v-active.v-active,
+.v-datetimepicker table tr td.v-active:hover.v-active,
+.v-datetimepicker table tr td.v-active.v-disabled.v-active,
+.v-datetimepicker table tr td.v-active.v-disabled:hover.v-active,
+.v-datetimepicker table tr td.v-active.v-disabled,
+.v-datetimepicker table tr td.v-active:hover.v-disabled,
+.v-datetimepicker table tr td.v-active.v-disabled.v-disabled,
+.v-datetimepicker table tr td.v-active.v-disabled:hover.v-disabled,
+.v-datetimepicker table tr td.v-active[disabled],
+.v-datetimepicker table tr td.v-active:hover[disabled],
+.v-datetimepicker table tr td.v-active.v-disabled[disabled],
+.v-datetimepicker table tr td.v-active.v-disabled:hover[disabled] {
+  background-color: #5bb3ee; }
+
+.v-datetimepicker table tr td.v-active:active,
+.v-datetimepicker table tr td.v-active:hover:active,
+.v-datetimepicker table tr td.v-active.v-disabled:active,
+.v-datetimepicker table tr td.v-active.v-disabled:hover:active,
+.v-datetimepicker table tr td.v-active.v-active,
+.v-datetimepicker table tr td.v-active:hover.v-active,
+.v-datetimepicker table tr td.v-active.v-disabled.v-active,
+.v-datetimepicker table tr td.v-active.v-disabled:hover.v-active {
+  background-color: #2d9ee9; }
+
+.v-datetimepicker .v-datetimepicker-hours table tr td span.v-hour_am,
+.v-datetimepicker .v-datetimepicker-hours table tr td span.v-hour_pm {
+  width: 14.6%; }
+
+.v-datetimepicker .v-datetimepicker-hours fieldset legend,
+.v-datetimepicker .v-datetimepicker-minutes fieldset legend {
+  margin-bottom: inherit;
+  line-height: 30px; }
+
+.v-datetimepicker table tr td span.v-disabled,
+.v-datetimepicker table tr td span.v-disabled:hover {
+  background: none;
+  color: #8ca0b3;
+  cursor: default; }
+
+.v-datetimepicker table tr td span.v-active,
+.v-datetimepicker table tr td span.v-active:hover,
+.v-datetimepicker table tr td span.v-active.v-disabled,
+.v-datetimepicker table tr td span.v-active.v-disabled:hover {
+  background: #5bb3ee linear-gradient(top, #89c8f3, #5bb3ee) repeat-x;
+  border-color: rgba(23, 33, 56, 0.1) rgba(23, 33, 56, 0.1) rgba(23, 33, 56, 0.25);
+  color: white;
+  text-shadow: 0 -1px 0 rgba(23, 33, 56, 0.25); }
+
+.v-datetimepicker table tr td span.v-active:hover,
+.v-datetimepicker table tr td span.v-active:hover:hover,
+.v-datetimepicker table tr td span.v-active.v-disabled:hover,
+.v-datetimepicker table tr td span.v-active.v-disabled:hover:hover,
+.v-datetimepicker table tr td span.v-active:active,
+.v-datetimepicker table tr td span.v-active:hover:active,
+.v-datetimepicker table tr td span.v-active.v-disabled:active,
+.v-datetimepicker table tr td span.v-active.v-disabled:hover:active,
+.v-datetimepicker table tr td span.v-active.v-active,
+.v-datetimepicker table tr td span.v-active:hover.v-active,
+.v-datetimepicker table tr td span.v-active.v-disabled.v-active,
+.v-datetimepicker table tr td span.v-active.v-disabled:hover.v-active,
+.v-datetimepicker table tr td span.v-active.v-disabled,
+.v-datetimepicker table tr td span.v-active:hover.v-disabled,
+.v-datetimepicker table tr td span.v-active.v-disabled.v-disabled,
+.v-datetimepicker table tr td span.v-active.v-disabled:hover.v-disabled,
+.v-datetimepicker table tr td span.v-active[disabled],
+.v-datetimepicker table tr td span.v-active:hover[disabled],
+.v-datetimepicker table tr td span.v-active.v-disabled[disabled],
+.v-datetimepicker table tr td span.v-active.v-disabled:hover[disabled] {
+  background-color: #5bb3ee; }
+
+.v-datetimepicker table tr td span.v-active:active,
+.v-datetimepicker table tr td span.v-active:hover:active,
+.v-datetimepicker table tr td span.v-active.v-disabled:active,
+.v-datetimepicker table tr td span.v-active.v-disabled:hover:active,
+.v-datetimepicker table tr td span.v-active.v-active,
+.v-datetimepicker table tr td span.v-active:hover.v-active,
+.v-datetimepicker table tr td span.v-active.v-disabled.v-active,
+.v-datetimepicker table tr td span.v-active.v-disabled:hover.v-active {
+  background-color: #2d9ee9; }
+
+.v-datetimepicker thead tr:first-child th,
+.v-datetimepicker tfoot tr:first-child th {
+  cursor: pointer; }
+
+.v-datetimepicker thead tr:first-child th:hover,
+.v-datetimepicker tfoot tr:first-child th:hover {
+  background: #dfe4ea; }
+
+.v-input-append.v-date .v-add-on i,
+.v-input-prepend.v-date .v-add-on i,
+.v-form-group__input-group.v-date .v-form-group__addon span {
+  cursor: pointer;
+  width: 14px;
+  height: 14px; }
+
 /**
  * Drops
  */
@@ -1536,6 +1862,23 @@ ul.v-drop {
 .v-select::after {
   background-image: url("/bundles/victoireui/images/components/form/select--caret.svg");
   background-repeat: no-repeat; }
+
+.v-form-group__input-group {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+
+.v-form-group__addon {
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-right: 10px; }
+  .v-form-group__input ~ .v-form-group__addon {
+    margin-right: 0;
+    margin-left: 10px; }
 
 .v-image--profile {
   border-radius: 0.1875em;
