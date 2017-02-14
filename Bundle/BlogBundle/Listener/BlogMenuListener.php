@@ -49,7 +49,7 @@ class BlogMenuListener implements MenuListenerInterface
 
         $mainItem->addChild('menu.blog.article.new',
             [
-                'route'           => 'victoire_blog_article_newBlogArticle',
+                'route'           => 'victoire_blog_article_new',
                 'routeParameters' => ['id' => $currentBlog->getId()],
             ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
@@ -80,7 +80,7 @@ class BlogMenuListener implements MenuListenerInterface
 
         $mainItem->addChild('menu.blog.article.new',
             [
-                'route'           => 'victoire_blog_article_newBlogArticle',
+                'route'           => 'victoire_blog_article_new',
                 'routeParameters' => ['id' => $event->getPage()->getId()],
                 ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
