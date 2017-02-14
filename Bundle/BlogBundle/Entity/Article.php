@@ -370,7 +370,7 @@ class Article
     /**
      * Set status.
      *
-     * @param status $status
+     * @param string $status
      */
     public function setStatus($status)
     {
@@ -383,7 +383,7 @@ class Article
     /**
      * Get status.
      *
-     * @return status
+     * @return string
      */
     public function getStatus()
     {
