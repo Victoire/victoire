@@ -2,7 +2,7 @@
 
 // PAGE MODAL EVENTS
 // Create new page after submit
-$vic(document).on('click', '.vic-modal.vic-view-modal *[data-modal="create"]', function(event) {
+$vic(document).on('click', '.v-modal.vic-view-modal *[data-modal="create"]', function(event) {
     $vic(document).trigger('victoire_modal_page_save_create_before');
     event.preventDefault();
     var form = $vic(this).parents('.vic-modal-content').find('form');
@@ -32,7 +32,7 @@ $vic(document).on('click', '.vic-modal.vic-view-modal *[data-modal="create"]', f
 });
 
 // Update an existing page
-$vic(document).on('click', '.vic-modal.vic-view-modal a[data-modal="update"]', function(event) {
+$vic(document).on('click', '.v-modal.vic-view-modal a[data-modal="update"]', function(event) {
     $vic(document).trigger('victoire_modal_page_save_update_before');
     event.preventDefault();
     var form = $vic(this).parents('.vic-modal-content').find('form');
@@ -61,7 +61,7 @@ $vic(document).on('click', '.vic-modal.vic-view-modal a[data-modal="update"]', f
 });
 
 // Create new page after submit
-$vic(document).on('click', '.vic-modal.vic-view-modal a.vic-confirmed', function(event) {
+$vic(document).on('click', '.v-modal.vic-view-modal a.vic-confirmed', function(event) {
     //Check there isn't any data-toggle="vic-confirm" on it
     event.preventDefault();
     loading(true);
