@@ -19,6 +19,7 @@ class StyleguideController extends Controller
             // 'styleguide',
             'color',
             'text',
+            'heading',
             'layout',
             'button',
             'drops',
