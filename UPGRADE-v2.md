@@ -8,14 +8,14 @@ You don't have to redefine the "picker" div because it's been put outside the bl
 
 ## UPGRADE 2.2.0
 You need to execute the following SQL command to upgrade your database.
-```
+```sql
 UPDATE vic_link SET target = '_modal' WHERE target = 'ajax-modal';
 ```
 
 ## UPGRADE 2.2.18
 You need to execute the following SQL command to upgrade your database.
 It simply remove deprecated associations that are not required anymore and could generate errors in WidgetDataWarmer.
-```
+```sql
 UPDATE vic_widget_map SET widget_id = NULL;
 UPDATE vic_widget SET view_id = NULL;
 ```
