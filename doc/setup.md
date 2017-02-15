@@ -77,7 +77,7 @@ class AppKernel extends Kernel
 
 ### Start a redis server
 
-[https://redis.io/topics/quickstart](Quick start)
+[Quick start](https://redis.io/topics/quickstart)
 
 just start it with docker:
 ```sh
