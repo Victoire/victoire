@@ -68,7 +68,9 @@ class BusinessTemplateController extends Controller
     }
 
     /**
-     * show BusinessTemplate.
+     * Show BusinessTemplate.
+     *
+     * @param BusinessTemplate $view
      *
      * @Route("/show/{id}", name="victoire_business_template_show")
      * @ParamConverter("template", class="VictoireBusinessPageBundle:BusinessTemplate")
@@ -80,14 +82,6 @@ class BusinessTemplateController extends Controller
         //add the view to twig
         $this->get('twig')->addGlobal('view', $view);
         $view->setReference(new ViewReference($view->getId()));
-
-        $this->get('victoire_widget_map.builder')->build($view);
-        $this->get('victoire_widget_map.widget_data_warmer')->warm(
-            $this->get('doctrine.orm.entity_manager'),
-            $view
-        );
-
-        $this->container->get('victoire_core.current_view')->setCurrentView($view);
 
         return $this->container->get('victoire_page.page_helper')->renderPage($view);
     }
