@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
@@ -168,6 +167,11 @@ abstract class View
     protected $roles;
 
     /**
+     * @var array
+     */
+    protected $builtWidgetMap;
+
+    /**
      * Construct.
      **/
     public function __construct()
@@ -224,7 +228,7 @@ abstract class View
     /**
      * Get template.
      *
-     * @return string
+     * @return View
      */
     public function getTemplate()
     {
@@ -521,9 +525,9 @@ abstract class View
     }
 
     /**
-     * Get widgets.
+     * Get WidgetMaps.
      *
-     * @return Collection[WidgetMap]
+     * @return WidgetMap[]
      */
     public function getWidgetMaps()
     {
@@ -531,9 +535,9 @@ abstract class View
     }
 
     /**
-     * Add widget.
+     * Add WidgetMap.
      *
-     * @param Widget $widgetMap
+     * @param WidgetMap $widgetMap
      */
     public function addWidgetMap(WidgetMap $widgetMap)
     {
@@ -554,22 +558,24 @@ abstract class View
     }
 
     /**
-     * Get widgets ids as array.
+     * Get WidgetMaps for View and its Templates.
      *
-     * @return array
+     * @return WidgetMap[]
      */
-    public function getWidgetsIds()
+    public function getWidgetMapsForViewAndTemplates()
     {
-        $widgetIds = [];
-        foreach ($this->getBuiltWidgetMap() as $slot => $_widgetMaps) {
-            foreach ($_widgetMaps as $widgetMap) {
-                foreach ($widgetMap->getWidgets() as $widget) {
-                    $widgetIds[] = $widget->getId();
-                }
-            }
+        $widgetMaps = [];
+
+        foreach ($this->getWidgetMaps() as $_widgetMap) {
+            $widgetMaps[] = $_widgetMap;
         }
 
-        return $widgetIds;
+        if ($template = $this->getTemplate()) {
+            $templateWidgetMaps = $template->getWidgetMapsForViewAndTemplates();
+            $widgetMaps = array_merge($widgetMaps, $templateWidgetMaps);
+        }
+
+        return $widgetMaps;
     }
 
     /**
@@ -585,7 +591,7 @@ abstract class View
     /**
      * Set builtWidgetMap.
      *
-     * @param string $builtWidgetMap
+     * @param array $builtWidgetMap
      *
      * @return $this
      */
@@ -717,7 +723,7 @@ abstract class View
 
     /**
      * @deprecated
-     * Get widgetMap.
+     * Get widgetMap
      *
      * @return widgetMap
      */
@@ -728,7 +734,7 @@ abstract class View
 
     /**
      * @deprecated
-     * Get widgets.
+     * Get widgets
      *
      * @return string
      */
@@ -737,6 +743,11 @@ abstract class View
         return $this->widgets;
     }
 
+    /**
+     * @param View $view
+     *
+     * @return bool
+     */
     public function isTemplateOf(View $view)
     {
         while ($_view = $view->getTemplate()) {
