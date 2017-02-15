@@ -87,7 +87,7 @@ class WidgetDataWarmer
                         //Override Collection default behaviour to avoid useless query
                         $builtWidgetMap[$slot][$i]->getWidgets()->setDirty(false);
                         $builtWidgetMap[$slot][$i]->getWidgets()->setInitialized(true);
-                        continue 2;
+                        continue;
                     }
                 }
             }
