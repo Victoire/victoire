@@ -2,8 +2,8 @@
 
 * A webserver like Apache or Nginx
 * PHP from 5.5.9
-    * JSON needs to be enabled
-    * ctype needs to be enabled
+    * [JSON extension](http://php.net/manual/book.json.php) needs to be enabled
+    * [ctype extension](http://php.net/manual/book.ctype.php) needs to be enabled
     * php.ini recommended settings
         * short_open_tag = Off
         * magic_quotes_gpc = Off
