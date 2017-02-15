@@ -7,11 +7,15 @@ To upgrade to this version, you have to refactor your widgets "edit" and "new" t
 You don't have to redefine the "picker" div because it's been put outside the block in the parent template.
 
 ## UPGRADE 2.2.0
-You need to execute the following SQL command to upgrade your database
-UPDATE vic_link SET target = '_modal' WHERE target = 'ajax-modal'
+You need to execute the following SQL command to upgrade your database.
+```
+UPDATE vic_link SET target = '_modal' WHERE target = 'ajax-modal';
+```
 
-## UPGRADE 2.2.16
-In order to reduce the number of Doctrine queries by using WidgetDataWarmer, you can execute the following SQL commands.
+## UPGRADE 2.2.18
+You need to execute the following SQL command to upgrade your database.
+It simply remove deprecated associations that are not required anymore and could generate errors in WidgetDataWarmer.
+```
 UPDATE vic_widget_map SET widget_id = NULL;
 UPDATE vic_widget SET view_id = NULL;
-It simply remove deprecated associations that are not required anymore.
+```
