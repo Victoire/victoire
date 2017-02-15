@@ -217,31 +217,6 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * Try to find value in element and retry for a given time.
-     *
-     * @param Element $element
-     * @param string  $selectorType xpath|css
-     * @param string  $value
-     * @param int     $timeout
-     */
-    protected function findOrRetry(Element $element, $selectorType, $value, $timeout = 10000)
-    {
-        if ($timeout <= 0) {
-            return;
-        }
-
-        $item = $element->find($selectorType, $value);
-
-        if ($item) {
-            return $item;
-        } else {
-            $this->getSession()->wait(100);
-
-            return $this->findOrRetry($element, $selectorType, $value, $timeout - 100);
-        }
-    }
-
-    /**
      * @Then I should see disable tab :name
      */
     public function iShouldSeeDisableTab($name)
@@ -265,5 +240,93 @@ class VictoireContext extends RawMinkContext
         $js = 'updateWidgetPosition({"parentWidgetMap": '.$widgetMapMovedTo.', "slot": "main_content", "position": "'.$position.'", "widgetMap": '.$widgetMapMoved.'})';
 
         $this->getSession()->executeScript($js);
+    }
+
+    /**
+     * @When /^I rename quantum "(.+)" with "(.+)"$/
+     */
+    public function iRenameQuantumWith($quantumPosition, $name)
+    {
+        $session = $this->getSession();
+
+        $pencilSelector = sprintf('descendant-or-self::ul[contains(@class, \'vic-quantum-nav\')]/li[%s]/a/i[contains(@class, \'fa-pencil\')]', $quantumPosition);
+        $pencil = $this->findOrRetry($session->getPage(), 'xpath', $pencilSelector);
+        $pencil->click();
+
+        $input = $this->findOrRetry($session->getPage(), 'css', '.quantum-edit-field');
+        $input->setValue($name);
+
+        //Click outside
+        $list = $this->findOrRetry($session->getPage(), 'css', '.vic-quantum-nav');
+        $list->click();
+    }
+
+    /**
+     * @When /^I select quantum "(.+)"$/
+     */
+    public function iSelectQuantum($quantumName)
+    {
+        $session = $this->getSession();
+
+        $quantumSelector = sprintf('descendant-or-self::ul[contains(@class, \'vic-quantum-nav\')]/li[normalize-space(.) = "%s"]/a', $quantumName);
+        $quantum = $this->findOrRetry($session->getPage(), 'xpath', $quantumSelector);
+        $quantum->click();
+    }
+
+    /**
+     * @When /^I create a new quantum "(.+)"$/
+     */
+    public function iCreateANewQuantum($name)
+    {
+        $session = $this->getSession();
+
+        $list = $this->findOrRetry($session->getPage(), 'css', '.vic-quantum-nav .edit.fa-plus');
+        $list->click();
+
+        $newQuantumSelector = 'descendant-or-self::ul[contains(@class, \'vic-quantum-nav\')]/li[normalize-space(.) = "Défault" and position() = (last()-1)]';
+        $newQuantum = $this->findOrRetry($session->getPage(), 'xpath', $newQuantumSelector);
+
+        if (null === $newQuantum) {
+            $message = sprintf('New quantum not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+
+        $pencilSelector = 'descendant-or-self::ul[contains(@class, \'vic-quantum-nav\')]/li[position() = (last()-1)]/a/i[contains(@class, \'fa-pencil\')]';
+        $pencil = $this->findOrRetry($session->getPage(), 'xpath', $pencilSelector);
+        $pencil->click();
+
+        $input = $this->findOrRetry($session->getPage(), 'css', '.quantum-edit-field');
+        $input->setValue($name);
+
+        //Click outside
+        $list = $this->findOrRetry($session->getPage(), 'css', '.vic-quantum-nav');
+        $list->click();
+    }
+
+    /**
+     * Try to find value in element and retry for a given time.
+     *
+     * @param Element $element
+     * @param string  $selectorType xpath|css
+     * @param string  $value
+     * @param int     $timeout
+     *
+     * @return \Behat\Mink\Element\NodeElement|mixed|null|void
+     */
+    protected function findOrRetry(Element $element, $selectorType, $value, $timeout = 10000)
+    {
+        if ($timeout <= 0) {
+            return;
+        }
+
+        $item = $element->find($selectorType, $value);
+
+        if ($item) {
+            return $item;
+        } else {
+            $this->getSession()->wait(100);
+
+            return $this->findOrRetry($element, $selectorType, $value, $timeout - 100);
+        }
     }
 }
