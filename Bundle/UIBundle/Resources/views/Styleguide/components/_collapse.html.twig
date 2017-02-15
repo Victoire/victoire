@@ -253,3 +253,73 @@
         </div>
     {% endblock snippet_preview %}
 {% endembed %}
+
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="v-btn v-btn--info / v-mode-trigger"\n        data-flag="v-drop v-mode-drop"\n        data-droptarget="#drop-collapse-ex"\n>\n    <span class="v-mode-trigger__placeholder-label">\n        Mode\n    </span>\n\n    <span class="v-mode-trigger__entity-label">\n        Mode sélection\n    </span>\n\n    <span class="v-mode-trigger__query-label">\n        Mode requête\n    </span>\n\n    <svg class="v-btn__ic v-btn__ic--after" xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="116 18 10 5">\n        <path fill="currentColor" fill-rule="evenodd" d="M124.716 18.189c.2943-.252.7696-.252 1.0638 0 .293.2517.2942.6594 0 .9122l-4.2472 3.6028c-.2942.2528-.7706.2528-1.0648 0l-4.2472-3.6028c-.294-.2528-.294-.6605 0-.9123.2942-.252.7696-.252 1.0638 0l3.7158 2.9544 3.716-2.9546z"></path>\n    </svg>\n</button>\n\n<div class="v-drop" id="drop-collapse-ex">\n    <nav class="v-drop__menu">\n        <a class="v-drop__anchor"\n           data-collapse="show"\n           data-href="#drop-collapse-ex-entity"\n           data-activeclass="v-drop__anchor--active"\n           data-triggerclass="v-mode-trigger--entity"\n        >\n            Entity\n        </a>\n\n        <a class="v-drop__anchor"\n           data-collapse="show"\n           data-href="#drop-collapse-ex-query"\n           data-activeclass="v-drop__anchor--active"\n           data-triggerclass="v-mode-trigger--query"\n        >\n            Query\n        </a>\n    </nav>\n</div>\n\n<div id="drop-collapse-ex-entity"\n     class="v-collapse"\n     data-flag="v-collapse"\n     data-group="drop-collapses"\n     data-state="visible"\n>\n    entity\n</div>\n\n<div id="drop-collapse-ex-query"\n     class="v-collapse"\n     data-flag="v-collapse"\n     data-group="drop-collapses"\n     data-state="hidden"\n>\n    hidden\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="v-btn v-btn--info / v-mode-trigger"
+                data-flag="v-drop v-mode-drop"
+                data-droptarget="#drop-collapse-ex"
+        >
+            <span class="v-mode-trigger__placeholder-label">
+                Mode
+            </span>
+
+            <span class="v-mode-trigger__entity-label">
+                Mode sélection
+            </span>
+
+            <span class="v-mode-trigger__query-label">
+                Mode requête
+            </span>
+
+            <svg class="v-btn__ic v-btn__ic--after" xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="116 18 10 5">
+                <path fill="currentColor" fill-rule="evenodd" d="M124.716 18.189c.2943-.252.7696-.252 1.0638 0 .293.2517.2942.6594 0 .9122l-4.2472 3.6028c-.2942.2528-.7706.2528-1.0648 0l-4.2472-3.6028c-.294-.2528-.294-.6605 0-.9123.2942-.252.7696-.252 1.0638 0l3.7158 2.9544 3.716-2.9546z"></path>
+            </svg>
+        </button>
+
+        <div class="v-drop" id="drop-collapse-ex">
+            <nav class="v-drop__menu">
+                <a class="v-drop__anchor"
+                   data-collapse="show"
+                   data-href="#drop-collapse-ex-entity"
+                   data-activeclass="v-drop__anchor--active"
+                   data-triggerclass="v-mode-trigger--entity"
+                >
+                    Entity
+                </a>
+
+                <a class="v-drop__anchor"
+                   data-collapse="show"
+                   data-href="#drop-collapse-ex-query"
+                   data-activeclass="v-drop__anchor--active"
+                   data-triggerclass="v-mode-trigger--query"
+                >
+                    Query
+                </a>
+            </nav>
+        </div>
+
+        <div id="drop-collapse-ex-entity"
+             class="v-collapse"
+             data-flag="v-collapse"
+             data-group="drop-collapses"
+             data-state="visible"
+        >
+            entity
+        </div>
+
+        <div id="drop-collapse-ex-query"
+             class="v-collapse"
+             data-flag="v-collapse"
+             data-group="drop-collapses"
+             data-state="hidden"
+        >
+            hidden
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
