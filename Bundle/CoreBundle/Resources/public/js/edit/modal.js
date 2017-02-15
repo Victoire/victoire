@@ -15,8 +15,8 @@ function openModal(url) {
             warn(response.message, 10000);
         } else {
             //remove drops from the previous instance of the modal
-            $vic('#vic-modal [data-flag="v-drop"]').each(function(index, el) {
-                $vic($vic(el).attr('data-href')).remove();
+            $vic('#vic-modal [data-flag*="v-drop"]').each(function(index, el) {
+                $vic($vic(el).attr('data-droptarget')).remove();
             });
 
             //remove the previous instance of the modal
@@ -84,6 +84,7 @@ function closeModal(modal) {
     $vic(modal).attr('data-modal', 'hidden');
     setTimeout(function() {$vic('.vic-creating').removeClass('vic-creating');}, 10);
 }
+
 
 //Code to close the modal by tapping esc
 //This code should not be there because the twitter bootstrap modal system
