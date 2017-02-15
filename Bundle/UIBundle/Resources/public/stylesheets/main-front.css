@@ -1942,6 +1942,31 @@ ul.v-drop {
   color: #8ca0b3;
   padding-bottom: calc(0.5em + 1px); }
 
+.v-h1, .v-h2, .v-h3, .v-h4, .v-h5, .v-h6 {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0.875em;
+  line-height: 1.125; }
+
+.v-h1 {
+  font-size: 36px; }
+
+.v-h2 {
+  font-size: 30px; }
+
+.v-h3 {
+  font-size: 24px; }
+
+.v-h4 {
+  font-size: 18px; }
+
+.v-h5 {
+  font-size: 16px; }
+
+.v-h6 {
+  font-size: 14px; }
+
 .v-image--profile {
   border-radius: 0.1875em;
   object-fit: cover;
