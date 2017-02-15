@@ -25,7 +25,7 @@
 
     <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
         {% for index, form in forms %}
-            <li class="{% if not loop.last %}vic-seperate{% endif %}{% if form.vars.data.id == widget.id %} vic-active{% endif %}">
+            <li class="{% if not loop.last %}vic-separate{% endif %}{% if form.vars.data.id == widget.id %} vic-active{% endif %}">
                 <a id="widget-{{ widgets[index].id}}-tab" class="quantum-tab-name" href="#widget-{{ widgets[index].id}}-tab-pane" data-toggle="vic-tab"><span>{{ widgets[index].quantum ? widgets[index].quantum : "widget_modal.quantum.tab.default"|trans }}</span></a>
             </li>
         {% endfor %}
