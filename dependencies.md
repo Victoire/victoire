@@ -1,7 +1,7 @@
 # System Requirements
 
 * A webserver like Apache or Nginx
-* PHP from 5.4
+* PHP from 5.5.9
     * JSON needs to be enabled
     * ctype needs to be enabled
     * php.ini recommended settings
