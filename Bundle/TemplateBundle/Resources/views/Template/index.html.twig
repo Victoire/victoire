@@ -35,7 +35,16 @@
                 </div>
 
                 <div class="v-flex-col">
-                    <a class="v-btn v-btn--square v-btn--sm" href="{{ path('victoire_template_show', {'id' : template.id }) }}">
+                    <a class="v-btn v-btn--square v-btn--sm"
+                       href="{{ path('victoire_template_settings', {'id' : template.id }) }}"
+                       data-toggle="vic-modal"
+                    >
+                        {% include 'VictoireUIBundle:SVG:cog.html.twig' %}
+                    </a>
+
+                    <a class="v-btn v-btn--square v-btn--sm"
+                       href="{{ path('victoire_template_show', {'id' : template.id }) }}"
+                    >
                         {% include 'VictoireUIBundle:SVG:angle-right.html.twig' %}
                     </a>
                 </div>
