@@ -36,7 +36,7 @@ $vic(document).on('click', '.v-modal.v-modal--view *[data-modal="create"]', func
 $vic(document).on('click', '.v-modal.v-modal--view a[data-modal="update"]', function(event) {
     $vic(document).trigger('victoire_modal_page_save_update_before');
     event.preventDefault();
-    var form = $vic(this).parents('.vic-modal-content').find('form');
+    var form = $vic(this).parents('.v-modal').find('.v-modal__content form');
 
     loading(true);
     $vic.ajax({
