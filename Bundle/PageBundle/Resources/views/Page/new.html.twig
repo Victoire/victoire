@@ -7,8 +7,19 @@
 
 {% block modal_body_content %}
     <form method="POST" action="{{path('victoire_core_page_new_post')}}">
-        {{form_widget(form)}}
-        {{form_rest(form)}}
+        <div class="v-grid">
+            <div class="v-col v-col--xs-12 v-col--md-6">
+                {{ form_widget(form.translations) }}
+            </div>
+
+            <div class="v-col v-col--xs-12 v-col--md-6">
+                <div id="v-page-new--sidebar">
+                    {{ form_row(form.template) }}
+                    {{ form_row(form.parent) }}
+                    {{ form_rest(form) }}
+                </div>
+            </div>
+        </div>
     </form>
 {% endblock modal_body_content %}
 
