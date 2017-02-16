@@ -85,6 +85,14 @@ class TrowelDrop {
         return fullOptions;
     }
 
+    get isFab() {
+        return this._trigger.getAttribute('data-flag').includes('v-drop-fab');
+    }
+
+    get isModalOpen() {
+        return document.querySelectorAll('[data-modal="show"]').length;
+    }
+
     getPositions(options) {
         return {
             options: options,
@@ -222,7 +230,12 @@ class TrowelDrop {
         switch (this._options.behavior) {
             case 'click':
                 this._trigger.addEventListener('click', function(event) {
-                    this.toggle();
+                    if (this.isFab && this.isModalOpen) {
+                        // method closeModal from `Bundle/CoreBundle/Resources/public/js/edit/modal.js`
+                        closeModal($vic('.v-modal').last());
+                    } else {
+                        this.toggle();
+                    }
                 }.bind(this), false);
 
                 document.addEventListener('click', function(event) {
