@@ -120,7 +120,7 @@
         </trans-unit>
         <trans-unit id="58893b99ed7fc" resname="menu.template.new">
             <source>menu.template.new</source>
-            <target>Nouveau</target>
+            <target>Nouveau modèle</target>
         </trans-unit>
         <trans-unit id="58893b99ed807" resname="menu.template.settings">
             <source>menu.template.settings</source>
