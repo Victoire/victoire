@@ -8,13 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
-use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 use Victoire\Bundle\SitemapBundle\Form\SitemapPriorityPageSeoType;
-use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
-use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
  * Victoire sitemap controller.
@@ -24,12 +20,7 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 class SitemapController extends Controller
 {
     /**
-     * Get the whole list of published pages
-     * #1 get the _locale related homepage
-     * #2 parse recursively and extract every persisted pages ids
-     * #3 load these pages with seo (if exists)
-     * #4 parse recursively and extract every VirtualBusinessPages references
-     * #5 prepare VirtualBusinessPages.
+     * Get Sitemap as XML.
      *
      * @Route(".{_format}", name="victoire_sitemap_xml", Requirements={"_format" = "xml"})
      *
@@ -37,55 +28,9 @@ class SitemapController extends Controller
      */
     public function xmlAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $homepage = $em->getRepository('VictoirePageBundle:BasePage')
-            ->findOneByHomepage($request->getLocale());
-
-        /** @var ViewReference $tree */
-        $tree = $this->get('victoire_view_reference.repository')->getOneReferenceByParameters(
-            ['viewId' => $homepage->getId()],
-            true,
-            true
+        $pages = $this->get('victoire_sitemap.export.handler')->handle(
+            $request->getLocale()
         );
-
-        $ids = [$tree->getViewId()];
-
-        $getChildrenIds = function (ViewReference $tree) use (&$getChildrenIds, $ids) {
-            foreach ($tree->getChildren() as $child) {
-                $ids[] = $child->getViewId();
-                $ids = array_merge($ids, $getChildrenIds($child));
-            }
-
-            return $ids;
-        };
-
-        $pages = $em->getRepository('VictoirePageBundle:BasePage')
-            ->getAll(true)
-            ->joinSeo()
-            ->filterByIds($getChildrenIds($tree))
-            ->run();
-
-        /** @var PageHelper $pageHelper */
-        $pageHelper = $this->get('victoire_page.page_helper');
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $getBusinessPages = function (ViewReference $tree) use (&$getBusinessPages, $pageHelper, $entityManager) {
-            $businessPages = [];
-            foreach ($tree->getChildren() as $child) {
-                if ($child instanceof BusinessPageReference
-                    && $child->getViewNamespace() == 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage') {
-                    /** @var WebViewInterface $businessPage */
-                    $businessPage = $pageHelper->findPageByReference($child);
-                    $businessPage->setReference($child);
-                    $businessPages[] = $businessPage;
-                }
-                $businessPages = array_merge($businessPages, $getBusinessPages($child));
-            }
-
-            return $businessPages;
-        };
-
-        $pages = array_merge($pages, $getBusinessPages($tree));
 
         return $this->render('VictoireSitemapBundle:Sitemap:sitemap.xml.twig', [
             'pages' => $pages,
@@ -93,7 +38,7 @@ class SitemapController extends Controller
     }
 
     /**
-     * Show sitemap as tree and reorganize it by dnd.
+     * Show Sitemap as tree and save new order if necessary.
      *
      * @Route("/reorganize", name="victoire_sitemap_reorganize", options={"expose"=true})
      * @Template()
@@ -102,48 +47,25 @@ class SitemapController extends Controller
      */
     public function reorganizeAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $pageRepo = $em->getRepository('VictoirePageBundle:BasePage');
-        $response = [
-            'success' => true,
-        ];
         if ($request->getMethod() === 'POST') {
-            $sorted = $request->request->get('sorted');
-            $depths = [];
-            //reorder pages positions
-            foreach ($sorted as $item) {
-                $depths[$item['depth']][$item['item_id']] = 1;
-                $page = $pageRepo->findOneById($item['item_id']);
-                if ($page !== null) {
-                    if ($item['parent_id'] !== '') {
-                        $parent = $pageRepo->findOneById($item['parent_id']);
-                        $page->setParent($parent);
-                    } else {
-                        $page->setParent(null);
-                    }
-                    $page->setPosition(count($depths[$item['depth']]));
-                    $em->persist($page);
-                }
-            }
-            $em->flush();
-
-            $response = [
-                'success' => true,
-                'message' => $this->get('translator')->trans('sitemap.changed.success', [], 'victoire'),
-            ];
+            $this->get('victoire_sitemap.sort.handler')->handle(
+                $request->request->get('sorted')
+            );
+            $response['message'] = $this->get('translator')->trans('sitemap.changed.success', [], 'victoire');
         }
 
-        $allPages = $em->getRepository('VictoirePageBundle:BasePage')->findAll();
+        $basePageRepo = $this->getDoctrine()->getManager()->getRepository('VictoirePageBundle:BasePage');
+
         $forms = [];
-        foreach ($allPages as $_page) {
+        foreach ($basePageRepo->findAll() as $_page) {
             $forms[$_page->getId()] = $this->createSitemapPriorityType($_page)->createView();
         }
 
-        $pages = $em->getRepository('VictoirePageBundle:BasePage')->findByParent(null, ['position' => 'ASC']);
+        $response['success'] = true;
         $response['html'] = $this->container->get('templating')->render(
             'VictoireSitemapBundle:Sitemap:reorganize.html.twig',
             [
-                'pages' => $pages,
+                'pages' => $basePageRepo->findByParent(null, ['position' => 'ASC']),
                 'forms' => $forms,
             ]
         );
