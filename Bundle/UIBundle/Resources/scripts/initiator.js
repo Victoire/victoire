@@ -7,11 +7,17 @@ import Slots from './ui-components/slots';
 
 export default class Initiator {
     constructor() {
-        const modals = new TrowelModals(document.querySelectorAll('[data-flag*="v-modal"]'));
-        const mdForm = new MDFormGroups(document.querySelectorAll('[data-flag*="v-mdForm"]'));
-        const drops = new TrowelDrops(document.querySelectorAll('[data-flag*="v-drop"]'));
-        const collapses = new TrowelCollapses(document.querySelectorAll('[data-flag*="v-collapse"]'));
-        const slots = new Slots(document.querySelectorAll('.v-slot'));
-        const modeDrops = new ModeDrops(document.querySelectorAll('[data-flag*="v-mode-drop"]'));
+        return this.newInits();
+    }
+
+    newInits(parent = document) {
+        this.modals = new TrowelModals(parent.querySelectorAll('[data-flag*="v-modal"]'));
+        this.mdForm = new MDFormGroups(parent.querySelectorAll('[data-flag*="v-mdForm"]'));
+        this.drops = new TrowelDrops(parent.querySelectorAll('[data-flag*="v-drop"]'));
+        this.collapses = new TrowelCollapses(parent.querySelectorAll('[data-flag*="v-collapse"]'));
+        this.slots = new Slots(parent.querySelectorAll('.v-slot'));
+        this.modeDrops = new ModeDrops(parent.querySelectorAll('[data-flag*="v-mode-drop"]'));
+
+        return;
     }
 }
