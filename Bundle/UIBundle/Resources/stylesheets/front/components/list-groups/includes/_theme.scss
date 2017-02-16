@@ -18,5 +18,8 @@ $listgroups--text-decoration: null;
 $listgroups--background-color: null;
 
 $listgroups-item--padding-x: 0.625em;
-$listgroups-item--padding-y: 0.625em;
+$listgroups-item--padding-y: (
+  'default': 0.625em,
+  '-sm': 0.3125em,
+);
 $listgroups-item-in-cascade--padding-y: 1.25em;
