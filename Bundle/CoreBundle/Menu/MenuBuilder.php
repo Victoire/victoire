@@ -119,7 +119,7 @@ class MenuBuilder
                 'dropdown'           => true,
                 'childrenAttributes' => [
                     'class' => 'v-drop v-drop__menu',
-                    'id' => 'footer-drop-navbar-left',
+                    'id' => 'footer-drop-navbar-template',
                 ],
                 'attributes' => [
                     'class'       => 'vic-dropdown',
@@ -129,7 +129,7 @@ class MenuBuilder
                     'class'       => 'v-btn v-btn--sm v-btn--transparent v-drop-trigger--no-toggle',
                     'data-flag'   => 'v-drop',
                     'data-position'   => 'topout rightin',
-                    'data-droptarget'   => '#footer-drop-navbar-left',
+                    'data-droptarget'   => '#footer-drop-navbar-template',
                 ],
                 'uri'   => '#',
             ],
@@ -159,7 +159,7 @@ class MenuBuilder
             [
                 'linkAttributes' => [
                     'class'         => 'v-btn v-btn--square v-btn--lg v-btn--fab',
-                    'data-flag'     => 'v-drop',
+                    'data-flag'     => 'v-drop v-drop-fab',
                     'data-position' => 'bottomout center',
                     'data-droptarget'     => '#victoire-fab-dropdown',
                 ],
