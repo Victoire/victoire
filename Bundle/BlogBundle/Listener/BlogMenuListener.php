@@ -46,6 +46,9 @@ class BlogMenuListener implements MenuListenerInterface
                     'blogId' => $currentBlog->getId(),
                     'tab'    => 'settings',
                 ],
+                'linkAttributes' => [
+                    'class' => 'v-btn v-btn--sm v-btn--transparent',
+                ],
             ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
 
