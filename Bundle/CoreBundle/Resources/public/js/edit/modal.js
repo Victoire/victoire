@@ -29,6 +29,9 @@ function openModal(url) {
                 backdrop: false
             });
             $vic('#vic-modal').attr('data-modal', 'show');
+
+            // set FAB on open mode
+            $vic('#v-float-container .v-btn--fab').addClass('v-btn--fab-open');
         }
         loading(false);
         $vic(document).trigger('victoire_modal_open_after');
@@ -82,6 +85,10 @@ function closeModal(modal) {
     }
 
     $vic(modal).attr('data-modal', 'hidden');
+
+    // set FAB on normal mode
+    $vic('#v-float-container .v-btn--fab').removeClass('v-btn--fab-open');
+
     setTimeout(function() {$vic('.vic-creating').removeClass('vic-creating');}, 10);
 }
 
