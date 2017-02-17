@@ -56,3 +56,16 @@
         </ul>
     {% endblock snippet_preview %}
 {% endembed %}
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<ul class="v-list-group v-list-group--main">\n    <li class="v-list-group__item">lorem</li>\n    <li class="v-list-group__item v-list-group__item--info">ipsum</li>\n</ul>',
+    }
+} %}
+    {% block snippet_preview %}
+        <ul class="v-list-group v-list-group--main">
+            <li class="v-list-group__item">lorem</li>
+            <li class="v-list-group__item v-list-group__item--info">ipsum</li>
+        </ul>
+    {% endblock snippet_preview %}
+{% endembed %}
