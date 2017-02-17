@@ -33,7 +33,6 @@
     "require": {
         "php": ">=5.5.9",
         "a2lix/translation-form-bundle": "^2.1",
-        "doctrine/doctrine-fixtures-bundle": "^2.2",
         "doctrine/doctrine-migrations-bundle": "^1.2",
         "doctrine/orm": "^2.5",
         "friendsofsymfony/jsrouting-bundle": "^1.0|^2.0",
@@ -74,7 +73,8 @@
         "phpunit/phpunit-mock-objects": "2.3.7",
         "phpunit/phpunit": "4.6.*",
         "sensio/generator-bundle": "~2.3",
-        "symfony/var-dumper": "~2.8|~3.1"
+        "symfony/var-dumper": "~2.8|~3.1",
+        "doctrine/doctrine-fixtures-bundle": "^2.2"
     },
     "autoload": {
         "psr-4": {
