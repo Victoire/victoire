@@ -1,0 +1,35 @@
+{% include "VictoireUIBundle:Styleguide:ui/section-header.html.twig" with {
+    "name": "Alert",
+} %}
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-alert v-alert--success">\n    <div class="v-alert__body">\n        ...\n    </div>\n</div>\n\n<div class="v-alert v-alert--info">\n    <div class="v-alert__body">\n        ...\n    </div>\n</div>\n\n<div class="v-alert v-alert--warning">\n    <div class="v-alert__body">\n        ...\n    </div>\n</div>\n\n<div class="v-alert v-alert--danger">\n    <div class="v-alert__body">\n        ...\n    </div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-alert v-alert--success">
+            <div class="v-alert__body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa deleniti illum ipsum quaerat quam rerum, ullam veniam voluptates? Asperiores earum facere fuga magnam modi omnis porro quasi quis repellat temporibus.
+            </div>
+        </div>
+
+        <div class="v-alert v-alert--info">
+            <div class="v-alert__body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa deleniti illum ipsum quaerat quam rerum, ullam veniam voluptates? Asperiores earum facere fuga magnam modi omnis porro quasi quis repellat temporibus.
+            </div>
+        </div>
+
+        <div class="v-alert v-alert--warning">
+            <div class="v-alert__body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa deleniti illum ipsum quaerat quam rerum, ullam veniam voluptates? Asperiores earum facere fuga magnam modi omnis porro quasi quis repellat temporibus.
+            </div>
+        </div>
+
+        <div class="v-alert v-alert--danger">
+            <div class="v-alert__body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa deleniti illum ipsum quaerat quam rerum, ullam veniam voluptates? Asperiores earum facere fuga magnam modi omnis porro quasi quis repellat temporibus.
+            </div>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
