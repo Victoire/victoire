@@ -96,11 +96,15 @@
       </trans-unit>
       <trans-unit id="58893b9934612" resname="business_template.listEntities.empty">
         <source>business_template.listEntities.empty</source>
-        <target><![CDATA[<div class="vic-alert vic-alert-info">Cette représentation métier n'est pas utilisée.</div>]]></target>
+        <target>Cette représentation métier n'est pas utilisée.</target>
       </trans-unit>
       <trans-unit id="58893b9934626" resname="business_template.listEntities">
         <source>business_template.listEntities</source>
         <target>Liste des représentations de l’objet métier</target>
+      </trans-unit>
+      <trans-unit id="3" resname="business_template.noEntities">
+        <source>business_template.noEntities</source>
+        <target>Cette entité n'à pas de représentations métier</target>
       </trans-unit>
     </body>
   </file>

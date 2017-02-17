@@ -97,11 +97,15 @@
       </trans-unit>
       <trans-unit id="58893b9932e9a" resname="business_template.listEntities.empty">
         <source>business_template.listEntities.empty</source>
-        <target><![CDATA[<div class="vic-alert vic-alert-info">Esta plantilla de negocio no sigue utilizada.</div>]]></target>
+        <target>Esta plantilla de negocio no sigue utilizada.</target>
       </trans-unit>
       <trans-unit id="58893b9932ee2" resname="business_template.listEntities">
         <source>business_template.listEntities</source>
         <target>Lista de las plantillas de negocios para</target>
+      </trans-unit>
+      <trans-unit id="3" resname="business_template.noEntities">
+        <source>business_template.noEntities</source>
+        <target>Esta entidad no alcanza actuaciones de negocios</target>
       </trans-unit>
     </body>
   </file>

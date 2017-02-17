@@ -22,45 +22,51 @@
     </div>
 </div>
 
-<ul class="v-list-group v-list-group--main v-list-group--sm">
-    {% for pagePattern in BusinessTemplates %}
-        <li class="v-list-group__item">
-            <div class="v-flex-grid v-flex-grid--justify-between v-flex-grid--align-center">
-                <div class="v-flex-col">
-                    {{ pagePattern.backendName }}
+{% if BusinessTemplates|length %}
+    <ul class="v-list-group v-list-group--main v-list-group--sm">
+        {% for pagePattern in BusinessTemplates %}
+            <li class="v-list-group__item">
+                <div class="v-flex-grid v-flex-grid--justify-between v-flex-grid--align-center">
+                    <div class="v-flex-col">
+                        {{ pagePattern.backendName }}
+                    </div>
+
+                    <div class="v-flex-col">
+                        <a class="v-btn v-btn--square v-btn--sm"
+                           data-toggle="vic-modal"
+                           href="{{ path('victoire_business_template_edit', {'id': pagePattern.id}) }}"
+                        >
+                            {% include 'VictoireUIBundle:SVG:pencil.html.twig' with { 'height': '16', 'width': '16' } %}
+                        </a>
+
+                        <a class="v-btn v-btn--square v-btn--sm"
+                           href="{{ path('victoire_business_template_show', {'id' : pagePattern.id}) }}"
+                        >
+                            {% include 'VictoireUIBundle:SVG:angle-right.html.twig' with { 'height': '12', 'width': '7' } %}
+                        </a>
+
+                        <button class="v-btn v-btn--info v-btn--square v-btn--sm"
+                                data-collapse="toggle"
+                                data-href="#page-pattern-list-{{ pagePattern.id }}"
+                        >
+                            {% include 'VictoireUIBundle:SVG:menu.html.twig' with { 'height': '20', 'width': '20' } %}
+                        </button>
+                    </div>
                 </div>
+            </li>
 
-                <div class="v-flex-col">
-                    <a class="v-btn v-btn--square v-btn--sm"
-                       data-toggle="vic-modal"
-                       href="{{ path('victoire_business_template_edit', {'id': pagePattern.id}) }}"
-                    >
-                        {% include 'VictoireUIBundle:SVG:pencil.html.twig' with { 'height': '16', 'width': '16' } %}
-                    </a>
-
-                    <a class="v-btn v-btn--square v-btn--sm"
-                       href="{{ path('victoire_business_template_show', {'id' : pagePattern.id}) }}"
-                    >
-                        {% include 'VictoireUIBundle:SVG:angle-right.html.twig' with { 'height': '12', 'width': '7' } %}
-                    </a>
-
-                    <a class="v-btn v-btn--info v-btn--square v-btn--sm"
-                       href="#"
-                       onclick="$vic(this).toggleClass('vic-btn-info');$vic('.fa',this).toggleClass('fa-inverse'); $vic('#business-entities-list-container-{{ pagePattern.id }}').slideToggle();"
-                    >
-                        {% include 'VictoireUIBundle:SVG:menu.html.twig' with { 'height': '20', 'width': '20' } %}
-                    </a>
-                </div>
-            </div>
-
-            <div class="vic-row">
-                <div class="vic-col-md-12"
-                     style="display: none"
-                     id="business-entities-list-container-{{ pagePattern.id }}"
-                >
+            <li class="v-list-group__sub-list / v-collapse" id="page-pattern-list-{{ pagePattern.id }}" data-flag="v-collapse">
+                <ul class="v-list-group">
                     {{ render(path('victoire_business_template_listentities', {'id': pagePattern.id})) }}
-                </div>
-            </div>
-        </li>
-    {% endfor %}
-</ul>
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <div class="v-alert v-alert--info">
+        <div class="v-alert__body">
+            {{ 'business_template.noEntities'|trans({}, 'victoire') }}
+        </div>
+    </div>
+{% endif %}
+
