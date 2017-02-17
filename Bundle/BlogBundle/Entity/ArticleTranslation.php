@@ -26,7 +26,7 @@ class ArticleTranslation
      * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255)
      * @Serializer\Groups({"search"})
-     * @VIC\BusinessProperty({"textable", "businessParameter", "seoable"})
+     * @VIC\BusinessProperty({"textable", "seoable"})
      */
     protected $name;
 
