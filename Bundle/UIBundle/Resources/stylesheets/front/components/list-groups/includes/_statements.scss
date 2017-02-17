@@ -56,6 +56,8 @@ $listgroup-item--selector: selector--set-element($listgroup--selector, 'item');
   @include declaration('border-top-width', $listgroups--border-width);
   @include declaration('border-top-style', $listgroups--border-style);
   @include declaration('border-top-color', $listgroups--border-color);
+  @include declaration('background-color', $listgroups-item--background-color);
+  @include declaration('color', $listgroups-item--color);
 
   @include block-generation($listgroup-item--selector);
 }

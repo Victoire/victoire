@@ -22,4 +22,10 @@ $listgroups-item--padding-y: (
   'default': 0.625em,
   '-sm': 0.3125em,
 );
+$listgroups-item--background-color: (
+  '~info': color('blue', 'light'),
+);
+$listgroups-item--color: (
+  '~info': color('white'),
+);
 $listgroups-item-in-cascade--padding-y: 1.25em;
