@@ -36,6 +36,7 @@ class StyleguideController extends Controller
             'navbar',
             'modal',
             'collapse',
+            'alert',
             // 'tabs',
             // 'card',
         );

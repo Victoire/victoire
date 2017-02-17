@@ -1,0 +1,21 @@
+@import '../../../globals/utils/rem';
+@import '../../../globals/utils/color';
+@import '../../../globals/utils/font';
+
+$alert--font-family: $app--font-family;
+$alert--font-size: rem(1);
+$alert--color: color('white');
+$alert--background-color: (
+  '-success': color('green', 'light'),
+  '-info': color('blue', 'light'),
+  '-warning': color('orange', 'light'),
+  '-danger': color('pink', 'light'),
+);
+$alert--border-width: 1px;
+$alert--border-style: solid;
+$alert--border-color: null;
+$alert--border-radius: 0.250em;
+$alert--margin: 0 0 2em;
+$alert--text-align: null;
+
+$alert-body--padding: rem(1);
