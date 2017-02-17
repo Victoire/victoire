@@ -37,3 +37,35 @@
         </div>
     {% endblock snippet_preview %}
 {% endembed %}
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-text--font-small">\n    ...\n</div>\n\n<div class="v-text--font-normal">\n    ...\n</div>\n\n<div class="v-text--font-large">\n    ...\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-text--font-small" style="margin-bottom: 20px">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit
+        </div>
+
+        <div class="v-text--font-normal" style="margin-bottom: 20px">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit
+        </div>
+
+        <div class="v-text--font-large">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-text--italic">\n    ...\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-text--italic">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}

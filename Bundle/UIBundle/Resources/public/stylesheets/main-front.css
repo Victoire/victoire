@@ -2918,6 +2918,18 @@ ul.v-menu {
 .v-text--left {
   text-align: left; }
 
+.v-text--font-small {
+  font-size: 14px; }
+
+.v-text--font-normal {
+  font-size: 16px; }
+
+.v-text--font-large {
+  font-size: 18px; }
+
+.v-text--italic {
+  font-style: italic; }
+
 .v-widget-nav {
   padding-bottom: 30px; }
 
