@@ -791,7 +791,7 @@ button.v-btn {
   [data-collapse]:hover, [data-collapse]:active, [data-collapse]:focus {
     text-decoration: none; }
 
-.v-collapse ::after {
+.v-collapse::after {
   display: block;
   content: '';
   clear: both; }
