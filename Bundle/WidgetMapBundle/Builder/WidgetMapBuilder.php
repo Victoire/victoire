@@ -4,6 +4,7 @@ namespace Victoire\Bundle\WidgetMapBundle\Builder;
 
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
+use Victoire\Bundle\WidgetMapBundle\Resolver\WidgetMapChildrenResolver;
 use Victoire\Bundle\WidgetMapBundle\Warmer\ContextualViewWarmer;
 
 /**
@@ -14,15 +15,21 @@ use Victoire\Bundle\WidgetMapBundle\Warmer\ContextualViewWarmer;
 class WidgetMapBuilder
 {
     private $contextualViewWarmer;
+    private $resolver;
 
     /**
      * WidgetMapBuilder constructor.
      *
      * @param ContextualViewWarmer $contextualViewWarmer
+     * @param WidgetMapChildrenResolver $resolver
      */
-    public function __construct(ContextualViewWarmer $contextualViewWarmer)
+    public function __construct(
+        ContextualViewWarmer $contextualViewWarmer,
+        WidgetMapChildrenResolver $resolver
+    )
     {
         $this->contextualViewWarmer = $contextualViewWarmer;
+        $this->resolver = $resolver;
     }
 
     /**
@@ -113,7 +120,7 @@ class WidgetMapBuilder
      */
     protected function orderizeWidgetMap(WidgetMap $currentWidgetMap, $builtWidgetMap, $slot, $slotWidgetMaps, View $view)
     {
-        $children = $currentWidgetMap->getChildren($view);
+        $children = $this->resolver->getChildren($currentWidgetMap, $view);
         foreach ($children as $child) {
             // check if the founded child belongs to the view
             if (in_array($child, $slotWidgetMaps, true)) {
