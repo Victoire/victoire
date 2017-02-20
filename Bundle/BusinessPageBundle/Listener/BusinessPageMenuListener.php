@@ -43,7 +43,7 @@ class BusinessPageMenuListener implements MenuListenerInterface
                 ->addChild(
                     'menu.business_template',
                     [
-                        'route' => 'victoire_business_template_index',
+                        'route'          => 'victoire_business_template_index',
                         'linkAttributes' => [
                             'class' => 'v-drop__anchor',
                         ],
@@ -64,7 +64,6 @@ class BusinessPageMenuListener implements MenuListenerInterface
      */
     public function addContextual($event)
     {
-
         $bottomRightNavbar = $this->menuBuilder->getBottomRightNavbar();
 
         //if there is a template, we add the link in the top bar
@@ -72,7 +71,7 @@ class BusinessPageMenuListener implements MenuListenerInterface
             [
                 'route'           => 'victoire_business_template_edit',
                 'routeParameters' => ['id' => $event->getPage()->getId()],
-                'linkAttributes' => [
+                'linkAttributes'  => [
                     'class' => 'v-btn v-btn--sm v-btn--transparent',
                 ],
             ]
@@ -81,12 +80,10 @@ class BusinessPageMenuListener implements MenuListenerInterface
             [
                 'route'           => 'victoire_seo_pageSeo_settings',
                 'routeParameters' => ['id' => $event->getPage()->getId()],
-                'linkAttributes' => [
+                'linkAttributes'  => [
                     'class' => 'v-btn v-btn--sm v-btn--transparent',
                 ],
             ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
-
-        return;
     }
 }

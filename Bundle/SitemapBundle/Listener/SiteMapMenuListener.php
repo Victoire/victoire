@@ -38,7 +38,7 @@ class SiteMapMenuListener
 
         $topNavbar
             ->addChild('menu.sitemap', [
-                'route' => 'victoire_sitemap_reorganize',
+                'route'      => 'victoire_sitemap_reorganize',
                 'attributes' => [
                     'class' => 'v-menu__item',
                 ],
@@ -47,7 +47,5 @@ class SiteMapMenuListener
                 ],
             ])
             ->setLinkAttribute('data-toggle', 'vic-modal');
-
-        return;
     }
 }

@@ -77,16 +77,16 @@ class MenuBuilder
                 'dropdown'           => true,
                 'childrenAttributes' => [
                     'class' => 'v-drop v-drop__menu',
-                    'id' => 'footer-drop-navbar-left',
+                    'id'    => 'footer-drop-navbar-left',
                 ],
                 'attributes' => [
                     'class'       => 'vic-dropdown',
                     'data-toggle' => 'vic-dropdown',
                 ],
                 'linkAttributes' => [
-                    'class'       => 'v-btn v-btn--transparent v-drop-trigger--no-toggle',
-                    'data-flag'   => 'v-drop',
-                    'data-position'   => 'topout leftin',
+                    'class'             => 'v-btn v-btn--transparent v-drop-trigger--no-toggle',
+                    'data-flag'         => 'v-drop',
+                    'data-position'     => 'topout leftin',
                     'data-droptarget'   => '#footer-drop-navbar-left',
                 ],
                 'uri'   => '#',
@@ -119,16 +119,16 @@ class MenuBuilder
                 'dropdown'           => true,
                 'childrenAttributes' => [
                     'class' => 'v-drop v-drop__menu',
-                    'id' => 'footer-drop-navbar-template',
+                    'id'    => 'footer-drop-navbar-template',
                 ],
                 'attributes' => [
                     'class'       => 'vic-dropdown',
                     'data-toggle' => 'vic-dropdown',
                 ],
                 'linkAttributes' => [
-                    'class'       => 'v-btn v-btn--sm v-btn--transparent v-drop-trigger--no-toggle',
-                    'data-flag'   => 'v-drop',
-                    'data-position'   => 'topout rightin',
+                    'class'             => 'v-btn v-btn--sm v-btn--transparent v-drop-trigger--no-toggle',
+                    'data-flag'         => 'v-drop',
+                    'data-position'     => 'topout rightin',
                     'data-droptarget'   => '#footer-drop-navbar-template',
                 ],
                 'uri'   => '#',
@@ -158,14 +158,14 @@ class MenuBuilder
             'menu.floatActionDropdown',
             [
                 'linkAttributes' => [
-                    'class'         => 'v-btn v-btn--square v-btn--lg v-btn--fab',
-                    'data-flag'     => 'v-drop v-drop-fab',
-                    'data-position' => 'bottomout center',
+                    'class'               => 'v-btn v-btn--square v-btn--lg v-btn--fab',
+                    'data-flag'           => 'v-drop v-drop-fab',
+                    'data-position'       => 'bottomout center',
                     'data-droptarget'     => '#victoire-fab-dropdown',
                 ],
                 'childrenAttributes' => [
                     'class' => 'v-drop v-drop--fab v-drop__menu v-drop__menu',
-                    'id' => 'victoire-fab-dropdown',
+                    'id'    => 'victoire-fab-dropdown',
                 ],
             ],
             false

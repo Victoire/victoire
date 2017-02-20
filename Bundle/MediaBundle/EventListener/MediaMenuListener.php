@@ -29,7 +29,7 @@ class MediaMenuListener
 
         $topNavbar
             ->addChild('menu.media', [
-                'uri' => '#',
+                'uri'        => '#',
                 'attributes' => [
                     'class' => 'v-menu__item',
                 ],
@@ -38,7 +38,5 @@ class MediaMenuListener
                 ],
             ])
             ->setLinkAttribute('id', 'media-manager');
-
-        return;
     }
 }

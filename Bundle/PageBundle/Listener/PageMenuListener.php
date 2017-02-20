@@ -41,7 +41,7 @@ class PageMenuListener implements MenuListenerInterface
         $bottomRightNavbar->addChild('menu.page.settings', [
             'route'           => 'victoire_core_page_settings',
             'routeParameters' => ['id' => $page->getId()],
-            'linkAttributes' => [
+            'linkAttributes'  => [
                 'class' => 'v-btn v-btn--sm v-btn--transparent',
             ],
         ])->setLinkAttribute('data-toggle', 'vic-modal');
@@ -49,12 +49,10 @@ class PageMenuListener implements MenuListenerInterface
         $bottomRightNavbar->addChild('menu.page.seoSettings', [
             'route'           => 'victoire_seo_pageSeo_settings',
             'routeParameters' => ['id' => $page->getId()],
-            'linkAttributes' => [
+            'linkAttributes'  => [
                 'class' => 'v-btn v-btn--sm v-btn--transparent',
             ],
         ])->setLinkAttribute('data-toggle', 'vic-modal');
-
-        return;
     }
 
     /**
@@ -69,15 +67,13 @@ class PageMenuListener implements MenuListenerInterface
         $floatActionDropdown = $this->menuBuilder->getFloatActionDropdown();
 
         $floatActionDropdown->addChild('menu.page.new', [
-            'route'     => 'victoire_core_page_new',
+            'route'          => 'victoire_core_page_new',
             'linkAttributes' => [
                 'class' => 'v-drop__anchor',
             ],
         ])
             ->setExtra('translation_domain', 'victoire')
             ->setLinkAttribute('data-toggle', 'vic-modal');
-
-        return;
     }
 
     /**
