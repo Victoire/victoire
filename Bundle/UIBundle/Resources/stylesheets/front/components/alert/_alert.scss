@@ -24,4 +24,8 @@ $alert-body--selector: selector--set-element($alert--selector, 'body');
   @include declaration('padding', $alert-body--padding);
 
   @include block-generation($alert-body--selector);
+
+  svg {
+    vertical-align: middle;
+  }
 }

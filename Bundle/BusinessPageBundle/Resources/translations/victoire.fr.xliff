@@ -76,7 +76,7 @@
       </trans-unit>
       <trans-unit id="58893b99345b3" resname="victoire.form.business_template.query.vic_help_block">
         <source>victoire.form.business_template.query.vic_help_block</source>
-        <target><![CDATA[<i class="fa fa-info-circle"></i> <em>Cette partie est réservée aux développeurs</em>. Utilisez ce champ pour définir quelles instances sont autorisées à utiliser cette représentation métier]]></target>
+        <target><![CDATA[<em>Cette partie est réservée aux développeurs</em>. Utilisez ce champ pour définir quelles instances sont autorisées à utiliser cette représentation métier]]></target>
       </trans-unit>
       <trans-unit id="58893b99345c6" resname="victoire.form.business_template.query.url.fieldset">
         <source>victoire.form.business_template.query.url.fieldset</source>

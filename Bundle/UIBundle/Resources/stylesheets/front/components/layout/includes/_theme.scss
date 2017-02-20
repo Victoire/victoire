@@ -17,6 +17,7 @@ $flexgrid--enable: true !default; // not a trowel variable
 $flexgrid--gutter: (
   'default': rem(0.5),
   '-gutter-lg': rem(1.1875),
+  '-gutter-sm': rem(0.25),
 );
 $flexgrid--flex-wrap: wrap !default;
 $flexgrid--align-items: (

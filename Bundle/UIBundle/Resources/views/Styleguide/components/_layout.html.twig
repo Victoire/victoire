@@ -119,6 +119,25 @@
     {% endblock snippet_preview %}
 {% endembed %}
 
+<h2 class="ts-section__sub-heading">Flexbox grid / small gutter</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-flex-grid v-flex-grid--gutter-sm">\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col v-flex-col--grow-1">flex col</div>\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col">flex col</div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-flex-grid v-flex-grid--gutter-sm">
+            {% for item in 1..5 %}
+                <div class="v-flex-col{% if item == 3 %} v-flex-col--grow-1{% endif %}">
+                    <div class="col-showcase" style="height: {{ 32 + item * 10 }}px">
+                        flex col
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
 <h2 class="ts-section__sub-heading">Flexbox grid / aligned center</h2>
 {% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
     'snippets': {
