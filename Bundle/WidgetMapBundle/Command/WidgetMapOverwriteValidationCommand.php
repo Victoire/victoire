@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
@@ -52,15 +51,12 @@ class WidgetMapOverwriteValidationCommand extends ContainerAwareCommand
 
         $views = $entityManager->getRepository('Victoire\Bundle\CoreBundle\Entity\View')->findAll();
         foreach ($views as $view) {
-
             $widgetMaps = $contextualViewWarmer->warm($view);
 
             foreach ($widgetMaps as $widgetMap) {
-
                 $positions = [WidgetMap::POSITION_BEFORE, WidgetMap::POSITION_AFTER];
                 $children = [];
                 foreach ($positions as $position) {
-
                     $children[$position] = null;
                     $matchingChildren = [];
 
@@ -97,7 +93,7 @@ class WidgetMapOverwriteValidationCommand extends ContainerAwareCommand
             }
         }
 
-        if($conflictNb > 0) {
+        if ($conflictNb > 0) {
             $output->writeln(sprintf('<error>%s WidgetMaps conflicts found.</error>', $conflictNb));
             $output->writeln('<error>At least one of those WidgetMaps must have a replace_id with action "overwrite".</error>');
             $table->render();

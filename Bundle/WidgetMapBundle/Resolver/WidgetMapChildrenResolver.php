@@ -8,19 +8,18 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 class WidgetMapChildrenResolver
 {
-
     private $logger;
 
     /**
      * WidgetMapChildrenResolver constructor.
-     * 
+     *
      * @param Logger $logger
      */
     public function __construct(Logger $logger)
     {
         $this->logger = $logger;
     }
-    
+
     /**
      * Return "after" and "before" children,
      * based on contextual View and its Templates.
@@ -32,7 +31,6 @@ class WidgetMapChildrenResolver
         $positions = [WidgetMap::POSITION_BEFORE, WidgetMap::POSITION_AFTER];
         $children = [];
         foreach ($positions as $position) {
-
             $matchingChildren = [];
 
             //Position is null by default
@@ -68,7 +66,6 @@ class WidgetMapChildrenResolver
                     $view->getId()
                 ));
             }
-
         }
 
         return $children;
