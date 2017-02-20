@@ -33,29 +33,18 @@ class BlogMenuListener implements MenuListenerInterface
      */
     public function addContextual($event)
     {
-        $bottomRightNavbar = $this->menuBuilder->getBottomRightNavbar();
         $floatActionDropdown = $this->menuBuilder->getFloatActionDropdown();
 
         $currentArticle = $event->getPage()->getBusinessEntity();
         $currentBlog = $currentArticle->getBlog();
 
-        $bottomRightNavbar->addChild('menu.blog.settings',
-            [
-                'route'           => 'victoire_blog_index',
-                'routeParameters' => [
-                    'blogId' => $currentBlog->getId(),
-                    'tab'    => 'settings',
-                ],
-                'linkAttributes' => [
-                    'class' => 'v-btn v-btn--sm v-btn--transparent',
-                ],
-            ]
-        )->setLinkAttribute('data-toggle', 'vic-modal');
-
-        $floatActionDropdowns->addChild('menu.blog.article.new',
+        $floatActionDropdown->addChild('menu.blog.article.new',
             [
                 'route'           => 'victoire_blog_article_new',
                 'routeParameters' => ['id' => $currentBlog->getId()],
+                'linkAttributes' => [
+                    'class' => 'v-drop__anchor',
+                ],
             ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
     }
@@ -69,18 +58,7 @@ class BlogMenuListener implements MenuListenerInterface
      */
     public function addBlogContextual($event)
     {
-        $bottomRightNavbar = $this->menuBuilder->getBottomRightNavbar();
         $floatActionDropdown = $this->menuBuilder->getFloatActionDropdown();
-
-        $bottomRightNavbar->addChild('menu.blog.settings',
-            [
-                'route'           => 'victoire_blog_index',
-                'routeParameters' => [
-                    'blogId' => $event->getPage()->getId(),
-                    'tab'    => 'settings',
-                ],
-            ]
-        )->setLinkAttribute('data-toggle', 'vic-modal');
 
         $floatActionDropdown->addChild('menu.blog.article.new',
             [
