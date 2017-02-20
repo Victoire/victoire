@@ -21,6 +21,10 @@
   margin: 19px;
 }
 
+.#{$app--prefix}-flex-grid--gutter-sm .#{$app--prefix}-flex-col {
+  margin: 4px;
+}
+
 .#{$app--prefix}-flex-grid--direction-column {
   flex-direction: column;
 }

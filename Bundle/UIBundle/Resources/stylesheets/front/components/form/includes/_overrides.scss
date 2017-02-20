@@ -46,3 +46,7 @@
   color: color('grey');
   padding-bottom: calc(0.5em + 1px);
 }
+
+.#{$app--prefix}-form-group__help svg {
+  vertical-align: bottom;
+}

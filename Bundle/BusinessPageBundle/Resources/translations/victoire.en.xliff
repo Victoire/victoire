@@ -76,7 +76,7 @@
       </trans-unit>
       <trans-unit id="58893b99315b3" resname="victoire.form.business_template.query.vic_help_block">
         <source>victoire.form.business_template.query.vic_help_block</source>
-        <target><![CDATA[<i class="fa fa-info-circle"></i> <em>This field is for developers only.</em> Use this field to define which authorities are authorized to use this business template]]></target>
+        <target><![CDATA[<em>This field is for developers only.</em> Use this field to define which authorities are authorized to use this business template]]></target>
       </trans-unit>
       <trans-unit id="58893b99315d1" resname="victoire.form.business_template.query.url.fieldset">
         <source>victoire.form.business_template.query.url.fieldset</source>
@@ -104,7 +104,7 @@
       </trans-unit>
       <trans-unit id="3" resname="business_template.noEntities">
         <source>business_template.noEntities</source>
-        <target>This entity has no business template</target>
+        <target>th</target>
       </trans-unit>
     </body>
   </file>

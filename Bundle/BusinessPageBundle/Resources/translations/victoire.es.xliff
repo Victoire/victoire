@@ -77,7 +77,7 @@
       </trans-unit>
       <trans-unit id="58893b9932e54" resname="victoire.form.business_template.query.vic_help_block">
         <source>victoire.form.business_template.query.vic_help_block</source>
-        <target><![CDATA[<i class="fa fa-info-circle"></i> <em>Esta parte está reservada para los programadores</em>. Utilice este campo para determinar qué organismos están autorizados a utilizar la plantilla de negocio]]></target>
+        <target><![CDATA[<em>Esta parte está reservada para los programadores</em>. Utilice este campo para determinar qué organismos están autorizados a utilizar la plantilla de negocio]]></target>
       </trans-unit>
       <trans-unit id="58893b9932e5f" resname="victoire.form.business_template.query.url.fieldset">
         <source>victoire.form.business_template.query.url.fieldset</source>
