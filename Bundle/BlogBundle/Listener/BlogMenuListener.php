@@ -58,8 +58,6 @@ class BlogMenuListener implements MenuListenerInterface
                 'routeParameters' => ['id' => $currentBlog->getId()],
             ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
-
-        return;
     }
 
     /**
@@ -90,8 +88,6 @@ class BlogMenuListener implements MenuListenerInterface
                 'routeParameters' => ['id' => $event->getPage()->getId()],
                 ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
-
-        return;
     }
 
     /**
@@ -108,7 +104,7 @@ class BlogMenuListener implements MenuListenerInterface
         if ($this->menuBuilder->isGranted('ROLE_VICTOIRE_BLOG')) {
             $this->menuBuilder->getTopNavbar()->addChild(
                 'menu.leftnavbar.blog.label', [
-                    'route' => 'victoire_blog_index',
+                    'route'      => 'victoire_blog_index',
                     'attributes' => [
                         'class' => 'v-menu__item',
                     ],

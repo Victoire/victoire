@@ -39,13 +39,11 @@ class TemplateMenuListener implements MenuListenerInterface
             [
                 'route'           => 'victoire_template_settings',
                 'routeParameters' => ['id' => $template->getId()],
-                'linkAttributes' => [
+                'linkAttributes'  => [
                     'class' => 'v-btn v-btn--sm v-btn--transparent',
                 ],
             ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
-
-        return;
     }
 
     /**
@@ -60,20 +58,18 @@ class TemplateMenuListener implements MenuListenerInterface
         $menuTemplate = $this->menuBuilder->getBottomRightNavbar()->getChild('menu.template');
 
         $menuTemplate->addChild('menu.template.new', [
-            'route' => 'victoire_template_new',
+            'route'          => 'victoire_template_new',
             'linkAttributes' => [
                 'class' => 'v-drop__anchor',
             ],
         ])->setLinkAttribute('data-toggle', 'vic-modal');
 
         $menuTemplate->addChild('menu.template.index', [
-            'route' => 'victoire_template_index',
+            'route'          => 'victoire_template_index',
             'linkAttributes' => [
                 'class' => 'v-drop__anchor',
             ],
         ])->setLinkAttribute('data-toggle', 'vic-modal');
-
-        return;
     }
 
     public function getMainItem()

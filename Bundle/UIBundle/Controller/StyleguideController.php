@@ -2,9 +2,9 @@
 
 namespace Victoire\Bundle\UIBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class StyleguideController extends Controller
 {
@@ -15,7 +15,7 @@ class StyleguideController extends Controller
      */
     public function indexAction($component = null)
     {
-        $components = array(
+        $components = [
             // 'styleguide',
             'color',
             'text',
@@ -39,11 +39,11 @@ class StyleguideController extends Controller
             'alert',
             // 'tabs',
             // 'card',
-        );
+        ];
 
-        return array(
-            'components' => $component ? array($component) : $components,
-            'focus' => $component != null,
-        );
+        return [
+            'components' => $component ? [$component] : $components,
+            'focus'      => $component != null,
+        ];
     }
 }
