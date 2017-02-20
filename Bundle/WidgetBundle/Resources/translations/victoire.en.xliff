@@ -86,7 +86,6 @@
         <source>widget_layout.form.containerTag.help_block</source>
         <target><![CDATA[More information about this choice <a href="http://www.w3.org/wiki/HTML_structural_elements" target="_blank">here</a>]]></target>
       </trans-unit>
-<<<<<<< acd9c98ccfd6f6ad80913b74a7048c1377fdfa50
       <trans-unit id="58893b9a16bcb" resname="widget_layout.form.containerMargin.placeholder">
         <source>widget_layout.form.containerMargin.placeholder</source>
         <target>units : pixels, % or "auto"</target>
@@ -96,9 +95,6 @@
         <target>units : pixels, % or "auto"</target>
       </trans-unit>
      <trans-unit id="58893b9a16bf1" resname="widget_layout.form.containerMargin.help_block">
-=======
-     <trans-unit id="22" resname="widget_layout.form.containerMargin.help_block">
->>>>>>> style modal redesign
         <source>widget_layout.form.containerMargin.help_block</source>
         <target><![CDATA[Eg : 10px 10px 10px 10px (top; right; bottom; left)</br><a href="hhttp://www.w3schools.com/css/css_padding.asp" target="_blank">more info</a>]]></target>
       </trans-unit>
