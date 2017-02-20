@@ -91,7 +91,7 @@ class VictoireContext extends RawMinkContext
      */
     public function iSwitchToMode($mode)
     {
-        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', 'descendant-or-self::*[@data-mode="admin-'.$mode.'"]');
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', 'descendant-or-self::*[@for="mode-switcher--'.$mode.'"]');
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
@@ -105,7 +105,29 @@ class VictoireContext extends RawMinkContext
      */
     public function iOpenTheHamburgerMenu()
     {
-        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', 'descendant-or-self::*[@id="vic-menu-leftnavbar-trigger"]');
+        $element = $this->findOrRetry(
+            $this->getSession()->getPage(),
+            'xpath',
+            'descendant-or-self::*[@id="vic-menu-leftnavbar-trigger"]'
+        );
+
+        if (null === $element) {
+            $message = sprintf('Element not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+        $element->click();
+    }
+
+    /**
+     * @Then /^I open the settings menu$/
+     */
+    public function iOpenTheSettingsMenu()
+    {
+        $element = $this->findOrRetry(
+            $this->getSession()->getPage(),
+            'xpath',
+            'descendant-or-self::*[@id="v-settings-link"]'
+        );
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');

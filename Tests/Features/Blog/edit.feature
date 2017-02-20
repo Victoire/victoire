@@ -8,7 +8,6 @@ Background:
     And I am on homepage
 
     Scenario: I create a new article and update its slug
-        Given I open the hamburger menu
         Then I should see "Blog"
         When I follow "Blog"
         Then I should see "The Jedi Network"
