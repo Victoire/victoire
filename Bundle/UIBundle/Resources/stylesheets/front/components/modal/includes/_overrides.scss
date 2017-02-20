@@ -1,0 +1,8 @@
+@import '../../../globals/utils/synthax';
+
+/**
+ * 1 - 100px equals the height of the modal header + modal footer
+ */
+.#{$app--prefix}-modal__body {
+  height: calc(100% - 100px); /* 1 */
+}
