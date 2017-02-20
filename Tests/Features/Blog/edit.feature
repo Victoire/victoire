@@ -22,7 +22,7 @@ Background:
         And I wait 5 seconds
         Then I should be on "/fr/the-jedi-network/i-m-your-father"
         And I wait 3 seconds
-        When I select the option "Paramètres de la page" in the dropdown "Page"
+        When I open the settings menu
         And I wait 3 seconds
         Then I should see "Paramètres de l'article"
         And I should see "I'm your father"

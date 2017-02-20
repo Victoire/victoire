@@ -33,7 +33,24 @@ class ArticleMenuListener implements MenuListenerInterface
      */
     public function addContextual($event)
     {
-        return;
+        $page = $event->getPage();
+        $currentArticle = $event->getPage()->getBusinessEntity();
+
+        $bottomRightNavbar = $this->menuBuilder->getBottomRightNavbar();
+
+        $bottomRightNavbar->addChild('menu.page.settings',
+            [
+                'route'           => 'victoire_blog_article_settings',
+                'routeParameters' => [
+                    'id'      => $currentArticle->getId(),
+                    'page_id' => $page->getId(),
+                ],
+                'linkAttributes'  => [
+                    'class' => 'v-btn v-btn--sm v-btn--transparent v-test',
+                    'id' => 'v-settings-link',
+                ],
+            ]
+        )->setLinkAttribute('data-toggle', 'vic-modal');
     }
 
     /**
@@ -48,4 +65,24 @@ class ArticleMenuListener implements MenuListenerInterface
     public function addGlobal(Event $event)
     {
     }
+
+    /**
+     * This method returns you the main item and create it if not exists.
+     *
+     * @return \Knp\Menu\ItemInterface The main item to get
+     */
+    private function getMainItem()
+    {
+        $menuPage = $this->menuBuilder->getTopNavbar()->getChild('menu.page');
+
+        if ($menuPage) {
+            return $menuPage;
+        } else {
+            return $this->menuBuilder->createDropdownMenuItem(
+                $this->menuBuilder->getTopNavbar(),
+                'menu.page'
+            );
+        }
+    }
+
 }
