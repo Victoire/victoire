@@ -17,6 +17,10 @@
   line-height: 1;
 }
 
+.#{$app--prefix}-flex-grid {
+  width: 100%;
+}
+
 .#{$app--prefix}-flex-grid--gutter-lg .#{$app--prefix}-flex-col {
   margin: 19px;
 }
