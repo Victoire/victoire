@@ -20,14 +20,13 @@ class WidgetMapBuilder
     /**
      * WidgetMapBuilder constructor.
      *
-     * @param ContextualViewWarmer $contextualViewWarmer
+     * @param ContextualViewWarmer      $contextualViewWarmer
      * @param WidgetMapChildrenResolver $resolver
      */
     public function __construct(
         ContextualViewWarmer $contextualViewWarmer,
         WidgetMapChildrenResolver $resolver
-    )
-    {
+    ) {
         $this->contextualViewWarmer = $contextualViewWarmer;
         $this->resolver = $resolver;
     }

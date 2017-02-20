@@ -19,16 +19,15 @@ class WidgetMapManager
     /**
      * WidgetMapManager constructor.
      *
-     * @param EntityManager $em
-     * @param WidgetMapBuilder $builder
+     * @param EntityManager             $em
+     * @param WidgetMapBuilder          $builder
      * @param WidgetMapChildrenResolver $resolver
      */
     public function __construct(
         EntityManager $em,
         WidgetMapBuilder $builder,
         WidgetMapChildrenResolver $resolver
-    )
-    {
+    ) {
         $this->em = $em;
         $this->builder = $builder;
         $this->resolver = $resolver;

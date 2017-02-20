@@ -423,14 +423,12 @@ class WidgetMap
                 return $substitute;
             }
 
-            while($template = $view->getTemplate()) {
+            while ($template = $view->getTemplate()) {
                 if ($substitute->getView() === $template) {
                     return $substitute;
                 }
             }
         }
-
-        return null;
     }
 
     /**
