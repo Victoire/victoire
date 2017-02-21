@@ -10,7 +10,6 @@ use Doctrine\DBAL\Schema\Schema;
  */
 class Version20170217154601 extends AbstractMigration
 {
-
     /**
      * @param Schema $schema
      */
@@ -32,7 +31,6 @@ class Version20170217154601 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_FAA91F342B7846BB ON vic_view (related_business_entity_id);');
         $this->addSql('ALTER TABLE vic_widget DROP FOREIGN KEY FK_57DF2B231341DB46;');
         $this->addSql('ALTER TABLE vic_widget ADD related_business_entity_id INT DEFAULT NULL;');
-
     }
 
     /**
@@ -56,6 +54,5 @@ class Version20170217154601 extends AbstractMigration
         $this->addSql('ALTER TABLE vic_view DROP INDEX IDX_FAA91F342B7846BB;');
         $this->addSql('ALTER TABLE vic_widget ADD FOREIGN KEY FK_57DF2B231341DB46 FOREIGN KEY (entityProxy_id) REFERENCES vic_entity_proxy (id) ON DELETE CASCADE;');
         $this->addSql('ALTER TABLE vic_widget DROP COLUMN related_business_entity_id;');
-
     }
 }

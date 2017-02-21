@@ -2,10 +2,9 @@
 
 namespace Victoire\Bundle\CoreBundle\Form;
 
-use Victoire\Bundle\CoreBundle\Form\Field\APISelect2Type;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
-use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -16,6 +15,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
 use Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver;
+use Victoire\Bundle\CoreBundle\Form\Field\APISelect2Type;
 use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
@@ -55,7 +55,6 @@ class EntityProxyFormType extends AbstractType
     {
         $entityManager = $this->entityManager;
         $locale = $this->requestStack->getCurrentRequest()->getLocale();
-
 
         if ($options['mode'] === Widget::MODE_ENTITY) {
             $businessEntity = $entityManager->getRepository(
@@ -139,7 +138,6 @@ class EntityProxyFormType extends AbstractType
                     ]
                 );
             }
-
         }
         $builder->add(
             'businessEntity',
@@ -164,7 +162,6 @@ class EntityProxyFormType extends AbstractType
             )
         );
     }
-
 
     /**
      * bind to Menu entity.
