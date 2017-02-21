@@ -5,6 +5,7 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
         Given I maximize the window
         And I am on homepage
 
+    @debug
     Scenario: I can view the mercenary show view
         Given the following Mercenaries:
             | name       | midiChlorians | slug       |
