@@ -53,13 +53,19 @@ class WidgetType extends AbstractType
         $builder->add('mode', HiddenType::class, [
             'data' => $options['mode'],
         ]);
-        $builder->add('asynchronous', null, [
+        $builder->add('asynchronous', AsynchronousType::class, [
                 'label'    => 'victoire.widget.type.asynchronous.label',
                 'required' => false,
+                'attr'     => array(
+                    'class' => 'vic-col-xs-12 test',
+                )
             ]);
         $builder->add('theme', HiddenType::class);
-        $builder->add('quantum', null, [
+        $builder->add('quantum', QuantumType::class, [
             'label' => 'victoire.widget.type.quantum.label',
+            'attr'     => array(
+                'class' => 'vic-col-xs-12 test',
+            )
         ]);
 
         //add the slot to the form
