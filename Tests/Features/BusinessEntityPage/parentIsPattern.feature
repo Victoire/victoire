@@ -10,7 +10,6 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
             | name       | midiChlorians | slug       |
             | Boba fet   | 1500          | boba-fet   |
 
-        Given I open the hamburger menu
         Given the following BusinessTemplate:
             | currentLocale |name                       | backendName  | slug                     |  businessEntityId | parent  | template      |
             | fr            |Fiche Personnage - {{item.name}} | Fiche Jedi   | fiche-personnage-{{item.slug}} |  character        | home    | base |
