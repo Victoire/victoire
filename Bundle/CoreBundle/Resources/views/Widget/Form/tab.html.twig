@@ -3,7 +3,7 @@
 {% set name = widget.quantum ? widget.quantum : "widget_modal.quantum.tab.default"|trans({}, 'victoire') %}
 
 <div class="v-flex-col">
-    <button
+    <a
         class="v-btn v-btn--square v-btn--quantum"
         data-flag="v-drop"
         data-position="middle rightout"
@@ -15,7 +15,7 @@
     >
         {% include "VictoireUIBundle:SVG:quantum.html.twig" with { class: 'v-btn--quantum__ic' } %}
         {{ name|truncate(2, false, '') }}
-    </button>
+    </a>
 
     <div class="v-drop v-drop--tooltip" id="tooltip-quantum-{{ id }}-name">
         <div class="v-drop__content">
