@@ -15,8 +15,9 @@
             <a class="v-btn v-btn--success"
                data-toggle="vic-modal"
                href="{{ path('victoire_business_template_new', {'id': businessEntity.id}) }}"
+               title="{{ 'list.action.add'|trans({}, 'victoire') }}"
             >
-                {{ 'list.action.add'|trans }}
+                {{ 'list.action.add'|trans({}, 'victoire') }}
             </a>
         {% endspaceless %}
     </div>
