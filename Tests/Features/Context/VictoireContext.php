@@ -136,6 +136,23 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
+     * @When I follow the float action button
+     */
+    public function iFollowTheFloatAction()
+    {
+        $element = $this->findOrRetry(
+            $this->getSession()->getPage(),
+            'css',
+            '#v-float-container [data-flag="v-drop v-drop-fab"]'
+        );
+        if (null === $element) {
+            $message = sprintf('Element not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+        $element->click();
+    }
+
+    /**
      * @When I open the widget quantum collapse for entity :entity
      */
     public function iOpenTheWidgetQuantumCollapse($entity)

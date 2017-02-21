@@ -7,8 +7,9 @@ Background:
 
   @smartStep
 Scenario: I can create a new page
-    Given I should see "Page"
-    Given I select the option "Nouvelle page" in the dropdown "Page"
+    When I follow the float action button
+    Then I should see "Nouvelle page"
+    And I follow "Nouvelle page"
     And I should see "Créer"
     And I fill in "Nom" with "tatooine"
     Then I submit the widget
