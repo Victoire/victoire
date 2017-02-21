@@ -7,14 +7,17 @@ Feature: Manage sitemap
 
   @smartStep
   Scenario: I can create a child for a page
-    Given I should see "Page"
-    Given I select the option "Nouvelle page" in the dropdown "Page"
+    When I follow the float action button
+    And I should see "Nouvelle page"
+    Then I follow "Nouvelle page"
     And I should see "Créer"
     And I fill in "Nom" with "anakin skywalker"
     Then I submit the widget
     And I should see "Page créée avec succès"
     And I should be on "/fr/anakin-skywalker"
-    Given I select the option "Nouvelle page" in the dropdown "Page"
+    When I follow the float action button
+    And I should see "Nouvelle page"
+    Then I follow "Nouvelle page"
     And I should see "Créer"
     And I fill in "Nom" with "luke skywalker"
     And I select "anakin skywalker" from "Page parente"
@@ -29,9 +32,9 @@ Feature: Manage sitemap
       | fr            |anakin skywalker | anakin-skywalker | home    | base          |
       | fr            |luke skywalker | luke-skywalker | anakin-skywalker    | base          |
     And I am on "/fr/anakin-skywalker"
-    Given I select the option "Paramètres de la page" in the dropdown "Page"
+    Given I open the settings menu
     Then I should see "Supprimer"
-    Then I follow "Supprimer"
+    Then I follow the link containing "Supprimer"
     And I should see "Cette action va supprimer définitivement cette page. Cette action est irréversible. Êtes-vous sûr ?"
     And I press "J'ai bien compris, je confirme la suppression"
     And I wait 2 seconds
