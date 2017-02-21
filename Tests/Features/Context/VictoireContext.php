@@ -119,6 +119,42 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
+     * @When I open the widget mode drop for entity :entity
+     */
+    public function iOpenTheWidgetModeDrop($entity)
+    {
+        $element = $this->findOrRetry(
+            $this->getSession()->getPage(),
+            'css',
+            '[id^="picker-'.strtolower($entity).'"] .v-mode-trigger'
+        );
+        if (null === $element) {
+            $message = sprintf('Element not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+        $element->click();
+    }
+
+    /**
+     * @When I open the widget quantum collapse for entity :entity
+     */
+    public function iOpenTheWidgetQuantumCollapse($entity)
+    {
+        $element = $this->findOrRetry(
+            $this->getSession()->getPage(),
+            'css',
+            '[id^="picker-'.strtolower($entity).'"][data-state="visible"] [id^="picker-'.strtolower($entity).'"][data-state="visible"] .v-widget-form__quantum-btn'
+        );
+
+
+        if (null === $element) {
+            $message = sprintf('Element not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+        $element->click();
+    }
+
+    /**
      * @Then /^I open the settings menu$/
      */
     public function iOpenTheSettingsMenu()
@@ -137,11 +173,62 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
+     * @Then /^I open the additionals menu drop$/
+     */
+    public function iOpenTheAdditionalsMenuDrop()
+    {
+        $element = $this->findOrRetry(
+            $this->getSession()->getPage(),
+            'xpath',
+            'descendant-or-self::*[@id="v-additionals-drop"]'
+        );
+
+        if (null === $element) {
+            $message = sprintf('Element not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+        $element->click();
+    }
+
+    /**
      * @When I follow the tab :name
      */
     public function iFollowTheTab($name)
     {
-        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::a[@data-toggle="vic-tab" and normalize-space(text()) = "%s"]', $name));
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::a[contains(@class, "v-tabs-nav__anchor") and normalize-space(text()) = "%s"]', $name));
+
+        // @TODO When the new styleguide is completly integrated, remove.
+        if (null === $element) {
+            $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::a[@data-toggle="vic-tab" and normalize-space(text()) = "%s"]', $name));
+        }
+
+        if (null === $element) {
+            $message = sprintf('Element not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+        $element->click();
+    }
+
+    /**
+     * @When I follow the drop trigger :name
+     */
+    public function iFollowTheDropTrigger($name)
+    {
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::a[@data-flag*="v-drop" and normalize-space(text()) = "%s"]', $name));
+
+        if (null === $element) {
+            $message = sprintf('Element not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+        $element->click();
+    }
+
+    /**
+     * @When I follow the drop anchor :name
+     */
+    public function iFollowTheDropAnchor($name)
+    {
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::a[contains(@class, "v-drop__anchor") and normalize-space(text()) = "%s"]', $name));
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');

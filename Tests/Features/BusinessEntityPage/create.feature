@@ -10,11 +10,11 @@ Feature: Create business entity pages
         And I maximize the window
         And I am on homepage
 
+    @debug
     Scenario: I can create a new Business entity page pattern
-        Given I open the hamburger menu
+        When I open the additionals menu drop
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
-        And I close the hamburger menu
         Then I should see "Jedi"
         Then I should see "Ajouter une représentation métier"
         When I follow the tab "Jedi"
@@ -37,9 +37,12 @@ Feature: Create business entity pages
         And I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
-        Then I follow the tab "Jedi"
+        Then I follow the tab "Entités"
+        Then I should see "Jedi"
+        Then I follow the drop anchor "Jedi"
+        When I open the widget mode drop for entity "Jedi"
         And I should see "Objet courant"
-        And I follow "Objet courant"
+        And I follow the drop anchor "Objet courant"
         And I select "side" from "jedi_a_businessEntity_widget_force[fields][side]"
         And I submit the widget
         Then I should see "Le côté obscur de la force"
@@ -138,12 +141,15 @@ Feature: Create business entity pages
         And I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
-        Then I follow the tab "Jedi"
+        Then I follow the tab "Entités"
+        Then I should see "Jedi"
+        Then I follow the drop anchor "Jedi"
+        When I open the widget mode drop for entity "Jedi"
         And I should see "Objet courant"
-        And I follow "Objet courant"
+        And I follow the drop anchor "Objet courant"
         And I select "side" from "jedi_a_businessEntity_widget_force[fields][side]"
-        And should see "Critères"
-        And I follow "Critères"
+        And should see "Quantum"
+        And I open the widget quantum collapse for entity "Jedi"
         And I fill in "jedi_a_businessEntity_widget_force[criterias][2][operator]" with "is_granted"
         And I select "BUSINESS_ENTITY_OWNER" from "jedi_a_businessEntity_widget_force[criterias][2][value]"
         And I submit the widget
