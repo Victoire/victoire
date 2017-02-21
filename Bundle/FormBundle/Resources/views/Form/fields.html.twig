@@ -17,6 +17,12 @@
     </div>
 {% endblock urlvalidated_widget %}
 
+{% block asynchronous_row %}
+    <div class="vic-col-xs-12">
+        {{ block('checkbox_widget') }}
+    </div>
+{% endblock asynchronous_row %}
+
 
 {% block criteria_collection_row %}
     <a class="v-btn v-btn--warning / v-widget-form__quantum-btn" data-collapse="toggle" data-href="#collapse-{{ id }}">
