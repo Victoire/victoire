@@ -27,6 +27,7 @@ Feature: Edit a widget
         And I submit the widget
         And I should see "Le côté anakin de la force"
 
+    @debug
     Scenario: I can create a new Business entity page pattern, create a static widget and edit this widget in query mode
         Given the following WidgetMap:
             | view | action | slot |
@@ -39,9 +40,12 @@ Feature: Edit a widget
         When I switch to "edit" mode
         And I edit the "Force" widget
         Then I should see "Mettre à jour"
-        When I follow the tab "Jedi"
+        When I follow the tab "Entités"
+        Then I should see "Jedi"
+        Then I follow the drop anchor "Jedi"
+        When I open the widget mode drop for entity "Jedi"
         And I should see "Requête"
-        And I follow "Requête"
+        Then I follow the drop anchor "Requête"
         When I select "side" from "jedi_a_query_widget_force[fields][side]"
         And I submit the widget
         And I should see "Le côté obscur de la force"
@@ -52,7 +56,8 @@ Feature: Edit a widget
         Then I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
-        And I should see disable tab "Vaisseaux"
+        When I follow the tab "Entités"
+        And I should see disable drop anchor "Vaisseaux"
 
     Scenario: I can edit the original widget from a child page
         Given the following Jedis:

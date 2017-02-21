@@ -343,6 +343,20 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
+     * @Then I should see disable drop anchor :name
+     */
+    public function iShouldSeeDisableDropAnchor($name)
+    {
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::*[contains(@class, \'v-drop__anchor--disabled\') and normalize-space(.) = "%s"]', $name));
+
+
+        if (null === $element) {
+            $message = sprintf('Element not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+    }
+
+    /**
      * @Then I should see disable tab :name
      */
     public function iShouldSeeDisableTab($name)
