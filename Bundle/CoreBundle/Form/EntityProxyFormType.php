@@ -139,13 +139,14 @@ class EntityProxyFormType extends AbstractType
                 );
             }
 
-            $builder->add(
-                'businessEntity',
-                HiddenType::class,
-                [
-                    'data' => $options['business_entity_id'],
-                ]
-            );
+        }
+        $builder->add(
+            'businessEntity',
+            HiddenType::class,
+            [
+                'data' => $options['business_entity_id'],
+            ]
+        );
 
             $builder->get('businessEntity')->addModelTransformer(
                 new CallbackTransformer(
@@ -163,6 +164,7 @@ class EntityProxyFormType extends AbstractType
             );
         }
     }
+
 
     /**
      * bind to Menu entity.
