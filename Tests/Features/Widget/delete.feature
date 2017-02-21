@@ -15,12 +15,12 @@ Scenario: Abort Delete
     Given I switch to "edit" mode
     And I edit the "Force" widget
     Then I should see "Supprimer"
-    Given I follow "Supprimer"
+    Given I follow the link containing "Supprimer"
     Then I should see "Cette action va définitivement supprimer ce contenu. Cette action est irréversible."
     And I should see "Êtes-vous sûr ?"
     Given I press "Annuler"
     And I wait 1 second
-    And I follow "Annuler"
+    And I follow the link containing "Annuler"
     Then I should see "Le côté Obscur de la force"
     When I reload the page
     Then I should see "Le côté Obscur de la force"
@@ -47,7 +47,7 @@ Scenario: Delete a widget
     Given I switch to "edit" mode
     And I edit the "Force" widget
     Then I should see "Supprimer"
-    Given I follow "Supprimer"
+    Given I follow the link containing "Supprimer"
     Then I should see "Cette action va définitivement supprimer ce contenu. Cette action est irréversible."
     And I should see "Êtes-vous sûr ?"
     Given I press "J'ai bien compris, je confirme la suppression"
