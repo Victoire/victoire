@@ -1,106 +1,79 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: paul
- * Date: 03/01/17
- * Time: 16:31.
- */
 
-namespace Victoire\Bundle\BusinessEntityBundle\Command;
+namespace Victoire\Migrations;
 
+use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\DBAL\Schema\Schema;
 use Doctrine\ORM\EntityManager;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Helper\ProgressHelper;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
-use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty as BusinessPropertyAnnotation;
+use Victoire\Bundle\BusinessEntityBundle\EventSubscriber\BusinessEntitySubscriber;
+use Victoire\Bundle\CoreBundle\Annotations\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
+use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty as BusinessPropertyAnnotation;
+use Victoire\Bundle\CoreBundle\EventSubscriber\WidgetSubscriber;
 use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
 
-class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
+/**
+ * Auto-generated Migration: Please modify to your needs!
+ */
+class Version20170217154603 extends AbstractMigration implements ContainerAwareInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configure()
-    {
-        parent::configure();
+    private $container;
 
-        $this
-            ->setName('victoire:businessEntities:migrate')
-            ->setDescription('migrate from annnotations to database BE management');
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
     }
 
     /**
-     * Read declared business entities and BusinessEntityPatternPages to generate their urls.
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return void
+     * @return mixed
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function getContainer()
     {
-        $i = 0;
-        /** @var EntityManager $entityManager */
-        $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
-        /** @var ProgressHelper $progress */
-        $progress = $this->getHelperSet()->get('progress');
-        $progress->setProgressCharacter('V');
-        $progress->setEmptyBarCharacter('-');
-
-        $progress->start($output);
-        foreach ($this->getContainer()->get('victoire_business_entity.annotation_driver')->getAllClassNames() as $className) {
-            $businessEntity = $this->parse(new \ReflectionClass($className));
-            if ($businessEntity) {
-                $entityManager->persist($businessEntity);
-            }
-            $progress->advance(++$i);
-        }
-
-        /** @var \Doctrine\DBAL\Connection $conn */
-        $conn = $this->getContainer()->get('database_connection');
-
-        $sql = 'SELECT * FROM vic_entity_proxy';
-        $oldProxies = $conn->fetchAll($sql);
-
-        foreach ($oldProxies as $k => $oldProxy) {
-            $proxy = $this->migrateOldProxies($oldProxy);
-            $entityManager->persist($proxy);
-            $progress->advance(++$i);
-        }
-
-        foreach ($entityManager->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findAll() as $bt) {
-            $this->migrateBusinessEntityName($bt);
-            $progress->advance(++$i);
-        }
-        foreach ($entityManager->getRepository('VictoireWidgetBundle:Widget')->findAll() as $widget) {
-            $this->migrateBusinessEntityName($widget);
-            $progress->advance(++$i);
-        }
-        $entityManager->flush();
-        $progress->finish();
+        return $this->container;
     }
+
+
+    /**
+     * @param Schema $schema
+     */
+    public function up(Schema $schema)
+    {
+        // this up() migration is auto-generated, please modify it to your needs
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->migrateBusinessEntities();
+        $this->migrateEntityProxies();
+        $this->migrateWidgetAndViews();
+    }
+
+    /**
+     * @param Schema $schema
+     */
+    public function down(Schema $schema)
+    {
+        $this->write('Not implemented');
+    }
+
 
     protected function migrateBusinessEntityName($entity)
     {
         /** @var EntityManager $entityManager */
         $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $businessEntity = $entityManager->getRepository('VictoireBusinessEntityBundle:ORMBusinessEntity')
+        $businessEntity = $entityManager->getRepository('VictoireORMBusinessEntityBundle:ORMBusinessEntity')
             ->createQueryBuilder('proxy')
             ->where('proxy.name LIKE :prop')
-            ->addParameter(':prop', $entity->getOldBusinessEntityName())
+            ->setParameter(':prop', $entity->getOldBusinessEntityName())
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
+
         $entity->setBusinessEntity($businessEntity);
     }
 
     protected function migrateOldProxies($oldProxy)
     {
-
         /** @var EntityManager $entityManager */
         $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
 
@@ -109,12 +82,12 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
             if ($oldProxyPropName === 'id') {
                 $proxy->setId($oldProxyPropValue);
             } elseif ($oldProxyPropValue !== null) {
-                $businessEntity = $entityManager->getRepository('VictoireBusinessEntityBundle:ORMBusinessEntity')
+                $businessEntity = $entityManager->getRepository('VictoireORMBusinessEntityBundle:ORMBusinessEntity')
                     ->createQueryBuilder('proxy')
                     ->where('proxy.name LIKE :prop')
-                    ->addParameter(':prop', str_replace('_id', $oldProxyPropName, ''))
+                    ->setParameter(':prop', str_replace('_id', '', $oldProxyPropName))
                     ->getQuery()
-                    ->getSingleResult();
+                    ->getOneOrNullResult();
                 $proxy->setBusinessEntity($businessEntity);
                 $proxy->setRessourceId($oldProxyPropValue);
             }
@@ -122,6 +95,65 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
 
         return $proxy;
     }
+
+    public function migrateEntityProxies()
+    {
+        /** @var \Doctrine\DBAL\Connection $conn */
+        $conn = $this->getContainer()->get('database_connection');
+        /** @var EntityManager $entityManager */
+        $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
+
+        $sql = 'SELECT * FROM vic_entity_proxy';
+        $oldProxies = $conn->fetchAll($sql);
+
+        foreach ($oldProxies as $k => $oldProxy) {
+            $proxy = $this->migrateOldProxies($oldProxy);
+            $entityManager->persist($proxy);
+            // Force the ID
+            $metadata = $entityManager->getClassMetaData(get_class($proxy));
+            $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
+        }
+
+        $entityManager->flush();
+    }
+
+    public function migrateWidgetAndViews()
+    {
+        /** @var \Doctrine\DBAL\Connection $conn */
+        $conn = $this->getContainer()->get('database_connection');
+        /** @var EntityManager $entityManager */
+        $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
+
+        foreach ($entityManager->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findAll() as $bt) {
+            $this->migrateBusinessEntityName($bt);
+
+        }
+        foreach ($entityManager->getRepository('VictoireWidgetBundle:Widget')->findAll() as $widget) {
+            if ($widget->getOldBusinessEntityName()) {
+                $this->migrateBusinessEntityName($widget);
+            }
+
+        }
+
+        // Do not uselessly regenerate the viewCss threw the onFlush event. It led to an exception
+        $evm = $entityManager->getEventManager();
+        foreach ($entityManager->getEventManager()->getListeners() as $event => $listeners) {
+            foreach ($listeners as $key => $listener) {
+                if ($listener instanceof WidgetSubscriber) {
+                    $evm->removeEventListener(array('onFlush'), $listener);
+                }
+                if ($listener instanceof BusinessEntitySubscriber) {
+                    $evm->removeEventListener(array('postUpdate'), $listener);
+                }
+            }
+        }
+
+        $entityManager->flush();
+
+
+    }
+
+
 
     /**
      * Parse the given Class to find some annotations related to BusinessEntities.
@@ -187,9 +219,6 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
             foreach ($annotations as $key => $annotationObj) {
                 if ($annotationObj instanceof BusinessPropertyAnnotation && !in_array($class, $businessProperties)) {
                     $businessProperties[$property->name] = $annotationObj;
-//                    foreach ($annotations[$key]->getTypes() as $type) {
-//                        $businessProperties[$type][] = $property->name;
-//                    }
                 }
             }
         }
@@ -204,16 +233,6 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
                     $businessProperties[$propertyName] = $parentProperty;
                 }
             }
-//            foreach ($parentProperties as $key => $parentProperty) {
-//                if (in_array($parentProperty, $businessProperties)) {
-//                    //if parent and current have a same business property type we merge the properties and remove
-//                    //duplicates if properties are the same;
-//                    $businessProperties[$key] = array_unique(array_merge($parentProperty, $businessProperties[$key]));
-//                } else {
-//                    //else we had a business property type for the parent properties
-//                    $businessProperties[$key] = $parentProperty;
-//                }
-//            }
         }
 
         return $businessProperties;
@@ -244,4 +263,21 @@ class BusinessEntityDBMigrationCommand extends ContainerAwareCommand
 
         return $businessEntity;
     }
+
+    private function migrateBusinessEntities()
+    {
+        /** @var EntityManager $entityManager */
+        $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
+
+        foreach ($this->getContainer()->get('victoire_business_entity.annotation_driver')->getAllClassNames() as $className) {
+            $businessEntity = $this->parse(new \ReflectionClass($className));
+            if ($businessEntity) {
+                $entityManager->persist($businessEntity);
+            }
+        }
+
+        $entityManager->flush();
+
+    }
+
 }
