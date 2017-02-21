@@ -16,9 +16,10 @@ Feature: Stylize a widget
     Then I switch to "style" mode
     When I edit the "Force" widget
     Then I should see "Style du widget"
-    When I fill in "widget_style[containerBackgroundColor]" with "rgb(255, 0, 0)"
+    And I fill in "widget_style[containerBackgroundColor]" with "rgb(255, 0, 0)"
+    Then I open the widget style tab 'xs'
     And I fill in "widget_style[containerBackgroundColorXS]" with "rgb(0, 0, 255)"
-    And I follow "Mettre à jour"
+    And I follow the link containing "Mettre à jour"
     And I wait 2 seconds
     And I reload the page
     And I resize the window to 1600x900
@@ -41,11 +42,12 @@ Feature: Stylize a widget
     When I select "image" from "widget_style[containerBackgroundType]"
     Then I should find css element "input" with selector "name" and value "widget_style[containerBackgroundImage]"
     When I attach image with id "1" to victoire field "widget_style_containerBackgroundImage_widget"
+    Then I open the widget style tab 'xs'
     When I fill in "widget_style[containerPaddingXS]" with "100px"
     And I select "image" from "widget_style[containerBackgroundTypeXS]"
     Then I should find css element "input" with selector "name" and value "widget_style[containerBackgroundImageXS]"
     When I attach image with id "2" to victoire field "widget_style_containerBackgroundImageXS_widget"
-    And I follow "Mettre à jour"
+    And I follow the link containing "Mettre à jour"
     And I wait 5 seconds
     And I reload the page
     And I maximize the window

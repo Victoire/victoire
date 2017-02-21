@@ -1,7 +1,7 @@
 {% trans_default_domain "victoire" %}
 
 {% set key = key|default('static') %}
-{% set active = (form.vicActiveTab.vars.data is defined and form.vicActiveTab.vars.data) ? form.vicActiveTab.vars.data : loop.first ? key : false %}
+{% set active = (form.vicActiveTab.vars.data is defined and form.vicActiveTab.vars.data) ? form.vicActiveTab.vars.data : loop.first|default(false) ? key : false %}
 
 <div class="v-tabs-nav__item">
     <a
@@ -14,6 +14,7 @@
         data-droptarget="#style-anchor-drop-{{ widgetId }}-{{ key }}"
         data-behavior="hover"
         data-key="{{ key }}"
+        title="style-{{ key }}"
     >
         {{ ('widget_layout.tab.containerMargin.' ~ key|upper ~ '.label' )|trans({}, 'victoire')|raw }}
     </a>
