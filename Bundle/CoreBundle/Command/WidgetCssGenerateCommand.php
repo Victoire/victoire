@@ -12,6 +12,9 @@ use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 class WidgetCssGenerateCommand extends ContainerAwareCommand
 {
+    /** @var EntityManager $entityManager */
+    private $entityManager;
+
     /**
      * {@inheritdoc}
      */
@@ -21,8 +24,8 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
 
         $this
             ->setName('victoire:widget-css:generate')
-            ->addOption('outofdate', null, InputOption::VALUE_NONE, 'Generate CSS only for View\'s CSS not up to date')
-            ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Number of generated View\'s CSS')
+            ->addOption('force', 'f', InputOption::VALUE_NONE, 'Generate CSS even for View\'s CSS up to date')
+            ->addOption('limit', 'l', InputOption::VALUE_OPTIONAL, 'Number of generated View\'s CSS')
             ->setDescription('Generate widgets CSS for each View');
     }
 
@@ -39,20 +42,78 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //Get options
-        $outOfDate = $input->getOption('outofdate');
+        $force = $input->getOption('force');
         $limit = $input->getOption('limit');
 
         //Get services
-
-        /** @var EntityManager $entityManager */
-        $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $this->entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
         $viewCssBuilder = $this->getContainer()->get('victoire_core.view_css_builder');
         $widgetMapBuilder = $this->getContainer()->get('victoire_widget_map.builder');
+        $widgetRepo = $this->entityManager->getRepository('Victoire\Bundle\WidgetBundle\Entity\Widget');
 
-        $widgetRepo = $entityManager->getRepository('Victoire\Bundle\WidgetBundle\Entity\Widget');
+        $views = $this->getViewsToTreat();
 
-//        //Get View's CSS to generate
-        $templateRepo = $entityManager->getRepository('VictoireTemplateBundle:Template');
+        //Remove View if CSS is upToDate and we don't want to regenerate it
+        foreach ($views as $i => $view) {
+            if (!$force && $view->isCssUpToDate()) {
+                unset($views[$i]);
+            }
+        }
+
+        //Prepare limit
+        $limit = ($limit && $limit < count($views)) ? $limit : count($views);
+        $count = 0;
+
+        if(count($views) < 1) {
+            $output->writeln('<info>0 View\'s CSS to regenerate for your options</info>');
+            return true;
+        }
+
+        //Set progress for output
+        $progress = $this->getHelper('progress');
+        $progress->start($output, $limit);
+
+        foreach ($views as $view) {
+
+            if ($count >= $limit) {
+                break;
+            }
+
+            //If hash already exist, remove CSS file
+            if ($viewHash = $view->getCssHash()) {
+                $viewCssBuilder->removeCssFile($viewHash);
+            }
+
+            //Generate a new hash to force browser reload
+            $view->changeCssHash();
+
+            //Generate CSS file with its widgets style
+            $widgetMapBuilder->build($view, $this->entityManager);
+            $widgets = $widgetRepo->findAllWidgetsForView($view);
+            $viewCssBuilder->generateViewCss($view, $widgets);
+
+            //Set View's CSS as up to date
+            $view->setCssUpToDate(true);
+            $this->entityManager->persist($view);
+            $this->entityManager->flush($view);
+
+            $progress->advance();
+            ++$count;
+        }
+
+        $progress->finish();
+
+        return true;
+    }
+
+    /**
+     * Get Templates, BasePages and ErrorPages
+     *
+     * @return View[]
+     */
+    private function getViewsToTreat()
+    {
+        $templateRepo = $this->entityManager->getRepository('VictoireTemplateBundle:Template');
         $rootTemplates = $templateRepo->getInstance()
             ->where('template.template IS NULL')
             ->getQuery()
@@ -71,55 +132,11 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
             $recursiveGetTemplates($rootTemplate);
         }
 
-        $pageRepo = $entityManager->getRepository('VictoirePageBundle:BasePage');
+        $pageRepo = $this->entityManager->getRepository('VictoirePageBundle:BasePage');
         $pages = $pageRepo->findAll();
-        $errorRepo = $entityManager->getRepository('VictoireTwigBundle:ErrorPage');
+        $errorRepo = $this->entityManager->getRepository('VictoireTwigBundle:ErrorPage');
         $errorPages = $errorRepo->findAll();
 
-        /* @var $views View[] */
-        $views = array_merge($templates, array_merge($pages, $errorPages));
-
-        //Prepare limit
-        $limit = ($limit && $limit < count($views)) ? $limit : count($views);
-        $count = 0;
-
-        //Set progress for output
-        $progress = $this->getHelper('progress');
-        $progress->start($output, $limit);
-
-        foreach ($views as $view) {
-            if ($outOfDate && $view->isCssUpToDate()) {
-                continue;
-            }
-
-            //Exit if limit reached
-            if ($count >= $limit) {
-                break;
-            }
-
-            //If hash already exist, remove CSS file, else generate a hash
-            if ($viewHash = $view->getCssHash()) {
-                $viewCssBuilder->removeCssFile($viewHash);
-            } else {
-                $view->changeCssHash();
-            }
-
-            //Generate CSS file with its widgets style
-            $widgetMapBuilder->build($view, $entityManager);
-            $widgets = $widgetRepo->findAllWidgetsForView($view);
-            $viewCssBuilder->generateViewCss($view, $widgets);
-
-            //Set View's CSS as up to date
-            $view->setCssUpToDate(true);
-            $entityManager->persist($view);
-            $entityManager->flush($view);
-
-            ++$count;
-            $progress->advance();
-        }
-
-        $progress->finish();
-
-        return true;
+        return array_merge($templates, array_merge($pages, $errorPages));
     }
 }
