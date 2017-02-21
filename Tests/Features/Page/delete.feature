@@ -7,10 +7,9 @@ Background:
 
 Scenario: I can delete a new page
     Given I am on "/fr/test"
-    Given I should see "Page"
-    Given I select the option "Paramètres de la page" in the dropdown "Page"
+    And I open the settings menu
     Then I should see "Supprimer"
-    Given I follow "Supprimer"
+    When I follow the link containing "Supprimer"
     Then I should see "Cette action va supprimer définitivement cette page. Cette action est irréversible. Êtes-vous sûr ?"
     Given I press "J'ai bien compris, je confirme la suppression"
     And I should be on "/fr/"
