@@ -87,6 +87,7 @@ Scenario: I move down a widget from template
   And "Widget 3" should precede "Widget 2"
 
 @reset-schema
+@debug
 Scenario: I add widget in a position from template
   Given the following WidgetMaps:
     | id | action | position | parent | slot         |   view  |
@@ -121,6 +122,7 @@ Scenario: I add widget in a position from template
   And "Widget 3" should precede "Widget 2"
 
 @reset-schema
+@debug
 Scenario: I delete widget from template
   Given the following WidgetMaps:
     | id | action | position | parent | slot         |   view  |
@@ -227,6 +229,7 @@ Scenario: I add a widget after an overwrite widget from template
   And "Widget 3" should precede "Widget 2"
 
 @reset-schema
+@debug
 Scenario: I delete an overwrite widget from template
   Given the following WidgetMaps:
     | id | action    | position | parent | slot         |   view  | replaced |
@@ -313,6 +316,7 @@ Scenario: I add a widget after an overwrite widget on template
   And "Widget 4" should precede "Widget 2"
 
 @reset-schema
+@debug
 Scenario: I delete an overwrite widget on template
   Given the following WidgetMaps:
     | id | action    | position | parent | slot         |   view  | replaced |
