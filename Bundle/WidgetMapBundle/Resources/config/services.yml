@@ -3,6 +3,7 @@ services:
         class: Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder
         arguments:
             - "@victoire_widget_map.contextual_view_warmer"
+            - "@victoire_widget_map.children_resolver"
 
     victoire_widget_map.widget_data_warmer:
         class: Victoire\Bundle\WidgetMapBundle\Warmer\WidgetDataWarmer
@@ -18,3 +19,9 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@victoire_widget_map.builder"
+            - "@victoire_widget_map.children_resolver"
+
+    victoire_widget_map.children_resolver:
+        class: Victoire\Bundle\WidgetMapBundle\Resolver\WidgetMapChildrenResolver
+        arguments:
+            - "@logger"
