@@ -64,8 +64,9 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
         $limit = ($limit && $limit < count($views)) ? $limit : count($views);
         $count = 0;
 
-        if(count($views) < 1) {
+        if (count($views) < 1) {
             $output->writeln('<info>0 View\'s CSS to regenerate for your options</info>');
+
             return true;
         }
 
@@ -74,7 +75,6 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
         $progress->start($output, $limit);
 
         foreach ($views as $view) {
-
             if ($count >= $limit) {
                 break;
             }
@@ -107,7 +107,7 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
     }
 
     /**
-     * Get Templates, BasePages and ErrorPages
+     * Get Templates, BasePages and ErrorPages.
      *
      * @return View[]
      */
