@@ -5,6 +5,7 @@ Feature: Display a page's content in a modal
     Given I maximize the window
     And I am on homepage
 
+  @debug
   Scenario: I can create a modal link to a page
     Given I switch to "layout" mode
     And I should see "Nouveau contenu"
