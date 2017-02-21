@@ -134,6 +134,22 @@ class VictoireContext extends RawMinkContext
         }
         $element->click();
     }
+    /**
+     * @When I open the widget style tab :key
+     */
+    public function iOpenTheWidgetStyleTab($key)
+    {
+        $element = $this->findOrRetry(
+            $this->getSession()->getPage(),
+            'css',
+            '[title="style-'.$key.'"]'
+        );
+        if (null === $element) {
+            $message = sprintf('Element not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+        $element->click();
+    }
 
     /**
      * @When I follow the float action button

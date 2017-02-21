@@ -16,13 +16,13 @@
 </div>
 
 <div class="vic-tab-content">
-    {% set active = (form.vicActiveTab.vars.data is defined and form.vicActiveTab.vars.data) ? form.vicActiveTab.vars.data : loop.first ? 'static' : false %}
+    {% set active = (form.vicActiveTab.vars.data is defined and form.vicActiveTab.vars.data) ? form.vicActiveTab.vars.data : loop.first|default(true) ? 'static' : false %}
     <div class="v-collapse" id="vic-widget-layout-{{ widgetId }}-static" data-flag="v-collapse" data-group="vic-widget-layout-{{ widgetId }}"{{ active ? ' data-state="visible"' }}>
         {% include 'VictoireCoreBundle:Widget/Form/stylize:_fields.html.twig' %}
     </div>
 
     {% for key, responsive_config in victoire_twig_responsive %}
-        {% set active = (form.vicActiveTab.vars.data is defined and form.vicActiveTab.vars.data) ? form.vicActiveTab.vars.data : loop.first ? key : false %}
+        {% set active = (form.vicActiveTab.vars.data is defined and form.vicActiveTab.vars.data) ? form.vicActiveTab.vars.data : loop.first|default(false) ? key : false %}
         <div class="v-collapse" id="vic-widget-layout-{{ widgetId }}-{{ key }}" data-flag="v-collapse" data-group="vic-widget-layout-{{ widgetId }}"{{ active ? ' data-state="visible"' }}>
             {% include 'VictoireCoreBundle:Widget/Form/stylize:_fields.html.twig' %}
         </div>
