@@ -29,7 +29,7 @@ trait QueryTrait
      *  Auto list mode: businessentity type.
      *
      * @var string
-     * @ORM\Column(name="business_entity_name", type="string", nullable=true)
+     * @ORM\Column(name="business_entity_id", type="string", nullable=true)
      */
     protected $businessEntityName;
     /**
