@@ -186,8 +186,9 @@ class BusinessEntitySubscriber implements EventSubscriber
         }
 
         foreach ($this->flushedBusinessTemplates as $entity) {
-            $businessEntityId = $entity->getBusinessEntityId();
-            $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
+            $em = $eventArgs->getEntityManager();
+            $businessEntityId = $entity->getBusinessEntityName();
+            $businessEntity = $eventArgs->getEntityManager()->getRepository('VictoireBusinessEntityBundle:BusinessEntity')->findOneBy(['name' => $businessEntityId]);
             //find all entities
             $entities = $this->businessPageHelper->getEntitiesAllowed($entity, $em);
             foreach ($entities as $be) {
