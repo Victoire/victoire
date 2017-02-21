@@ -192,9 +192,9 @@ class PageHelper
         $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view);
 
         //Set currentView and dispatch victoire.on_render_page event with this currentView
-        $this->currentViewHelper->setCurrentView($view);
         $pageRenderEvent = new PageRenderEvent($view);
         $this->eventDispatcher->dispatch('victoire.on_render_page', $pageRenderEvent);
+        $this->currentViewHelper->setCurrentView($view);
 
         //Build WidgetMap
         $this->widgetMapBuilder->build($view, true);
