@@ -74,9 +74,9 @@ class EntityProxyFormType extends AbstractType
                         'attr'         => [
                             'class' => 'add_'.$options['business_entity_id'].'_link picker_entity_select',
                         ],
-                        'query_builder' => function (EntityRepository $er) use ($options, $locale) {
+                        'query_builder' => function (EntityRepository $er) use ($businessEntity, $locale) {
                             // Don't display entities that don't have translations in the current locale.
-                            if (in_array(Translatable::class, class_uses($options['namespace']))) {
+                            if (in_array(Translatable::class, class_uses($businessEntity->getClass()))) {
                                 return $er->createQueryBuilder('entity')
                                     ->join('entity.translations', 't')
                                     ->andWhere('t.locale = :s')
