@@ -102,6 +102,7 @@ Scenario: I add widget in a position from simple page
   And "Le côté obscur de la force" should precede "Le côté Double de la force"
 
 @reset-schema
+@debug
 Scenario: I delete widget from simple page
   Given the following WidgetMaps:
     | id | action | position | parent | slot         |   view  |
@@ -116,9 +117,9 @@ Scenario: I delete widget from simple page
   And I am on the homepage
   Then I should see "Widget 1"
   When I switch to "edit" mode
-  And I edit the "Text" widget
+  Then I edit the "Text" widget
   Then I should see "Supprimer"
-  Given I follow "Supprimer"
+  Given I follow the link containing "Supprimer"
   Then I should see "Cette action va définitivement supprimer ce contenu. Cette action est irréversible."
   And I should see "Êtes-vous sûr ?"
   Given I press "J'ai bien compris, je confirme la suppression"
