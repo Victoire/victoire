@@ -57,6 +57,7 @@ default:
                      Page:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml
                      ErrorPage:         Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml
                      BusinessEntity:    Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/BusinessEntity/businessEntity.yml
+                     BusinessEntity:    Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/BusinessEntity/businessEntity.yml
                      Blog:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/blog.yml
                      BlogTemplate:      Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/template.yml
                      ArticleI18n:       Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article_i18n.yml
@@ -72,7 +73,7 @@ default:
                      Page:               [Template, User, BusinessEntity]
                      Blog:               [Template, BlogTemplate, User, BusinessEntity]
                      Article:            [ArticleI18n, Template, Blog, BlogTemplate, BlogBP, User, BusinessEntity]
-                     CharacterTemplates: [Template, User, BusinessEntity, BusinessEntity]
+                     CharacterTemplates: [Template, User, BusinessEntity]
                      Jedi:               [BusinessEntity]
                      MediaFile:          [Media]
              symfony_kernel:
