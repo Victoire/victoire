@@ -84,6 +84,7 @@ class MenuBuilder
                     'data-toggle' => 'vic-dropdown',
                 ],
                 'linkAttributes' => [
+                    'id'                => 'v-additionals-drop',
                     'class'             => 'v-btn v-btn--transparent v-drop-trigger--no-toggle',
                     'data-flag'         => 'v-drop',
                     'data-position'     => 'topout leftin',
