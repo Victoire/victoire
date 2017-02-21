@@ -72,7 +72,12 @@ class QueryHelper
         }
 
         //the business name of the container entity
-        $businessEntityId = $containerEntity->getBusinessEntity()->getName();
+        if ($containerEntity->getBusinessEntity()) {
+            $businessEntity = $containerEntity->getBusinessEntity();
+        } else {
+            $businessEntity = $containerEntity->getEntityProxy()->getBusinessEntity();
+        }
+        $businessEntityId = $businessEntity->getName();
 
         //test that there is a business entity name
         if ($businessEntityId === null || $businessEntityId === '') {
