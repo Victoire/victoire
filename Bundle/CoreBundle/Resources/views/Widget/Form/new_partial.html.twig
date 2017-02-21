@@ -76,32 +76,42 @@
 
                     <div class="v-drop" id="picker-modes-{{ class|lower }}-{{ quantum }}">
                         <nav class="v-drop__menu">
-                            <a class="v-drop__anchor"
-                               data-collapse="show"
-                               data-href="#picker-{{ class|lower }}-{{ quantum }}-entity"
-                               data-activeclass="v-drop__anchor--active" data-triggerclass="v-mode-trigger--entity"
-                            >
-                                {{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}
-                            </a>
-
-                            <a class="v-drop__anchor"
-                               data-collapse="show"
-                               data-href="#picker-{{ class|lower }}-{{ quantum }}-query"
-                               data-activeclass="v-drop__anchor--active"
-                               data-triggerclass="v-mode-trigger--query"
-                            >
-                                {{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}
-                            </a>
-
-                            {% if is_business_entity_allowed(class|lower, view) %}
+                            {% spaceless %}
                                 <a class="v-drop__anchor"
                                    data-collapse="show"
-                                   data-href="#picker-{{ class|lower }}-{{ quantum }}-businessEntity"
+                                   data-href="#picker-{{ class|lower }}-{{ quantum }}-entity"
+                                   title="{{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}"
                                    data-activeclass="v-drop__anchor--active"
-                                   data-triggerclass="v-mode-trigger--businessEntity"
+                                   data-triggerclass="v-mode-trigger--entity"
                                 >
-                                    {{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}
+                                    {{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}
                                 </a>
+                            {% endspaceless %}
+
+                            {% spaceless %}
+                                <a class="v-drop__anchor"
+                                   data-collapse="show"
+                                   data-href="#picker-{{ class|lower }}-{{ quantum }}-query"
+                                   data-activeclass="v-drop__anchor--active"
+                                   data-triggerclass="v-mode-trigger--query"
+                                   title="{{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}"
+                                >
+                                    {{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}
+                                </a>
+                            {% endspaceless %}
+
+                            {% if is_business_entity_allowed(class|lower, view) %}
+                                {% spaceless %}
+                                    <a class="v-drop__anchor"
+                                       data-collapse="show"
+                                       data-href="#picker-{{ class|lower }}-{{ quantum }}-businessEntity"
+                                       data-activeclass="v-drop__anchor--active"
+                                       data-triggerclass="v-mode-trigger--businessEntity"
+                                       title="{{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}"
+                                    >
+                                        {{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}
+                                    </a>
+                                {% endspaceless %}
                             {% endif %}
                         </nav>
                     </div>
