@@ -11,7 +11,7 @@ export default class Initiator {
     }
 
     newInits(parent = document) {
-        this.modals = new TrowelModals(parent.querySelectorAll('[data-flag*="v-modal"]'));
+        this.modals = new TrowelModals(document.querySelectorAll('[data-flag*="v-modal"]'));
         this.mdForm = new MDFormGroups(parent.querySelectorAll('[data-flag*="v-mdForm"]'));
         this.drops = new TrowelDrops(parent.querySelectorAll('[data-flag*="v-drop"]'));
         this.collapses = new TrowelCollapses(parent.querySelectorAll('[data-flag*="v-collapse"]'));
