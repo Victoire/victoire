@@ -22,7 +22,7 @@ Scenario: I can change the name and the url of a given page
           | currentLocale |name     | slug     | parent  | template      |
           | fr            |tatooine | tatooine | home    | base          |
     And I am on "/fr/tatooine"
-    And I select the option "Paramètres de la page" in the dropdown "Page"
+    And I open the settings menu
     And I should see "Mettre à jour"
     Then I fill in "Nom" with "anoth"
     Then I fill in "page_settings_translations_fr_slug" with "anoth"
