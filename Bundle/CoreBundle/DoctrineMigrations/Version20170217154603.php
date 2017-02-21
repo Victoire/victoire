@@ -11,8 +11,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\EventSubscriber\BusinessEntitySubscriber;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessEntity;
-use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Annotations\BusinessProperty as BusinessPropertyAnnotation;
+use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\EventSubscriber\WidgetSubscriber;
 use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
 
@@ -36,7 +36,6 @@ class Version20170217154603 extends AbstractMigration implements ContainerAwareI
         return $this->container;
     }
 
-
     /**
      * @param Schema $schema
      */
@@ -56,7 +55,6 @@ class Version20170217154603 extends AbstractMigration implements ContainerAwareI
     {
         $this->write('Not implemented');
     }
-
 
     protected function migrateBusinessEntityName($entity)
     {
@@ -126,13 +124,11 @@ class Version20170217154603 extends AbstractMigration implements ContainerAwareI
 
         foreach ($entityManager->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findAll() as $bt) {
             $this->migrateBusinessEntityName($bt);
-
         }
         foreach ($entityManager->getRepository('VictoireWidgetBundle:Widget')->findAll() as $widget) {
             if ($widget->getOldBusinessEntityName()) {
                 $this->migrateBusinessEntityName($widget);
             }
-
         }
 
         // Do not uselessly regenerate the viewCss threw the onFlush event. It led to an exception
@@ -140,20 +136,16 @@ class Version20170217154603 extends AbstractMigration implements ContainerAwareI
         foreach ($entityManager->getEventManager()->getListeners() as $event => $listeners) {
             foreach ($listeners as $key => $listener) {
                 if ($listener instanceof WidgetSubscriber) {
-                    $evm->removeEventListener(array('onFlush'), $listener);
+                    $evm->removeEventListener(['onFlush'], $listener);
                 }
                 if ($listener instanceof BusinessEntitySubscriber) {
-                    $evm->removeEventListener(array('postUpdate'), $listener);
+                    $evm->removeEventListener(['postUpdate'], $listener);
                 }
             }
         }
 
         $entityManager->flush();
-
-
     }
-
-
 
     /**
      * Parse the given Class to find some annotations related to BusinessEntities.
@@ -277,7 +269,5 @@ class Version20170217154603 extends AbstractMigration implements ContainerAwareI
         }
 
         $entityManager->flush();
-
     }
-
 }

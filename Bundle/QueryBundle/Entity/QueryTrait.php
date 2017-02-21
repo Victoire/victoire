@@ -98,6 +98,7 @@ trait QueryTrait
     {
         return $this->getBusinessEntity()->getName();
     }
+
     /**
      * @deprecated
      * Proxy to get businessEntityName.
