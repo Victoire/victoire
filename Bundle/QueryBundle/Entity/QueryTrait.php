@@ -95,6 +95,16 @@ trait QueryTrait
     {
         return $this->businessEntityName;
     }
+    /**
+     * @deprecated
+     * Proxy to get businessEntityName.
+     *
+     * @return int
+     */
+    public function getBusinessEntityId()
+    {
+        return $this->getBusinessEntityName();
+    }
 
     /**
      * Set businessEntityName.
