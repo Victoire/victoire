@@ -65,6 +65,14 @@ class EntityProxy
     }
 
     /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
      * Get the entity of the proxy.
      *
      * @throws \Exception
