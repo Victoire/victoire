@@ -41,16 +41,8 @@ class ViewCssListener
             $currentView->setCssHash($currentView->getTemplate()->getCssHash());
         } elseif (!$currentView->getCssHash() || !$currentView->isCssUpToDate()) {
 
-            //Get View's widgets
-            $widgetRepo = $this->entityManager->getRepository('Victoire\Bundle\WidgetBundle\Entity\Widget');
-            $this->widgetMapBuilder->build($currentView);
-            $widgets = $widgetRepo->findAllWidgetsForView($currentView);
-
-            //Generate CSS file and set View's CSS as up to date
-            $oldHash = $currentView->getCssHash();
+            //CSS file will be regenerated during WidgetSubscriber onFlush event
             $currentView->changeCssHash();
-            $this->viewCssBuilder->updateViewCss($oldHash, $currentView, $widgets);
-            $currentView->setCssUpToDate(true);
             $this->entityManager->persist($currentView);
             $this->entityManager->flush($currentView);
         }
