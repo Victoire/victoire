@@ -291,3 +291,31 @@ There are some fixtures in `vendor/victoire/victoire/Tests/Functionnal/src/Acme/
 Get the whole Victoire Widget list [**here**](http://packagist.org/search/?tags=victoire)
 
 And it's done, just go to /login to enter in the edit mode.
+
+## 3. Production
+
+### Views CSS
+
+When you edit a Widget style parameter in Victoire, CSS rules must be generated and imported in concerned View.
+Unfortunately, Victoire can't simply include inline `<style>` tags for each Widget due to some [IE restrictions][1].  
+That's why for each View, a CSS file is generated compiling all Widgets CSS rules.
+
+When a Widget which belongs to a Template is modified, all inherited Templates and Pages CSS files must be regenerated. Files can be regenerated :
+
+* **on-the-fly** when a user ask for a View that need to regenerate its CSS
+* **with command** `victoire:widget-css:generate`
+
+So you can let Victoire regenerate CSS files on user demand.
+But you may want to set a crontab on your production environment to regenerate a batch of CSS files each minute.
+
+```
+* * * * * php bin/console victoire:widget-css:generate --limit=20 --env=prod
+```
+
+If you want to manually force all CSS to be regenerated even if they are up to date, add `--force`.
+
+```sh
+php bin/console victoire:widget-css:generate --force
+```
+
+[1]: https://blogs.msdn.microsoft.com/ieinternals/2011/05/14/stylesheet-limits-in-internet-explorer/
