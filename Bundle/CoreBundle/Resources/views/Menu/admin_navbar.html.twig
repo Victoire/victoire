@@ -1,4 +1,4 @@
-<header id="header" class="v-navbar v-navbar--lg v-navbar--header">
+<header id="v-header" class="v-navbar v-navbar--lg v-navbar--header">
     <div class="v-container v-container--fluid">
         {% block header %}
             <div class="v-flex-grid v-flex-grid--gutter-lg  v-flex-grid--align-center">
@@ -17,11 +17,11 @@
                 </div>
 
                 <div class="v-flex-col">
-                    <a class="v-btn v-btn--transparent v-btn--sm" data-flag="v-drop" data-position="bottomout rightin" data-droptarget="#header-drop-profile">
+                    <a class="v-btn v-btn--transparent v-btn--sm" data-flag="v-drop" data-position="bottomout rightin" data-droptarget="#v-header-drop-profile">
                         <img class="v-image--profile" src="https://www.gravatar.com/avatar/{{ app.user.email|hash }}?s=70&d={{ 'https://fr.gravatar.com/userimage/63937294/1d5eaaa346a27c5915344db44177b469.png?size=70'|url_encode }}">
                     </a>
 
-                    <div class="v-drop" id="header-drop-profile">
+                    <div class="v-drop" id="v-header-drop-profile">
                         <nav class="v-drop__menu">
                             <a class="v-drop__anchor" href="{{ path('fos_user_security_logout') }}">{{ 'vicmenu.logout.label'|trans({}, 'victoire') }}</a>
                         </nav>

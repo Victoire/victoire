@@ -83,12 +83,6 @@ class BlogMenuListener implements MenuListenerInterface
             $this->menuBuilder->getTopNavbar()->addChild(
                 'menu.leftnavbar.blog.label', [
                     'route'      => 'victoire_blog_index',
-                    'attributes' => [
-                        'class' => 'v-menu__item',
-                    ],
-                    'linkAttributes' => [
-                        'class' => 'v-menu__anchor',
-                    ],
                 ]
             )->setLinkAttribute('data-toggle', 'vic-modal');
         }
