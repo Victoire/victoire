@@ -137,11 +137,11 @@ function updateWidgetPosition(sorted, ui) {
 
 function loading(value) {
     if (value == undefined) { //Switch mode
-        $vic('#header').toggleClass('v-navbar--loading');
+        $vic('#v-header').toggleClass('v-navbar--loading');
     } else if (value === true) { //Run
-        $vic('#header').addClass('v-navbar--loading');
+        $vic('#v-header').addClass('v-navbar--loading');
     } else if (value === false) { //Stop
-        $vic('#header').removeClass('v-navbar--loading');
+        $vic('#v-header').removeClass('v-navbar--loading');
     }
 }
 
