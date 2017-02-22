@@ -1,3 +1,5 @@
+@import '../../globals/utils/synthax';
+
 @keyframes logo-rocket-lunch {
   0% {
     transform: translate(0, 0);
@@ -27,11 +29,11 @@
   }
 }
 
-.logo {
+.#{$app--prefix}-logo {
   overflow: visible;
 }
 
-.logo__rocket {
+.#{$app--prefix}-logo__rocket {
   .v-navbar--loading & {
     animation-name: logo-rocket-lunch;
     animation-duration: 1s;
@@ -41,7 +43,7 @@
   }
 }
 
-.logo__circle {
+.#{$app--prefix}-logo__circle {
   fill: $mode-readonly--color;
   transition: fill 300ms ease-in-out;
 
