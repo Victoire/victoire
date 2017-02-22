@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="58893b9963c02" resname="modal.button.delete.title">
         <source>modal.button.delete.title</source>
-        <target>Supprimer</target>
+        <target>SUPPRIMER</target>
       </trans-unit>
       <trans-unit id="58893b9963c67" resname="modal.button.update.title">
         <source>modal.button.update.title</source>
