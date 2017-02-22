@@ -5,7 +5,6 @@ Feature: Domain strategy
     Given I maximize the window
     And I am on homepage
 
-  @debug
   Scenario: I check the domain strategy
     Given I visit homepage through domain "en.victoire.io"
     Then the title should be "Homepage"
