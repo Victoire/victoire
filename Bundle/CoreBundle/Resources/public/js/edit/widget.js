@@ -133,7 +133,7 @@ $vic(document).on('click', 'a#widget-new-tab', function(event) {
         slot: $vic(this).data('slot'),
         position: $vic(this).data('position'),
         parentWidgetMap: $vic(this).data('parentwidgetmap'),
-        quantum: $vic(this).parents('ul').children('li').length,
+        quantum: $vic("#v-quantum-tab > .v-flex-col").length,
         _locale: locale
     });
     $vic.ajax({
