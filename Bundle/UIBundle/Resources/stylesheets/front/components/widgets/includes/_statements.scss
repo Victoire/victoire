@@ -69,6 +69,7 @@ $widget-overlayicon--selector: selector--set-element($widget--selector, 'overlay
   @include declaration('transform', translate(-50%, -50%));
   @include declaration('width', $widgets-overlayicon--size);
   @include declaration('height', $widgets-overlayicon--size);
+  @include declaration('pointer-events', none);
   @include block-generation($widget-overlayicon--selector);
 }
 
