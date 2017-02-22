@@ -220,7 +220,7 @@
       </trans-unit>
       <trans-unit id="58893b995da20" resname="victoire.widget.type.criterias.label">
         <source>victoire.widget.type.criterias.label</source>
-        <target>Quantum</target>
+        <target>QUANTUM</target>
       </trans-unit>
       <trans-unit id="58893b995da32" resname="victoire.widget.modal.title">
         <source>victoire.widget.modal.title</source>

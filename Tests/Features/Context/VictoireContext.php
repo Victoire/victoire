@@ -188,6 +188,25 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
+     * @When I open the widget quantum collapse when static
+     */
+    public function iOpenTheWidgetQuantumCollapseWhenStatic()
+    {
+        $element = $this->findOrRetry(
+            $this->getSession()->getPage(),
+            'css',
+            '[data-state="visible"] [id^="picker-static"] .v-widget-form__quantum-btn'
+        );
+
+
+        if (null === $element) {
+            $message = sprintf('Element not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+        $element->click();
+    }
+
+    /**
      * @Then /^I open the settings menu$/
      */
     public function iOpenTheSettingsMenu()
@@ -430,39 +449,20 @@ class VictoireContext extends RawMinkContext
     {
         $session = $this->getSession();
 
-        $quantumSelector = sprintf('descendant-or-self::ul[contains(@class, \'vic-quantum-nav\')]/li[normalize-space(.) = "%s"]/a', $quantumName);
+        $quantumSelector = sprintf('descendant-or-self::a[contains(@class, \'v-btn--quantum\') and normalize-space(.) = "%s"]', $quantumName);
         $quantum = $this->findOrRetry($session->getPage(), 'xpath', $quantumSelector);
         $quantum->click();
     }
 
     /**
-     * @When /^I create a new quantum "(.+)"$/
+     * @When /^I create a new quantum$/
      */
-    public function iCreateANewQuantum($name)
+    public function iCreateANewQuantum()
     {
         $session = $this->getSession();
 
-        $list = $this->findOrRetry($session->getPage(), 'css', '.vic-quantum-nav .edit.fa-plus');
-        $list->click();
-
-        $newQuantumSelector = 'descendant-or-self::ul[contains(@class, \'vic-quantum-nav\')]/li[normalize-space(.) = "Défault" and position() = (last()-1)]';
-        $newQuantum = $this->findOrRetry($session->getPage(), 'xpath', $newQuantumSelector);
-
-        if (null === $newQuantum) {
-            $message = sprintf('New quantum not found in the page after 10 seconds"');
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
-        }
-
-        $pencilSelector = 'descendant-or-self::ul[contains(@class, \'vic-quantum-nav\')]/li[position() = (last()-1)]/a/i[contains(@class, \'fa-pencil\')]';
-        $pencil = $this->findOrRetry($session->getPage(), 'xpath', $pencilSelector);
-        $pencil->click();
-
-        $input = $this->findOrRetry($session->getPage(), 'css', '.quantum-edit-field');
-        $input->setValue($name);
-
-        //Click outside
-        $list = $this->findOrRetry($session->getPage(), 'css', '.vic-quantum-nav');
-        $list->click();
+        $element = $this->findOrRetry($session->getPage(), 'css', '#widget-new-tab');
+        $element->click();
     }
 
     /**
