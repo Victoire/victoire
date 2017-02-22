@@ -33,8 +33,8 @@ Feature: Manage sitemap
       | fr            |luke skywalker | luke-skywalker | anakin-skywalker    | base          |
     And I am on "/fr/anakin-skywalker"
     Given I open the settings menu
-    Then I should see "Supprimer"
-    Then I follow the link containing "Supprimer"
+    Then I should see "SUPPRIMER"
+    Then I follow the link containing "SUPPRIMER"
     And I should see "Cette action va supprimer définitivement cette page. Cette action est irréversible. Êtes-vous sûr ?"
     And I press "J'ai bien compris, je confirme la suppression"
     And I wait 2 seconds
