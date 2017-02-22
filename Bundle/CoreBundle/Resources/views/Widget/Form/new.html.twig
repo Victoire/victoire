@@ -4,7 +4,7 @@
 
 {% block modal_body_sidebar %}
 <nav class="v-navbar v-navbar--vertical">
-    <div class="v-flex-grid v-flex-grid--direction-column">
+    <div class="v-flex-grid v-flex-grid--direction-column" id="v-quantum-tab">
         {% for key, form in forms %}
             {% include "VictoireCoreBundle:Widget:Form/tab.html.twig" with {
                 'widget': widgets[key],

@@ -211,3 +211,18 @@ function generateNewWidgetUrl(select){
         params
     );
 }
+
+
+// update on left bar, the quantum name when modifying it
+$vic(document).on('keyup', '[data-flag="v-quantum-name"]', function(event) {
+    var activeQuantumTab = $vic('#v-quantum-tab > .v-flex-col .v-btn--quantum-active');
+
+    if (!activeQuantumTab.find('span[data-flag="old-name"]').length) {
+        var originalShortName = $vic('#v-quantum-tab > .v-flex-col .v-btn--quantum-active span:not([data-flag="old-name"])').text();
+        activeQuantumTab.append('<span data-flag="old-name" style="display: none;">' + originalShortName + '</span>');
+    }
+
+    var quantumShortName = event.target.value.length ? event.target.value.substr(0, 2) : activeQuantumTab.find('span[data-flag="old-name"]').text();
+
+    activeQuantumTab.find('span:not([data-flag="old-name"])').text(quantumShortName);
+});
