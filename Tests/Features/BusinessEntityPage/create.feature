@@ -10,16 +10,15 @@ Feature: Create business entity pages
         And I maximize the window
         And I am on homepage
 
-    @debug
     Scenario: I can create a new Business entity page pattern
         When I open the additionals menu drop
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
         Then I should see "Jedi"
-        Then I should see "Ajouter une représentation métier"
+        Then I should see "AJOUTER UNE REPRÉSENTATION MÉTIER"
         When I follow the tab "Jedi"
-        And I should see "Ajouter une représentation métier"
-        And I follow "Ajouter une représentation métier"
+        And I should see "AJOUTER UNE REPRÉSENTATION MÉTIER"
+        And I follow "AJOUTER UNE REPRÉSENTATION MÉTIER"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche Jedi - {{item.name}}"
         And I fill in "URL" with "fiche-jedi-{{item.slug}}"
