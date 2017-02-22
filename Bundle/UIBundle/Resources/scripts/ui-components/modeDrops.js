@@ -1,15 +1,4 @@
-export default class ModeDrops {
-    constructor(triggers) {
-        // If `drops` is a nodelist transform it into a array
-        if (triggers == '[object NodeList]') {
-            triggers = Array.prototype.slice.call(triggers);
-        }
-
-        triggers.forEach(trigger => new ModeDrop(trigger));
-    }
-}
-
-class ModeDrop {
+export default class ModeDrop {
     constructor(trigger) {
         this.trigger = trigger;
         this.toggleActiveClass();

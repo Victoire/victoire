@@ -1,15 +1,4 @@
-export default class Slots {
-    constructor(elements) {
-        // If `modals` is a nodelist transform it into a array
-        if (elements == '[object NodeList]') {
-            elements = Array.prototype.slice.call(elements);
-        }
-
-        elements.forEach(element => new Slot(element));
-    }
-}
-
-class Slot {
+export default class Slot {
     constructor(element) {
         this.element = element;
         this.evalSize();

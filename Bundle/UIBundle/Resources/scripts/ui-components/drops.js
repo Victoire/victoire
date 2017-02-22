@@ -20,18 +20,7 @@ let mergeDeep = (target, source) => {
     return output;
 }
 
-export default class TrowelDrops {
-    constructor(elements) {
-        // If `modals` is a nodelist transform it into a array
-        if (elements == '[object NodeList]') {
-            elements = Array.prototype.slice.call(elements);
-        }
-
-        elements.forEach(element => new TrowelDrop(element));
-    }
-}
-
-class TrowelDrop {
+export default class TrowelDrop {
     constructor(trigger, options = {}) {
         if (window.Tether === undefined) throw new Error('Trowel drops require Tether (http://tether.io/)');
         if (typeof(trigger) != 'object') return false;
