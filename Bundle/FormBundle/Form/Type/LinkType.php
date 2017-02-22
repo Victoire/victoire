@@ -73,8 +73,6 @@ class LinkType extends AbstractType
                 self::manageRefreshTarget($form, $options);
             });
 
-        $this->addTargetField($builder, $options);
-
         $builder
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($builder, $options) {
                 $form = $event->getForm();
@@ -120,6 +118,7 @@ class LinkType extends AbstractType
                     'attr' => [
                         'data-refreshOnChange' => 'true',
                         'data-target' => $options['refresh-target'] ?: 'form[name="' . $rootFormName . '"]',
+                        'data-update-strategy' => 'replaceWith',
                     ],
                 ]
             )
@@ -268,6 +267,8 @@ class LinkType extends AbstractType
      */
     protected function addTargetField($form, array $options)
     {
+
+        $rootFormName = $form->getRoot()->getName();
         $form->add('target', ChoiceType::class, [
             'label'    => 'form.link_type.target.label',
             'required' => true,
@@ -279,7 +280,8 @@ class LinkType extends AbstractType
             'choices_as_values' => true,
             'attr'              => [
                 'data-refreshOnChange' => 'true',
-                'data-target'          => $options['refresh-target'],
+                'data-target' => $options['refresh-target'] ?: 'form[name="' . $rootFormName . '"]',
+                'data-update-strategy' => 'replaceWith',
             ],
             'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group viewReference-type page-type url-type route-type attachedWidget-type'],
         ]);
