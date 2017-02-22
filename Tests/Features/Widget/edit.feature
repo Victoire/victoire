@@ -27,28 +27,27 @@ Feature: Edit a widget
         And I submit the widget
         And I should see "Le côté anakin de la force"
 
-    @debug
     Scenario: I can create a new Business entity page pattern, create a static widget and edit this widget in query mode
         Given the following WidgetMap:
             | view | action | slot |
             |  fiche-jedi-{{item.slug}}| create | main_content |
-        Given the following WidgetForce:
+        And the following WidgetForce:
             | widgetMap                | side |
             | fiche-jedi-{{item.slug}} | Obscur |
-        Given I am on "/fr/victoire-dcms/business-template/show/4"
-        And I should see "Le côté Obscur de la force"
+        And I am on "/fr/victoire-dcms/business-template/show/4"
+        Then I should see "Le côté Obscur de la force"
         When I switch to "edit" mode
         And I edit the "Force" widget
         Then I should see "Mettre à jour"
         When I follow the tab "Entités"
         Then I should see "Jedi"
-        Then I follow the drop anchor "Jedi"
-        When I open the widget mode drop for entity "Jedi"
-        And I should see "Requête"
-        Then I follow the drop anchor "Requête"
-        When I select "side" from "jedi_a_query_widget_force[fields][side]"
+        When I follow the drop anchor "Jedi"
+        And I open the widget mode drop for entity "Jedi"
+        Then I should see "Requête"
+        When I follow the drop anchor "Requête"
+        And I select "side" from "jedi_a_query_widget_force[fields][side]"
         And I submit the widget
-        And I should see "Le côté obscur de la force"
+        Then I should see "Le côté obscur de la force"
 
     Scenario: I cannot edit widget for an entity with missing business parameter
         Given I am on "/fr/victoire-dcms/business-template/show/4"

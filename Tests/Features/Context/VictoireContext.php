@@ -261,13 +261,19 @@ class VictoireContext extends RawMinkContext
      */
     public function iFollowTheDropAnchor($name)
     {
-        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::a[contains(@class, "v-drop__anchor") and normalize-space(text()) = "%s"]', $name));
+        $page = $this->getSession()->getPage();
+        $elements = $page->findAll('xpath', sprintf('descendant-or-self::a[contains(@class, "v-drop__anchor") and normalize-space(text()) = "%s"]', $name));
 
-        if (null === $element) {
+        if (count($elements) < 1) {
             $message = sprintf('Element not found in the page after 10 seconds"');
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
-        $element->click();
+
+        foreach($elements as $element) {
+            if($element->getText() === $name) {
+                $element->click();
+            }
+        }
     }
 
     /**
