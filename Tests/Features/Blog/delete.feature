@@ -11,7 +11,7 @@ Background:
         When I open the settings menu
         Then I should see "Supprimer"
         When I follow the link containing "Supprimer"
-        Then I should see "Cette action va supprimer définitivement cette page. Cette action est irréversible. Êtes-vous sûr ?"
+        Then I should see "Cette action va supprimer définitivement cet article. Cette action est irréversible. Êtes-vous sûr ?"
         Given I press "J'ai bien compris, je confirme la suppression"
         #TODO Then I should see "L'article a bien été supprimé"
         And I wait 10 seconds
