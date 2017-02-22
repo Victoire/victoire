@@ -14,8 +14,8 @@ Scenario: Abort Delete
     And I am on homepage
     Given I switch to "edit" mode
     And I edit the "Force" widget
-    Then I should see "Supprimer"
-    Given I follow the link containing "Supprimer"
+    Then I should see "SUPPRIMER"
+    Given I follow the link containing "SUPPRIMER"
     Then I should see "Cette action va définitivement supprimer ce contenu. Cette action est irréversible."
     And I should see "Êtes-vous sûr ?"
     Given I press "Annuler"
@@ -46,8 +46,8 @@ Scenario: Delete a widget
     And I am on homepage
     Given I switch to "edit" mode
     And I edit the "Force" widget
-    Then I should see "Supprimer"
-    Given I follow the link containing "Supprimer"
+    Then I should see "SUPPRIMER"
+    Given I follow the link containing "SUPPRIMER"
     Then I should see "Cette action va définitivement supprimer ce contenu. Cette action est irréversible."
     And I should see "Êtes-vous sûr ?"
     Given I press "J'ai bien compris, je confirme la suppression"

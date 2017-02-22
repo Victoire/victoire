@@ -38,12 +38,6 @@ class HamburgerMenuListener implements MenuListenerInterface
 
         $this->mainItem->addChild('hamburger_menu.jedi', [
                 'route' => 'acme_app_jedi_index',
-                'attributes' => [
-                    'class' => 'v-menu__item',
-                ],
-                'linkAttributes' => [
-                    'class' => 'v-menu__anchor',
-                ],
             ]
         );
 
