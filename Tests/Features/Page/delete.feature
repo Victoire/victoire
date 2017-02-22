@@ -8,8 +8,8 @@ Background:
 Scenario: I can delete a new page
     Given I am on "/fr/test"
     And I open the settings menu
-    Then I should see "Supprimer"
-    When I follow the link containing "Supprimer"
+    Then I should see "SUPPRIMER"
+    When I follow the link containing "SUPPRIMER"
     Then I should see "Cette action va supprimer définitivement cette page. Cette action est irréversible. Êtes-vous sûr ?"
     Given I press "J'ai bien compris, je confirme la suppression"
     And I should be on "/fr/"
