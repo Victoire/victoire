@@ -21,8 +21,12 @@ $menus-anchor--letter-spacing: null;
 $menus-anchor--line-height: 1.25;
 $menus-anchor--color: (
   'default': color('grey'),
-  ':hover': color('grey', 'dark'),
-  ':active': color('grey', 'dark'),
-  ':focus': color('grey', 'dark'),
+  ':hover': color('white'),
+  ':active': color('white'),
+  ':focus': color('white'),
 );
-$menus-anchor--text-decoration: null;
+$menus-anchor--text-decoration: (
+  ':hover': none,
+  ':active': none,
+  ':focus': none,
+);
