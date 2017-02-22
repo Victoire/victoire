@@ -102,7 +102,6 @@ Scenario: I add widget in a position from simple page
   And "Le côté obscur de la force" should precede "Le côté Double de la force"
 
 @reset-schema
-@debug
 Scenario: I delete widget from simple page
   Given the following WidgetMaps:
     | id | action | position | parent | slot         |   view  |
