@@ -9,22 +9,22 @@ Feature: Manage sitemap
   Scenario: I can create a child for a page
     When I follow the float action button
     And I should see "Nouvelle page"
-    Then I follow "Nouvelle page"
-    And I should see "Créer"
-    And I fill in "Nom" with "anakin skywalker"
+    When I follow the link containing "Nouvelle page"
+    Then I should see "Créer"
+    When I fill in "Nom" with "anakin skywalker"
     Then I submit the widget
     And I should see "Page créée avec succès"
     And I should be on "/fr/anakin-skywalker"
     When I follow the float action button
-    And I should see "Nouvelle page"
-    Then I follow "Nouvelle page"
-    And I should see "Créer"
-    And I fill in "Nom" with "luke skywalker"
+    Then I should see "Nouvelle page"
+    When I follow "Nouvelle page"
+    Then I should see "Créer"
+    When I fill in "Nom" with "luke skywalker"
     And I select "anakin skywalker" from "Page parente"
-    Then I submit the widget
-    And I should see "Page créée avec succès"
-    And I wait 2 seconds
-    And I should be on "/fr/anakin-skywalker/luke-skywalker"
+    When I submit the widget
+    Then I should see "Page créée avec succès"
+    When I wait 2 seconds
+    Then I should be on "/fr/anakin-skywalker/luke-skywalker"
 
   Scenario: I can delete a page and his child
     Given the following Page:
