@@ -150,7 +150,6 @@ Scenario: I delete widget from template
   And "Widget 3" should precede "Widget 2"
 
 @reset-schema
-@debug
   Scenario: I overwrite a widget from template
   Given the following WidgetMaps:
     | id | action | position | parent | slot         |   view  |
