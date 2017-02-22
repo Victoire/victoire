@@ -57,14 +57,14 @@ class WidgetType extends AbstractType
                 'label'    => 'victoire.widget.type.asynchronous.label',
                 'required' => false,
                 'attr'     => array(
-                    'class' => 'vic-col-xs-12 test',
+                    'class' => 'vic-col-xs-12',
                 )
             ]);
         $builder->add('theme', HiddenType::class);
         $builder->add('quantum', QuantumType::class, [
             'label' => 'victoire.widget.type.quantum.label',
             'attr'     => array(
-                'class' => 'vic-col-xs-12 test',
+                'data-flag' => 'v-quantum-name'
             )
         ]);
 

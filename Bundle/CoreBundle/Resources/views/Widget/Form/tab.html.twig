@@ -14,7 +14,7 @@
         data-activeclass="v-btn--quantum-active"
     >
         {% include "VictoireUIBundle:SVG:quantum.html.twig" with { class: 'v-btn--quantum__ic' } %}
-        {{ name|truncate(2, false, '') }}
+        <span>{{ name|truncate(2, false, '') }}</span>
     </a>
 
     <div class="v-drop v-drop--tooltip" id="tooltip-quantum-{{ id }}-name">
