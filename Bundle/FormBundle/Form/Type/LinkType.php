@@ -63,10 +63,6 @@ class LinkType extends AbstractType
                 'required'          => true,
                 'choices'           => $options['linkTypeChoices'],
                 'choices_as_values' => true,
-                'attr'              => [
-                    'data-refreshOnChange' => 'true',
-                    'data-target'          => $options['refresh-target'],
-                ],
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($builder, $options) {
                 /** @var Link $data */
@@ -74,6 +70,7 @@ class LinkType extends AbstractType
                 $form = $event->getForm();
                 self::manageLinkTypeRelatedFields($data ? $data->getLinkType() : Link::TYPE_NONE, $data ? $data->getLocale() : null, $form, $builder, $options);
                 self::manageTargetRelatedFields($data ? $data->getTarget() : Link::TARGET_PARENT, $form, $options);
+                self::manageRefreshTarget($form, $options);
             });
 
         $this->addTargetField($builder, $options);
@@ -100,6 +97,33 @@ class LinkType extends AbstractType
                 'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group analytics-type'],
             ]);
         }
+    }
+
+    /**
+     * By default set data-target to root Form.
+     *
+     * @param FormInterface $form
+     * @param array         $options
+     */
+    protected function manageRefreshTarget($form, $options)
+    {
+        $rootFormName = $form->getRoot()->getName();
+        $linkTypeConfig = $form->get('linkType')->getConfig();
+        $linkTypeOptions = $linkTypeConfig->getOptions();
+
+        $form->add(
+            'linkType',
+            $linkTypeConfig->getType()->getName(),
+            array_replace(
+                $linkTypeOptions,
+                [
+                    'attr' => [
+                        'data-refreshOnChange' => 'true',
+                        'data-target' => $options['refresh-target'] ?: 'form[name="' . $rootFormName . '"]',
+                    ],
+                ]
+            )
+        );
     }
 
     /**
