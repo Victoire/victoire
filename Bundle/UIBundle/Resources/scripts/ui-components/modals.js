@@ -1,15 +1,4 @@
-export default class TrowelModals {
-    constructor(modals) {
-        // If `modals` is a nodelist transform it into a array
-        if (modals == '[object NodeList]') {
-            modals = Array.prototype.slice.call(modals);
-        }
-
-        modals.forEach(modal => new TrowelModal(modal));
-    }
-}
-
-class TrowelModal {
+export default class TrowelModal {
     constructor(modal) {
         this._modal = modal;
         this._togglers = document.querySelectorAll('[data-v-modal-toggle="#' + this._modal.id + '"]');

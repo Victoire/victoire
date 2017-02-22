@@ -1,15 +1,4 @@
-export default class TrowelCollapses {
-    constructor(elements) {
-        // If `modals` is a nodelist transform it into a array
-        if (elements == '[object NodeList]') {
-            elements = Array.prototype.slice.call(elements);
-        }
-
-        elements.forEach(element => new TrowelCollapse(element));
-    }
-}
-
-class TrowelCollapse {
+export default class TrowelCollapse {
     constructor(collapse, nested = true) {
         this.collapse = collapse;
         this.nested = nested;
@@ -37,9 +26,8 @@ class TrowelCollapse {
     hide() {
         this.collapse.setAttribute('data-state', 'hidden');
 
-        this.triggers
+        return this.triggers
             .forEach(trigger => trigger.removeActiveclass());
-        return;
     }
 
     toggle() {

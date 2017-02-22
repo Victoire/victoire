@@ -1,15 +1,4 @@
-export default class MDFormGroups {
-    constructor(elements) {
-        // If `modals` is a nodelist transform it into a array
-        if (elements == '[object NodeList]') {
-            elements = Array.prototype.slice.call(elements);
-        }
-
-        elements.forEach(element => new MDFormGroup(element));
-    }
-}
-
-class MDFormGroup {
+export default class MDFormGroup {
     constructor(element) {
         this._group = element;
         this._label = this._group.querySelector('.v-form-group__label');
