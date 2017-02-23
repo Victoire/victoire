@@ -57,12 +57,12 @@ export default class Initiator {
 
     newModeDrops() {
         const modeDrops = [].slice.call(document.querySelectorAll('[data-flag*="v-drop"]'));
-        modeDrops.forEach(modeDrop => {
+        modeDrops.forEach(function(modeDrop) {
             if (this.modeDropsInitiated.includes(modeDrop)) return true;
             this.modeDropsInitiated.push(modeDrop);
             let obj = new ModeDrop(modeDrop);
             return true;
-        });
+        }, this);
     }
 
     newDrops() {
