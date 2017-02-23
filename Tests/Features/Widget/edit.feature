@@ -77,7 +77,8 @@ Feature: Edit a widget
         And I wait 3 seconds
         Then I should see "Attention !"
         And I should see "Ce contenu appartient à un modèle parent"
-        And I follow "modifier le contenu original"
+        And I should see "MODIFIER LE CONTENU ORIGINAL"
+        When I follow "MODIFIER LE CONTENU ORIGINAL"
         And I wait 5 seconds
         Then I should not see "Attention !"
         And I should not see "Ce contenu appartient à un modèle parent"
