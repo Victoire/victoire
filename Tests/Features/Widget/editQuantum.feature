@@ -22,7 +22,7 @@ Feature: Edit widgets quantums
         And I fill in "_a_static_widget_force[criterias][0][operator]" with "equal"
         And I select "fr" from "_a_static_widget_force[criterias][0][value]"
         And I create a new quantum
-        And I select quantum "Dé"
+        And I wait 3 seconds
         And I fill in "b_static_widget_force_side" with "english"
         And I should see "QUANTUM"
         When I open the widget quantum collapse when static
@@ -48,7 +48,6 @@ Feature: Edit widgets quantums
         And I fill in "_a_static_widget_force[side]" with "français"
         When I open the widget quantum collapse when static
         Then I should see "Nom du quantum"
-        And I fill in "a_static_widget_force_side" with "français"
         When I fill in "_a_static_widget_force[quantum]" with "FR"
         And I fill in "a_static_widget_force_criterias_0_operator" with "equal"
         And I select "fr" from "a_static_widget_force_criterias_0_value"
@@ -85,7 +84,7 @@ Feature: Edit widgets quantums
         And I wait 3 seconds
         Then I should see "Attention !"
         And I should see "Ce contenu appartient à un modèle parent"
-        And I follow "modifier le contenu original"
+        And I follow "MODIFIER LE CONTENU ORIGINAL"
         And I wait 5 seconds
         Then I should not see "Attention !"
         And I should not see "Ce contenu appartient à un modèle parent"
