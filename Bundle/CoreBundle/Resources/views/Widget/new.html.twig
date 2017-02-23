@@ -17,31 +17,22 @@
                         data-group="picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}"
                         {% if isVisible %}data-state="visible"{% endif %}
                     >
-                        {% block form_entity %}
+                        {% block form_entity_wrapper %}
                             {% block form_entity_start %}{{ form_start(form) }}{% endblock %}
-                                {{ block('form_entity_base_before') }}
-                                {% block form_entity_base %}{{ block('form_base') }}{% endblock %}
-                                {{ block('form_entity_base_after') }}
-
-                                {{ block('form_entity_body_before') }}
-                                {% block form_entity_body %}{% endblock %}
-                                {{ block('form_entity_body_after') }}
+                                {{ block('form_base') }}
+                                {% block form_entity %}{% endblock %}
                             {% block form_entity_end %}{{ form_end(form) }}{% endblock %}
-                        {% endblock form_entity %}
+                        {% endblock form_entity_wrapper %}
                     </div>
                 {% endblock entity_collapse %}
             {% else %}
-                {% block form_static %}
+                {% block form_static_wrapper %}
                     {% block form_static_start %}{{ form_start(form) }}{% endblock %}
-                        {{ block('form_static_base_before') }}
-                        {% block form_static_base %}{{ block('form_base') }}{% endblock %}
-                        {{ block('form_static_base_after') }}
+                        {{ block('form_base') }}
 
-                        {{ block('form_static_body_before') }}
-                        {% block form_static_body %}{% endblock %}
-                        {{ block('form_static_body_after') }}
+                        {% block form_static %}{% endblock %}
                     {% block form_static_end %}{{ form_end(form) }}{% endblock %}
-                {% endblock form_static %}
+                {% endblock form_static_wrapper %}
             {% endif %}
         {% endblock form %}
 
