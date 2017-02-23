@@ -30,8 +30,6 @@ export default class Slot {
 
     selectBlur() {
         this.element.classList.remove(this.openClass);
-        this.select.selectedIndex = 0;
-        this.select.blur();
         return;
     }
 
