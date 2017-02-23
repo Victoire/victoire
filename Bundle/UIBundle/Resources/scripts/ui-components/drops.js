@@ -55,7 +55,7 @@ export default class TrowelDrop {
 
         const { posY, posX } = this.getPositions(fullOptions);
 
-        if (!['click', 'hover'].includes(fullOptions.behavior)) {
+        if (!(['click', 'hover'].indexOf(fullOptions.behavior) > -1)) {
             throw new Error('Trowel drops behavior option must be \'click\' or \'hover\'')
         }
 
@@ -63,11 +63,11 @@ export default class TrowelDrop {
             throw new Error('Trowel drops position option must be a string within two words describing Y (\'top\', \'middle\' or \'bottom\') and X (\'left\', \'center\' or \'right\') position')
         }
 
-        if (!['topin', 'topout', 'middle', 'bottomin', 'bottomout'].includes(posY)) {
+        if (!(['topin', 'topout', 'middle', 'bottomin', 'bottomout'].indexOf(posY) > -1)) {
             throw new Error('Trowel drops position option first word must be \'topin\', \'topout\', \'middle\', \'bottomin\' or \'bottomout\'')
         }
 
-        if (!['leftin', 'leftout', 'center', 'rightin', 'rightout'].includes(posX)) {
+        if (!(['leftin', 'leftout', 'center', 'rightin', 'rightout'].indexOf(posX) > -1)) {
             throw new Error('Trowel drops position option second word must be \'leftin\', \'leftout\', \'center\', \'rightin\' or \'rightout\'')
         }
 
@@ -75,7 +75,7 @@ export default class TrowelDrop {
     }
 
     get isFab() {
-        return this._trigger.getAttribute('data-flag').includes('v-drop-fab');
+        return (this._trigger.getAttribute('data-flag').indexOf('v-drop-fab') > -1);
     }
 
     get isModalOpen() {
