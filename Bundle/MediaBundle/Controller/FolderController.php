@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Victoire\Bundle\MediaBundle\Form\FolderType;
 
@@ -19,6 +20,8 @@ use Victoire\Bundle\MediaBundle\Form\FolderType;
  */
 class FolderController extends Controller
 {
+    use VictoireAlertifyControllerTrait;
+
     /**
      * @param int $folderId The folder id
      *
@@ -68,12 +71,12 @@ class FolderController extends Controller
         $parentFolder = $folder->getParent();
 
         if (empty($parentFolder)) {
-            $this->get('session')->getFlashBag()->add('failure', 'You can\'t delete the \''.$folderName.'\' Folder!');
+            $this->scold('You can\'t delete the \''.$folderName.'\' Folder!');
         } else {
             $folder->setDeleted(true);
             $em->persist($folder);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Folder \''.$folderName.'\' has been deleted!');
+            $this->congrat('Folder \''.$folderName.'\' has been deleted!');
             $folderId = $parentFolder->getId();
         }
 
@@ -105,7 +108,7 @@ class FolderController extends Controller
             if ($form->isValid()) {
                 $em->getRepository('VictoireMediaBundle:Folder')->save($folder);
 
-                $this->get('session')->getFlashBag()->add('success', 'Folder \''.$folder->getName().'\' has been created!');
+                $this->congrat('Folder \''.$folder->getName().'\' has been created!');
 
                 return new Response('<script>window.location="'.$this->generateUrl('VictoireMediaBundle_folder_show', ['folderId' => $folder->getId()]).'"</script>');
             }
