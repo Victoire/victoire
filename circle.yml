@@ -25,8 +25,8 @@ dependencies:
         sed -i '/CoverageContext/d' behat.yml.dist
         echo "CoverageContext disabled"
       fi
-
   override:
+    - sudo apt-get update && sudo apt-get install libpango1.0-0 && sudo apt-get install firefox
     - npm install less
     - mkdir fails
     - composer install --prefer-dist
