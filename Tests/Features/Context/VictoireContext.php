@@ -64,8 +64,6 @@ class VictoireContext extends RawMinkContext
         foreach ($errors as $index => $error) {
             echo sprintf("   #%d: %s", $index, $error) . PHP_EOL;
         }
-        throw new \Exception($message);
-
     }
 
     /**
