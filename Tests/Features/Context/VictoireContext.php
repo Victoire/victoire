@@ -4,7 +4,9 @@ namespace Victoire\Tests\Features\Context;
 
 use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\Element;
+use Behat\Mink\Session;
 use Behat\Symfony2Extension\Context\KernelDictionary;
 use Knp\FriendlyContexts\Context\RawMinkContext;
 
@@ -45,11 +47,17 @@ class VictoireContext extends RawMinkContext
      */
     public function lookForJSErrors(AfterStepScope $scope)
     {
+        /* @var Session $session */
         $session = $this->getSession();
+
+        if(!($session->getDriver() instanceof Selenium2Driver)) {
+            return;
+        }
+
         try {
             $errors = $session->evaluateScript("window.jsErrors");
+            $session->evaluateScript("window.jsErrors = []");
         } catch (\Exception $e) {
-            // output where the error occurred for debugging purposes
             throw $e;
         }
         if (!$errors || empty($errors)) {
