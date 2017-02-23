@@ -30,6 +30,7 @@ dependencies:
     - npm install less
     - mkdir fails
     - composer install --prefer-dist
+    - bower install
     - php Tests/Functionnal/bin/console --env=ci doctrine:database:create --no-debug
     - php Tests/Functionnal/bin/console --env=ci doctrine:schema:create --no-debug
     - php Tests/Functionnal/bin/console --env=ci cache:warmup --no-debug
