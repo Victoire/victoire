@@ -28,7 +28,7 @@ export default class Initiator {
     newModals() {
         const modals = [].slice.call(document.querySelectorAll('[data-flag*="v-modal"]'));
         modals.forEach(modal => {
-            if (this.modalsInitiated.includes(modal)) return true;
+            if (this.modalsInitiated.indexOf(modal) > -1) return true;
             this.modalsInitiated.push(modal);
             let obj = new TrowelModal(modal);
             return true;
@@ -38,7 +38,7 @@ export default class Initiator {
     newMdForm() {
         const mdForms = [].slice.call(document.querySelectorAll('[data-flag*="v-mdForm"]'));
         mdForms.forEach(mdForm => {
-            if (this.mdFormInitiated.includes(mdForm)) return true;
+            if (this.mdFormInitiated.indexOf(mdForm) > -1) return true;
             this.mdFormInitiated.push(mdForm);
             let obj = new MDFormGroup(mdForm);
             return true;
@@ -48,7 +48,7 @@ export default class Initiator {
     newSlots() {
         const slots = [].slice.call(document.querySelectorAll('.v-slot'));
         slots.forEach(slot => {
-            if (this.slotsInitiated.includes(slot)) return true;
+            if (this.slotsInitiated.indexOf(slot) > -1) return true;
             this.slotsInitiated.push(slot);
             let obj = new Slot(slot);
             return true;
@@ -57,18 +57,18 @@ export default class Initiator {
 
     newModeDrops() {
         const modeDrops = [].slice.call(document.querySelectorAll('[data-flag*="v-drop"]'));
-        modeDrops.forEach(function(modeDrop) {
-            if (this.modeDropsInitiated.includes(modeDrop)) return true;
+        modeDrops.forEach(modeDrop => {
+            if (this.modeDropsInitiated.indexOf(modeDrop) > -1) return true;
             this.modeDropsInitiated.push(modeDrop);
             let obj = new ModeDrop(modeDrop);
             return true;
-        }, this);
+        });
     }
 
     newDrops() {
         const drops = [].slice.call(document.querySelectorAll('[data-flag*="v-drop"]'));
         drops.forEach(drop => {
-            if (this.dropsInitiated.includes(drop)) return true;
+            if (this.dropsInitiated.indexOf(drop) > -1) return true;
             this.dropsInitiated.push(drop);
             let obj = new TrowelDrop(drop);
             return true;
@@ -78,7 +78,7 @@ export default class Initiator {
     newCollapses() {
         const collapses = [].slice.call(document.querySelectorAll('[data-flag*="v-collapse"]'));
         collapses.forEach(collapse => {
-            if (this.collapsesInitiated.includes(collapse)) return true;
+            if (this.collapsesInitiated.indexOf(collapse) > -1) return true;
             this.collapsesInitiated.push(collapse);
             let obj = new TrowelCollapse(collapse);
             return true;
