@@ -132,7 +132,7 @@
       </trans-unit>
       <trans-unit id="58893b995feba" resname="victoire.widget.inherited.notice">
         <source>victoire.widget.inherited.notice</source>
-        <target><![CDATA[<strong>¡ Advertencia ! </strong>Este contenido es propiedad de una plantilla padre (<i>%templateName%</i>).<br/>Si desea editar el contenido SOLAMENTE en esta página, seguir adelante, estás en el lugar correcto.<br/>Sin embargo, si desea modificar este widget en la plantilla de los padres, y que afecten a donde quiera que se utiliza en el sitio web, usted tiene que hacer clic en este enlace :<a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal"> editar el contenido original</a>.]]></target>
+        <target><![CDATA[<strong>¡ Advertencia ! </strong>Este contenido es propiedad de una plantilla padre (<i>%templateName%</i>).<br/>Si desea editar el contenido SOLAMENTE en esta página, seguir adelante, estás en el lugar correcto.<br/>Sin embargo, si desea modificar este widget en la plantilla de los padres, y que afecten a donde quiera que se utiliza en el sitio web, usted tiene que hacer clic en este enlace :<a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal" class="v-btn v-btn--warning">editar el contenido original</a>.]]></target>
       </trans-unit>
       <trans-unit id="58893b995fece" resname="navbar.mode.edit">
         <source>navbar.mode.edit</source>

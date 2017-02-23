@@ -128,7 +128,7 @@
       </trans-unit>
       <trans-unit id="58893b9964059" resname="victoire.widget.inherited.notice">
         <source>victoire.widget.inherited.notice</source>
-        <target><![CDATA[<strong>Attention ! </strong>Ce contenu appartient à un modèle parent (<i>%templateName%</i>).<br/>Si vous voulez uniquement modifier le contenu sur cette page, continuez, vous êtes au bon endroit.<br/>Si toutefois vous voulez que cette modification soit répercutée sur toutes les pages utilisant le modèle <i>%templateName%</i>, cliquez sur ce lien : <a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal">modifier le contenu original</a>.]]></target>
+        <target><![CDATA[<strong>Attention ! </strong>Ce contenu appartient à un modèle parent (<i>%templateName%</i>).<br/>Si vous voulez uniquement modifier le contenu sur cette page, continuez, vous êtes au bon endroit.<br/>Si toutefois vous voulez que cette modification soit répercutée sur toutes les pages utilisant le modèle <i>%templateName%</i>, cliquez sur ce lien : <a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal" class="v-btn v-btn--warning">modifier le contenu original</a>.]]></target>
       </trans-unit>
       <trans-unit id="58893b9964135" resname="navbar.mode.edit">
         <source>navbar.mode.edit</source>

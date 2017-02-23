@@ -1,8 +1,10 @@
 <div class="v-collapse" id="widget-{{ id }}-tab-pane" data-flag="v-collapse" data-group="tab-widget-quantum" {% if forms.active is defined and forms.active == true %}data-state="visible"{% endif %}>
     {% if widget.id and widget.widgetMap.view != view %}
-        <div class="vic-alert vic-alert-warning vic-alert-dismissible">
-            {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.widgetMap.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'viewReference': widget.widgetMap.view.reference.id })}, 'victoire')|raw }}
-        </div>
+        {% embed "VictoireUIBundle:Bricks:alert.html.twig" with { theme: "warning" } %}
+            {% block body %}
+                {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.widgetMap.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'viewReference': widget.widgetMap.view.reference.id })}, 'victoire')|raw }}
+            {% endblock body %}
+        {% endembed %}
     {% endif %}
 
     {% if classes|length %}

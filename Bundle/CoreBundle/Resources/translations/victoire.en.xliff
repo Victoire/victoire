@@ -132,7 +132,7 @@
       </trans-unit>
       <trans-unit id="58893b995d42c" resname="victoire.widget.inherited.notice">
         <source>victoire.widget.inherited.notice</source>
-        <target><![CDATA[<strong>Warning! </strong>This content is owned by a parent template (<i>%templateName%</i>).<br/>If you want to edit the content ONLY on this page, keep on going, you're in the right place.<br/>However, if you want to edit this widget on the parent template, and affect it wherever it is used on the website, you have to click on this link :<a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal"> edit the original content</a>.]]></target>
+        <target><![CDATA[<strong>Warning! </strong>This content is owned by a parent template (<i>%templateName%</i>).<br/>If you want to edit the content ONLY on this page, keep on going, you're in the right place.<br/>However, if you want to edit this widget on the parent template, and affect it wherever it is used on the website, you have to click on this link :<a href="%templateEditLink%" data-modal="close" class="v-btn v-btn--warning" data-toggle="vic-modal">edit the original content</a>.]]></target>
       </trans-unit>
       <trans-unit id="58893b995d4c9" resname="navbar.mode.edit">
         <source>navbar.mode.edit</source>
