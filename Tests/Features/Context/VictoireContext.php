@@ -2,6 +2,7 @@
 
 namespace Victoire\Tests\Features\Context;
 
+use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Mink\Element\Element;
 use Behat\Symfony2Extension\Context\KernelDictionary;
@@ -33,6 +34,38 @@ class VictoireContext extends RawMinkContext
     {
         $viewsReferences = $this->getContainer()->get('victoire_core.view_helper')->buildViewsReferences();
         $this->getContainer()->get('victoire_view_reference.manager')->saveReferences($viewsReferences);
+    }
+
+    /**
+     * @AfterStep
+     *
+     * @param AfterStepScope $scope
+     *
+     * @throws \Exception
+     */
+    public function lookForJSErrors(AfterStepScope $scope)
+    {
+        $session = $this->getSession();
+        try {
+            $errors = $session->evaluateScript("window.jsErrors");
+        } catch (\Exception $e) {
+            // output where the error occurred for debugging purposes
+            throw $e;
+        }
+        if (!$errors || empty($errors)) {
+            return;
+        }
+        $file = sprintf("%s:%d", $scope->getFeature()->getFile(), $scope->getStep()->getLine());
+        $message = sprintf("Found %d javascript error%s", count($errors), count($errors) > 0 ? 's' : '');
+        echo '-------------------------------------------------------------' . PHP_EOL;
+        echo $file . PHP_EOL;
+        echo $message . PHP_EOL;
+        echo '-------------------------------------------------------------' . PHP_EOL;
+        foreach ($errors as $index => $error) {
+            echo sprintf("   #%d: %s", $index, $error) . PHP_EOL;
+        }
+        throw new \Exception($message);
+
     }
 
     /**
