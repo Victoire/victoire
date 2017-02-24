@@ -47,7 +47,7 @@ class ArticleMenuListener implements MenuListenerInterface
                 ],
                 'linkAttributes'  => [
                     'class' => 'v-btn v-btn--sm v-btn--transparent v-test',
-                    'id' => 'v-settings-link',
+                    'id'    => 'v-settings-link',
                 ],
             ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
@@ -84,5 +84,4 @@ class ArticleMenuListener implements MenuListenerInterface
             );
         }
     }
-
 }

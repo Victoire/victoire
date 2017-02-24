@@ -2,15 +2,11 @@
 
 namespace Victoire\Bundle\UIBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Helper\ProgressHelper;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
-use Victoire\Bundle\CoreBundle\Entity\View;
 
 class FetchAssetsCommand extends ContainerAwareCommand
 {
@@ -44,7 +40,6 @@ class FetchAssetsCommand extends ContainerAwareCommand
             $output->writeln(sprintf('<error>%s</error>', 'Did you installed bower properly ?'));
             $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
         }
-
 
         $output->writeln(sprintf('<info>%s</info>', $process->getOutput()));
         $output->writeln('✅  <fg=green>Ok</> Assets fetched');

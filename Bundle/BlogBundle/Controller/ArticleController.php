@@ -202,7 +202,6 @@ class ArticleController extends Controller
         $this->get('session')->getFlashBag()->add('success', $message);
         $this->congrat($message);
 
-
         $response = [
             'success' => true,
             'url'     => $this->generateUrl('victoire_core_page_show', [

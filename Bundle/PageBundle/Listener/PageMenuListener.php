@@ -43,7 +43,7 @@ class PageMenuListener implements MenuListenerInterface
             'routeParameters' => ['id' => $page->getId()],
             'linkAttributes'  => [
                 'class' => 'v-btn v-btn--sm v-btn--transparent',
-                'id' => 'v-settings-link',
+                'id'    => 'v-settings-link',
             ],
         ])->setLinkAttribute('data-toggle', 'vic-modal');
 
@@ -52,7 +52,7 @@ class PageMenuListener implements MenuListenerInterface
             'routeParameters' => ['id' => $page->getId()],
             'linkAttributes'  => [
                 'class' => 'v-btn v-btn--sm v-btn--transparent',
-                'id' => 'v-seo-link',
+                'id'    => 'v-seo-link',
             ],
         ])->setLinkAttribute('data-toggle', 'vic-modal');
     }

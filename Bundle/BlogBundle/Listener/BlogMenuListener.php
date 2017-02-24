@@ -42,7 +42,7 @@ class BlogMenuListener implements MenuListenerInterface
             [
                 'route'           => 'victoire_blog_article_new',
                 'routeParameters' => ['id' => $currentBlog->getId()],
-                'linkAttributes' => [
+                'linkAttributes'  => [
                     'class' => 'v-drop__anchor',
                 ],
             ]
