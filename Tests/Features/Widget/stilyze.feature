@@ -70,7 +70,7 @@ Feature: Stylize a widget
     And I edit the "Force" widget
     Then I should see "Style du widget"
     When I fill in "widget_style[containerBackgroundColor]" with "rgb(255, 0, 0)"
-    And I follow "Mettre à jour"
+    And I follow the link containing "Mettre à jour"
     And I wait 2 seconds
     And I reload the page
     Then I should see the css property "background-color" of "widget-1" with "rgb(255, 0, 0)"
@@ -81,7 +81,7 @@ Feature: Stylize a widget
     And I edit the "Force" widget
     Then I should see "Style du widget"
     When I fill in "widget_style[containerBackgroundColor]" with "rgb(0, 0, 255)"
-    And I follow "Mettre à jour"
+    And I follow the link containing "Mettre à jour"
     And I wait 2 seconds
     And I reload the page
     Then I should see the css property "background-color" of "widget-1" with "rgb(0, 0, 255)"
