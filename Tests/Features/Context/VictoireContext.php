@@ -20,7 +20,11 @@ class VictoireContext extends RawMinkContext
     use KernelDictionary;
     protected $minkContext;
 
-    /** @BeforeScenario */
+    /**
+     * @BeforeScenario
+     *
+     * @param BeforeScenarioScope $scope
+     */
     public function gatherContexts(BeforeScenarioScope $scope)
     {
         $environment = $scope->getEnvironment();
@@ -91,7 +95,8 @@ class VictoireContext extends RawMinkContext
     public function iLoginAsVisitor()
     {
         $this->getSession()->getDriver()->stop();
-        $url = 'http://z6po@victoire.io:test@fr.victoire.io:8000';
+        $baseUrl = $this->minkContext->getMinkParameter('base_url');
+        $url = str_replace('anakin@victoire.io:test', 'z6po@victoire.io:test', $baseUrl);
         $this->minkContext->setMinkParameter('base_url', $url);
     }
 
