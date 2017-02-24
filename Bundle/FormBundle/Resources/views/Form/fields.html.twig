@@ -41,19 +41,18 @@
 
 {% block criteria_row %}
     <div>
-        <label class="v-form-group__label">
-            {{ ('victoire_criteria.' ~ form.vars.data.name ~ '.criteria.label')|trans }}
-        </label>
-
         <div class="v-grid">
             <div class="v-col v-col--sm-6">
-                <div class="v-form-group">
+                <div class="v-form-group v-form-group--md" data-flag="v-mdForm">
+                    <label class="v-form-group__label">
+                        {{ ('victoire_criteria.' ~ form.vars.data.name ~ '.criteria.label')|trans }}
+                    </label>
                     {{ form_widget(form.operator) }}
                 </div>
             </div>
 
             <div class="v-col v-col--sm-6">
-                <div class="v-form-group">
+                <div class="v-form-group v-form-group--md" data-flag="v-mdForm">
                     {{ form_widget(form.value) }}
                 </div>
             </div>
