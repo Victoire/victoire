@@ -199,7 +199,6 @@ class ArticleController extends Controller
         $this->get('victoire_blog.manager.article')->delete($article);
 
         $message = $this->get('translator')->trans('victoire.blog.article.delete.success', [], 'victoire');
-        $this->get('session')->getFlashBag()->add('success', $message);
         $this->congrat($message);
 
         $response = [
