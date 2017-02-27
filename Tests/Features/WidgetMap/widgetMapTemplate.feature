@@ -342,3 +342,45 @@ Scenario: I delete an overwrite widget on template
   Then I should see "Widget 1"
   Then I should see "Widget 2"
   Then I should see "Widget 3 overwrite"
+
+  @reset-schema
+  Scenario: I delete a widget from template which has children WidgetMap in inherited page
+    Given the following WidgetMaps:
+      | id | action | position | parent | slot         | view | replaced |
+      | 1  | create |          |        | main_content | base |          |
+      | 2  | create | after    | 1      | main_content | base |          |
+      | 3  | create | after    | 2      | main_content | home |          |
+      | 4  | create | after    | 3      | main_content | home |          |
+    Given the following WidgetTexts:
+      | content  | mode   | widgetMap |
+      | Widget 1 | static | 1         |
+      | Widget 2 | static | 2         |
+      | Widget 3 | static | 3         |
+      | Widget 4 | static | 4         |
+    When I am on the homepage
+    Then I should see "Widget 1"
+    And I should see "Widget 2"
+    And I should see "Widget 3"
+    And I should see "Widget 4"
+    And I am on "/fr/victoire-dcms/template/show/1"
+    Then I should see "Widget 1"
+    And I should see "Widget 2"
+    And I should not see "Widget 3"
+    And I should not see "Widget 4"
+    When I switch to "edit" mode
+    And I press the "Widget 2" content
+    Then I should see "SUPPRIMER"
+    When I follow "SUPPRIMER"
+    Then I should see "Cette action va définitivement supprimer ce contenu. Cette action est irréversible."
+    And I should see "Êtes-vous sûr ?"
+    When I press "J'ai bien compris, je confirme la suppression"
+    And I reload the page
+    Then I should see "Widget 1"
+    And I should not see "Widget 2"
+    And I should not see "Widget 3"
+    And I should not see "Widget 4"
+    When I am on the homepage
+    Then I should see "Widget 1"
+    And I should not see "Widget 2"
+    And I should see "Widget 3"
+    And I should see "Widget 4"
