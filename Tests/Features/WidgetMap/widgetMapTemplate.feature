@@ -369,8 +369,8 @@ Scenario: I delete an overwrite widget on template
     And I should not see "Widget 4"
     When I switch to "edit" mode
     And I press the "Widget 2" content
-    Then I should see "SUPPRIMER"
-    When I follow "SUPPRIMER"
+    Then I should see "Supprimer"
+    When I follow "Supprimer"
     Then I should see "Cette action va définitivement supprimer ce contenu. Cette action est irréversible."
     And I should see "Êtes-vous sûr ?"
     When I press "J'ai bien compris, je confirme la suppression"
