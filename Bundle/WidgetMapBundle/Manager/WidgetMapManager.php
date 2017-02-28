@@ -97,8 +97,6 @@ class WidgetMapManager
 
         $widgetMap = $this->moveWidgetMap($view, $widgetMap, $parentWidgetMap, $position, $slot);
 
-        // If the moved widgetMap has someone at both his before and after, arbitrary move UP the before side
-        // and find the first place after the before widgetMap hierarchy to place the after widgetMap.
         $this->moveChildren($view, $beforeChild, $afterChild, $originalParent, $originalPosition);
 
         foreach ($parentWidgetMapChildren['views'] as $_view) {
@@ -162,7 +160,13 @@ class WidgetMapManager
             $view->addWidgetMap($replaceWidgetMap);
         }
 
+        //Move children for current WidgetMap View
         $this->moveChildren($view, $beforeChild, $afterChild, $originalParent, $originalPosition);
+
+        //Move children WidgetMap for children from other View
+        foreach ($widgetMap->getChildren() as $child) {
+            $this->moveWidgetMap($child->getView(), $child, $originalParent, $originalPosition);
+        }
     }
 
     /**
