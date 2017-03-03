@@ -16,7 +16,7 @@ checkout:
 
 dependencies:
   override:
-    - bash victoire-test-suite/dependencies.sh victoire/victoire
+    - bash victoire-test-suite/dependencies.sh victoire/victoire 
   cache_directories:
     - ~/.composer/cache
 
