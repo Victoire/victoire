@@ -7,65 +7,24 @@ machine:
   services:
     - redis
   php:
-    version: 7.0.4
+    version: 7.1.0
+
+checkout:
+  post:
+    - git submodule sync
+    - git submodule update --init
 
 dependencies:
-  pre:
-    - cp Tests/Functionnal/app/config/parameters.yml.dist Tests/Functionnal/app/config/parameters.yml
-    - echo "memory_limit = 2048M" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/memory.ini
-    - echo "always_populate_raw_post_data=-1" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/post_data.ini
-    - >
-      if [ -n "${RUN_NIGHTLY_BUILD}" ]; then
-        sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
-        echo "xdebug enabled"
-      fi
-    - >
-      if [ -z "${RUN_NIGHTLY_BUILD}" ]; then
-        sed -i '/CoverageContext/d' behat.yml
-        sed -i '/CoverageContext/d' behat.yml.dist
-        echo "CoverageContext disabled"
-      fi
-
   override:
-    - npm install less
-    - mkdir fails
-    - composer install --prefer-dist
-    - php Tests/Functionnal/bin/console --env=ci doctrine:database:create --no-debug
-    - php Tests/Functionnal/bin/console --env=ci doctrine:schema:create --no-debug
-    - php Tests/Functionnal/bin/console --env=ci cache:warmup --no-debug
-    - php Tests/Functionnal/bin/console --env=domain cache:warmup --no-debug
-    - php Tests/Functionnal/bin/console --env=ci victoire:generate:view --no-debug
-    - php Tests/Functionnal/bin/console --env=ci assets:install Tests/Functionnal/web --no-debug
-    - php Tests/Functionnal/bin/console --env=ci bazinga:js-translation:dump --no-debug
-    - php Tests/Functionnal/bin/console --env=ci fos:js:dump --target="Tests/Functionnal/web/js/fos_js_routes_test.js" --no-debug
-    - php Tests/Functionnal/bin/console --env=domain fos:js:dump --target="Tests/Functionnal/web/js/fos_js_routes_domain.js" --no-debug
-    - php Tests/Functionnal/bin/console --env=ci assetic:dump --no-debug
-    - wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
-    - 'java -jar selenium-server-standalone-2.53.0.jar > /dev/null 2>&1':
-          background: true
-    - 'php Tests/Functionnal/bin/console --env=ci server:run -r Tests/Functionnal/app/config/router_ci.php --no-debug > server.log 2>&1':
-          background: true
-    - "Xvfb :99 -ac 2>/dev/null":
-          background: true
-    - sleep 3 # give xvfb some time to start
+    - bash victoire-test-suite/dependencies.sh victoire/victoire 
   cache_directories:
     - ~/.composer/cache
 
 test:
   override:
-    - >
-      if [ -n "${RUN_NIGHTLY_BUILD}" ]; then
-        ./vendor/bin/behat --format=pretty --out=std --format=junit --out=$CIRCLE_TEST_REPORTS/$i/junit
-      fi
-    - bash circle-behat.sh Tests/Features:
+    - bash victoire-test-suite/circle.sh victoire/victoire:
         parallel: true
-    - wget http://psvcg.coreteks.org/php-semver-checker-git.phar
-    - >
-      php php-semver-checker-git.phar suggest --allow-detached -vvv --details --include-before=src --include-after=src | awk '/Suggested semantic version: / {print $4}' | awk '{ print "{\"Suggested semantic version\":\"" $1 "\"}" }' > $CIRCLE_TEST_REPORTS/semver.json
-    - >
-      if [ -n "${RUN_NIGHTLY_BUILD}" ]; then
-        mkdir -p cp $CIRCLE_TEST_REPORTS/coverage && cp -R $(php -r "echo sys_get_temp_dir();")/Victoire/logs/coverage $CIRCLE_TEST_REPORTS
-      fi
+    - bash victoire-test-suite/test.sh victoire/victoire
 
 general:
   artifacts:
