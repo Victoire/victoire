@@ -1,0 +1,3 @@
+[submodule "victoire-test-suite"]
+	path = victoire-test-suite
+	url = git@github.com:Victoire/test-suite.git
