@@ -46,7 +46,7 @@ class ArticleMenuListener implements MenuListenerInterface
                     'page_id' => $page->getId(),
                 ],
                 'linkAttributes'  => [
-                    'class' => 'v-btn v-btn--sm v-btn--transparent v-test',
+                    'class' => 'v-btn v-btn--sm v-btn--transparent',
                     'id'    => 'v-settings-link',
                 ],
             ]
