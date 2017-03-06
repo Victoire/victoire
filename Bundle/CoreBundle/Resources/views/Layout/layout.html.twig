@@ -10,15 +10,14 @@
 {% block head_script %}
     <!-- HEAD_SCRIPT -->
     <script type="text/javascript">
-        {% if is_granted('ROLE_VICTOIRE') %}
-            var adminLocale = '{{ app.user.locale}}';
-        {% endif %}
-
         var locale = '{{ app.request.locale }}';
         var debug = {{ app.debug ? "true" : "false" }};
     </script>
 
     {% if is_granted('ROLE_VICTOIRE') %}
+        <script type="text/javascript">
+            var adminLocale = '{{ app.user.locale }}';
+        </script>
         {% javascripts injector="victoire-head, modernizr" %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
