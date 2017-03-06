@@ -108,7 +108,6 @@ class MenuBuilder
         $this->bottomRightNavbar = $this->factory->createItem('root', [
                 'childrenAttributes' => [
                     'id'    => 'v-footer-navbar-bottom-right',
-                    'class' => '',
                 ],
             ]
         );
@@ -182,12 +181,7 @@ class MenuBuilder
      */
     public function initLeftNavbar()
     {
-        $this->leftNavbar = $this->factory->createItem('root', [
-            'childrenAttributes' => [
-                'class' => '',
-                ],
-            ]
-        );
+        $this->leftNavbar = $this->factory->createItem('root');
 
         return $this->leftNavbar;
     }
