@@ -16,7 +16,6 @@ class StyleguideController extends Controller
     public function indexAction($component = null)
     {
         $components = [
-            // 'styleguide',
             'color',
             'text',
             'heading',
@@ -37,8 +36,6 @@ class StyleguideController extends Controller
             'modal',
             'collapse',
             'alert',
-            // 'tabs',
-            // 'card',
         ];
 
         return [
