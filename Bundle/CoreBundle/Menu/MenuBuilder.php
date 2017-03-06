@@ -192,7 +192,7 @@ class MenuBuilder
      * @param ItemInterface $rootItem
      * @param string        $title
      * @param array         $attributes
-     * @param string        $caret
+     * @param bool          $caret
      *
      * @return \Knp\Menu\ItemInterface
      */
