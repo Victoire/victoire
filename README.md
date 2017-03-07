@@ -36,6 +36,8 @@ You can follow the relative questions on [StackOverflow](http://stackoverflow.co
 
 You can see the list of our lovely [contributors](https://github.com/Victoire/Victoire/contributors).
 
+Victoire and its Widgets are tested with Behat through CircleCI. For further information please take a look at [victoire-test-suite](https://github.com/Victoire/test-suite).
+
 ### Frontend contribution
 
 If you want to contribute to Victoire frontend, please read this [contribution guideline](doc/frontend-contribution.md).
