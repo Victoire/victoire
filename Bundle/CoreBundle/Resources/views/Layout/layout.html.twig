@@ -28,8 +28,13 @@
     {% endjavascripts %}
 
     <!-- END HEAD_SCRIPT -->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    {% if app.debug %}
+        <script src="{{ asset('/bundles/victoireui/bower_components/jquery/dist/jquery.js') }}"></script>
+        <script src="{{ asset('/bundles/victoireui/bower_components/angular/angular.min.js') }}"></script>
+    {% else %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    {% endif %}
 {% endblock head_script %}
 
 {% block head_style %}
@@ -84,7 +89,11 @@
 
     {% block foot_script__view %}
         {% block foot_script__view_bootstrap %}
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            {% if app.debug %}
+                <script src="{{ asset('/bundles/victoireui/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+            {% else %}
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            {% endif %}
         {% endblock foot_script__view_bootstrap %}
 
         {% if view is defined %}
