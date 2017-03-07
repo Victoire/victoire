@@ -5,17 +5,6 @@
     "url": "https://github.com/victoire/victoire",
     "type": "git"
   },
-  "scripts": {
-    "server": "php Tests/Functionnal/bin/console server:run -e test -r vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/config/router_prod.php",
-    "assets": "php Tests/Functionnal/bin/console assets:install Tests/Functionnal/web",
-    "gulp": "gulp",
-    "styles": "gulp styles",
-    "styles-watch": "gulp watch",
-    "cc": "php Tests/Functionnal/bin/console cache:clear",
-    "js-routing": "php Tests/Functionnal/bin/console fos:js-routing:dump -e test --target=Tests/Functionnal/web/js/fos_js_routes_test.js",
-    "assetic": "php Tests/Functionnal/bin/console assetic:dump",
-    "assetic-watch": "php Tests/Functionnal/bin/console assetic:watch"
-  },
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.22.1",
