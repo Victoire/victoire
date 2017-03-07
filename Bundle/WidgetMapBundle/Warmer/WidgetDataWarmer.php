@@ -15,6 +15,7 @@ use Victoire\Bundle\WidgetBundle\Entity\Traits\LinkTrait;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Repository\WidgetRepository;
+use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 /**
  * WidgetDataWarmer.
@@ -122,6 +123,11 @@ class WidgetDataWarmer
             foreach ($metaData->getAssociationMappings() as $association) {
                 $targetClass = $association['targetEntity'];
 
+                //Skip already set WidgetMap association
+                if ($targetClass == WidgetMap::class) {
+                    continue;
+                }
+
                 //If Widget has OneToOne or ManyToOne association, store target entity id to construct
                 //a single query for this entity type
                 if ($metaData->isSingleValuedAssociation($association['fieldName'])
@@ -143,7 +149,7 @@ class WidgetDataWarmer
                 elseif ($metaData->isCollectionValuedAssociation($association['fieldName'])) {
 
                     //Even if Widget is cached, we need its Criterias used before cache call
-                    if (!$widgetCached || $association['targetEntity'] == Criteria::class) {
+                    if (!$widgetCached || $targetClass == Criteria::class) {
 
                         //If Collection is not null, treat it
                         if ($this->accessor->getValue($entity, $association['fieldName'])) {
