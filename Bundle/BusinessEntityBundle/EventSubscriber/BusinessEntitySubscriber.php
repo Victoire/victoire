@@ -112,40 +112,45 @@ class BusinessEntitySubscriber implements EventSubscriber
     {
         $businessTemplates = $entityManager->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
         foreach ($businessTemplates as $businessTemplate) {
-            if ($this->businessPageHelper->isEntityAllowed($businessTemplate, $entity, $entityManager)) {
-                /** @var BusinessPageRepository $bepRepo */
-                $bepRepo = $entityManager->getRepository('VictoireBusinessPageBundle:BusinessPage');
-                $virtualBusinessPage = $this->businessPageBuilder->generateEntityPageFromTemplate(
-                    $businessTemplate,
-                    $entity,
-                    $entityManager
-                );
-                // Get the BusinessPage if exists for the given entity
-                /** @var BusinessPage $businessPage */
-                $businessPage = $bepRepo->findPageByBusinessEntityAndPattern(
-                    $businessTemplate,
-                    $entity,
-                    $businessEntity
-                );
-                // If there is diff between persisted BEP and computed, persist the change
-                $scheduledForRemove = false;
-                foreach ($deletions as $deletion) {
-                    if (get_class($deletion) == get_class($businessPage)
-                        && $deletion->getId() === $businessPage->getId()
-                    ) {
-                        $scheduledForRemove = true;
+            // we generate viewRef for each BT translation
+            /** @var ViewTra $translation */
+            foreach ($businessTemplate->getTranslations() as $translation) {
+                $businessTemplate->setCurrentLocale($translation->getLocale());
+                if ($this->businessPageHelper->isEntityAllowed($businessTemplate, $entity, $entityManager)) {
+                    /** @var BusinessPageRepository $bepRepo */
+                    $bepRepo = $entityManager->getRepository('VictoireBusinessPageBundle:BusinessPage');
+                    $virtualBusinessPage = $this->businessPageBuilder->generateEntityPageFromTemplate(
+                        $businessTemplate,
+                        $entity,
+                        $entityManager
+                    );
+                    // Get the BusinessPage if exists for the given entity
+                    /** @var BusinessPage $businessPage */
+                    $businessPage = $bepRepo->findPageByBusinessEntityAndPattern(
+                        $businessTemplate,
+                        $entity,
+                        $businessEntity
+                    );
+                    $businessPage->setCurrentLocale($translation->getLocale());
+                    // If there is diff between persisted BEP and computed, persist the change
+                    $scheduledForRemove = false;
+                    foreach ($deletions as $deletion) {
+                        if (get_class($deletion) == get_class($businessPage)
+                            && $deletion->getId() === $businessPage->getId()
+                        ) {
+                            $scheduledForRemove = true;
+                        }
                     }
-                }
 
-                if ($businessPage && !$scheduledForRemove) {
-                    $oldSlug = $businessPage->getSlug();
-                    $newSlug = $entity->getSlug();
+                    if ($businessPage && !$scheduledForRemove) {
+                        $oldSlug = $businessPage->getSlug();
+                        $newSlug = $entity->getSlug();
+                        $businessPage->setName($virtualBusinessPage->getName());
+                        $businessPage->setSlug($virtualBusinessPage->getSlug());
 
-                    $businessPage->setName($virtualBusinessPage->getName());
-                    $businessPage->setSlug($virtualBusinessPage->getSlug());
-
-                    $entityManager->persist($businessPage);
-                    $entityManager->flush();
+                        $entityManager->persist($businessPage);
+                        $entityManager->flush();
+                    }
                 }
             }
         }
@@ -167,23 +172,28 @@ class BusinessEntitySubscriber implements EventSubscriber
             //find all BT that can represent the businessEntity
             $businessTemplates = $em->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
             foreach ($businessTemplates as $businessTemplate) {
-                if ($page = $em->getRepository(
-                    'Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage'
-                )->findPageByBusinessEntityAndPattern($businessTemplate, $entity, $businessEntity)
-                ) {
-                    //if it's a BP we update the BP
-                    $this->businessPageBuilder->updatePageParametersByEntity($page, $entity);
-                } else {
-                    $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
-                        $businessTemplate,
-                        $entity,
-                        $em
-                    );
-                }
-                if ($this->businessPageHelper->isEntityAllowed($businessTemplate, $entity, $em)) {
-                    //update the reference
-                    $event = new ViewReferenceEvent($page);
-                    $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
+                // we generate viewRef for each BT translation
+                foreach ($businessTemplate->getTranslations() as $translation) {
+                    $businessTemplate->setCurrentLocale($translation->getLocale());
+
+                    if ($page = $em->getRepository(
+                        'Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage'
+                    )->findPageByBusinessEntityAndPattern($businessTemplate, $entity, $businessEntity)
+                    ) {
+                        //if it's a BP we update the BP
+                        $this->businessPageBuilder->updatePageParametersByEntity($page, $entity);
+                    } else {
+                        $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
+                            $businessTemplate,
+                            $entity,
+                            $em
+                        );
+                    }
+                    if ($this->businessPageHelper->isEntityAllowed($businessTemplate, $entity, $em)) {
+                        //update the reference
+                        $event = new ViewReferenceEvent($page);
+                        $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
+                    }
                 }
             }
         }
@@ -193,24 +203,28 @@ class BusinessEntitySubscriber implements EventSubscriber
             $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
             //find all entities
             $entities = $this->businessPageHelper->getEntitiesAllowed($entity, $em);
-            foreach ($entities as $be) {
-                if ($this->businessPageHelper->isEntityAllowed($entity, $be, $em)) {
-                    if ($page = $em->getRepository(
-                        'Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage'
-                    )->findPageByBusinessEntityAndPattern($entity, $be, $businessEntity)
-                    ) {
-                        //rebuild page if its a BP
-                        $this->businessPageBuilder->updatePageParametersByEntity($page, $be);
-                    } else {
-                        $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
-                            $entity,
-                            $be,
-                            $em
-                        );
+            // we generate viewRef for each BT translation
+            foreach ($entity->getTranslations() as $translation) {
+                $entity->setCurrentLocale($translation->getLocale());
+                foreach ($entities as $be) {
+                    if ($this->businessPageHelper->isEntityAllowed($entity, $be, $em)) {
+                        if ($page = $em->getRepository(
+                            'Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage'
+                        )->findPageByBusinessEntityAndPattern($entity, $be, $businessEntity)
+                        ) {
+                            //rebuild page if its a BP
+                            $this->businessPageBuilder->updatePageParametersByEntity($page, $be);
+                        } else {
+                            $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
+                                $entity,
+                                $be,
+                                $em
+                            );
+                        }
+                        // update reference
+                        $event = new ViewReferenceEvent($page);
+                        $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
                     }
-                    // update reference
-                    $event = new ViewReferenceEvent($page);
-                    $this->dispatcher->dispatch(ViewReferenceEvents::UPDATE_VIEW_REFERENCE, $event);
                 }
             }
         }
@@ -270,17 +284,22 @@ class BusinessEntitySubscriber implements EventSubscriber
             $em = $eventArgs->getEntityManager();
             $businessTemplates = $em->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
             foreach ($businessTemplates as $businessTemplate) {
-                if ($page = $em->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findPageByBusinessEntityAndPattern($businessTemplate, $entity, $businessEntity)) {
-                    $event = new ViewReferenceEvent($page);
-                    $this->dispatcher->dispatch(ViewReferenceEvents::REMOVE_VIEW_REFERENCE, $event);
-                } else {
-                    $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
-                        $businessTemplate,
-                        $entity,
-                        $em
-                    );
-                    $event = new ViewReferenceEvent($page);
-                    $this->dispatcher->dispatch(ViewReferenceEvents::REMOVE_VIEW_REFERENCE, $event);
+
+                // we generate viewRef for each BT translation
+                foreach ($businessTemplate->getTranslations() as $translation) {
+                    $businessTemplate->setCurrentLocale($translation->getLocale());
+                    if ($page = $em->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findPageByBusinessEntityAndPattern($businessTemplate, $entity, $businessEntity)) {
+                        $event = new ViewReferenceEvent($page);
+                        $this->dispatcher->dispatch(ViewReferenceEvents::REMOVE_VIEW_REFERENCE, $event);
+                    } else {
+                        $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
+                            $businessTemplate,
+                            $entity,
+                            $em
+                        );
+                        $event = new ViewReferenceEvent($page);
+                        $this->dispatcher->dispatch(ViewReferenceEvents::REMOVE_VIEW_REFERENCE, $event);
+                    }
                 }
             }
         }
@@ -288,14 +307,19 @@ class BusinessEntitySubscriber implements EventSubscriber
         if ($entity instanceof BusinessTemplate) {
             $em = $eventArgs->getEntityManager();
             $entities = $this->businessPageHelper->getEntitiesAllowed($entity, $em);
-            foreach ($entities as $be) {
-                $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
-                    $entity,
-                    $be,
-                    $em
-                );
-                $event = new ViewReferenceEvent($page);
-                $this->dispatcher->dispatch(ViewReferenceEvents::REMOVE_VIEW_REFERENCE, $event);
+
+            // we generate viewRef for each BT translation
+            foreach ($entity->getTranslations() as $translation) {
+                $entity->setCurrentLocale($translation->getLocale());
+                foreach ($entities as $be) {
+                    $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
+                        $entity,
+                        $be,
+                        $em
+                    );
+                    $event = new ViewReferenceEvent($page);
+                    $this->dispatcher->dispatch(ViewReferenceEvents::REMOVE_VIEW_REFERENCE, $event);
+                }
             }
         }
     }
