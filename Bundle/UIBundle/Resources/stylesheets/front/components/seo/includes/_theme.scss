@@ -1,0 +1,21 @@
+// scss-lint:disable ColorVariable
+$seos--font-size: 1.4em;
+$seos--font-family: $app--font-family;
+$seos--text-shadow: null;
+$seos--color: color('grey');
+$seos--font-weight: font-weight('bold');
+$seos--text-transform: uppercase;
+$seos--line-height: 1;
+
+$seos-indicator--size: 0.85em;
+$seos-indicator--margin-right: 0.26em;
+$seos-indicator--background-image: (
+  '-success': radial-gradient(ellipse at center, color('green', 'light') 0%, color('green', 'dark') 100%),
+  '-danger': radial-gradient(ellipse at center, color('orange', 'light') 0%, color('orange', 'dark') 100%),
+  '-warning': radial-gradient(ellipse at center, color('pink', 'light') 0%, color('pink', 'dark') 100%),
+);
+$seos-indicator--box-shadow: (
+  '-success': 0 0 0.52em color('green'),
+  '-danger': 0 0 0.52em color('orange'),
+  '-warning': 0 0 0.52em color('pink'),
+);

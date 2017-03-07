@@ -1,0 +1,100 @@
+{% include "VictoireUIBundle:Styleguide:ui/section-header.html.twig" with {
+    "name": "Button",
+    "framework": {
+        "name": "trowel-button",
+        "url": "#",
+    }
+} %}
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<a class="v-btn" href="#" role="button">Anchor</a>\n<button class="v-btn" type="submit">Button</button>\n<input class="v-btn" type="button" value="Input">\n<input class="v-btn" type="submit" value="Submit">',
+    }
+} %}
+    {% block snippet_preview %}
+        <a class="v-btn" href="#" role="button">Anchor</a>
+        <button class="v-btn" type="submit">Button</button>
+        <input class="v-btn" type="button" value="Input">
+        <input class="v-btn" type="submit" value="Submit">
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Colors</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="v-btn">Default</button>\n<button class="v-btn v-btn--info">Info</button>\n<button class="v-btn v-btn--success">Success</button>\n<button class="v-btn v-btn--warning">Danger</button>\n<button class="v-btn v-btn--danger">Danger</button>\n',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="v-btn">Default</button>
+        <button class="v-btn v-btn--info">Info</button>
+        <button class="v-btn v-btn--success">Success</button>
+        <button class="v-btn v-btn--warning">Danger</button>
+        <button class="v-btn v-btn--danger">Danger</button>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Transparent</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'preview': {
+        'background-color': '#172138',
+        'color': '#fff',
+    },
+    'snippets': {
+        'html': '<button class="v-btn v-btn--transparent">Transparent</button>\n<button class="v-btn v-btn--transparent v-btn--danger">Transparent</button>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="v-btn v-btn--transparent">Transparent</button>
+        <button class="v-btn v-btn--transparent v-btn--danger">Transparent</button>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Sizes</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="v-btn v-btn--lg">large</button>\n<button class="v-btn">medium</button>\n<button class="v-btn v-btn--sm">small</button>\n<button class="v-btn v-btn--xs">xsmall</button>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="v-btn v-btn--lg">large</button>
+        <button class="v-btn">medium</button>
+        <button class="v-btn v-btn--sm">small</button>
+        <button class="v-btn v-btn--xs">xsmall</button>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Square</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="v-btn v-btn--square v-btn--lg">I</button>\n<button class="v-btn v-btn--square">I</button>\n<button class="v-btn v-btn--square v-btn--sm">I</button>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="v-btn v-btn--square v-btn--lg">I</button>
+        <button class="v-btn v-btn--square">I</button>
+        <button class="v-btn v-btn--square v-btn--sm">I</button>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Radiusless</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="v-btn v-btn--radiusless">radiusless</button>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="v-btn v-btn--radiusless">radiusless</button>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Framed</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="v-btn v-btn--framed v-btn--transparent">framed</button>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="v-btn v-btn--framed v-btn--transparent">framed</button>
+    {% endblock snippet_preview %}
+{% endembed %}

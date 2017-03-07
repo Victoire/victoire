@@ -1,0 +1,22 @@
+// Helper function
+// Return null rather than throwing an error if index is outside list range.
+@function nth-or-null($list, $index) {
+    @return if(length($list) >= $index, nth($list, $index), null);
+}
+
+
+/// To quickly check if a value is a part of a list
+/// @author Loïc Goyet
+/// @param {List} $list - list of values
+/// @param $value - value to test
+/// @return {Bool} - if or not the $value param is in the $list param
+@function in-list($list, $value) {
+  $length: length($list);
+  @for $index from 1 through length($list) {
+    @if nth($list, $index) == $value {
+      @return true;
+    }
+  }
+
+  @return false;
+}

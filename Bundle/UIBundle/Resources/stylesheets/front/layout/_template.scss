@@ -1,0 +1,6 @@
+#v-template-new--sidebar,
+#v-template-settings--sidebar {
+  @include media-query('md') {
+    margin-top: rem(3.125);
+  }
+}

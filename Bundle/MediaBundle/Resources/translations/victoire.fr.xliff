@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="58893b99e4b1a" resname="menu.media">
         <source>menu.media</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-img"></i> Bibliothèque média]]></target>
+        <target>Bibliothèque média</target>
       </trans-unit>
       <trans-unit id="58893b99e4b3b" resname="nothing">
         <source>nothing</source>

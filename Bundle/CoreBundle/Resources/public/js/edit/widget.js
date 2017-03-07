@@ -3,24 +3,50 @@
 
 
 // Open select when click on dropdown link
-$vic(document).on('focus', '.vic-new-widget select', function(event) {
-    $vic(this).addClass('vic-open');
+$vic(document).on('focus', '.v-slot select', function(event) {
+    $vic(this).parent('.v-slot').addClass('v-slot--open');
 });
-$vic(document).on('blur', '.vic-new-widget select', function(event) {
+$vic(document).on('blur', '.v-slot select', function(event) {
+    $vic(event.target).parent('.v-slot').removeClass('v-slot--open');
     $vic(event.target).prop('selectedIndex', 0);
-    $vic(event.target).removeClass('vic-open');
 });
+
+// Eval width of the slots to add or not a class
+function evalSlotWidth(slot) {
+    var smallClass = 'v-slot--sm';
+
+    if (slot.offsetWidth > 250 && slot.classList.contains(smallClass)) {
+        slot.classList.remove(smallClass);
+    } else if (slot.offsetWidth <= 250 && slot.offsetWidth > 0) {
+        slot.classList.add(smallClass);
+    }
+
+    return;
+}
+
+$vic(document).ready(function() {
+    $('.v-slot').each(function(index, el) {
+        return evalSlotWidth(el);
+    });
+});
+
+$vic(window).resize(function() {
+    $('.v-slot').each(function(index, el) {
+        return evalSlotWidth(el);
+    });
+});
+
 
 // Create modal for new widget
-$vic(document).on('change', '.vic-new-widget select', function(event) {
+$vic(document).on('change', '.v-slot select', function(event) {
     event.preventDefault();
     var url = generateNewWidgetUrl(event.target);
-    $vic(event.target).blur();
+    $vic(this).blur();
     openModal(url);
-    $vic(this).parents('.vic-new-widget').first().addClass('vic-creating');
+    $vic(this).parents('.v-slot').first().addClass('vic-creating');
 });
 
-$vic(document).on('click', '.vic-widget-modal a[data-modal="update"], .vic-widget-modal a[data-modal="create"]', function(event) {
+$vic(document).on('click', '.v-modal--widget a[data-modal="update"], .v-modal--widget a[data-modal="create"]', function(event) {
     event.preventDefault();
     // we remove the prototype picker to avoid persist it
     if ($vic("select.picker_entity_select").length != 0 && $vic("select.picker_entity_select").attr('name').indexOf('appventus_victoirecorebundle_widgetlistingtype[items][__name__][entity]') !== -1) {
@@ -28,17 +54,20 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"], .vic-widge
     }
 
     var forms = [];
-    $vic('.vic-tab-quantum').each(function(index, quantum) {
+    $vic('[data-group="tab-widget-quantum"]').each(function(index, quantum) {
         // matches widget edit form with more than one mode available
-        var activeForm = $vic(quantum).find('.vic-tab-mode.vic-active .vic-tab-pane.vic-active > form');
+        var activeForm = $vic(quantum).find('[data-group="picker-' + index + '"][data-state="visible"] [data-flag="v-collapse"][data-state="visible"] > form');
+
         // matches widget edit form with only static mode available
         if (activeForm.length == 0) {
-            activeForm = $vic(quantum).find('.vic-tab-pane.vic-active form, form');
+            activeForm = $vic(quantum).find('[data-group="picker-' + index + '"][data-state="visible"] form');
         }
+
         // matches widget stylize form
-        if (activeForm.length == 0 && $vic(quantum).hasClass('vic-active')) {
+        if (activeForm.length == 0 && $vic(quantum).attr('data-state') == 'visible') {
             activeForm = $vic(quantum).find('form[name="widget_style"]');
         }
+
         forms = $vic.merge(forms, [activeForm]);
     });
 
@@ -60,6 +89,8 @@ $vic(document).on('click', '.vic-widget-modal a[data-modal="update"], .vic-widge
             contentType : contentType
         }).done(function(response) {
             $vic(form).trigger("victoire_widget_form_update_postsubmit");
+        }).fail(function() {
+            loading(false);
         })
         );
     });
@@ -102,7 +133,7 @@ $vic(document).on('click', 'a#widget-new-tab', function(event) {
         slot: $vic(this).data('slot'),
         position: $vic(this).data('position'),
         parentWidgetMap: $vic(this).data('parentwidgetmap'),
-        quantum: $vic(this).parents('ul').children('li').length,
+        quantum: $vic("#v-quantum-tab > .v-flex-col").length - 1,
         _locale: locale
     });
     $vic.ajax({
@@ -110,20 +141,23 @@ $vic(document).on('click', 'a#widget-new-tab', function(event) {
         url : url
     }).done(function(response) {
         if (true === response.success) {
-            $vic('.vic-modal-tab-content-container .vic-tab-quantum').removeClass('vic-active');
-            $vic('.vic-modal-nav-tabs li').removeClass('vic-active');
-            var form = $vic(response.html).find('.vic-tab-quantum').first();
-            var tab = $vic(response.html).find('.vic-modal-nav-tabs li:not(.widget-new-tab)').last();
-            $vic('li.widget-new-tab').before(tab);
-            $vic('div.vic-modal-tab-content-container').append(form);
-            $vic('#victoire-modal-label').html($vic(response.html).find('li:not(.widget-new-tab) .quantum-tab-name').last().data('tabName'));
+            $vic('[data-group="tab-widget-quantum"][data-state="visible"]').attr('data-state', 'hidden');
+            $vic('.v-btn--quantum-active').removeClass('v-btn--quantum-active');
+            var form = $vic(response.html).find('[data-group="tab-widget-quantum"]').first();
+            var tab = $vic(response.html).find('.v-btn--quantum').last().addClass('v-btn--quantum-active').parent();
+            $vic('#widget-new-tab').parent('.v-flex-col').before(tab);
+            $vic('#v-modal-tab-content-container').append(form);
+
             loading(false);
         }
+    }).fail(function() {
+        loading(false);
     });
     $vic(document).trigger("victoire_widget_delete_postsubmit");
 });
+
 // Delete a widget after submit
-$vic(document).on('click', '.vic-widget-modal a.vic-confirmed, .vic-hover-widget-unlink', function(event) {
+$vic(document).on('click', '.v-modal--widget a.vic-confirmed, .vic-hover-widget-unlink', function(event) {
     event.preventDefault();
     $vic(document).trigger("victoire_widget_delete_presubmit");
 
@@ -144,31 +178,13 @@ $vic(document).on('click', '.vic-widget-modal a.vic-confirmed, .vic-hover-widget
                 console.info('An error occured during the deletion of the widget.');
                 console.log(response.message);
             }
+        }).fail(function() {
+            loading(false);
         });
         $vic(document).trigger("victoire_widget_delete_postsubmit");
 });
 
 
-$vic(document).on('click', '.quantum-tab-name', function(event) {
-    $vic('#victoire-modal-label').html($vic(this).data('tabName'));
-
-});
-$vic(document).on('click', '.quantum-tab-name i.edit', function(event) {
-    event.preventDefault();
-    var value = $vic('#'+$vic(this).parents('a').first().prop('id')+"-pane").find('input[name$="[quantum]"]').val();
-    var input = '<input class="quantum-edit-field" type="text" value="'+value+'"></input>';
-    $vic(this).parent().children('span').first().html(input);
-    $vic(input).focus();
-
-});
-$vic(document).on('focusout', '.quantum-edit-field', function(event) {
-    event.preventDefault();
-    var value = $vic(this).val();
-    $vic('#'+$vic(this).parents('a').first().prop('id')+"-pane").find('input[name$="[quantum]"]').val(value);
-    $vic(this).parent().prepend('<span>'+value+'</span>');
-    $vic(this).remove();
-
-});
 function generateNewWidgetUrl(select){
     var slotId = $vic(select).parents('.vic-slot').first().data('name');
     var container = $vic(select).parents('new-widget-button');
@@ -195,3 +211,18 @@ function generateNewWidgetUrl(select){
         params
     );
 }
+
+
+// update on left bar, the quantum name when modifying it
+$vic(document).on('keyup', '[data-flag="v-quantum-name"]', function(event) {
+    var activeQuantumTab = $vic('#v-quantum-tab > .v-flex-col .v-btn--quantum-active');
+
+    if (!activeQuantumTab.find('span[data-flag="old-name"]').length) {
+        var originalShortName = $vic('#v-quantum-tab > .v-flex-col .v-btn--quantum-active span:not([data-flag="old-name"])').text();
+        activeQuantumTab.append('<span data-flag="old-name" style="display: none;">' + originalShortName + '</span>');
+    }
+
+    var quantumShortName = event.target.value.length ? event.target.value.substr(0, 2) : activeQuantumTab.find('span[data-flag="old-name"]').text();
+
+    activeQuantumTab.find('span:not([data-flag="old-name"])').text(quantumShortName);
+});

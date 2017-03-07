@@ -1,0 +1,4 @@
+@mixin slots-select--open-width($value, $flags) {
+  @include declaration('width', $value, append($flags, '-open'));
+  @include declaration('margin-left', round(-$value / 2), append($flags, '-open'));
+}

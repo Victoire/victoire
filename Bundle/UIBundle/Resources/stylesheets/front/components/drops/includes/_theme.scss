@@ -1,0 +1,155 @@
+// scss-lint:disable ColorVariable
+$drops--font-size: (
+  'default': rem(),
+  '-tooltip': rem(0.875),
+);
+$drops--font-family: $app--font-family;
+$drops--font-weight: font-weight('normal');
+$drops--text-transform: null !default;
+$drops--letter-spacing: null !default;
+$drops--line-height: null !default;
+$drops--text-align: (
+  'default': left,
+  '-fab': center,
+  '-tooltip': center,
+) !default;
+$drops--text-decoration: null !default;
+$drops--margin: null !default;
+$drops--min-width: (
+  'default': 13em,
+  '-tooltip': 0,
+) !default;
+$drops--max-width: null !default;
+$drops--width: null !default;
+$drops--border-width: (
+  'default': 1px,
+  '-tooltip': 0,
+  '-fab': 0,
+) !default;
+$drops--border-style: solid !default;
+$drops--border-color: (
+  'default': rgba(0, 0, 0, 0.15),
+  '-tooltip': rgb(0, 0, 0),
+) !default;
+$drops--border-radius: (
+  '-popover': 0.1875em,
+  '-tooltip': 0.285714286em,
+) !default;
+$drops--color: (
+  '-tooltip': rgb(255, 255, 255),
+  '-fab': rgb(255, 255, 255),
+) !default;
+$drops--box-shadow: (
+  'default': 0 0.125em 0.5em 0 color('black', null, 0.25),
+  '-popover': 0 0.125em 1.875em 0 color('black', null, 0.1),
+  '-tooltip': 0 0 0.3125em 0 color('black', null, 0.2),
+  '-fab': none,
+);
+$drops--background: null !default;
+$drops--background-color: (
+  'default': color('white'),
+  '-tooltip': rgb(0, 0, 0),
+  '-fab': transparent,
+) !default;
+$drops--padding-x: (
+  'default': rem(0.625),
+  '-popover': 1.25em,
+  '-tooltip': 0.714285714em,
+  '-fab': 0,
+) !default;
+$drops--margin: (
+  '-tooltip': 0.625em,
+  '-popover': 0.625em,
+) !default;
+$drops--z-index: 1000 !default;
+
+$drops-caret--base: (
+  'default': 0,
+  '-popover': 20px,
+  '-tooltip': 16px,
+) !default;
+$drops-caret--height: (
+  'default': 0,
+  '-popover': 10px,
+  '-tooltip': 5px,
+) !default;
+
+$drops-menu--padding-y: (
+  '-fab': 0.3125em,
+);
+$drops-menu--margin: null !default;
+$drops-menu--font-size: null !default;
+$drops-menu--color: null !default;
+$drops-menu--text-align: null !default;
+$drops-menu--background-color: null !default;
+
+$drops-heading--padding-y: 0.5em !default;
+$drops-heading--font-size: 0.75em !default;
+$drops-heading--line-height: 1.1 !default;
+$drops-heading--letter-spacing: null !default;
+$drops-heading--font-weight: 500 !default;
+$drops-heading--text-transform: null !default;
+$drops-heading--text-decoration: null !default;
+$drops-heading--color: #818a91 !default;
+
+$drops-anchor--padding-y: (
+  '-fab': 0.3125em,
+);
+$drops-anchor--font-size: null !default;
+$drops-anchor--line-height: 2;
+$drops-anchor--letter-spacing: null !default;
+$drops-anchor--font-weight: null !default;
+$drops-anchor--text-transform: null !default;
+$drops-anchor--text-decoration:  (
+  'default': none,
+  ':hover': none,
+);
+$drops-anchor--color: (
+  'default': color('grey', 'darker'),
+  '~disabled': color('grey'),
+  '~active': (
+    'default': color('orange'),
+    ':hover': color('orange'),
+    ':focus': color('orange'),
+    ':active': color('orange'),
+  ),
+  '<a': (
+    ':hover': color('grey', 'darker'),
+    ':focus': color('grey', 'darker'),
+    ':active': color('grey', 'darker'),
+  ),
+  '-fab': (
+    'default': color('white'),
+    '<a': (
+      ':hover': color('white'),
+      ':focus': color('white'),
+      ':active': color('white'),
+    ),
+  ),
+);
+$drops-anchor--background-color:  (
+  '<a': (
+    ':hover': #eee,
+    ':focus': #eee,
+    ':active': #eee,
+    '-fab': (
+      ':hover': transparent,
+      ':focus': transparent,
+      ':active': transparent,
+    )
+  ),
+);
+
+$drops-header--padding-y: 0.5rem !default;
+$drops-header--font-size: 1rem !default;
+$drops-header--background-color: rgb(247, 247, 247) !default;
+$drops-header--border-bottom: 1px solid rgb(235, 235, 235) !default;
+$drops-header--font-weight: 500 !default;
+$drops-header--color: inherit !default;
+
+$drops-content--padding-y: (
+  '-popover': 1.25em,
+  '-tooltip': 0.428571429em,
+) !default;
+
+$drops-divider--margin: rem(0.625) 0 !default;

@@ -1,0 +1,99 @@
+{% include 'VictoireUIBundle:Styleguide:ui/section-header.html.twig' with {
+    'name': 'styleguide',
+    'category': 'styleguide',
+} %}
+
+<h2 class="ts-section__sub-heading">Section Header</h2>
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'twig': "{% include 'VictoireUIBundle:Styleguide:ui/section-header.html.twig' with {\n%indent%'name': 'Styleguide UI',\n%indent%'category': 'styleguide',\n%indent%'framework': {\n%indent%%indent%'name': 'framework',\n%indent%%indent%'url': '#',\n%indent%}\n} %}",
+    }
+} %}
+    {% block snippet_preview %}
+        {% include 'VictoireUIBundle:Styleguide:ui/section-header.html.twig' with {
+            'name': 'styleguide',
+            'category': 'styleguide',
+            'framework': {
+                'name': 'framework',
+                'url': '#',
+            }
+        } %}
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Sub Heading</h2>
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '&lt;h2 class="ts-section__sub-heading"&gt;Sub Heading&lt;/h2&gt;',
+    }
+} %}
+    {% block snippet_preview %}
+        <h2 class="ts-section__sub-heading">Sub Heading</h2>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Callout</h2>
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+'twig': "{% embed 'VictoireUIBundle:Styleguide:ui/callout.html.twig' with {\n%indent%'title': 'test',\n%indent%'theme': 'success',\n} %}\n%indent%{% block callout_description %}\n%indent%%indent%Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n%indent%{% endblock %}\n{% endembed %}",
+    }
+} %}
+    {% block snippet_preview %}
+        {% embed 'VictoireUIBundle:Styleguide:ui/callout.html.twig' with {
+            'title': 'test',
+            'theme': 'success',
+        } %}
+            {% block callout_description %}
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {% endblock %}
+        {% endembed %}
+    {% endblock snippet_preview %}
+{% endembed %}
+
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+'twig': "{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {\n%indent%'snippets': {\n%indent%%indent%'twig': '&lt;div&gt;{{ values.one }}&lt;/div&gt;\\n&lt;div&gt;{{ values.two }}&lt;/div&gt;',\n%indent%}\n} %}\n%indent%{% block snippet_preview %}\n%indent%%indent%<div>div 1</div>\n%indent%%indent%<div>div 2</div>\n%indent%{% endblock snippet_preview %}\n{% endembed %}",
+    }
+} %}
+    {% block snippet_preview %}
+        {% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+            'snippets': {
+                'twig': "&lt;div&gt;{{ values.one }}&lt;/div&gt;\n&lt;div&gt;{{ values.two }}&lt;/div&gt;",
+            }
+        } %}
+            {% block snippet_preview %}
+                <div>div 1</div>
+                <div>div 2</div>
+            {% endblock snippet_preview %}
+        {% endembed %}
+    {% endblock snippet_preview %}
+{% endembed %}
+
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+'twig': "{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {\n%indent%'preview': {\n%indent%%indent%'background-color': '#0090d1',\n%indent%%indent%'color': '#fff',\n%indent%},\n%indent%'snippets': {\n%indent%%indent%'html': '&lt;div&gt;div 1&lt;/div&gt;\\n&lt;div&gt;div 2&lt;/div&gt;',\n%indent%%indent%'twig': '&lt;div&gt;{{ values.one }}&lt;/div&gt;\\n&lt;div&gt;{{ values.two }}&lt;/div&gt;',\n%indent%}\n} %}\n%indent%{% block snippet_preview %}\n%indent%%indent%<div>div 1</div>\n%indent%%indent%<div>div 2</div>\n%indent%{% endblock snippet_preview %}\n{% endembed %}",
+    }
+} %}
+    {% block snippet_preview %}
+        {% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+            'preview': {
+                'background-color': '#0090d1',
+                'color': '#fff',
+            },
+            'snippets': {
+                'html': '&lt;div&gt;div 1&lt;/div&gt;\n&lt;div&gt;div 2&lt;/div&gt;',
+                'twig': "&lt;div&gt;{{ values.one }}&lt;/div&gt;\n&lt;div&gt;{{ values.two }}&lt;/div&gt;",
+            }
+        } %}
+            {% block snippet_preview %}
+                <div>div 1</div>
+                <div>div 2</div>
+            {% endblock snippet_preview %}
+        {% endembed %}
+    {% endblock snippet_preview %}
+{% endembed %}

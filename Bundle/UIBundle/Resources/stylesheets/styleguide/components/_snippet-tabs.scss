@@ -1,0 +1,36 @@
+.ts-snippet-tabs {
+  @include styleguide-base;
+  @include layout-border ('left' 'right' 'bottom');
+  // margin-top: -$sidebar--border-width;
+  display: flex;
+  background-color: $snippet-tabs--background-color;
+}
+
+.ts-snippet-tabs__anchor {
+  padding: rem(0.5) rem(1);
+  text-decoration: none;
+  cursor: pointer;
+  margin: -$sidebar--border-width;
+  border: $sidebar--border-width solid transparent;
+
+  @include on-event(true) {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  @include on-event {
+    background-color: $sidebar--border-color;
+    color: $snippet-tabs--color-event;
+  }
+
+  &.is-active {
+    @include layout-border;
+    background-color: $snippet--background-color;
+    cursor: default;
+    border-bottom-color: $snippet--background-color;
+
+    @include on-event(true) {
+      color: $snippet-tabs--color-event;
+    }
+  }
+}

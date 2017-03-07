@@ -1,26 +1,64 @@
 {% extends 'VictoireCoreBundle::_modal.html.twig' %}
 {% trans_default_domain "victoire" %}
-{% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
+{% block modal_container_classes %}{{ parent() }} v-modal--view{% endblock modal_container_classes %}
 
 {% block modal_header_title %}
     {{'index.template.modal.header'|trans({}, 'victoire')}}
 {% endblock modal_header_title %}
 
 {% block modal_body_content %}
-    {{ _self.templatesHierarchy(templates) }}
+    <div class="v-flex-grid v-flex-grid--justify-between v-flex-grid--align-center">
+        <div class="v-flex-col">
+            <h3 class="v-h3">Liste des modèles de pages</h3>
+        </div>
+
+        <div class="v-flex-col">
+            <a class="v-btn v-btn--success" href="{{ path('victoire_template_new') }}" data-toggle="vic-modal">
+                {{ 'menu.template.new'|trans({}, 'victoire') }}
+            </a>
+        </div>
+    </div>
+
+    <ul class="v-list-group v-list-group--main v-list-group--sm">
+        {{ _self.templatesHierarchy(templates) }}
+    </ul>
 {% endblock modal_body_content %}
 
 {% macro templatesHierarchy(templates) %}
     {% for template in templates %}
-      <li id="list_{{template.id}}"><a href="{{path('victoire_template_show', {'id' : template.id })}}">{{ template.backendName|default(template.name)|default('#' ~ template.id) }}</a>
-      {% if template.templateInheritors %}
-          <ul>
-            {{ _self.templatesHierarchy(template.templateInheritors) }}
-          </ul>
-      {% endif %}
-      </li>
+        <li class="v-list-group__item" id="list_{{ template.id }}">
+            <div class="v-flex-grid v-flex-grid--justify-between v-flex-grid--align-center">
+                <div class="v-flex-col">
+                    <a href="{{ path('victoire_template_show', {'id' : template.id }) }}">
+                        {{ template.backendName|default(template.name)|default('#' ~ template.id) }}
+                    </a>
+                </div>
+
+                <div class="v-flex-col">
+                    <a class="v-btn v-btn--square v-btn--sm"
+                       href="{{ path('victoire_template_settings', {'id' : template.id }) }}"
+                       data-toggle="vic-modal"
+                    >
+                        {% include 'VictoireUIBundle:SVG:cog.html.twig' %}
+                    </a>
+
+                    <a class="v-btn v-btn--square v-btn--sm"
+                       href="{{ path('victoire_template_show', {'id' : template.id }) }}"
+                    >
+                        {% include 'VictoireUIBundle:SVG:angle-right.html.twig' %}
+                    </a>
+                </div>
+            </div>
+        </li>
+
+        {% if template.templateInheritors %}
+            <li class="v-list-group__sub-list">
+                <ul class="v-list-group">
+                    {{ _self.templatesHierarchy(template.templateInheritors) }}
+                </ul>
+            </li>
+        {% endif %}
     {% endfor %}
 {% endmacro %}
 
-{% block modal_footer_content %}
-{% endblock modal_footer_content %}
+{% block modal_footer_content %}{% endblock %}

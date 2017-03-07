@@ -8,28 +8,37 @@
     {{ 'victoire_widget.stylize.title'|trans({'%widgetId%': widget.id})|raw }}
 {% endblock modal_header_title %}
 
+{% block modal_body_sidebar %}
+    <nav class="v-navbar v-navbar--vertical">
+        <div class="v-flex-grid v-flex-grid--direction-column" id="v-quantum-tab">
+            {% for key, form in forms %}
+                {% include "VictoireCoreBundle:Widget:Form/tab.html.twig" with {
+                    'widget': widgets[key],
+                    'active': form.active is defined ? form.active : false,
+                    'id': widgets[key].id ? widgets[key].id : id
+                } %}
+            {% endfor %}
+        </div>
+    </nav>
+{% endblock modal_body_sidebar %}
+
 {% block modal_body_content %}
     {% if widget.id and widget.currentView != widget.view %}
-        <div class="vic-alert vic-alert-warning vic-alert-dismissible">
-            {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'viewReference': widget.view.reference.id })}, 'victoire')|raw }}
-        </div>
+        {% embed "VictoireUIBundle:Bricks:alert.html.twig" with { theme: "warning" } %}
+            {% block body %}
+                {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'viewReference': widget.view.reference.id })}, 'victoire')|raw }}
+            {% endblock body %}
+        {% endembed %}
     {% endif %}
 
-    <div class="vic-tab-content vic-modal-tab-content vic-modal-tab-content-container">
+    <div id="v-modal-tab-content-container">
         {% for index, form in forms %}
-        <div class="vic-tab-quantum vic-tab-pane{% if form.vars.data.id == widget.id %} vic-active{% endif %}" id="widget-{{ widgets[index].id }}-tab-pane">
-            {% include 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' %}
-        </div>
+            <div class="v-collapse" id="widget-{{ widgets[index].id }}-tab-pane" data-flag="v-collapse" data-group="tab-widget-quantum" {% if loop.first %}data-state="visible"{% endif %}>
+                {% include 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' %}
+            </div>
         {% endfor %}
     </div>
 
-    <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
-        {% for index, form in forms %}
-            <li class="{% if not loop.last %}vic-separate{% endif %}{% if form.vars.data.id == widget.id %} vic-active{% endif %}">
-                <a id="widget-{{ widgets[index].id}}-tab" class="quantum-tab-name" href="#widget-{{ widgets[index].id}}-tab-pane" data-toggle="vic-tab"><span>{{ widgets[index].quantum ? widgets[index].quantum : "widget_modal.quantum.tab.default"|trans }}</span></a>
-            </li>
-        {% endfor %}
-    </ul>
     <script>
         <!--
         /**
@@ -42,16 +51,27 @@
          * We use a hidden input with value of the good tab
          * When we click on a new tab, the value of this input will change
          */
-        $(document).on('click', '.vic-nav-group .item a[data-toggle="vic-tab"]', function(){
+        $(document).on('click', '#v-style-tab .v-tabs-nav__anchor', function(){
             $('#widget_style_vicActiveTab').attr('value', $(this).data("key"));
         });
         -->
     </script>
-
 {% endblock modal_body_content %}
 
 {% block action %}update{% endblock action %}
+
 {% block modal_footer_content %}
-    <a href="#" class="vic-btn vic-btn-default vic-pull-left" data-modal="close"><i class="fa fa-times-circle"></i> {{ 'modal.button.cancel.title'|trans({}, 'victoire') }}</a>
-    <a href="#" class="vic-btn vic-btn-success" data-modal="{{ block('action') }}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}</a>
+    <div class="v-flex-grid v-flex-grid--justify-between">
+        <div class="v-flex-col">
+            <a href="#" class="v-btn v-btn--transparent" data-modal="close">
+                {{ 'modal.button.cancel.title'|trans({}, 'victoire') }}
+            </a>
+        </div>
+
+        <div class="v-flex-col">
+            <a href="#" class="v-btn v-btn--danger" data-modal="{{ block('action') }}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}">
+                {{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}
+            </a>
+        </div>
+    </div>
 {% endblock modal_footer_content %}

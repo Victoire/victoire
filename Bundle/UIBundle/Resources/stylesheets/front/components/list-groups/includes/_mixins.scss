@@ -1,0 +1,11 @@
+@mixin listgroup-item--margin-top($value, $flags) {
+  @include declaration('margin-top', ($value * -1), $flags);
+}
+
+@mixin listgroup-item--cascade-padding($value, $flags) {
+  $padding-orgin: value($listgroups-item--padding-x, $flags);
+  $padding-cascade: value($listgroups-item-in-cascade--padding-y, $flags);
+  $cascade: $value;
+
+  @include declaration('padding-left', ($padding-orgin + ($padding-cascade * $cascade)), $flags);
+}

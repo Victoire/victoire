@@ -1,30 +1,39 @@
 {% extends 'VictoireCoreBundle:Widget:Form/_modal.html.twig' %}
-
 {% trans_default_domain "victoire" %}
-
 {% block action %}create{% endblock action %}
-{% block modal_body_content %}
 
-    <div class="vic-tab-content vic-modal-tab-content vic-modal-tab-content-container">
-    {% for key, widget in widgets %}
-        {% include "VictoireCoreBundle:Widget:Form/new_partial.html.twig" with {forms: forms[key], widget: widget, classes: classes, id: widgets[key].id ? widgets[key].id : id, quantum: forms[key]['quantum'] }%}
-    {% endfor %}
-    </div>
-    <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs vic-quantum-nav">
+{% block modal_body_sidebar %}
+<nav class="v-navbar v-navbar--vertical">
+    <div class="v-flex-grid v-flex-grid--direction-column" id="v-quantum-tab">
         {% for key, form in forms %}
-            {% include "VictoireCoreBundle:Widget:Form/tab.html.twig" with {isLast: loop.last, widget: widgets[key], active: form.active is defined ? form.active : false, id: widgets[key].id ? widgets[key].id : id} %}
+            {% include "VictoireCoreBundle:Widget:Form/tab.html.twig" with {
+                'widget': widgets[key],
+                'active': form.active is defined ? form.active : false,
+                'id': widgets[key].id ? widgets[key].id : id
+            } %}
         {% endfor %}
 
-        <li class="vic-separate widget-new-tab">
-            <a id="widget-new-tab" class="quantum-tab-name"
-               data-type="{{ widget.type }}"
-               data-slot="{{ slot }}"
-               data-position="{{ position }}"
-               data-parentwidgetmap="{{ parentWidgetMap }}"
-               data-viewreference="{{ view.reference.id }}"
-               href="#"
-            ><i class="edit fa fa-plus"></i></a>
-        </li>
-    </ul>
-{% endblock modal_body_content %}
+        <div class="v-flex-col">
+            <a
+                id="widget-new-tab"
+                class="v-btn v-btn--square v-btn--transparent"
+                data-type="{{ widget.type }}"
+                data-slot="{{ slot }}"
+                data-position="{{ position }}"
+                data-parentWidgetMap="{{ parentWidgetMap }}"
+                data-viewreference="{{ view.reference.id }}"
+            >
+                {% include "VictoireUIBundle:SVG:quantum-add.html.twig" %}
+            </a>
+        </div>
+    </div>
+</nav>
+{% endblock modal_body_sidebar %}
 
+{% block modal_body_content %}
+    <div id="v-modal-tab-content-container">
+        {% for key, widget in widgets %}
+            {% include "VictoireCoreBundle:Widget:Form/new_partial.html.twig" with {forms: forms[key], widget: widget, classes: classes, id: widgets[key].id ? widgets[key].id : id, quantum: forms[key]['quantum'] }%}
+        {% endfor %}
+    </div>
+{% endblock modal_body_content %}

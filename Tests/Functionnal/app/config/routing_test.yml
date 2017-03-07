@@ -24,6 +24,11 @@ fos_js_routing:
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
 
+VictoireUIBundle:
+  resource: "@VictoireUIBundle/Controller/"
+  type:     annotation
+  prefix:   /ui
+
 VictoireCoreBundle:
     resource: .
     type: victoire_i18n

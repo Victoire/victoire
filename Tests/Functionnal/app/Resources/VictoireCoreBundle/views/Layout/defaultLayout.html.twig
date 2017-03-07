@@ -18,3 +18,13 @@
         }
     </style>
 {% endblock head_style %}
+
+{% block head_script %}
+    <script type="text/javascript">
+        window.jsErrors = [];
+        window.onerror = function(error, url, line) {
+            window.jsErrors.push(error + ". Line: " + line);
+        };
+    </script>
+    {{ parent() }}
+{% endblock head_script %}

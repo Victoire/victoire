@@ -1,91 +1,174 @@
 {% block a2lix_translations_widget %}
     {{ form_errors(form) }}
     <div class="a2lix_translations tabbable">
-        <ul class="a2lix_translationsLocales vic-nav vic-nav-tabs">
+        <div class="a2lix_translationsLocales v-tabs-nav v-tabs-nav--insert">
             {% for translationsFields in form %}
                 {% set locale = translationsFields.vars.name %}
 
-                <li {% if app.request.locale == locale %}class="vic-active"{% endif %}>
-                    <a href="#" data-toggle="vic-tab" data-target=".{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }}">
-                        {{ translationsFields.vars.label|default(locale|humanize)|trans }}
-                        {% if form.vars.default_locale == locale %}{{ form.vars.default_label|default('[Default]')|trans }}{% endif %}
+                <div class="v-tabs-nav__item">
+                    <a class="v-tabs-nav__anchor{{ app.request.locale == locale ? ' v-tabs-nav__anchor--active' }}"
+                       data-collapse="show"
+                       data-href="#{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }}"
+                       data-activeclass="v-tabs-nav__anchor--active"
+                    >
+                        {{ translationsFields.vars.label|default(locale|humanize)|trans|upper }}
+                        {% if form.vars.default_locale == locale %}{{ form.vars.default_label|default('(default)')|trans }}{% endif %}
                         {% if translationsFields.vars.required %}*{% endif %}
                     </a>
-                </li>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
 
-        <div class="a2lix_translationsFields vic-tab-content">
+        <div class="a2lix_translationsFields v-tabs-collapses v-tabs-collapses--insert">
             {% for translationsFields in form %}
                 {% set locale = translationsFields.vars.name %}
 
-                <div class="{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }} vic-tab-pane {% if app.request.locale == locale %}vic-active{% endif %} {% if not form.vars.valid %}sonata-ba-field-error{% endif %}">
+                <div id="{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }}"
+                     class="{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }} {% if not form.vars.valid %}sonata-ba-field-error{% endif %} v-collapse"
+                     data-flag="v-collapse"
+                     data-group="a2lix_translationsFields"
+                     {% if app.request.locale == locale %}data-state="visible"{% endif %}
+                >
+                    <a class="v-btn v-btn--info / v-mode-trigger / v-seo--mode-trigger"
+                       data-flag="v-drop v-mode-drop"
+                       data-droptarget="#seo-mode-drop-{{ locale }}"
+                    >
+                        <span class="v-mode-trigger__global-label">{{ 'modal.form.pageSeo.general.title'|trans({}, 'victoire') }}</span>
+                        <span class="v-mode-trigger__social-label">{{ 'modal.form.pageSeo.socialmedia.title'|trans({}, 'victoire') }}</span>
+                        <span class="v-mode-trigger__advanced-label">{{ 'modal.form.pageSeo.advanced.title'|trans({}, 'victoire') }}</span>
 
-                    <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
-                        <li class="vic-active vic-separate"><a href="#seo-global-{{ locale }}" data-toggle="vic-tab">{{ 'modal.form.pageSeo.general.title'|trans({}, 'victoire') }}</a></li>
-                        <li><a href="#seo-social-{{ locale }}" data-toggle="vic-tab">{{ 'modal.form.pageSeo.socialmedia.title'|trans({}, 'victoire') }}</a></li>
-                        <li><a href="#seo-advanced-{{ locale }}" data-toggle="vic-tab">{{ 'modal.form.pageSeo.advanced.title'|trans({}, 'victoire') }}</a></li>
-                    </ul>
+                        <svg class="v-btn__ic v-btn__ic--after" xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="116 18 10 5">
+                            <path fill="currentColor" fill-rule="evenodd" d="M124.716 18.189c.2943-.252.7696-.252 1.0638 0 .293.2517.2942.6594 0 .9122l-4.2472 3.6028c-.2942.2528-.7706.2528-1.0648 0l-4.2472-3.6028c-.294-.2528-.294-.6605 0-.9123.2942-.252.7696-.252 1.0638 0l3.7158 2.9544 3.716-2.9546z"></path>
+                        </svg>
+                    </a>
 
-                    <div class="vic-tab-content vic-modal-tab-content">
-                        <div class="vic-tab-pane vic-active" id="seo-global-{{ locale }}">
-                            <div class="vic-tab-content vic-modal-tab-content">
-                                {{ form_row(translationsFields.metaTitle)}}
+                    <div class="v-drop" id="seo-mode-drop-{{ locale }}">
+                        <div class="v-drop__menu">
+                            <a class="v-drop__anchor"
+                               data-collapse="show"
+                               data-href="#seo-mode-global-{{ locale }}"
+                               data-activeclass="v-drop__anchor--active"
+                               data-triggerclass="v-mode-trigger--global"
+                            >
+                                {{ 'modal.form.pageSeo.general.title'|trans({}, 'victoire') }}
+                            </a>
+
+                            <a class="v-drop__anchor"
+                               data-collapse="show"
+                               data-href="#seo-mode-social-{{ locale }}"
+                               data-activeclass="v-drop__anchor--active"
+                               data-triggerclass="v-mode-trigger--social"
+                            >
+                                {{ 'modal.form.pageSeo.socialmedia.title'|trans({}, 'victoire') }}
+                            </a>
+
+                            <a class="v-drop__anchor"
+                               data-collapse="show"
+                               data-href="#seo-mode-advanced-{{ locale }}"
+                               data-activeclass="v-drop__anchor--active"
+                               data-triggerclass="v-mode-trigger--advanced"
+                            >
+                                {{ 'modal.form.pageSeo.advanced.title'|trans({}, 'victoire') }}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="seo-mode-global-{{ locale }}"
+                         class="v-collapse"
+                         data-flag="v-collapse"
+                         data-group="seo-mode-{{ locale }}"
+                         data-state="visible"
+                    >
+                        <div class="v-grid">
+                            <div class="v-col v-col--xs-12 v-col--md-6">
+                                {{ form_row(translationsFields.metaTitle) }}
+                            </div>
+
+                            <div class="v-col v-col--xs-12 v-col--md-6">
                                 {{ form_row(translationsFields.metaDescription) }}
+                            </div>
+
+                            <div class="v-col v-col--xs-12 v-col--md-6">
                                 {{ form_row(translationsFields.relAuthor) }}
+                            </div>
+
+                            <div class="v-col v-col--xs-12 v-col--md-6">
                                 {{ form_row(translationsFields.relPublisher) }}
+                            </div>
+
+                            <div class="v-col v-col--xs-12 v-col--md-6">
                                 {{ form_row(translationsFields.keyword) }}
                             </div>
                         </div>
-                        <div class="vic-tab-pane" id="seo-social-{{ locale }}">
-                            <div class="vic-tab-content vic-modal-tab-content">
-                                <div class="col-md-6">
-                                    <h3 class="vic-h3">{{ 'modal.form.pageSeo.OpenGraph.title'|trans({}, 'victoire') }}</h3>
-                                    {{ form_row(translationsFields.ogTitle) }}
-                                    {{ form_row(translationsFields.ogDescription) }}
-                                    {{ form_row(translationsFields.ogType) }}
-                                    {{ form_row(translationsFields.ogUrl) }}
-                                    {{ form_row(translationsFields.fbAdmins) }}
-                                    {{ form_row(translationsFields.ogImage) }}
-                                </div>
-                                <div class="col-md-6">
-                                    <h3 class="vic-h3">{{ 'modal.form.pageSeo.twitter.title'|trans({}, 'victoire') }}</h3>
-                                    {{ form_row(translationsFields.twitterCard) }}
-                                    {{ form_row(translationsFields.twitterTitle) }}
-                                    {{ form_row(translationsFields.twitterDescription) }}
-                                    {{ form_row(translationsFields.twitterCreator) }}
-                                    {{ form_row(translationsFields.twitterUrl) }}
-                                    {{ form_row(translationsFields.twitterImage) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="vic-tab-pane" id="seo-advanced-{{ locale }}">
-                            <div class="vic-tab-content vic-modal-tab-content">
-                                <div class="col-md-4">
-                                    <h3 class="vic-h3">{{ 'modal.form.pageSeo.schema.title'|trans({}, 'victoire') }}</h3>
-                                    {{ form_row(translationsFields.schemaPageType) }}
-                                    {{ form_row(translationsFields.schemaName) }}
-                                    {{ form_row(translationsFields.schemaDescription) }}
-                                    {{ form_row(translationsFields.schemaImage) }}
-                                </div>
-                                <div class="col-md-4">
-                                    <h3 class="vic-h3">{{ 'modal.form.pageSeo.robots.title'|trans({}, 'victoire') }}</h3>
-                                    {{ form_row(translationsFields.metaRobotsIndex) }}
-                                    {{ form_row(translationsFields.metaRobotsFollow) }}
-                                    {{ form_row(translationsFields.metaRobotsAdvanced) }}
-                                </div>
-                                <div class="col-md-4">
-                                    <h3 class="vic-h3">{{ 'modal.form.pageSeo.sitemap.title'|trans({}, 'victoire') }}</h3>
-                                    {{ form_row(translationsFields.sitemapIndexed) }}
-                                    {{ form_row(translationsFields.sitemapPriority) }}
-                                    {{ form_row(translationsFields.sitemapChangeFreq) }}
-                                    {{ form_row(translationsFields.relCanonical) }}
-                                    {{ form_row(translationsFields.redirectTo) }}
-                                </div>
+                    </div>
 
-                                {{form_rest(translationsFields)}}
+                    <div id="seo-mode-social-{{ locale }}"
+                         class="v-collapse"
+                         data-flag="v-collapse"
+                         data-group="seo-mode-{{ locale }}"
+                         data-state="hidden"
+                    >
+                        <div class="v-grid">
+                            <div class="v-col v-col--xs-12 v-col--sm-6">
+                                <h3 class="v-h3">{{ 'modal.form.pageSeo.OpenGraph.title'|trans({}, 'victoire') }}</h3>
+
+                                {{ form_row(translationsFields.ogTitle) }}
+                                {{ form_row(translationsFields.ogDescription) }}
+                                {{ form_row(translationsFields.ogType) }}
+                                {{ form_row(translationsFields.ogUrl) }}
+                                {{ form_row(translationsFields.fbAdmins) }}
+                                {{ form_row(translationsFields.ogImage) }}
+                            </div>
+
+                            <div class="v-col v-col--xs-12 v-col--sm-6">
+                                <h3 class="v-h3">{{ 'modal.form.pageSeo.twitter.title'|trans({}, 'victoire') }}</h3>
+
+                                {{ form_row(translationsFields.twitterCard) }}
+                                {{ form_row(translationsFields.twitterTitle) }}
+                                {{ form_row(translationsFields.twitterDescription) }}
+                                {{ form_row(translationsFields.twitterCreator) }}
+                                {{ form_row(translationsFields.twitterUrl) }}
+                                {{ form_row(translationsFields.twitterImage) }}
                             </div>
                         </div>
+                    </div>
+
+                    <div id="seo-mode-advanced-{{ locale }}"
+                         class="v-collapse"
+                         data-flag="v-collapse"
+                         data-group="seo-mode-{{ locale }}"
+                         data-state="hidden"
+                    >
+                        <div class="v-grid">
+                            <div class="v-col v-col--xs-12 v-col--md-6 v-col--lg-4">
+                                <h3 class="v-h3">{{ 'modal.form.pageSeo.schema.title'|trans({}, 'victoire') }}</h3>
+
+                                {{ form_row(translationsFields.schemaPageType) }}
+                                {{ form_row(translationsFields.schemaName) }}
+                                {{ form_row(translationsFields.schemaDescription) }}
+                                {{ form_row(translationsFields.schemaImage) }}
+                            </div>
+
+                            <div class="v-col v-col--xs-12 v-col--md-6 v-col--lg-4">
+                                <h3 class="v-h3">{{ 'modal.form.pageSeo.robots.title'|trans({}, 'victoire') }}</h3>
+
+                                {{ form_row(translationsFields.metaRobotsIndex) }}
+                                {{ form_row(translationsFields.metaRobotsFollow) }}
+                                {{ form_row(translationsFields.metaRobotsAdvanced) }}
+                            </div>
+
+                            <div class="v-col v-col--xs-12 v-col--lg-4">
+                                <h3 class="v-h3">{{ 'modal.form.pageSeo.sitemap.title'|trans({}, 'victoire') }}</h3>
+
+                                {{ form_row(translationsFields.sitemapIndexed) }}
+                                {{ form_row(translationsFields.sitemapPriority) }}
+                                {{ form_row(translationsFields.sitemapChangeFreq) }}
+                                {{ form_row(translationsFields.relCanonical) }}
+                                {{ form_row(translationsFields.redirectTo) }}
+                            </div>
+                        </div>
+
+                        {{ form_rest(translationsFields) }}
                     </div>
                 </div>
             {% endfor %}

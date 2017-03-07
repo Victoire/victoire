@@ -1,52 +1,73 @@
 {% trans_default_domain "victoire" %}
 
-<div class="vic-businessentity-list-header">
-    <div class="vic-row">
-        <div class="vic-col-sm-6">
-            {% spaceless %}
-            <h1 class="vic-businessentity-list-heading">{{ 'business_template.listEntities'|trans({}, 'victoire') }}
+<div id="v-businessentity-list__header" class="v-flex-grid v-flex-grid--justify-between v-flex-grid--align-center">
+    <div class="v-flex-col">
+        {% spaceless %}
+            <h1 class="v-h3" id="v-businessentity-list__heading">
+                {{ 'business_template.listEntities'|trans({}, 'victoire') }}
                 "{{ businessEntity.getName }}"
             </h1>
-            {% endspaceless %}
-        </div>
+        {% endspaceless %}
+    </div>
 
-        <div class="vic-col-sm-6 vic-text-right">
-            {% spaceless %}
-            <a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_business_template_new', {'id': businessEntity.id}) }}">
-                <i class="fa fa-plus-square"></i>
-
-                {{ 'list.action.add'|trans }}
+    <div class="v-flex-col">
+        {% spaceless %}
+            <a class="v-btn v-btn--success"
+               data-toggle="vic-modal"
+               href="{{ path('victoire_business_template_new', {'id': businessEntity.id}) }}"
+               title="{{ 'list.action.add'|trans({}, 'victoire') }}"
+            >
+                {{ 'list.action.add'|trans({}, 'victoire') }}
             </a>
-            {% endspaceless %}
-        </div>
+        {% endspaceless %}
     </div>
 </div>
 
-<ul class="vic-bordered-list">
-    {% for pagePattern in BusinessTemplates %}
-    <li class="item -level0">
-        <div class="vic-bordered-line">
-            <div class="title">
-                {{ pagePattern.backendName }}
-            </div>
+{% if BusinessTemplates|length %}
+    <ul class="v-list-group v-list-group--main v-list-group--sm">
+        {% for pagePattern in BusinessTemplates %}
+            <li class="v-list-group__item">
+                <div class="v-flex-grid v-flex-grid--justify-between v-flex-grid--align-center">
+                    <div class="v-flex-col">
+                        {{ pagePattern.backendName }}
+                    </div>
 
-            <a class="vic-btn vic-btn-default -square" data-toggle="vic-modal" href="{{ path('victoire_business_template_edit', {'id': pagePattern.id}) }}">
-                <i class="fa fa-pencil"></i>
-            </a>
+                    <div class="v-flex-col">
+                        <a class="v-btn v-btn--square v-btn--sm"
+                           data-toggle="vic-modal"
+                           href="{{ path('victoire_business_template_edit', {'id': pagePattern.id}) }}"
+                        >
+                            {% include 'VictoireUIBundle:SVG:pencil.html.twig' with { 'height': '16', 'width': '16' } %}
+                        </a>
 
-            <a class="vic-btn vic-btn-default -square" href="{{ path('victoire_business_template_show', {'id' : pagePattern.id}) }}">
-                <i class="fa fa-angle-right"></i>
-            </a>
+                        <a class="v-btn v-btn--square v-btn--sm"
+                           href="{{ path('victoire_business_template_show', {'id' : pagePattern.id}) }}"
+                        >
+                            {% include 'VictoireUIBundle:SVG:angle-right.html.twig' with { 'height': '12', 'width': '7' } %}
+                        </a>
 
-            <a class="vic-btn vic-btn-default -square" href="#" onclick="$vic(this).toggleClass('vic-btn-info');$vic('.fa',this).toggleClass('fa-inverse'); $vic('#business-entities-list-container-{{ pagePattern.id }}').slideToggle();">
-                <i class="fa fa-list"></i>
-            </a>
+                        <button class="v-btn v-btn--info v-btn--square v-btn--sm"
+                                data-collapse="toggle"
+                                data-href="#page-pattern-list-{{ pagePattern.id }}"
+                        >
+                            {% include 'VictoireUIBundle:SVG:menu.html.twig' with { 'height': '20', 'width': '20' } %}
+                        </button>
+                    </div>
+                </div>
+            </li>
+
+            <li class="v-list-group__sub-list / v-collapse" id="page-pattern-list-{{ pagePattern.id }}" data-flag="v-collapse">
+                <ul class="v-list-group">
+                    {{ render(path('victoire_business_template_listentities', {'id': pagePattern.id})) }}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <div class="v-alert v-alert--info">
+        <div class="v-alert__body">
+            {{ 'business_template.noEntities'|trans({}, 'victoire') }}
         </div>
-        <div class="vic-row">
-            <div class="vic-col-md-12" style="display: none" id="business-entities-list-container-{{ pagePattern.id }}">
-                {{ render(path('victoire_business_template_listentities', {'id': pagePattern.id})) }}
-            </div>
-        </div>
-    </li>
-    {% endfor %}
-</ul>
+    </div>
+{% endif %}
+

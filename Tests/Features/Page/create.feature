@@ -7,11 +7,13 @@ Background:
 
   @smartStep
 Scenario: I can create a new page
-    Given I should see "Page"
-    Given I select the option "Nouvelle page" in the dropdown "Page"
+    When I follow the float action button
+    Then I should see "Nouvelle page"
+    And I follow "Nouvelle page"
     And I should see "Créer"
     And I fill in "Nom" with "tatooine"
     Then I submit the widget
+    And I wait 3 second
     And I should see "Page créée avec succès"
     And I should be on "/fr/tatooine"
 
@@ -21,7 +23,7 @@ Scenario: I can change the name and the url of a given page
           | currentLocale |name     | slug     | parent  | template      |
           | fr            |tatooine | tatooine | home    | base          |
     And I am on "/fr/tatooine"
-    And I select the option "Paramètres de la page" in the dropdown "Page"
+    And I open the settings menu
     And I should see "Mettre à jour"
     Then I fill in "Nom" with "anoth"
     Then I fill in "page_settings_translations_fr_slug" with "anoth"
