@@ -2,9 +2,6 @@
   "name": "victoire",
   "description": "Fullstack Symfony2 DCMS (Dynamic Content Management System)",
   "private": true,
-  "devDependencies": {
-    "clipboard": "^1.5.13"
-  },
   "dependencies": {
     "trowel-buttons": "^1.1.0",
     "trowel-collapses": "^0.1.0",

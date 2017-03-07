@@ -12,7 +12,7 @@
 
     <div class="ts-snippet-tabs">
         {% for lang, snippet in snippets %}
-            <a class="ts-snippet-tabs__anchor{% if loop.first %} is-active{% endif %}" onclick="openSnippet(this, '{{ lang }}')">{{ lang }}</a>
+            <a class="ts-snippet-tabs__anchor{% if loop.first %} is-active{% endif %}" data-snippet="{{ lang }}">{{ lang }}</a>
         {% endfor %}
     </div>
 

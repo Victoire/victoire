@@ -1,10 +1,18 @@
-var toggleSidebar = function() {
-    document.querySelector('.ts-body').classList.toggle('is-nosidebar');
-}
+import Clipboard from '../../config/node_modules/clipboard';
+import hljs from '../../config/node_modules/highlight.js';
 
 new Clipboard('.tsjs-copy');
+hljs.initHighlightingOnLoad();
 
-var openSnippet = function(el, target) {
+document.querySelector('[data-toggle="sidebar"]').addEventListener('click', function(event) {
+    document.querySelector('.ts-body').classList.toggle('is-nosidebar');
+});
+
+
+const openSnippet = function(event) {
+    const el = event.target;
+    const target = el.getAttribute('data-snippet');
+
     var anchors = el.parentNode.childNodes;
     for (var i = 0; i < anchors.length; i++) {
         if (typeof anchors[i].classList !== 'undefined') {
@@ -28,3 +36,8 @@ var openSnippet = function(el, target) {
         }
     }
 }
+
+
+Array.prototype.slice.call(document.querySelectorAll('[data-snippet]')).forEach(element => {
+    element.addEventListener('click', openSnippet);
+});
