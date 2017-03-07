@@ -30,12 +30,12 @@ dependencies:
     - npm install less
     - mkdir fails
     - composer install --prefer-dist
-    - bower install
     - php Tests/Functionnal/bin/console --env=ci doctrine:database:create --no-debug
     - php Tests/Functionnal/bin/console --env=ci doctrine:schema:create --no-debug
     - php Tests/Functionnal/bin/console --env=ci cache:warmup --no-debug
     - php Tests/Functionnal/bin/console --env=domain cache:warmup --no-debug
     - php Tests/Functionnal/bin/console --env=ci victoire:generate:view --no-debug
+    - php Tests/Functionnal/bin/console --env=ci victoire:ui:fetchAssets --no-debug
     - php Tests/Functionnal/bin/console --env=ci assets:install Tests/Functionnal/web --no-debug
     - php Tests/Functionnal/bin/console --env=ci bazinga:js-translation:dump --no-debug
     - php Tests/Functionnal/bin/console --env=ci fos:js:dump --target="Tests/Functionnal/web/js/fos_js_routes_test.js" --no-debug
