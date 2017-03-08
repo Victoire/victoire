@@ -19,7 +19,6 @@ symfony new . 2.8
 composer require victoire/victoire \
     friendsofsymfony/user-bundle:~2.0@dev \
     doctrine/orm \
-    doctrine/doctrine-fixtures-bundle \
     --update-with-dependencies
 ```
 
