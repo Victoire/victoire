@@ -4,6 +4,7 @@
 /composer.phar
 /vendor/*
 /Tests/Functionnal/web/bundles/*
+/Tests/Functionnal/web/uploads/*
 /Tests/Functionnal/web/*js/*
 /Tests/Functionnal/web/*css/*
 /Bundle/UIBundle/Resources/config/node_modules
