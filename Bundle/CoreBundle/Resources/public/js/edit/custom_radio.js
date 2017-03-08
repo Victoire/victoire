@@ -1,6 +1,6 @@
-$vic(document).on('click', '#vic-mode-toggler .vic-mode', function(event) {
+$vic(document).on('change', '[name="mode-switcher"]', function(event) {
 
-    var mode = $vic(this).data('mode');
+    var mode = $('input[name="mode-switcher"]:checked').val();
     $vic('body').attr('role', mode);
     var route = Routing.generate('victoire_core_switchMode', {'mode': mode, '_locale': locale});
     $vic('#vic-mode-toggler .vic-mode').removeClass('vic-active');

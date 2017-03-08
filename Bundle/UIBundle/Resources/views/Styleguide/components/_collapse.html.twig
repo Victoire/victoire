@@ -1,0 +1,325 @@
+{% include "VictoireUIBundle:Styleguide:ui/section-header.html.twig" with {
+    "name": "collapse"
+} %}
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<a class="v-btn v-btn--warning" data-collapse="toggle" data-href="#collapse-ex-1-1">quantum</a>\n<a class="v-btn v-btn--info" data-collapse="toggle" data-href="#collapse-ex-1-2">style</a>\n\n<div>\n    <div class="v-collapse v-collapse--plain" id="collapse-ex-1-1" data-flag="v-collapse" data-group="collapse-group-1">\n        <div class="v-container">\n            quantum\n        </div>\n    </div>\n\n    <div class="v-collapse v-collapse--plain" id="collapse-ex-1-2" data-flag="v-collapse" data-group="collapse-group-1">\n        <div class="v-container">\n            style\n        </div>\n    </div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <a class="v-btn v-btn--warning" data-collapse="toggle" data-href="#collapse-ex-1-1">quantum</a>
+        <a class="v-btn v-btn--info" data-collapse="toggle" data-href="#collapse-ex-1-2">style</a>
+
+        <div>
+            <div class="v-collapse v-collapse--plain" id="collapse-ex-1-1" data-flag="v-collapse" data-group="collapse-group-1">
+                <div class="v-container">
+                    quantum
+                </div>
+            </div>
+
+            <div class="v-collapse v-collapse--plain" id="collapse-ex-1-2" data-flag="v-collapse" data-group="collapse-group-1">
+                <div class="v-container">
+                    style
+                </div>
+            </div>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'preview': {
+        'background-color': 'rgb(47, 60, 89)',
+    },
+    'snippets': {
+        'html': '<div class="v-tabs-nav">\n    <div class="v-tabs-nav__item">\n        <a class="v-tabs-nav__anchor" data-collapse="show" data-href="#collapse-ex-3-1" data-activeclass="v-tabs-nav__anchor--active">manuel</a>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a class="v-tabs-nav__anchor" data-flag="v-drop" data-position="bottomout center" data-droptarget="#drop-in-tab-ex">\n            entités\n\n            <svg style="margin-left: 0.4em;" xmlns="http://www.w3.org/2000/svg" width="8" height="6" viewBox="65 6 8 6">\n                <path fill="currentColor" fill-rule="evenodd" d="M65.94 7L69 10.0904 72.06 7l.94.9514L69 12l-4-4.0486"/>\n            </svg>\n        </a>\n\n        <div class="v-drop" id="drop-in-tab-ex">\n            <nav class="v-drop__menu">\n                <a class="v-drop__anchor" data-collapse="show" data-href="#collapse-ex-3-2">Entité 1</a>\n                <a class="v-drop__anchor" data-collapse="show" data-href="#collapse-ex-3-3">Entité 2</a>\n            </nav>\n        </div>\n    </div>\n</div>\n\n<div class="v-tabs-collapses">\n    <div class="v-collapse" id="collapse-ex-3-1" data-flag="v-collapse" data-group="tab-ex-3" data-state="visible">\n        tab 1\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-3-2" data-flag="v-collapse" data-group="tab-ex-3">\n        tab 2\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-3-3" data-flag="v-collapse" data-group="tab-ex-3">\n        tab 3\n    </div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-tabs-nav">
+            <div class="v-tabs-nav__item">
+                <a class="v-tabs-nav__anchor" data-collapse="show" data-href="#collapse-ex-3-1" data-activeclass="v-tabs-nav__anchor--active">manuel</a>
+            </div>
+
+            <div class="v-tabs-nav__item">
+                <a class="v-tabs-nav__anchor" data-flag="v-drop" data-position="bottomout center" data-droptarget="#drop-in-tab-ex">
+                    entités
+
+                    <svg style="margin-left: 0.4em;" xmlns="http://www.w3.org/2000/svg" width="8" height="6" viewBox="65 6 8 6">
+                        <path fill="currentColor" fill-rule="evenodd" d="M65.94 7L69 10.0904 72.06 7l.94.9514L69 12l-4-4.0486"/>
+                    </svg>
+                </a>
+
+                <div class="v-drop" id="drop-in-tab-ex">
+                    <nav class="v-drop__menu">
+                        <a class="v-drop__anchor" data-collapse="show" data-href="#collapse-ex-3-2">Entité 1</a>
+                        <a class="v-drop__anchor" data-collapse="show" data-href="#collapse-ex-3-3">Entité 2</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="v-tabs-collapses">
+            <div class="v-collapse" id="collapse-ex-3-1" data-flag="v-collapse" data-group="tab-ex-3" data-state="visible">
+                tab 1
+            </div>
+
+            <div class="v-collapse" id="collapse-ex-3-2" data-flag="v-collapse" data-group="tab-ex-3">
+                tab 2
+            </div>
+
+            <div class="v-collapse" id="collapse-ex-3-3" data-flag="v-collapse" data-group="tab-ex-3">
+                tab 3
+            </div>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-tabs-nav v-tabs-nav--spread">\n    <div class="v-tabs-nav__item">\n        <a\n            class="v-tabs-nav__anchor"\n            data-collapse="show"\n            data-href="#collapse-ex-4-1"\n            data-activeclass="v-tabs-nav__anchor--active"\n            data-flag="v-drop"\n            data-position="topout center"\n            data-droptarget="#ex-tab-anchor-drop-1"\n            data-behavior="hover"\n        >\n            {% include "VictoireUIBundle:SVG:browser.html.twig" with { "width": 30 } %}\n        </a>\n\n        <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-1">\n            <div class="v-drop__content">\n                Général\n            </div>\n        </div>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a\n            class="v-tabs-nav__anchor"\n            data-collapse="show"\n            data-href="#collapse-ex-4-2"\n            data-activeclass="v-tabs-nav__anchor--active"\n            data-flag="v-drop"\n            data-position="topout center"\n            data-droptarget="#ex-tab-anchor-drop-2"\n            data-behavior="hover"\n        >\n            {% include "VictoireUIBundle:SVG:mobile.html.twig" with { "width": 30 } %}\n        </a>\n\n        <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-2">\n            <div class="v-drop__content">\n                Mobile\n            </div>\n        </div>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a\n            class="v-tabs-nav__anchor"\n            data-collapse="show"\n            data-href="#collapse-ex-4-3"\n            data-activeclass="v-tabs-nav__anchor--active"\n            data-flag="v-drop"\n            data-position="topout center"\n            data-droptarget="#ex-tab-anchor-drop-3"\n            data-behavior="hover"\n        >\n            {% include "VictoireUIBundle:SVG:tablet.html.twig" with { "width": 30 } %}\n        </a>\n\n        <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-3">\n            <div class="v-drop__content">\n                Tablet\n            </div>\n        </div>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a\n            class="v-tabs-nav__anchor"\n            data-collapse="show"\n            data-href="#collapse-ex-4-4"\n            data-activeclass="v-tabs-nav__anchor--active"\n            data-flag="v-drop"\n            data-position="topout center"\n            data-droptarget="#ex-tab-anchor-drop-4"\n            data-behavior="hover"\n        >\n            {% include "VictoireUIBundle:SVG:laptop.html.twig" with { "width": 30 } %}\n        </a>\n\n        <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-4">\n            <div class="v-drop__content">\n                Laptop\n            </div>\n        </div>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a\n            class="v-tabs-nav__anchor"\n            data-collapse="show"\n            data-href="#collapse-ex-4-5"\n            data-activeclass="v-tabs-nav__anchor--active"\n            data-flag="v-drop"\n            data-position="topout center"\n            data-droptarget="#ex-tab-anchor-drop-5"\n            data-behavior="hover"\n        >\n            {% include "VictoireUIBundle:SVG:desktop.html.twig" with { "width": 30 } %}\n        </a>\n\n        <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-5">\n            <div class="v-drop__content">\n                Desktop\n            </div>\n        </div>\n    </div>\n</div>\n\n<div class="v-tabs-collapses">\n    <div class="v-collapse" id="collapse-ex-4-1" data-flag="v-collapse" data-group="tab-ex-4" data-state="visible">\n        tab 1\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-2" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 2\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-3" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 3\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-4" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 4\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-4-5" data-flag="v-collapse" data-group="tab-ex-4">\n        tab 5\n    </div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-tabs-nav v-tabs-nav--spread">
+            <div class="v-tabs-nav__item">
+                <a
+                    class="v-tabs-nav__anchor"
+                    data-collapse="show"
+                    data-href="#collapse-ex-4-1"
+                    data-activeclass="v-tabs-nav__anchor--active"
+                    data-flag="v-drop"
+                    data-position="topout center"
+                    data-droptarget="#ex-tab-anchor-drop-1"
+                    data-behavior="hover"
+                >
+                    {% include "VictoireUIBundle:SVG:browser.html.twig" with { "width": 30 } %}
+                </a>
+
+                <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-1">
+                    <div class="v-drop__content">
+                        Général
+                    </div>
+                </div>
+            </div>
+
+            <div class="v-tabs-nav__item">
+                <a
+                    class="v-tabs-nav__anchor"
+                    data-collapse="show"
+                    data-href="#collapse-ex-4-2"
+                    data-activeclass="v-tabs-nav__anchor--active"
+                    data-flag="v-drop"
+                    data-position="topout center"
+                    data-droptarget="#ex-tab-anchor-drop-2"
+                    data-behavior="hover"
+                >
+                    {% include "VictoireUIBundle:SVG:mobile.html.twig" with { "width": 30 } %}
+                </a>
+
+                <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-2">
+                    <div class="v-drop__content">
+                        Mobile
+                    </div>
+                </div>
+            </div>
+
+            <div class="v-tabs-nav__item">
+                <a
+                    class="v-tabs-nav__anchor"
+                    data-collapse="show"
+                    data-href="#collapse-ex-4-3"
+                    data-activeclass="v-tabs-nav__anchor--active"
+                    data-flag="v-drop"
+                    data-position="topout center"
+                    data-droptarget="#ex-tab-anchor-drop-3"
+                    data-behavior="hover"
+                >
+                    {% include "VictoireUIBundle:SVG:tablet.html.twig" with { "width": 30 } %}
+                </a>
+
+                <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-3">
+                    <div class="v-drop__content">
+                        Tablet
+                    </div>
+                </div>
+            </div>
+
+            <div class="v-tabs-nav__item">
+                <a
+                    class="v-tabs-nav__anchor"
+                    data-collapse="show"
+                    data-href="#collapse-ex-4-4"
+                    data-activeclass="v-tabs-nav__anchor--active"
+                    data-flag="v-drop"
+                    data-position="topout center"
+                    data-droptarget="#ex-tab-anchor-drop-4"
+                    data-behavior="hover"
+                >
+                    {% include "VictoireUIBundle:SVG:laptop.html.twig" with { "width": 30 } %}
+                </a>
+
+                <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-4">
+                    <div class="v-drop__content">
+                        Laptop
+                    </div>
+                </div>
+            </div>
+
+            <div class="v-tabs-nav__item">
+                <a
+                    class="v-tabs-nav__anchor"
+                    data-collapse="show"
+                    data-href="#collapse-ex-4-5"
+                    data-activeclass="v-tabs-nav__anchor--active"
+                    data-flag="v-drop"
+                    data-position="topout center"
+                    data-droptarget="#ex-tab-anchor-drop-5"
+                    data-behavior="hover"
+                >
+                    {% include "VictoireUIBundle:SVG:desktop.html.twig" with { "width": 30 } %}
+                </a>
+
+                <div class="v-drop v-drop--tooltip" id="ex-tab-anchor-drop-5">
+                    <div class="v-drop__content">
+                        Desktop
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="v-tabs-collapses">
+            <div class="v-collapse" id="collapse-ex-4-1" data-flag="v-collapse" data-group="tab-ex-4" data-state="visible">
+                tab 1
+            </div>
+
+            <div class="v-collapse" id="collapse-ex-4-2" data-flag="v-collapse" data-group="tab-ex-4">
+                tab 2
+            </div>
+
+            <div class="v-collapse" id="collapse-ex-4-3" data-flag="v-collapse" data-group="tab-ex-4">
+                tab 3
+            </div>
+
+            <div class="v-collapse" id="collapse-ex-4-4" data-flag="v-collapse" data-group="tab-ex-4">
+                tab 4
+            </div>
+
+            <div class="v-collapse" id="collapse-ex-4-5" data-flag="v-collapse" data-group="tab-ex-4">
+                tab 5
+            </div>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-tabs-nav v-tabs-nav--insert">\n    <div class="v-tabs-nav__item">\n        <a class="v-tabs-nav__anchor"\n           data-collapse="show"\n           data-href="#collapse-ex-5-1"\n           data-activeclass="v-tabs-nav__anchor--active"\n        >\n            FR\n        </a>\n    </div>\n\n    <div class="v-tabs-nav__item">\n        <a class="v-tabs-nav__anchor"\n           data-collapse="show"\n           data-href="#collapse-ex-5-2"\n           data-activeclass="v-tabs-nav__anchor--active"\n        >\n            EN\n        </a>\n    </div>\n</div>\n\n<div class="v-tabs-collapses v-tabs-collapses--insert">\n    <div class="v-collapse" id="collapse-ex-5-1" data-flag="v-collapse" data-group="tab-ex-5" data-state="visible">\n        tab 1\n    </div>\n\n    <div class="v-collapse" id="collapse-ex-5-2" data-flag="v-collapse" data-group="tab-ex-5">\n        tab 2\n    </div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-tabs-nav v-tabs-nav--insert">
+            <div class="v-tabs-nav__item">
+                <a class="v-tabs-nav__anchor"
+                   data-collapse="show"
+                   data-href="#collapse-ex-5-1"
+                   data-activeclass="v-tabs-nav__anchor--active"
+                >
+                    FR
+                </a>
+            </div>
+
+            <div class="v-tabs-nav__item">
+                <a class="v-tabs-nav__anchor"
+                   data-collapse="show"
+                   data-href="#collapse-ex-5-2"
+                   data-activeclass="v-tabs-nav__anchor--active"
+                >
+                    EN
+                </a>
+            </div>
+        </div>
+
+        <div class="v-tabs-collapses v-tabs-collapses--insert">
+            <div class="v-collapse" id="collapse-ex-5-1" data-flag="v-collapse" data-group="tab-ex-5" data-state="visible">
+                tab 1
+            </div>
+
+            <div class="v-collapse" id="collapse-ex-5-2" data-flag="v-collapse" data-group="tab-ex-5">
+                tab 2
+            </div>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<button class="v-btn v-btn--info / v-mode-trigger"\n        data-flag="v-drop v-mode-drop"\n        data-droptarget="#drop-collapse-ex"\n>\n    <span class="v-mode-trigger__placeholder-label">\n        Mode\n    </span>\n\n    <span class="v-mode-trigger__entity-label">\n        Mode sélection\n    </span>\n\n    <span class="v-mode-trigger__query-label">\n        Mode requête\n    </span>\n\n    <svg class="v-btn__ic v-btn__ic--after" xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="116 18 10 5">\n        <path fill="currentColor" fill-rule="evenodd" d="M124.716 18.189c.2943-.252.7696-.252 1.0638 0 .293.2517.2942.6594 0 .9122l-4.2472 3.6028c-.2942.2528-.7706.2528-1.0648 0l-4.2472-3.6028c-.294-.2528-.294-.6605 0-.9123.2942-.252.7696-.252 1.0638 0l3.7158 2.9544 3.716-2.9546z"></path>\n    </svg>\n</button>\n\n<div class="v-drop" id="drop-collapse-ex">\n    <nav class="v-drop__menu">\n        <a class="v-drop__anchor"\n           data-collapse="show"\n           data-href="#drop-collapse-ex-entity"\n           data-activeclass="v-drop__anchor--active"\n           data-triggerclass="v-mode-trigger--entity"\n        >\n            Entity\n        </a>\n\n        <a class="v-drop__anchor"\n           data-collapse="show"\n           data-href="#drop-collapse-ex-query"\n           data-activeclass="v-drop__anchor--active"\n           data-triggerclass="v-mode-trigger--query"\n        >\n            Query\n        </a>\n    </nav>\n</div>\n\n<div id="drop-collapse-ex-entity"\n     class="v-collapse"\n     data-flag="v-collapse"\n     data-group="drop-collapses"\n     data-state="visible"\n>\n    entity\n</div>\n\n<div id="drop-collapse-ex-query"\n     class="v-collapse"\n     data-flag="v-collapse"\n     data-group="drop-collapses"\n     data-state="hidden"\n>\n    hidden\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <button class="v-btn v-btn--info / v-mode-trigger"
+                data-flag="v-drop v-mode-drop"
+                data-droptarget="#drop-collapse-ex"
+        >
+            <span class="v-mode-trigger__placeholder-label">
+                Mode
+            </span>
+
+            <span class="v-mode-trigger__entity-label">
+                Mode sélection
+            </span>
+
+            <span class="v-mode-trigger__query-label">
+                Mode requête
+            </span>
+
+            <svg class="v-btn__ic v-btn__ic--after" xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="116 18 10 5">
+                <path fill="currentColor" fill-rule="evenodd" d="M124.716 18.189c.2943-.252.7696-.252 1.0638 0 .293.2517.2942.6594 0 .9122l-4.2472 3.6028c-.2942.2528-.7706.2528-1.0648 0l-4.2472-3.6028c-.294-.2528-.294-.6605 0-.9123.2942-.252.7696-.252 1.0638 0l3.7158 2.9544 3.716-2.9546z"></path>
+            </svg>
+        </button>
+
+        <div class="v-drop" id="drop-collapse-ex">
+            <nav class="v-drop__menu">
+                <a class="v-drop__anchor"
+                   data-collapse="show"
+                   data-href="#drop-collapse-ex-entity"
+                   data-activeclass="v-drop__anchor--active"
+                   data-triggerclass="v-mode-trigger--entity"
+                >
+                    Entity
+                </a>
+
+                <a class="v-drop__anchor"
+                   data-collapse="show"
+                   data-href="#drop-collapse-ex-query"
+                   data-activeclass="v-drop__anchor--active"
+                   data-triggerclass="v-mode-trigger--query"
+                >
+                    Query
+                </a>
+            </nav>
+        </div>
+
+        <div id="drop-collapse-ex-entity"
+             class="v-collapse"
+             data-flag="v-collapse"
+             data-group="drop-collapses"
+             data-state="visible"
+        >
+            entity
+        </div>
+
+        <div id="drop-collapse-ex-query"
+             class="v-collapse"
+             data-flag="v-collapse"
+             data-group="drop-collapses"
+             data-state="hidden"
+        >
+            hidden
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}

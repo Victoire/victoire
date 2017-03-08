@@ -1,0 +1,13 @@
+@each $mode in ('entity', 'query', 'businessEntity', 'global', 'social', 'advanced') {
+  .#{$app--prefix}-mode-trigger__#{$mode}-label {
+    display: none;
+
+    .#{$app--prefix}-mode-trigger--#{$mode} & {
+      display: inline;
+    }
+  }
+
+  .#{$app--prefix}-mode-trigger--#{$mode} .#{$app--prefix}-mode-trigger__placeholder-label {
+    display: none;
+  }
+}

@@ -7,9 +7,10 @@
 /Tests/Functionnal/web/uploads/*
 /Tests/Functionnal/web/*js/*
 /Tests/Functionnal/web/*css/*
-/node_modules/*
+/Bundle/UIBundle/Resources/config/node_modules
 /nohup.out
 /selenium-server-standalone-2.45.0.jar
 /.behat.yml
 /behat.yml
 /Tests/Functionnal/app/config/parameters.yml
+/Bundle/UIBundle/Resources/public/bower_components/*

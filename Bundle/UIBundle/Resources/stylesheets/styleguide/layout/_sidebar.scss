@@ -1,0 +1,49 @@
+.ts-sidebar {
+  @include styleguide-base;
+  @include layout-border('right');
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: $sidebar--width;
+  user-select: none;
+  overflow-y: auto;
+  background-color: $sidebar--background-color;
+
+  @include when-inside('.is-nosidebar') {
+    @include large-viewport {
+      display: none;
+    }
+  }
+
+  #vic-admin-menu ~ & {
+    top: 40px;
+    bottom: 50px;
+    height: auto;
+  }
+
+  @include small-viewport {
+    position: static;
+    width: 100%;
+    height: auto;
+    border-left-width: 0;
+    padding-top: $header--height;
+  }
+}
+
+.ts-sidebar__nav-anchor {
+  @include layout-border('bottom');
+  display: block;
+  color: inherit;
+  font-weight: font-weight('light');
+  text-decoration: none;
+  height: $sidebar-toggle--height;
+  padding: rem(1);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    color: color('blue');
+  }
+}

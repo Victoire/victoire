@@ -31,18 +31,19 @@ class TemplateMenuListener implements MenuListenerInterface
      */
     public function addContextual($event)
     {
-        $mainItem = $this->getMainItem();
+        $menuBottomRight = $this->menuBuilder->getBottomRightNavbar();
         $template = $event->getTemplate();
 
         //this contextual menu appears only for template
-        $mainItem->addChild('menu.template.settings',
+        $menuBottomRight->addChild('menu.template.settings',
             [
                 'route'           => 'victoire_template_settings',
                 'routeParameters' => ['id' => $template->getId()],
-                ]
+                'linkAttributes'  => [
+                    'class' => 'v-btn v-btn--sm v-btn--transparent',
+                ],
+            ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
-
-        return $mainItem;
     }
 
     /**
@@ -54,18 +55,21 @@ class TemplateMenuListener implements MenuListenerInterface
      */
     public function addGlobal(Event $event)
     {
-        $mainItem = $this->getMainItem();
-        $mainItem->addChild('menu.template.new', [
-            'route' => 'victoire_template_new',
-            ]
-        )->setLinkAttribute('data-toggle', 'vic-modal');
+        $menuTemplate = $this->menuBuilder->getBottomRightNavbar()->getChild('menu.template');
 
-        $mainItem->addChild('menu.template.index', [
-            'route' => 'victoire_template_index',
-            ]
-        )->setLinkAttribute('data-toggle', 'vic-modal');
+        $menuTemplate->addChild('menu.template.new', [
+            'route'          => 'victoire_template_new',
+            'linkAttributes' => [
+                'class' => 'v-drop__anchor',
+            ],
+        ])->setLinkAttribute('data-toggle', 'vic-modal');
 
-        return $mainItem;
+        $menuTemplate->addChild('menu.template.index', [
+            'route'          => 'victoire_template_index',
+            'linkAttributes' => [
+                'class' => 'v-drop__anchor',
+            ],
+        ])->setLinkAttribute('data-toggle', 'vic-modal');
     }
 
     public function getMainItem()

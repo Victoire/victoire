@@ -33,6 +33,9 @@ class MenuBuilder
         $this->leftNavbar = $this->initLeftNavbar();
 
         $this->topNavbar = $this->initTopNavbar();
+        $this->bottomLeftNavbar = $this->initBottomLeftNavbar();
+        $this->bottomRightNavbar = $this->initBottomRightNavbar();
+        $this->floatActionNavbar = $this->initFloatActionNavbar();
     }
 
     /**
@@ -44,13 +47,131 @@ class MenuBuilder
     {
         $this->topNavbar = $this->factory->createItem('root', [
                 'childrenAttributes' => [
-                    'id'    => 'vic-topNavbar-left',
-                    'class' => 'vic-list-unstyled vic-menu-main-list vic-hidden-xs vic-hidden-sm',
+                    'id'    => 'v-navbar-top',
+                    'class' => 'v-menu',
                 ],
             ]
         );
 
         return $this->topNavbar;
+    }
+
+    /**
+     * create bottom left menu defined in the contructor.
+     *
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function initBottomLeftNavbar()
+    {
+        $this->bottomLeftNavbar = $this->factory->createItem('root', [
+                'childrenAttributes' => [
+                    'id'    => 'v-footer-navbar-bottom-left',
+                ],
+            ]
+        );
+
+        $this->createDropdownMenuItem(
+            $this->getBottomLeftNavbar(),
+            'menu.additionals',
+            [
+                'dropdown'           => true,
+                'childrenAttributes' => [
+                    'class' => 'v-drop v-drop__menu',
+                    'id'    => 'footer-drop-navbar-left',
+                ],
+                'attributes' => [
+                    'class'       => 'vic-dropdown',
+                    'data-toggle' => 'vic-dropdown',
+                ],
+                'linkAttributes' => [
+                    'id'                => 'v-additionals-drop',
+                    'class'             => 'v-btn v-btn--transparent v-drop-trigger--no-toggle',
+                    'data-flag'         => 'v-drop',
+                    'data-position'     => 'topout leftin',
+                    'data-droptarget'   => '#footer-drop-navbar-left',
+                ],
+                'uri'   => '#',
+            ],
+            false
+        );
+
+        return $this->bottomLeftNavbar;
+    }
+
+    /**
+     * create bottom right menu defined in the contructor.
+     *
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function initBottomRightNavbar()
+    {
+        $this->bottomRightNavbar = $this->factory->createItem('root', [
+                'childrenAttributes' => [
+                    'id'    => 'v-footer-navbar-bottom-right',
+                ],
+            ]
+        );
+
+        $this->createDropdownMenuItem(
+            $this->getBottomRightNavbar(),
+            'menu.template',
+            [
+                'dropdown'           => true,
+                'childrenAttributes' => [
+                    'class' => 'v-drop v-drop__menu',
+                    'id'    => 'footer-drop-navbar-template',
+                ],
+                'attributes' => [
+                    'class'       => 'vic-dropdown',
+                    'data-toggle' => 'vic-dropdown',
+                ],
+                'linkAttributes' => [
+                    'class'             => 'v-btn v-btn--sm v-btn--transparent v-drop-trigger--no-toggle',
+                    'data-flag'         => 'v-drop',
+                    'data-position'     => 'topout rightin',
+                    'data-droptarget'   => '#footer-drop-navbar-template',
+                ],
+                'uri'   => '#',
+            ],
+            false
+        );
+
+        return $this->bottomRightNavbar;
+    }
+
+    /**
+     * create bottom right menu defined in the contructor.
+     *
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function initFloatActionNavbar()
+    {
+        $this->floatActionNavbar = $this->factory->createItem('root', [
+                'childrenAttributes' => [
+                    'id'    => 'v-float-container',
+                ],
+            ]
+        );
+
+        $this->createDropdownMenuItem(
+            $this->getFloatActionNavbar(),
+            'menu.floatActionDropdown',
+            [
+                'linkAttributes' => [
+                    'class'               => 'v-btn v-btn--square v-btn--lg v-btn--fab',
+                    'data-flag'           => 'v-drop v-drop-fab',
+                    'data-position'       => 'bottomout center',
+                    'data-droptarget'     => '#victoire-fab-dropdown',
+                ],
+                'childrenAttributes' => [
+                    'class' => 'v-drop v-drop--fab v-drop__menu v-drop__menu',
+                    'id'    => 'victoire-fab-dropdown',
+                ],
+            ],
+            false
+        );
+
+        return $this->floatActionNavbar;
     }
 
     /**
@@ -60,12 +181,7 @@ class MenuBuilder
      */
     public function initLeftNavbar()
     {
-        $this->leftNavbar = $this->factory->createItem('root', [
-            'childrenAttributes' => [
-                'class' => '',
-                ],
-            ]
-        );
+        $this->leftNavbar = $this->factory->createItem('root');
 
         return $this->leftNavbar;
     }
@@ -76,7 +192,7 @@ class MenuBuilder
      * @param ItemInterface $rootItem
      * @param string        $title
      * @param array         $attributes
-     * @param string        $caret
+     * @param bool          $caret
      *
      * @return \Knp\Menu\ItemInterface
      */
@@ -125,6 +241,46 @@ class MenuBuilder
     public function getTopNavbar()
     {
         return $this->topNavbar;
+    }
+
+    /**
+     * return bottomLeftNavbar.
+     *
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function getBottomLeftNavbar()
+    {
+        return $this->bottomLeftNavbar;
+    }
+
+    /**
+     * return bottomRightNavbar.
+     *
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function getBottomRightNavbar()
+    {
+        return $this->bottomRightNavbar;
+    }
+
+    /**
+     * return floatActionNavbar.
+     *
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function getFloatActionNavbar()
+    {
+        return $this->floatActionNavbar;
+    }
+
+    /**
+     * return floatActionDropdown.
+     *
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function getFloatActionDropdown()
+    {
+        return $this->getFloatActionNavbar()->getChild('menu.floatActionDropdown');
     }
 
     /**

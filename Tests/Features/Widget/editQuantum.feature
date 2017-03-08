@@ -10,23 +10,24 @@ Feature: Edit widgets quantums
 
     Scenario: I can create widget and its quantums in a page
         Given I am on "/fr/"
-        And I switch to "layout" mode
-        And I should see "Nouveau contenu"
+        When I switch to "layout" mode
+        Then I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
-        When I rename quantum "1" with "FR"
-        And I wait 5 second
-        And I select quantum "FR"
-        And I fill in "a_static_widget_force_side" with "français"
-        And I follow "Critères"
-        And I fill in "a_static_widget_force_criterias_0_operator" with "equal"
-        And I select "fr" from "a_static_widget_force_criterias_0_value"
-        And I create a new quantum "EN"
-        And I select quantum "EN"
-        And I fill in "c_static_widget_force_side" with "english"
-        And I follow "Critères"
-        And I fill in "c_static_widget_force_criterias_0_operator" with "equal"
-        And I select "en" from "c_static_widget_force_criterias_0_value"
+        And I should see "QUANTUM"
+        When I open the widget quantum collapse when static
+        Then I should see "Nom du quantum"
+        When I fill in "_a_static_widget_force[quantum]" with "FR"
+        And I fill in "_a_static_widget_force[side]" with "français"
+        And I fill in "_a_static_widget_force[criterias][0][operator]" with "equal"
+        And I select "fr" from "_a_static_widget_force[criterias][0][value]"
+        And I create a new quantum
+        And I select quantum "Dé"
+        And I fill in "b_static_widget_force_side" with "english"
+        And I should see "QUANTUM"
+        When I open the widget quantum collapse when static
+        And I fill in "b_static_widget_force_criterias_0_operator" with "equal"
+        And I select "en" from "b_static_widget_force_criterias_0_value"
         And I submit the widget
         Given I am on "/fr/victoire-dcms/template/show/1"
         Then I should not see "Le côté français de la force"
@@ -43,18 +44,21 @@ Feature: Edit widgets quantums
         And I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
-        When I rename quantum "1" with "FR"
-        And I select quantum "FR"
+        And I should see "QUANTUM"
+        And I fill in "_a_static_widget_force[side]" with "français"
+        When I open the widget quantum collapse when static
+        Then I should see "Nom du quantum"
         And I fill in "a_static_widget_force_side" with "français"
-        And I follow "Critères"
+        When I fill in "_a_static_widget_force[quantum]" with "FR"
         And I fill in "a_static_widget_force_criterias_0_operator" with "equal"
         And I select "fr" from "a_static_widget_force_criterias_0_value"
-        And I create a new quantum "EN"
-        And I select quantum "EN"
-        And I fill in "c_static_widget_force_side" with "english"
-        And I follow "Critères"
-        And I fill in "c_static_widget_force_criterias_0_operator" with "equal"
-        And I select "en" from "c_static_widget_force_criterias_0_value"
+        And I create a new quantum
+        And I select quantum "Dé"
+        And I fill in "b_static_widget_force_side" with "english"
+        And I should see "QUANTUM"
+        When I open the widget quantum collapse when static
+        And I fill in "b_static_widget_force_criterias_0_operator" with "equal"
+        And I select "en" from "b_static_widget_force_criterias_0_value"
         And I submit the widget
         Given I am on "/fr/victoire-dcms/template/show/1"
         Then I should see "Le côté français de la force"
@@ -81,22 +85,25 @@ Feature: Edit widgets quantums
         And I wait 3 seconds
         Then I should see "Attention !"
         And I should see "Ce contenu appartient à un modèle parent"
-        And I follow "modifier le contenu original"
+        And I should see "MODIFIER LE CONTENU ORIGINAL"
+        When I follow "MODIFIER LE CONTENU ORIGINAL"
         And I wait 5 seconds
         Then I should not see "Attention !"
         And I should not see "Ce contenu appartient à un modèle parent"
-        When I rename quantum "1" with "FR"
-        And I select quantum "FR"
-        And I fill in "a_static_widget_force_side" with "français"
-        And I follow "Critères"
+        When I fill in "a_static_widget_force_side" with "français"
+        And I open the widget quantum collapse when static
+        Then I should see "Nom du quantum"
+        When I fill in "_a_static_widget_force[quantum]" with "FR"
         And I fill in "a_static_widget_force_criterias_0_operator" with "equal"
         And I select "fr" from "a_static_widget_force_criterias_0_value"
-        And I create a new quantum "EN"
-        And I select quantum "EN"
-        And I fill in "c_static_widget_force_side" with "english"
-        And I follow "Critères"
-        And I fill in "c_static_widget_force_criterias_0_operator" with "equal"
-        And I select "en" from "c_static_widget_force_criterias_0_value"
+        And I create a new quantum
+        And I select quantum "Dé"
+        And I fill in "b_static_widget_force_side" with "english"
+        And I should see "QUANTUM"
+        When I open the widget quantum collapse when static
+        And I fill in "b_static_widget_force_side" with "english"
+        And I fill in "b_static_widget_force_criterias_0_operator" with "equal"
+        And I select "en" from "b_static_widget_force_criterias_0_value"
         And I submit the widget
         Given I am on "/fr/victoire-dcms/template/show/1"
         Then I should see "Le côté français de la force"

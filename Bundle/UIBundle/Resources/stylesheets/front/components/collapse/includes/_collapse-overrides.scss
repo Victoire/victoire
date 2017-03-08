@@ -1,0 +1,13 @@
+[data-collapse] {
+  cursor: pointer;
+
+  &:hover,
+  &:active,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+.#{$app--prefix}-collapse {
+  @include clearfix;
+}

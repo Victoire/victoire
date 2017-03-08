@@ -1,0 +1,59 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+
+$colors: (
+  'gray': #e0e6ed,
+  'gray-lightest': rgb(249, 249, 249),
+  'gray-lighter': rgb(243, 243, 243),
+  'gray-light': rgb(249, 249, 249),
+  'gray-dark': #9f9f9f,
+  'black': rgb(0, 0, 0),
+  'blue': rgb(95, 176, 227),
+  'yellow': rgb(245, 162, 95),
+  'white': rgb(255, 255, 255),
+  'red': rgb(227, 101, 102),
+  'green': rgb(51, 178, 144),
+);
+
+@function color($color) {
+  @return map-get($colors, $color);
+}
+
+$font-size-base: 16px;
+
+@function rem($multiplier: 1) {
+  @return round($font-size-base * $multiplier);
+}
+
+$font-sizes: (
+  'small': rem(0.875),
+  'normal': rem(1),
+  'large': rem(1.125),
+  'xlarge': rem(1.25),
+);
+
+$font-weights: (
+  'light': 300,
+  'normal': 400,
+  'bold': 900,
+);
+
+$main--padding: rem(1.5);
+$main--background-color: color('white');
+
+$sidebar--width: 255px;
+$sidebar--border-width: 1px;
+$sidebar--border-color: color('gray');
+$sidebar--padding: rem(1.5);
+$sidebar--background-color: $main--background-color;
+$sidebar-submenu--background-color: color('gray-light');
+$sidebar-toggle--height: 60px;
+
+$header--height: $sidebar-toggle--height;
+$header--background-color: $main--background-color;
+
+$snippet--background-color: color('gray-lightest');
+$snippet-tabs--background-color: inherit;
+$snippet-tabs--color-event: color('black');
+$snippet-copy--color: color('black');

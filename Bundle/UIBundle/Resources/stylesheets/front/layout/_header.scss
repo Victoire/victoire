@@ -1,0 +1,50 @@
+@import '../globals/utils/synthax';
+@import '../globals/utils/rem';
+@import '../globals/utils/font';
+@import '../../../public/bower_components/trowel-core/src/value';
+
+##{$app--prefix}-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: z-index(3);
+  overflow: hidden;
+}
+
+.ts-body ##{$app--prefix}-header {
+  z-index: 0;
+  display: none;
+}
+
+[id^="#{$app--prefix}-header-drop-"] {
+  z-index: z-index(5);
+}
+
+
+##{$app--prefix}-navbar-top > li {
+  margin: value($menus--gutter) / 2;
+}
+
+##{$app--prefix}-navbar-top > li > a {
+  font-size: value(rem());
+  font-family: value($menus-anchor--font-family);
+  line-height: value($menus-anchor--line-height);
+  color: value($menus-anchor--color);
+  font-weight: value($menus-anchor--font-weight);
+
+  &:hover {
+    color: value($menus-anchor--color, ':hover');
+    text-decoration: value($menus-anchor--text-decoration, ':hover');
+  }
+
+  &:active {
+    color: value($menus-anchor--color, ':active');
+    text-decoration: value($menus-anchor--text-decoration, ':active');
+  }
+
+  &:focus {
+    color: value($menus-anchor--color, ':focus');
+    text-decoration: value($menus-anchor--text-decoration, ':focus');
+  }
+}

@@ -4,44 +4,47 @@
 
 {% extends 'VictoireCoreBundle::_modal.html.twig' %}
 
-{% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
+{% block modal_container_classes %}{{ parent() }} v-modal--view{% endblock modal_container_classes %}
 {% block modal_header_title %}{{ 'business_template.creation.title'|trans }}{% endblock modal_header_title %}
 
 {% block modal_body_content %}
-
     {{ form_start(form) }}
-    <div class="vic-row">
-        <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
-            {{ form_row(form.translations) }}
-        </div>
-        <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
-            {{ form_row(form.backendName) }}
-        </div>
-    </div>
-    <div class="vic-row">
-        {% if form.parent is defined and form.parent %}
-            <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
-                {{ form_row(form.parent) }}
+        <div class="v-grid">
+            <div class="v-col v-col--xs-12 v-col--sm-6">
+                {{ form_widget(form.translations) }}
             </div>
-        {% endif %}
-        <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
-            {{ form_row(form.template) }}
-        </div>
-        {% if form.locale is defined %}
-            <div class="vic-col-xs-12 vic-col-sm-6 vic-col-md-6">
-                {{ form_row(form.locale) }}
+
+            <div class="v-col v-col--xs-12 v-col--sm-6">
+                <div id="v-businesstemplate-new--sidebar">
+                    {{ form_row(form.backendName) }}
+
+                    {% if form.parent is defined and form.parent %}
+                        {{ form_row(form.parent) }}
+                    {% endif %}
+
+                    {{ form_row(form.template) }}
+
+                    {% if form.locale is defined %}
+                        {{ form_row(form.locale) }}
+                    {% endif %}
+                </div>
             </div>
-        {% endif %}
-    </div>
-    <div class="vic-row">
-        <div class="vic-col-md-12">
-            {{ 'victoire.form.business_template.query.vic_help_block'|trans|raw }}
-            {{ form_row(form.query) }}
-            {{ form_rest(form) }}
         </div>
-    </div>
+
+        {% embed "VictoireUIBundle:Bricks:alert.html.twig" with {
+            theme: "info",
+            id: "v-businesstemplate-new--request-alert",
+        } %}
+            {% block body %}
+                {% include 'VictoireUIBundle:SVG:information.html.twig' with { width: '16', height: '16' } %}
+                {{ 'victoire.form.business_template.query.vic_help_block'|trans({}, 'victoire')|raw }}
+            {% endblock body %}
+        {% endembed %}
+
+
+        {{ form_row(form.query) }}
+        {{ form_rest(form) }}
     {{ form_end(form) }}
-</ul>
 {% endblock modal_body_content %}
 
 {% block modal_footer_content %}

@@ -1,0 +1,36 @@
+@import './color';
+
+@mixin when-victoire {
+  .victoire-ui & {
+    @content;
+  }
+}
+
+@mixin when-mode-readonly {
+  .victoire-ui[role="admin-readonly"] & {
+    @content;
+  }
+}
+
+@mixin when-mode-layout {
+  .victoire-ui[role="admin-layout"] & {
+    @content;
+  }
+}
+
+@mixin when-mode-edit {
+  .victoire-ui[role="admin-edit"] & {
+    @content;
+  }
+}
+
+@mixin when-mode-style {
+  .victoire-ui[role="admin-style"] & {
+    @content;
+  }
+}
+
+$mode-readonly--color: color('blue');
+$mode-layout--color: color('green');
+$mode-edit--color: color('orange');
+$mode-style--color: color('pink');

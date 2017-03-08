@@ -1,0 +1,6 @@
+@function z-index($rank: 0) {
+  $base-index: 1500;
+  $additional-index: 10 * $rank;
+
+  @return $base-index + $additional-index;
+}

@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="58893b9931474" resname="menu.business_template">
         <source>menu.business_template</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-sandbox"></i> Business Template]]></target>
+        <target>Business Template</target>
       </trans-unit>
       <trans-unit id="58893b9931496" resname="victoire.business_template.create.success">
         <source>victoire.business_template.create.success</source>
@@ -76,7 +76,7 @@
       </trans-unit>
       <trans-unit id="58893b99315b3" resname="victoire.form.business_template.query.vic_help_block">
         <source>victoire.form.business_template.query.vic_help_block</source>
-        <target><![CDATA[<i class="fa fa-info-circle"></i> <em>This field is for developers only.</em> Use this field to define which authorities are authorized to use this business template]]></target>
+        <target><![CDATA[<em>This field is for developers only.</em> Use this field to define which authorities are authorized to use this business template]]></target>
       </trans-unit>
       <trans-unit id="58893b99315d1" resname="victoire.form.business_template.query.url.fieldset">
         <source>victoire.form.business_template.query.url.fieldset</source>
@@ -96,11 +96,15 @@
       </trans-unit>
       <trans-unit id="58893b9931645" resname="business_template.listEntities.empty">
         <source>business_template.listEntities.empty</source>
-        <target><![CDATA[<div class="vic-alert vic-alert-info">This business template isn't used.</div>]]></target>
+        <target>This business template isn't used.</target>
       </trans-unit>
       <trans-unit id="58893b9931664" resname="business_template.listEntities">
         <source>business_template.listEntities</source>
         <target>Business Templates' list for</target>
+      </trans-unit>
+      <trans-unit id="3" resname="business_template.noEntities">
+        <source>business_template.noEntities</source>
+        <target>th</target>
       </trans-unit>
     </body>
   </file>

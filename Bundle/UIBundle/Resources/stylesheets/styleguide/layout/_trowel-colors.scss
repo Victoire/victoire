@@ -1,0 +1,41 @@
+.ts-colors {
+  @include styleguide-base;
+  @include gutter-row(rem());
+  @include reset-list;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ts-colors__item {
+  @include gutter-col(rem(), true);
+  flex: 0 0 200px;
+}
+
+.ts-colors__swatch {
+  @include layout-border('top' 'left' 'right');
+  @include aspect-ratio;
+}
+
+.ts-colors__legend {
+  display: flex;
+  padding: rem(0.5);
+  align-items: center;
+  @include layout-border('bottom' 'left' 'right');
+}
+
+.ts-colors__label {
+  display: block;
+  flex: 1 0;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.ts-colors__values {
+  font-size: 0.6em;
+  text-align: right;
+  color: color('gray-dark');
+}
+
+.ts-color__swatch {
+}

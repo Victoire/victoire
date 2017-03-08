@@ -2,35 +2,65 @@
 {% use 'form_div_layout.html.twig' %}
 {% use 'VictoireFormBundle:Form:localeTabs.html.twig' %}
 
+{% block urlvalidated_row %}
+    <div class="form-group">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}
+
 {% block urlvalidated_widget %}
-    <div class="vic-form-url-slug">
-        {{ base_url }}
+    <div class="v-form-group__input-group">
+        <div class="v-form-group__addon v-form-group__addon--url-slug">{{ base_url }}</div>
         {{ block('slug_widget') }}
     </div>
 {% endblock urlvalidated_widget %}
 
+{% block asynchronous_row %}
+    <div class="vic-col-xs-12">
+        {{ block('checkbox_widget') }}
+    </div>
+{% endblock asynchronous_row %}
+
 
 {% block criteria_collection_row %}
+    <a class="v-btn v-btn--warning / v-widget-form__quantum-btn" data-collapse="toggle" data-href="#collapse-{{ id }}">
+        {% include 'VictoireUIBundle:SVG:quantum.html.twig' with { class: 'v-btn__ic v-btn__ic--before' } %}
+        {{ 'victoire.widget.type.criterias.label'|trans({}, 'victoire') }}
+        {% include 'VictoireUIBundle:SVG:caret.html.twig' with { class: 'v-btn__ic v-btn__ic--after' } %}
+    </a>
 
-    <div class="vic-criterias-container">
-        <a class="vic-pull-right" href="#" onclick="$vic(this).parent().find('.vic-criterias-form-container').slideToggle();">
-            {{ form_label(form) }} <i class="fa fa-crosshairs"></i>
-        </a>
-        <div style="display: none" class="vic-criterias-form-container">
+    <div class="v-collapse v-collapse--plain v-collapse--criteria" id="collapse-{{ id }}" data-flag="v-collapse">
+        <div class="v-container">
+            {{ form_row(form.parent.quantum) }}
             {{ form_widget(form) }}
         </div>
     </div>
-
 {% endblock %}
 
 {% block criteria_row %}
-    <div class="vic-row">
-        <div class="vic-col-md-4">{{ ('victoire_criteria.'~form.vars.data.name~'.criteria.label')|trans }}</div>
-    </div>
-    <div class="vic-row">
-        <div class="vic-col-md-4">{{ form_widget(form.operator) }}</div>
-        <div class="vic-col-md-4">{{ form_widget(form.value) }}</div>
-        {{ form_row(form.name) }}
+    <div>
+        <div class="v-grid">
+            <div class="v-col v-col--sm-6">
+                <div class="v-form-group v-form-group--md" data-flag="v-mdForm">
+                    <label class="v-form-group__label">
+                        {{ ('victoire_criteria.' ~ form.vars.data.name ~ '.criteria.label')|trans }}
+                    </label>
+                    {{ form_widget(form.operator) }}
+                </div>
+            </div>
+
+            <div class="v-col v-col--sm-6">
+                <div class="v-form-group v-form-group--md" data-flag="v-mdForm">
+                    {{ form_widget(form.value) }}
+                </div>
+            </div>
+
+            <div class="v-col">
+                {{ form_row(form.name) }}
+            </div>
+        </div>
     </div>
 {% endblock criteria_row %}
 
@@ -51,8 +81,14 @@
 
 {% block slug_widget %}
     {{ block('form_widget') }}
-    <i id="{{id}}-correct" class="fa fa-check slug-is-correct vic-hidden"></i>
-    <i id="{{id}}-not-correct" class="fa fa-remove slug-is-not-correct vic-hidden"></i>
+    <span id="{{ id }}-correct" class="v-form-group__addon v-color--green v-hidden">
+        {% include 'VictoireUIBundle:SVG:check.html.twig' %}
+    </span>
+
+    <span id="{{ id }}-not-correct" class="v-form-group__addon v-color--pink v-hidden">
+        {% include 'VictoireUIBundle:SVG:close.html.twig' %}
+    </span>
+
     <script>
         <!--
         addSlugValidation($vic('#{{id}}'),{% if allow_empty %}true{% else %}false{% endif %});
@@ -82,7 +118,7 @@
     {% spaceless %}
         {% if vic_button_offset is not empty %}
             {% set attr = attr|merge({'for': id, 'class': vic_button_offset }) %}
-            <div class="vic-form-group">
+            <div class="v-form-group">
                 <div {% for attrname, attrvalue in attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
                 {{ form_widget(form) }}
                 </div>
@@ -98,8 +134,8 @@
 {# Widgets #}
 
 {% block choice_widget_collapsed %}
-    <div class="vic-custom-select">
-        {% set attr = attr|merge({'class': ''}) %}
+    <div class="v-select">
+        {% set attr = attr|merge({'class': 'v-select__native'}) %}
         {{ parent() }}
     </div>
 
@@ -108,24 +144,31 @@
 
 {% block textarea_widget %}
     {% set type = type|default('text') %}
+
     {% if type != 'hidden' and ( vic_widget_addon_prepend|default(null) is not null or vic_widget_addon_append|default(null) is not null ) %}
-    <div class="vic-input-group">
-        {% if vic_widget_addon_prepend|default(null) is not null %}
-            {% set widget_addon = vic_widget_addon_prepend %}
-            {{ block('widget_addon') }}
-        {% endif %}
+        <div class="vic-input-group">
+            {% if vic_widget_addon_prepend|default(null) is not null %}
+                {% set widget_addon = vic_widget_addon_prepend %}
+
+                {{ block('widget_addon') }}
+            {% endif %}
     {% endif %}
-    {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ vic_widget_form_control_class}) %}
-    {{ parent() }}
-    {% if vic_horizontal %}
-            {{ block('form_message') }}
-    {% endif %}
+
+            {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ vic_widget_form_control_class}) %}
+
+            {{ parent() }}
+
+            {% if vic_horizontal %}
+                {{ block('form_message') }}
+            {% endif %}
+
     {% if type != 'hidden' and ( vic_widget_addon_prepend|default(null) is not null or vic_widget_addon_append|default(null) is not null ) %}
-        {% if vic_widget_addon_append|default(null) is not null %}
-        {% set widget_addon = vic_widget_addon_append %}
-        {{ block('widget_addon') }}
-        {% endif %}
-    </div>
+            {% if vic_widget_addon_append|default(null) is not null %}
+                {% set widget_addon = vic_widget_addon_append %}
+
+                {{ block('widget_addon') }}
+            {% endif %}
+        </div>
     {% endif %}
 {% endblock textarea_widget %}
 
@@ -252,18 +295,28 @@
     {% if expanded %}
         {% set attr = attr|merge({'class': attr.class|default(vic_horizontal_input_wrapper_class)}) %}
     {% endif %}
-    {% for child in form %}
-        {% if vic_widget_type != 'inline' %}
-        <div class="{{ multiple ? 'vic-checkbox' : 'vic-radio' }}">
-        {% endif %}
-            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-                {{ form_widget(child, {'vic_horizontal_label_class': vic_horizontal_label_class, 'vic_horizontal_input_wrapper_class': vic_horizontal_input_wrapper_class, 'attr': {'class': attr.widget_class|default('')}}) }}
-                {{ child.vars.label|trans({}, translation_domain) }}
-            </label>
-        {% if vic_widget_type != 'inline' %}
-        </div>
-        {% endif %}
-    {% endfor %}
+
+    {% if vic_widget_type == 'inline' %}<div class="v-flex-grid">{% endif %}
+        {% for child in form %}
+            {% if vic_widget_type == 'inline' %}
+                {% set label_attr = label_attr|merge({'class': label_attr.class ~ ' v-flex-col'}) %}
+            {% else %}
+                {% set label_attr = label_attr|merge({'class': label_attr.class ~ ' v-form-group v-form-group--small'}) %}
+            {% endif %}
+
+            <div{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                {{ form_widget(child, {
+                    'vic_horizontal_label_class': vic_horizontal_label_class,
+                    'choiceLabel': child.vars.label|trans({}, translation_domain),
+                    'vic_horizontal_input_wrapper_class': vic_horizontal_input_wrapper_class,
+                    'attr': {
+                        'class': attr.widget_class|default('')
+                    }
+                }) }}
+            </div>
+        {% endfor %}
+    {% if vic_widget_type == 'inline' %}</div>{% endif %}
+
     {{ block('form_message') }}
     {% if expanded %}
     {% endif %}
@@ -271,30 +324,56 @@
 {% endblock choice_widget_expanded %}
 
 {% block checkbox_widget %}
-{% spaceless %}
-{% if label is not same as(false) and label is empty %}
-    {% set label = name|humanize %}
-{% endif %}
-{% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
-    <div class="vic-checkbox">
-{% endif %}
+    {% spaceless %}
+        {% if label is not same as(false) and label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
 
-{% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes and vic_label_render %}
-    <label {% if not vic_horizontal %}class="vic-checkbox-inline"{% endif %}>
-{% endif %}
-        <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}/>
-{% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
-    {% if vic_label_render and vic_widget_vic_checkbox_label in ['both', 'widget'] %}
-        {{ label|trans({}, translation_domain) }}
-    </label>
-    {% endif %}
-{% endif %}
-{% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
-    </div>
-    {{ block('form_message') }}
-{% endif %}
-{% endspaceless %}
+        {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}<div>{% endif %}
+            <label class="v-checkbox {% if not vic_horizontal %} vic-checkbox-inline{% endif %}">
+                {% set attr = attr|merge({'class': attr.class|default('') ~ ' v-checkbox__native'}) %}
+                <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}/>
+                <span class="v-checkbox__indicator"></span>
+
+                {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
+                    {% if vic_label_render and vic_widget_vic_checkbox_label in ['both', 'widget'] %}
+                        {{ label|trans({}, translation_domain) }}
+                    {% endif %}
+                {% endif %}
+
+                {% if choiceLabel|default(false) %}
+                    {{ choiceLabel }}
+                {% endif %}
+            </label>
+        {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}</div>{{ block('form_message') }}{% endif %}
+    {% endspaceless %}
 {% endblock checkbox_widget %}
+
+{% block radio_widget %}
+    {% spaceless %}
+        {% if label is not same as(false) and label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+
+        {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}<div>{% endif %}
+            <label class="v-radio {% if not vic_horizontal %} vic-radio-inline{% endif %}">
+                {% set attr = attr|merge({'class': attr.class|default('') ~ ' v-radio__native'}) %}
+                <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}/>
+                <span class="v-radio__indicator"></span>
+
+                {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
+                    {% if vic_label_render and vic_widget_vic_checkbox_label in ['both', 'widget'] %}
+                        {{ label|trans({}, translation_domain) }}
+                    {% endif %}
+                {% endif %}
+
+                {% if choiceLabel|default(false) %}
+                    {{ choiceLabel }}
+                {% endif %}
+            </label>
+        {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}</div>{{ block('form_message') }}{% endif %}
+    {% endspaceless %}
+{% endblock radio_widget %}
 
 {% block date_widget %}
 {% spaceless %}
@@ -327,7 +406,7 @@
 {% if widget == 'single_text' %}
     {% if timepicker is defined %}
         <div data-provider="timepicker" class="vic-input-group vic-date" data-date="{{ value }}" data-link-field="{{ id }}" data-link-format="hh:ii">
-            <input class="vic-form-control" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
+            <input class="v-form-group__input" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
             <input type="hidden" value="{{ value }}" {{ block('widget_attributes') }}>
             <span class="vic-input-group-addon">{{ victoire_icon('time') }}</span>
         </div>
@@ -352,10 +431,13 @@
 {% spaceless %}
     {% if widget == 'single_text' %}
         {% if vic_datetimepicker is defined %}
-            <div data-provider="datetimepicker" class="vic-input-group vic-date" data-date="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}" data-link-field="{{ id }}" data-link-format="dd-mm-yyyy hh:ii">
-                <input class="vic-form-control" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %} value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}">
+            <div data-provider="datetimepicker" class="v-form-group__input-group v-date" data-date="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}" data-link-field="{{ id }}" data-link-format="dd-mm-yyyy hh:ii">
+                <span class="v-form-group__addon">
+                    {% include 'VictoireUIBundle:SVG:calendar.html.twig' %}
+                </span>
+
+                <input class="v-form-group__input" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %} value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}">
                 <input type="hidden" value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}" {{ block('widget_attributes') }}>
-                <span class="vic-input-group-addon">{{ victoire_icon('th') }}</span>
             </div>
         {% else %}
             {{ block('form_widget_simple') }}
@@ -431,7 +513,7 @@
         {% endif %}
         {% set label_attr_class = '' %}
         {% if vic_horizontal %}
-            {% set label_attr_class = 'vic-control-label ' ~ label_attr_class ~ vic_horizontal_label_class %}
+            {% set label_attr_class = 'v-form-group__label ' ~ label_attr_class ~ vic_horizontal_label_class %}
         {% endif %}
         {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ label_attr_class ~ (required ? ' vic-required' : '') }) %}
         <label{% for attrname,attrvalue in label_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
@@ -456,11 +538,11 @@
 {% endblock form_label %}
 
 {% block vic_help_label %}
-    <span class="vic-help-block">{{ vic_help_label|trans({}, translation_domain) }}</span>
+    <span class="v-form-group__help">{{ vic_help_label|trans({}, translation_domain) }}</span>
 {% endblock vic_help_label %}
 
 {% block vic_help_label_tooltip %}
-    <span class="vic-help-block">
+    <span class="v-form-group__help">
         <a href="#" data-toggle="vic-tooltip" data-placement="{{ vic_help_label_tooltip.placement}}" data-title="{{ vic_help_label_tooltip.title|trans({}, translation_domain) }}">
             {% if vic_help_label_tooltip.icon is not same as(false) %}
                 {{ victoire_icon(vic_help_label_tooltip.icon) }}
@@ -473,7 +555,7 @@
 {% endblock vic_help_label_tooltip %}
 
 {% block vic_help_label_popover %}
-    <span class="vic-help-block">
+    <span class="v-form-group__help">
         <a href="#" data-toggle="vic-popover" data-trigger="hover" data-placement="{{ vic_help_label_popover.placement}}" data-title="{{ vic_help_label_popover.title|trans({}, translation_domain) }}" data-content="{{ vic_help_label_popover.content|trans({}, translation_domain) }}" >
             {% if vic_help_label_popover.icon is not same as(false) %}
                 {{ victoire_icon(vic_help_label_popover.icon) }}
@@ -555,7 +637,7 @@
 {% block form_help %}
     {% spaceless %}
         {% if vic_help_block %}
-            <p class="vic-help-block">{{ vic_help_block|trans({}, translation_domain)|raw }}</p>
+            <p class="v-form-group__help">{{ vic_help_block|trans({}, translation_domain)|raw }}</p>
         {%endif %}
         {% if vic_business_property_picker %}
             {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with {
@@ -579,7 +661,7 @@
 {% block form_vic_widget_remove_btn %}
 {% spaceless %}
     {% if vic_widget_remove_btn.wrapper_div is not same as(false) %}
-        <div class="vic-form-group">
+        <div class="v-form-group">
             <div class="{{ vic_widget_remove_btn.wrapper_div.class }} vic-col-lg-offset-3">
     {% endif %}
     {% if vic_widget_remove_btn|default(null) %}
@@ -769,8 +851,8 @@
 
 {% block font_awesome_picker_widget %}
     {% spaceless %}
-    <div class="vic-form-group">
-        <input type="search" {{ block('widget_attributes') }} class="vic-form-control" {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    <div class="v-form-group">
+        <input type="search" {{ block('widget_attributes') }} class="v-form-group__input" {% if value is not empty %}value="{{ value }}" {% endif %}/>
     </div>
     <script type="text/javascript">
 
