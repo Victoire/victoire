@@ -42,6 +42,6 @@ Feature: Create a widget
         Then I follow the tab "Users"
         And I should see "Sélection"
         And I select "email" from "users_a_entity_widget_text[fields][content]"
-        And I fill in select2 input "#users_a_entity_widget_text_entity_proxy_ressourceId" with "ervin" and select "Ervin Howell"
+        And I fill in select2 input "users_a_entity_widget_text[entity_proxy][ressourceId]" with "ervin" and select "Ervin Howell"
         And I submit the widget
         Then I should see "Shanna@melissa.tv"
