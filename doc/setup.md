@@ -213,6 +213,12 @@ parameters:
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
 
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
@@ -227,8 +233,8 @@ Then you're done with the Victoire steps but your database is empty. Just run th
 
 Start by creating your admin user:
 ```sh
-bin/console -e=dev fos:user:create admin anakin@victoire.io myAwesomePassword
-bin/console -e=dev fos:user:promote admin ROLE_VICTOIRE_DEVELOPER
+app/console -e=dev fos:user:create admin anakin@victoire.io myAwesomePassword
+app/console -e=dev fos:user:promote admin ROLE_VICTOIRE_DEVELOPER
 ```
 
 Then run these sql queries to populates the initial views (error pages, one base template and the homepage):
@@ -264,7 +270,7 @@ VALUES
 ### Generate view references
 
 ```sh
-php bin/console victoire:viewReference:generate -e=dev
+php app/console victoire:viewReference:generate -e=dev
 ```
 
 #### Do you prefer the fixtures way ?
@@ -291,7 +297,7 @@ Run the following command to fetch the Victoire assets:
 
 `CAUTION` you need to install bower first
 ```shell
-php bin/console victoire:ui:fetchAssets
+php app/console victoire:ui:fetchAssets
 ```
 
 #### Dump with assetic
@@ -299,7 +305,7 @@ php bin/console victoire:ui:fetchAssets
 Run the following command to dump assets with assetic library:
 
 ```shell
-php bin/console assetic:dump
+php app/console assetic:dump
 ```
 
 
@@ -322,13 +328,13 @@ So you can let Victoire regenerate CSS files on user demand.
 But you may want to set a crontab on your production environment to regenerate a batch of CSS files each minute.
 
 ```
-* * * * * php bin/console victoire:widget-css:generate --limit=20 --env=prod
+* * * * * php app/console victoire:widget-css:generate --limit=20 --env=prod
 ```
 
 If you want to manually force all CSS to be regenerated even if they are up to date, add `--force`.
 
 ```sh
-php bin/console victoire:widget-css:generate --force
+php app/console victoire:widget-css:generate --force
 ```
 
 [1]: https://blogs.msdn.microsoft.com/ieinternals/2011/05/14/stylesheet-limits-in-internet-explorer/
