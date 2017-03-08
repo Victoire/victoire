@@ -66,6 +66,7 @@ Component | Description
 [**SitemapBundle**][20] | Sitemap related logic
 [**TemplateBundle**][11] | Contains the pages templates logic (nearly close to [PageBundle][22])
 [**TwigBundle**][13] | Brings ErrorPage (404, 500, 503 etc) and responsive support
+[**UIBundle**][27] | Brings Victoire design components with a complete styleguide
 [**UserBundle**][14] | Extends [FosUserBundle][12], this bundle brings a ready to use system you can override
 [**ViewReferenceBundle**][25] | Contains the view Reference logic
 [**WidgetBundle**][15] | Contains all the base widget logic to be able to use Widgets
@@ -81,33 +82,31 @@ Victoire uses GitHub issues, feel free to [create your own](https://github.com/v
 
 ##MIT License
 
-License can be found [here](http://github.com/victoire/victoire/blob/master/license.md).
+License can be found [here](license.md).
 
-
-
-
-[1]:  http://github.com/victoire/victoire/blob/master/Bundle/CoreBundle/README.md
-[2]:  http://github.com/victoire/victoire/blob/master/Bundle/BlogBundle/README.md
-[3]:  http://github.com/victoire/victoire/blob/master/Bundle/BusinessEntityBundle/README.md
-[4]:  http://github.com/victoire/victoire/blob/master/Bundle/BusinessPageBundle/README.md
-[5]:  http://github.com/victoire/victoire/blob/master/Bundle/AnalyticsBundle/README.md
-[6]:  http://github.com/victoire/victoire/blob/master/Bundle/FormBundle/README.md
-[7]:  http://github.com/victoire/victoire/blob/master/Bundle/MediaBundle/README.md
-[8]:  http://github.com/victoire/victoire/blob/master/Bundle/PageBundle/README.md
-[9]:  http://github.com/victoire/victoire/blob/master/Bundle/QueryBundle/README.md
-[10]: http://github.com/victoire/victoire/blob/master/Bundle/SeoBundle/README.md
-[11]: http://github.com/victoire/victoire/blob/master/Bundle/TemplateBundle/README.md
+[1]:  Bundle/CoreBundle/README.md
+[2]:  Bundle/BlogBundle/README.md
+[3]:  Bundle/BusinessEntityBundle/README.md
+[4]:  Bundle/BusinessPageBundle/README.md
+[5]:  Bundle/AnalyticsBundle/README.md
+[6]:  Bundle/FormBundle/README.md
+[7]:  Bundle/MediaBundle/README.md
+[8]:  Bundle/PageBundle/README.md
+[9]:  Bundle/QueryBundle/README.md
+[10]: Bundle/SeoBundle/README.md
+[11]: Bundle/TemplateBundle/README.md
 [12]: http://github.com/FriendsOfSymfony/FOSUserBundle
-[13]: http://github.com/victoire/victoire/blob/master/Bundle/TwigBundle/README.md
-[14]: http://github.com/victoire/victoire/blob/master/Bundle/UserBundle/README.md
-[15]: http://github.com/victoire/victoire/blob/master/Bundle/WidgetBundle/README.md
-[16]: http://github.com/victoire/victoire/blob/master/Bundle/WidgetMapBundle/README.md
-[17]: http://github.com/victoire/victoire/blob/master/Bundle/I18nBundle/README.md
-[18]: http://github.com/victoire/victoire/blob/master/Bundle/BusinessPageBundle/Resources/doc/BusinessPage.md
-[19]: http://github.com/victoire/victoire/blob/master/Bundle/BusinessPageBundle/Resources/doc/BusinessTemplate.md
-[20]: http://github.com/victoire/victoire/blob/master/Bundle/SitemapBundle/README.md
+[13]: Bundle/TwigBundle/README.md
+[14]: Bundle/UserBundle/README.md
+[15]: Bundle/WidgetBundle/README.md
+[16]: Bundle/WidgetMapBundle/README.md
+[17]: Bundle/I18nBundle/README.md
+[18]: Bundle/BusinessPageBundle/Resources/doc/BusinessPage.md
+[19]: Bundle/BusinessPageBundle/Resources/doc/BusinessTemplate.md
+[20]: Bundle/SitemapBundle/README.md
 [21]: http://github.com/Kunstmaan/KunstmaanMediaBundle
-[22]: http://github.com/victoire/victoire/blob/master/Bundle/PageBundle
-[23]: http://github.com/victoire/victoire/blob/master/Bundle/FilterBundle/README.md
-[25]: http://github.com/victoire/victoire/blob/master/Bundle/ViewReferenceBundle/README.md
-[26]: http://github.com/victoire/victoire/blob/master/Bundle/CriteriaBundle
+[22]: Bundle/PageBundle
+[23]: Bundle/FilterBundle/README.md
+[25]: Bundle/ViewReferenceBundle/README.md
+[26]: Bundle/CriteriaBundle
+[27]: Bundle/UIBundle
