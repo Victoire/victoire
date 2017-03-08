@@ -5,7 +5,6 @@ namespace Victoire\Tests\Features\Context;
 use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Behat\Hook\Scope\BeforeStepScope;
-use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Element\Element;
@@ -708,7 +707,7 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * Fill Select2 input field and select a value
+     * Fill Select2 input field and select a value.
      *
      * @When /^(?:|I )fill in select2 input "(?P<field>(?:[^"]|\\")*)" with "(?P<value>(?:[^"]|\\")*)" and select "(?P<entry>(?:[^"]|\\")*)"$/
      */
@@ -721,10 +720,11 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * Open Select2 choice list
+     * Open Select2 choice list.
      *
      * @param DocumentElement $page
      * @param string          $field
+     *
      * @throws \Exception
      */
     private function openField(DocumentElement $page, $field)
@@ -740,12 +740,14 @@ class VictoireContext extends RawMinkContext
         }
         $choice->press();
     }
+
     /**
-     * Fill Select2 search field
+     * Fill Select2 search field.
      *
      * @param DocumentElement $page
      * @param string          $field
      * @param string          $value
+     *
      * @throws \Exception
      */
     private function fillSearchField(DocumentElement $page, $field, $value)
@@ -769,11 +771,12 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * Select value in choice list
+     * Select value in choice list.
      *
      * @param DocumentElement $page
      * @param string          $field
      * @param string          $value
+     *
      * @throws \Exception
      */
     private function selectValue(DocumentElement $page, $field, $value)
@@ -783,13 +786,15 @@ class VictoireContext extends RawMinkContext
         foreach ($chosenResults as $result) {
             if ($result->getText() == $value) {
                 $result->click();
+
                 return;
             }
         }
         throw new \Exception(sprintf('Value "%s" not found for "%s"', $value, $field));
     }
+
     /**
-     * Wait the end of fetching Select2 results
+     * Wait the end of fetching Select2 results.
      *
      * @param int $time Time to wait in seconds
      */
