@@ -68,6 +68,7 @@ class AppKernel extends Kernel
             new Victoire\Bundle\SitemapBundle\VictoireSitemapBundle(),
             new Victoire\Bundle\TemplateBundle\VictoireTemplateBundle(),
             new Victoire\Bundle\TwigBundle\VictoireTwigBundle(),
+            new Victoire\Bundle\UIBundle\VictoireUIBundle(),
             new Victoire\Bundle\UserBundle\VictoireUserBundle(),
             new Victoire\Bundle\ViewReferenceBundle\ViewReferenceBundle(),
             new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
@@ -284,7 +285,27 @@ There are some fixtures in `vendor/victoire/victoire/Tests/Functionnal/src/Acme/
 
 Get the whole Victoire Widget list [**here**](http://packagist.org/search/?tags=victoire)
 
-And it's done, just go to /login to enter in the edit mode.
+### Prepare Victoire assets
+
+#### Fetch bower assets
+
+Run the following command to fetch the Victoire assets:
+
+`CAUTION` you need to install bower first
+```shell
+php bin/console victoire:ui:fetchAssets
+```
+
+#### Dump with assetic
+
+Run the following command to dump assets with assetic library:
+
+```shell
+php bin/console assetic:dump
+```
+
+
+**And it's done, just go to /login to enter in the edit mode.**
 
 ## 3. Production
 

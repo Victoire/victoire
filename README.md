@@ -44,7 +44,7 @@ If you want to contribute to Victoire frontend, please read this [contribution g
 
 ##Install Victoire
 
-To do so, follow the [setup guide](http://github.com/Victoire/victoire/blob/2.2/doc/setup.md).
+To do so, follow the [setup guide](doc/setup.md).
 
 ##What's inside?
 
