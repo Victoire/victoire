@@ -38,9 +38,9 @@ class AppKernel extends Kernel
         $bundles = [
             ...
             //dependencies
+            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Troopers\AsseticInjectorBundle\TroopersAsseticInjectorBundle(),
             new Troopers\AlertifyBundle\TroopersAlertifyBundle(),
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
@@ -114,7 +114,7 @@ assetic:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: Victoire\UserBundle\Entity\User
+    user_class: Victoire\Bundle\UserBundle\Entity\User
     from_email:
         address: hey@victoire.io
         sender_name: Victoire
@@ -136,7 +136,7 @@ stof_doctrine_extensions:
             timestampable: true
 
 victoire_core:
-    user_class: "Victoire\\UserBundle\\Entity\\User"
+    user_class: Victoire\Bundle\UserBundle\Entity\User
     business_entity_debug: true
     layouts:
         defaultLayout: "Default layout"
@@ -206,21 +206,13 @@ parameters:
         victoire.io: fr
 ```
 
-Update the `parameters.yml` with correct values.
-
-```yml
-#app/config/config.yml
-imports:
-    ...
-    - { resource: victoire_core.yml }
-```
-
 ### Add following routes
 
 ```yml
 #app/config/routing.yml
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
+
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
@@ -290,7 +282,6 @@ There are some fixtures in `vendor/victoire/victoire/Tests/Functionnal/src/Acme/
 ```
 
 Get the whole Victoire Widget list [**here**](http://packagist.org/search/?tags=victoire)
-
 
 ### Prepare Victoire assets
 
