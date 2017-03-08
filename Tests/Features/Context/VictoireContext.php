@@ -4,6 +4,7 @@ namespace Victoire\Tests\Features\Context;
 
 use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\Element;
 use Behat\Mink\Session;
@@ -537,32 +538,99 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
+     * Fill Select2 input field and select a value
+     *
      * @When /^(?:|I )fill in select2 input "(?P<field>(?:[^"]|\\")*)" with "(?P<value>(?:[^"]|\\")*)" and select "(?P<entry>(?:[^"]|\\")*)"$/
      */
-    public function fillInSelectInputWithAndSelect($field, $value, $entry)
+    public function iFillInSelect2InputWithAndSelect($field, $value, $entry)
     {
         $page = $this->getSession()->getPage();
-        $inputField = $page->find('css', $field);
+        $this->openField($page, $field);
+        $this->fillSearchField($page, $field, $value);
+        $this->selectValue($page, $field, $entry);
+    }
+
+    /**
+     * Open Select2 choice list
+     *
+     * @param DocumentElement $page
+     * @param string          $field
+     * @throws \Exception
+     */
+    private function openField(DocumentElement $page, $field)
+    {
+        $fieldName = sprintf('select[name="%s"] + .select2-container', $field);
+        $inputField = $page->find('css', $fieldName);
         if (!$inputField) {
-            throw new \Exception('No field found');
+            throw new \Exception(sprintf('No field "%s" found', $field));
         }
-        $choice = $inputField->getParent()->find('css', '.select2-selection');
+        $choice = $inputField->find('css', '.select2-selection');
         if (!$choice) {
-            throw new \Exception('No select2 choice found');
+            throw new \Exception(sprintf('No select2 choice found for "%s"', $field));
         }
         $choice->press();
-        $select2Input = $page->find('css', '.select2-search__field');
-        if (!$select2Input) {
-            throw new \Exception('No input found');
+    }
+    /**
+     * Fill Select2 search field
+     *
+     * @param DocumentElement $page
+     * @param string          $field
+     * @param string          $value
+     * @throws \Exception
+     */
+    private function fillSearchField(DocumentElement $page, $field, $value)
+    {
+        $driver = $this->getSession()->getDriver();
+        if ('Behat\Mink\Driver\Selenium2Driver' === get_class($driver)) {
+            // Can't use `$this->getSession()->getPage()->find()` because of https://github.com/minkphp/MinkSelenium2Driver/issues/188
+            $select2Input = $this->getSession()->getDriver()->getWebDriverSession()->element('xpath', "//html/descendant-or-self::*[@class and contains(concat(' ', normalize-space(@class), ' '), ' select2-search__field ')]");
+            if (!$select2Input) {
+                throw new \Exception(sprintf('No field "%s" found', $field));
+            }
+            $select2Input->postValue(['value' => [$value]]);
+        } else {
+            $select2Input = $page->find('css', '.select2-search__field');
+            if (!$select2Input) {
+                throw new \Exception(sprintf('No input found for "%s"', $field));
+            }
+            $select2Input->setValue($value);
         }
-        $select2Input->setValue($value);
-        $this->getSession()->wait(1000);
+        $this->waitForLoadingResults();
+    }
+
+    /**
+     * Select value in choice list
+     *
+     * @param DocumentElement $page
+     * @param string          $field
+     * @param string          $value
+     * @throws \Exception
+     */
+    private function selectValue(DocumentElement $page, $field, $value)
+    {
+        $this->waitForLoadingResults();
         $chosenResults = $page->findAll('css', '.select2-results li');
         foreach ($chosenResults as $result) {
-            if ($result->getText() == $entry) {
+            if ($result->getText() == $value) {
                 $result->click();
-                break;
+                return;
             }
         }
+        throw new \Exception(sprintf('Value "%s" not found for "%s"', $value, $field));
+    }
+    /**
+     * Wait the end of fetching Select2 results
+     *
+     * @param int $time Time to wait in seconds
+     */
+    private function waitForLoadingResults($time = 60)
+    {
+        for ($i = 0; $i < $time; $i++) {
+            if (!$this->getSession()->getPage()->find('css', '.select2-results__option.loading-results')) {
+                return true;
+            }
+            sleep(1);
+        }
+        throw new \Exception(sprintf('Results are not load after "%d" seconds.', $time));
     }
 }
