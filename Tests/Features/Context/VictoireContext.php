@@ -4,8 +4,8 @@ namespace Victoire\Tests\Features\Context;
 
 use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
-use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Driver\Selenium2Driver;
+use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Element\Element;
 use Behat\Mink\Session;
 use Behat\Symfony2Extension\Context\KernelDictionary;
@@ -55,27 +55,27 @@ class VictoireContext extends RawMinkContext
         /* @var Session $session */
         $session = $this->getSession();
 
-        if(!($session->getDriver() instanceof Selenium2Driver)) {
+        if (!($session->getDriver() instanceof Selenium2Driver)) {
             return;
         }
 
         try {
-            $errors = $session->evaluateScript("window.jsErrors");
-            $session->evaluateScript("window.jsErrors = []");
+            $errors = $session->evaluateScript('window.jsErrors');
+            $session->evaluateScript('window.jsErrors = []');
         } catch (\Exception $e) {
             throw $e;
         }
         if (!$errors || empty($errors)) {
             return;
         }
-        $file = sprintf("%s:%d", $scope->getFeature()->getFile(), $scope->getStep()->getLine());
-        $message = sprintf("Found %d javascript error%s", count($errors), count($errors) > 0 ? 's' : '');
-        echo '-------------------------------------------------------------' . PHP_EOL;
-        echo $file . PHP_EOL;
-        echo $message . PHP_EOL;
-        echo '-------------------------------------------------------------' . PHP_EOL;
+        $file = sprintf('%s:%d', $scope->getFeature()->getFile(), $scope->getStep()->getLine());
+        $message = sprintf('Found %d javascript error%s', count($errors), count($errors) > 0 ? 's' : '');
+        echo '-------------------------------------------------------------'.PHP_EOL;
+        echo $file.PHP_EOL;
+        echo $message.PHP_EOL;
+        echo '-------------------------------------------------------------'.PHP_EOL;
         foreach ($errors as $index => $error) {
-            echo sprintf("   #%d: %s", $index, $error) . PHP_EOL;
+            echo sprintf('   #%d: %s', $index, $error).PHP_EOL;
         }
     }
 
@@ -179,6 +179,7 @@ class VictoireContext extends RawMinkContext
         }
         $element->click();
     }
+
     /**
      * @When I open the widget style tab :key
      */
@@ -224,7 +225,6 @@ class VictoireContext extends RawMinkContext
             '[id^="picker-'.strtolower($entity).'"][data-state="visible"] [id^="picker-'.strtolower($entity).'"][data-state="visible"] .v-widget-form__quantum-btn'
         );
 
-
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
@@ -242,7 +242,6 @@ class VictoireContext extends RawMinkContext
             'css',
             '[data-state="visible"] [id^="picker-static"] .v-widget-form__quantum-btn'
         );
-
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
@@ -333,8 +332,8 @@ class VictoireContext extends RawMinkContext
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
 
-        foreach($elements as $element) {
-            if($element->getText() === $name) {
+        foreach ($elements as $element) {
+            if ($element->getText() === $name) {
                 $element->click();
             }
         }
@@ -434,7 +433,6 @@ class VictoireContext extends RawMinkContext
     public function iShouldSeeDisableDropAnchor($name)
     {
         $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::*[contains(@class, \'v-drop__anchor--disabled\') and normalize-space(.) = "%s"]', $name));
-
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
@@ -538,7 +536,7 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * Fill Select2 input field and select a value
+     * Fill Select2 input field and select a value.
      *
      * @When /^(?:|I )fill in select2 input "(?P<field>(?:[^"]|\\")*)" with "(?P<value>(?:[^"]|\\")*)" and select "(?P<entry>(?:[^"]|\\")*)"$/
      */
@@ -551,10 +549,11 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * Open Select2 choice list
+     * Open Select2 choice list.
      *
      * @param DocumentElement $page
      * @param string          $field
+     *
      * @throws \Exception
      */
     private function openField(DocumentElement $page, $field)
@@ -570,12 +569,14 @@ class VictoireContext extends RawMinkContext
         }
         $choice->press();
     }
+
     /**
-     * Fill Select2 search field
+     * Fill Select2 search field.
      *
      * @param DocumentElement $page
      * @param string          $field
      * @param string          $value
+     *
      * @throws \Exception
      */
     private function fillSearchField(DocumentElement $page, $field, $value)
@@ -599,11 +600,12 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * Select value in choice list
+     * Select value in choice list.
      *
      * @param DocumentElement $page
      * @param string          $field
      * @param string          $value
+     *
      * @throws \Exception
      */
     private function selectValue(DocumentElement $page, $field, $value)
@@ -613,13 +615,15 @@ class VictoireContext extends RawMinkContext
         foreach ($chosenResults as $result) {
             if ($result->getText() == $value) {
                 $result->click();
+
                 return;
             }
         }
         throw new \Exception(sprintf('Value "%s" not found for "%s"', $value, $field));
     }
+
     /**
-     * Wait the end of fetching Select2 results
+     * Wait the end of fetching Select2 results.
      *
      * @param int $time Time to wait in seconds
      */
