@@ -15,9 +15,12 @@ Feature: Edit a widget
         Given the following WidgetMap:
             | view | action | slot |
             | fiche-jedi-{{item.slug}} | create | main_content |
+        Given the following EntityProxy:
+            | businessEntity |
+            |      Jedi      |
         Given the following WidgetForce:
-            | widgetMap                | fields                       | mode           | businessEntity |
-            | fiche-jedi-{{item.slug}} | a:1:{s:4:"side";s:4:"side";} | businessEntity | Jedi             |
+            | widgetMap                | fields                       | mode           | entityProxy |
+            | fiche-jedi-{{item.slug}} | a:1:{s:4:"side";s:4:"side";} | businessEntity | Jedi        |
         Given I am on "/fr/victoire-dcms/business-template/show/4"
         And I should see "Le côté obscur de la force"
         When I switch to "edit" mode
