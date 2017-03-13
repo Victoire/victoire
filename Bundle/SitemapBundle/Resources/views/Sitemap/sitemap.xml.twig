@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {% for page in pages %}
-   <url>
-      <loc>{{ url('victoire_core_page_show', {'url': page.url}) }}</loc>
-      <lastmod>{{ page.publishedAt|date('c') }}</lastmod>
-      <changefreq>{{ page.seo|default({'sitemapChangeFreq': 'monthly'}).sitemapChangeFreq }}</changefreq>
-      <priority>{{ page.seo|default({'sitemapPriority': 0.5}).sitemapPriority }}</priority>
-   </url>
+
+   {# PageSeo doesn't exist untill one of its attribute is persisted #}
+   {% if page.seo is null %}
+      {% set seo = {
+      'sitemapIndexed': 1,
+      'sitemapChangeFreq': 'monthly',
+      'sitemapPriority': 0.5
+      } %}
+   {% else %}
+      {% set seo = page.seo %}
+   {% endif %}
+
+   {% if seo.sitemapIndexed %}
+      <url>
+         <loc>{{ url('victoire_core_page_show', {'url': page.url}) }}</loc>
+         <lastmod>{{ page.publishedAt|date('c') }}</lastmod>
+         <changefreq>{{ seo.sitemapChangeFreq }}</changefreq>
+         <priority>{{ seo.sitemapPriority }}</priority>
+      </url>
+   {% endif %}
+
 {% endfor %}
 </urlset>
