@@ -30,11 +30,11 @@
                             {% for class, namespace in classes %}
                                 {% if namespace.disable %}
                                     <span class="v-drop__anchor v-drop__anchor--disabled" title="{{ ('form.widget.tab.entity.disable.label')|trans({}, 'victoire') }}">
-                                        {{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}
+                                        {{ ('form.widget.tab.' ~ namespace|lower ~ '.label')|trans({}, 'victoire') }}
                                     </span>
                                 {% else %}
-                                    <a class="v-drop__anchor {% if widget.entityProxy.businessEntity is defined and businessEntity.name == widget.entityProxy.businessEntity.name|lower %} v-drop__anchor--active{% endif %}" data-href="#picker-{{ class|lower }}-{{ quantum }}" data-collapse="show" data-activeclass="v-drop__anchor--active">
-                                        {{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}
+                                    <a class="v-drop__anchor {% if widget.entityProxy.businessEntity is defined and businessEntity.name == widget.entityProxy.businessEntity.name|lower %} v-drop__anchor--active{% endif %}" data-href="#picker-{{ namespace|lower }}-{{ quantum }}" data-collapse="show" data-activeclass="v-drop__anchor--active">
+                                        {{ ('form.widget.tab.' ~ namespace|lower ~ '.label')|trans({}, 'victoire') }}
                                     </a>
                                 {% endif %}
                             {% endfor %}
