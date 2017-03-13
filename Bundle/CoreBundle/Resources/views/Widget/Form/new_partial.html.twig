@@ -27,14 +27,15 @@
                 {% if classes|length %}
                     <div class="v-drop" id="picker-entities-{{ quantum }}">
                         <nav class="v-drop__menu">
-                            {% for class, namespace in classes %}
-                                {% if namespace.disable %}
+                            {% for businessEntity in classes %}
+                                {% set label = businessEntity.type == constant('TYPE', businessEntity) ? businessEntity.name : ('form.widget.tab.' ~ businessEntity.name|lower ~ '.label')|trans({}, 'victoire') %}
+                                {% if businessEntity.disable %}
                                     <span class="v-drop__anchor v-drop__anchor--disabled" title="{{ ('form.widget.tab.entity.disable.label')|trans({}, 'victoire') }}">
-                                        {{ ('form.widget.tab.' ~ namespace|lower ~ '.label')|trans({}, 'victoire') }}
+                                        {{ label }}
                                     </span>
                                 {% else %}
-                                    <a class="v-drop__anchor {% if widget.entityProxy.businessEntity is defined and businessEntity.name == widget.entityProxy.businessEntity.name|lower %} v-drop__anchor--active{% endif %}" data-href="#picker-{{ namespace|lower }}-{{ quantum }}" data-collapse="show" data-activeclass="v-drop__anchor--active">
-                                        {{ ('form.widget.tab.' ~ namespace|lower ~ '.label')|trans({}, 'victoire') }}
+                                    <a class="v-drop__anchor {% if widget.entityProxy.businessEntity is defined and businessEntity.name == widget.entityProxy.businessEntity.name|lower %} v-drop__anchor--active{% endif %}" data-href="#picker-{{ businessEntity.name|lower }}-{{ quantum }}" data-collapse="show" data-activeclass="v-drop__anchor--active">
+                                        {{ label }}
                                     </a>
                                 {% endif %}
                             {% endfor %}
