@@ -103,6 +103,7 @@ framework:
 ```yml
 imports:
     - { resource: @VictoireCoreBundle/Resources/config/config.yml }
+    - { resource: @VictoireTwigBundle/Resources/config/config.yml }
 
 assetic:
     use_controller: false
