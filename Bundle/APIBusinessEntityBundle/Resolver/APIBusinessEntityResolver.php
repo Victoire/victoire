@@ -49,6 +49,7 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
         $businessEntity = $entityProxy->getBusinessEntity();
         $getMethod = $businessEntity->getGetMethod();
         preg_match_all('/{{([a-zA-Z]+)}}/', $getMethod, $matches);
+        // build an array with businessIdentifiers properties names
         $identifiers = array_map(function ($property) {
             return $property->getName();
         },
@@ -64,7 +65,10 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
             $getMethod = $this->parameterConverter->convert($getMethod, $match, $value);
         }
 
-        $entity = $this->callApi($businessEntity->getEndpoint()->getHost(), $getMethod, $businessEntity->getEndpoint());
+        $entity = $this->callApi($businessEntity->getEndpoint(), $getMethod);
+        // Then the BusinessEntity is an API result, it's not a proper object but a decoded json result.
+        // It has no classname so we cannot resolve the related BusinessEntity definition, so we
+        // store the businessEntity object into the entity.
         $entity->_businessEntity = $entityProxy->getBusinessEntity();
 
         return $entity;
@@ -79,7 +83,7 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
      */
     public function getBusinessEntities(APIBusinessEntity $businessEntity, $page = 1)
     {
-        $data = $this->callApi($businessEntity->getEndpoint()->getHost(), $businessEntity->getListMethod($page), $businessEntity->getEndpoint());
+        $data = $this->callApi($businessEntity->getEndpoint(), $businessEntity->getListMethod($page));
 
         foreach ($data as $entity) {
             $entity->_businessEntity = $businessEntity;
@@ -106,7 +110,7 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
             .$businessProperty->getFilterMethod();
         $getMethod = preg_replace('/{{([a-zA-Z]+)}}/', $filter, $getMethod);
 
-        $data = $this->callApi($businessEntity->getEndpoint()->getHost(), $getMethod, $businessEntity->getEndpoint());
+        $data = $this->callApi($businessEntity->getEndpoint(), $getMethod);
 
         foreach ($data as $entity) {
             $entity->businessEntity = $businessEntity;
@@ -122,8 +126,9 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
      *
      * @return array
      */
-    protected function callApi($host, $getMethod, APIEndpoint $endPoint)
+    protected function callApi(APIEndpoint $endPoint, $getMethod)
     {
+        $host = $endPoint->getHost();
         $token = $endPoint->getToken();
         $curl = curl_init();
         if ($tokenType = $endPoint->getTokenType()) {

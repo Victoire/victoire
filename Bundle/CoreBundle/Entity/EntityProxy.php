@@ -48,6 +48,8 @@ class EntityProxy
     protected $entity;
 
     /**
+     * This is used to pass additionnal informations to the API call, like the format (eg. lite, full...) or to give some
+     * filters (eg. ?color=red...)
      * @var array
      *
      * @ORM\Column(type="text", nullable=true)

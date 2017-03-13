@@ -22,7 +22,7 @@ class ParameterConverter
      *
      * @return string The updated string
      */
-    public function convertFromEntity($string, BusinessProperty $businessProperty, $entity)
+    public function convertFromEntity($url, BusinessProperty $businessProperty, $entity)
     {
         //test parameters
         if ($entity === null) {
@@ -35,7 +35,7 @@ class ParameterConverter
         $accessor = new PropertyAccessor();
         $attributeValue = $accessor->getValue($entity, $entityProperty);
 
-        return $this->convert($string, 'item.'.$entityProperty, $attributeValue);
+        return $this->convert($url, 'item.'.$entityProperty, $attributeValue);
     }
 
     /**
@@ -49,7 +49,7 @@ class ParameterConverter
      *
      * @return string The updated string
      */
-    public function convert($string, $entityProperty, $attributeValue)
+    public function convert($url, $entityProperty, $attributeValue)
     {
         //the string to replace
         $stringToReplace = '{{'.$entityProperty.'}}';
@@ -60,6 +60,6 @@ class ParameterConverter
         }
 
         //we replace the string
-        return str_replace($stringToReplace, $attributeValue, $string);
+        return str_replace($stringToReplace, $attributeValue, $url);
     }
 }
