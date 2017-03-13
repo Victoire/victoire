@@ -25,7 +25,9 @@ Feature: Create a widget
         And I should see "Nouveau contenu"
         And I select "Texte brut" from the "1" select of "main_content" slot
         Then I should see "Créer"
-        Then I follow the tab "Jedi"
+        Then I follow the tab "Entités"
+        Then I should see "Jedi"
+        Then I follow the drop anchor "Jedi"
         And I should see "Sélection"
         And I select "side" from "jedi_a_entity_widget_text[fields][content]"
         And I select "Anakin" from "jedi_a_entity_widget_text[entity_proxy][ressourceId]"
@@ -39,7 +41,9 @@ Feature: Create a widget
         And I should see "Nouveau contenu"
         And I select "Texte brut" from the "1" select of "main_content" slot
         Then I should see "Créer"
-        Then I follow the tab "Users"
+        Then I follow the tab "Entités"
+        Then I should see "Users"
+        Then I follow the drop anchor "Users"
         And I should see "Sélection"
         And I select "email" from "users_a_entity_widget_text[fields][content]"
         And I fill in select2 input "users_a_entity_widget_text[entity_proxy][ressourceId]" with "ervin" and select "Ervin Howell"
