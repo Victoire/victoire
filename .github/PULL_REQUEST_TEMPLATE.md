@@ -13,10 +13,6 @@ OR
 <!-- If documentation -->
 This PR improves documentation of …
 
-OR
-<!-- If documentation -->
-This PR improves documentation of ...
-
 ## BC Break
 YES|NO
 
