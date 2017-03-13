@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 
 /**
- * The ORM business Entity.
+ * The API business Entity.
  *
  * @ORM\Entity(repositoryClass="Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntityRepository")
  */
