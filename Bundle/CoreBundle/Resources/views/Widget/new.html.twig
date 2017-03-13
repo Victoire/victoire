@@ -11,7 +11,7 @@
 
                 {% block entity_collapse %}
                     <div
-                        id="picker{% if entity|lower %}-{{ entity }}{% endif %}-{{ quantum }}-{{ form.mode.vars.data }}"
+                        id="picker{% if entity|lower %}-{{ entity|lower }}{% endif %}-{{ quantum }}-{{ form.mode.vars.data }}"
                         class="v-collapse"
                         data-flag="v-collapse"
                         data-group="picker{% if entity %}-{{ entity }}{% endif %}-{{ quantum }}"
