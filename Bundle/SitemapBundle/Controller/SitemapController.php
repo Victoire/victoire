@@ -113,7 +113,7 @@ class SitemapController extends Controller
      * Create a sitemap priority type.
      *
      * @param BasePage $page
-     * @param PageSeo $pageSeo
+     * @param PageSeo  $pageSeo
      *
      * @return \Symfony\Component\Form\Form
      */

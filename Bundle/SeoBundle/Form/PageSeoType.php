@@ -156,7 +156,7 @@ class PageSeoType extends AbstractType
                     ],
                     'sitemapIndexed' => [
                         'label' => 'form.pageSeo.sitemapIndexed.label',
-                        'data' => $builder->getData() ? $builder->getData()->isSitemapIndexed() : PageSeoTranslation::SITEMAP_INDEXED_DEFAULT,
+                        'data'  => $builder->getData() ? $builder->getData()->isSitemapIndexed() : PageSeoTranslation::SITEMAP_INDEXED_DEFAULT,
                     ],
                     'sitemapChangeFreq' => [
                         'field_type' => ChoiceType::class,

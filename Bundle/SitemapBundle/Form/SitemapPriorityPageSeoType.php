@@ -28,7 +28,7 @@ class SitemapPriorityPageSeoType extends AbstractType
                 'choices_as_values' => true,
             ])
             ->add('sitemapIndexed', CheckboxType::class, [
-                'label' => false
+                'label' => false,
             ]);
     }
 

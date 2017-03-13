@@ -32,8 +32,7 @@ class SitemapExportHandler
         EntityManager $entityManager,
         PageHelper $pageHelper,
         ViewReferenceRepository $viewReferenceRepo
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->pageHelper = $pageHelper;
         $this->viewReferenceRepo = $viewReferenceRepo;
