@@ -377,7 +377,7 @@ class PageHelper
         if (!$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
             $roles = $this->getPageRoles($page);
             if ($roles && !$this->authorizationChecker->isGranted($roles, $entity)) {
-                throw new AccessDeniedException('You are not allowed to see this page, see the access roles defined in the view or it\'s parents and templates');
+                throw new AccessDeniedException('You are not allowed to see this page, see the access roles defined in the view or its parents and templates');
             }
         }
     }
