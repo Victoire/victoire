@@ -63,7 +63,7 @@ class WidgetMap
     protected $widgets;
 
     /**
-     * @deprecated
+     * @deprecated Remove Doctrine mapping and property
      *
      * @var Widget
      *
