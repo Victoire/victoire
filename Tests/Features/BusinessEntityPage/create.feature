@@ -28,28 +28,30 @@ Feature: Create business entity pages
         And I should see "La représentation métier a bien été créée"
 
     Scenario: I can create a new API Business entity page pattern
-        Given I open the hamburger menu
+        When I open the additionals menu drop
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
-        And I close the hamburger menu
         Then I should see "Users"
-        Then I should see "Ajouter une représentation métier"
+        Then I should see "AJOUTER UNE REPRÉSENTATION MÉTIER"
         When I follow the tab "Users"
-        And I should see "Ajouter une représentation métier"
-        And I follow "Ajouter une représentation métier"
+        And I should see "AJOUTER UNE REPRÉSENTATION MÉTIER"
+        And I follow "AJOUTER UNE REPRÉSENTATION MÉTIER"
         Then I should see "Créer une représentation métier"
         When I fill in "Nom" with "Fiche user - {{item.name}}"
         And I fill in "URL" with "fiche-user-{{item.id}}"
         And I follow "Créer"
-        And I wait 20 seconds
+        And I wait 2 seconds
         Then I should be on "/fr/victoire-dcms/business-template/show/4"
         Then I switch to "layout" mode
         And I should see "Nouveau contenu"
         When I select "Texte brut" from the "1" select of "main_content" slot
         Then I should see "Créer"
-        Then I follow the tab "Users"
+        Then I follow the tab "Entités"
+        Then I should see "Users"
+        Then I follow the drop anchor "Users"
+        When I open the widget mode drop for entity "Users"
         And I should see "Objet courant"
-        And I follow "Objet courant"
+        And I follow the drop anchor "Objet courant"
         And I select "name" from "users_a_businessEntity_widget_text[fields][content]"
         And I submit the widget
         Given I am on "/fr/fiche-user-1"
