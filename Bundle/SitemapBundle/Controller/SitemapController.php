@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\SitemapBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -47,7 +48,7 @@ class SitemapController extends Controller
      */
     public function reorganizeAction(Request $request)
     {
-        if ($request->getMethod() === 'POST') {
+        if ($request->isMethod('POST')) {
             $this->get('victoire_sitemap.sort.handler')->handle(
                 $request->request->get('sorted')
             );
@@ -55,10 +56,16 @@ class SitemapController extends Controller
         }
 
         $basePageRepo = $this->getDoctrine()->getManager()->getRepository('VictoirePageBundle:BasePage');
+        $basePages = $basePageRepo
+            ->getAll(true)
+            ->joinSeo()
+            ->joinSeoTranslations($request->getLocale())
+            ->run();
 
         $forms = [];
-        foreach ($basePageRepo->findAll() as $_page) {
-            $forms[$_page->getId()] = $this->createSitemapPriorityType($_page)->createView();
+        foreach ($basePages as $_page) {
+            $_pageSeo = $_page->getSeo() ?: new PageSeo();
+            $forms[$_page->getId()] = $this->createSitemapPriorityType($_page, $_pageSeo)->createView();
         }
 
         $response['success'] = true;
@@ -82,29 +89,21 @@ class SitemapController extends Controller
      */
     public function changePriorityAction(Request $request, BasePage $page)
     {
-        $form = $this->createSitemapPriorityType($page);
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        $pageSeo = $page->getSeo() ?: new PageSeo();
+        $pageSeo->setCurrentLocale($request->getLocale());
+
+        $form = $this->createSitemapPriorityType($page, $pageSeo);
         $form->handleRequest($request);
         $params = [
             'success' => $form->isValid(),
         ];
-        if ($form->isValid()) {
-            if (!$page->getSeo()) {
-                $seo = new PageSeo();
-                $page->setSeo($seo);
-            }
-            $this->get('doctrine.orm.entity_manager')->persist($page->getSeo());
-            $this->get('doctrine.orm.entity_manager')->flush();
 
-            // congratulate user, the action succeed
-            $message = $this->get('translator')->trans(
-                'sitemap.changedPriority.success',
-                [
-                    '%priority%' => $page->getSeo()->getSitemapPriority(),
-                    '%pageName%' => $page->getName(),
-                    ],
-                'victoire'
-            );
-            $params['message'] = $message;
+        if ($form->isValid()) {
+            $page->setSeo($pageSeo);
+            $em->persist($pageSeo);
+            $em->flush();
         }
 
         return new JsonResponse($params);
@@ -113,11 +112,14 @@ class SitemapController extends Controller
     /**
      * Create a sitemap priority type.
      *
-     * @return \Symfony\Component\Form\Form The form
-     **/
-    protected function createSitemapPriorityType(BasePage $page)
+     * @param BasePage $page
+     * @param PageSeo $pageSeo
+     *
+     * @return \Symfony\Component\Form\Form
+     */
+    protected function createSitemapPriorityType(BasePage $page, PageSeo $pageSeo)
     {
-        $form = $this->createForm(SitemapPriorityPageSeoType::class, $page->getSeo(), [
+        $form = $this->createForm(SitemapPriorityPageSeoType::class, $pageSeo, [
                 'action' => $this->generateUrl('victoire_sitemap_changePriority', [
                         'id' => $page->getId(),
                     ]
