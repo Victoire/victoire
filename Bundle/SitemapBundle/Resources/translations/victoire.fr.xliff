@@ -28,7 +28,11 @@
             </trans-unit>
             <trans-unit id="58893b9a05007" resname="modal.sitemap.priority.label">
                 <source>modal.sitemap.priority.label</source>
-                <target>Priorit&#xE9; :</target>
+                <target>Priorité</target>
+            </trans-unit>
+            <trans-unit id="58893b9a03bd8" resname="modal.sitemap.indexed.label">
+                <source>modal.sitemap.indexed.label</source>
+                <target>Indexée</target>
             </trans-unit>
             <trans-unit id="58893b9a05022" resname="sitemap.goto">
                 <source>sitemap.goto</source>

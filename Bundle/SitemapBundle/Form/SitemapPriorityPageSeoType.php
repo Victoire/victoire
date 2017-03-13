@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\SitemapBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,12 +21,15 @@ class SitemapPriorityPageSeoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('sitemapPriority', ChoiceType::class, [
+        $builder
+            ->add('sitemapPriority', ChoiceType::class, [
                 'label'             => 'sitemap.form.priority.label',
-                'choices'           => range(0, 1, 0.1), //array from 0 to 1 with a 0.1 step
+                'choices'           => array_combine(range(0, 1, 0.1), range(0, 1, 0.1)),
                 'choices_as_values' => true,
-            ]
-        );
+            ])
+            ->add('sitemapIndexed', CheckboxType::class, [
+                'label' => false
+            ]);
     }
 
     /**
