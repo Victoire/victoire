@@ -3,6 +3,7 @@
 .#{$app--prefix}-drop[id^="tooltip-quantum"],
 .#{$app--prefix}-drop[id^="style-anchor-drop"],
 .#{$app--prefix}-drop[id^="seo-mode-drop"],
-.#{$app--prefix}-drop[id^="business-entity-drop"] {
+.#{$app--prefix}-drop[id^="business-entity-drop"],
+.select2-container--open .select2-dropdown {
   z-index: z-index(4);
 }
