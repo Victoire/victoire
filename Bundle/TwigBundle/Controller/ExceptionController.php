@@ -77,7 +77,7 @@ class ExceptionController extends BaseExceptionController
 
         $locale = $request->getLocale();
         if (!in_array($locale, $this->availableLocales, true)) {
-            $locale = $this->defaultLocale;
+            $request->setLocale($this->defaultLocale);
         }
         //if in production environment and the query is not a file
         if ($this->debug === false && 0 === $matches) {
@@ -85,7 +85,6 @@ class ExceptionController extends BaseExceptionController
             if ($page) {
                 return $this->forward('VictoireTwigBundle:ErrorPage:show', [
                         'code'    => $page->getCode(),
-                        '_locale' => $locale,
                 ]);
             }
         }
