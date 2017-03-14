@@ -7,13 +7,13 @@ Background:
 
   Scenario: I cannot acces a non exitant page
     And I am on "/fr/imaginary-page"
-    Then I should see "404 not found"
+    Then the title should be "Page introuvable"
   Scenario: I cannot acces a page for a non exitant locale
     And I am on "/notalocale/"
-    Then I should see "404 not found"
+    Then the title should be "Page introuvable"
   Scenario: I cannot acces a non existant page for a non exitant locale
     And I am on "/notalocale/imaginary-page"
-    Then I should see "404 not found"
+    Then the title should be "Page introuvable"
   Scenario: I cannot acces a page for a inconsistant locale
     And I am on "/notalocale:/"
-    Then I should see "404 not found"
+    Then the title should be "Page introuvable"
