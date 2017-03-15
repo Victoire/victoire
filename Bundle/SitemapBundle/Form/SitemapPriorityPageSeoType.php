@@ -25,7 +25,6 @@ class SitemapPriorityPageSeoType extends AbstractType
             ->add('sitemapPriority', ChoiceType::class, [
                 'label'             => 'sitemap.form.priority.label',
                 'choices'           => array_combine(range(0, 1, 0.1), range(0, 1, 0.1)),
-                'choices_as_values' => true,
             ])
             ->add('sitemapIndexed', CheckboxType::class, [
                 'label' => false,

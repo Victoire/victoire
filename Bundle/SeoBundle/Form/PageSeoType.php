@@ -177,7 +177,6 @@ class PageSeoType extends AbstractType
                         'field_type'        => ChoiceType::class,
                         'label'             => 'form.pageSeo.sitemapPriority.label',
                         'choices'           => array_combine(range(0, 1, 0.1), range(0, 1, 0.1)),
-                        'choices_as_values' => true,
                         'data'              => $builder->getData() ? $builder->getData()->getSitemapPriority() : PageSeoTranslation::SITEMAP_PRIORITY_DEFAULT,
                     ],
                     'relCanonical' => [
