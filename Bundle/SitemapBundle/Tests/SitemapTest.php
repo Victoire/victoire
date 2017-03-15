@@ -2,10 +2,7 @@
 
 namespace Bundle\SitemapBundle\Tests;
 
-
 use Symfony\Component\DomCrawler\Crawler;
-use Victoire\Bundle\CoreBundle\Tests\Doctrine;
-use Victoire\Bundle\CoreBundle\Tests\SymfonyKernel;
 use Victoire\Bundle\CoreBundle\Tests\VictoireWebTestCase;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
@@ -51,32 +48,32 @@ class SitemapTest extends VictoireWebTestCase
 
         $englishAssertions = [
             [
-                'loc' => '/en/',
+                'loc'        => '/en/',
                 'changefreq' => 'monthly',
-                'priority' => '0.5',
+                'priority'   => '0.5',
             ],
             [
-                'loc' => '/en/english-test',
+                'loc'        => '/en/english-test',
                 'changefreq' => 'monthly',
-                'priority' => '0.5',
+                'priority'   => '0.5',
             ],
         ];
 
         $frenchAssertions = [
             [
-                'loc' => '/fr/',
+                'loc'        => '/fr/',
                 'changefreq' => 'monthly',
-                'priority' => '0.5',
+                'priority'   => '0.5',
             ],
             [
-                'loc' => '/fr/test',
+                'loc'        => '/fr/test',
                 'changefreq' => 'monthly',
-                'priority' => '0.5',
+                'priority'   => '0.5',
             ],
             [
-                'loc' => '/fr/page-indexee',
+                'loc'        => '/fr/page-indexee',
                 'changefreq' => 'monthly',
-                'priority' => '0.3',
+                'priority'   => '0.3',
             ],
         ];
 
@@ -101,7 +98,7 @@ class SitemapTest extends VictoireWebTestCase
 
     /**
      * @param Crawler $pages
-     * @param array $assertions
+     * @param array   $assertions
      */
     private function runAssertions(Crawler $pages, array $assertions)
     {

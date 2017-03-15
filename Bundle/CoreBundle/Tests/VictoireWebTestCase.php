@@ -2,18 +2,18 @@
 
 namespace Victoire\Bundle\CoreBundle\Tests;
 
-use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\Tools\SchemaTool;
-use Symfony\Component\BrowserKit\Cookie;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Nelmio\Alice\Fixtures;
+use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
- * Class VictoireWebTestCase
+ * Class VictoireWebTestCase.
  *
  * This class can be used for functional tests
  * It provides :
@@ -45,7 +45,7 @@ class VictoireWebTestCase extends WebTestCase
     protected $entityManager;
 
     /**
-     * Start tests by set up Kernel, Doctrine and Entity Manager
+     * Start tests by set up Kernel, Doctrine and Entity Manager.
      */
     protected function setUp()
     {
@@ -54,7 +54,7 @@ class VictoireWebTestCase extends WebTestCase
     }
 
     /**
-     * Drop and create database schema
+     * Drop and create database schema.
      *
      * @throws \Doctrine\ORM\Tools\ToolsException
      */
@@ -68,17 +68,17 @@ class VictoireWebTestCase extends WebTestCase
     }
 
     /**
-     * Victoire login
+     * Victoire login.
      *
      * @param Client $client
-     * @param array $roles
+     * @param array  $roles
      */
     protected function logIn(Client $client, array $roles)
     {
         $session = $client->getContainer()->get('session');
 
         $token = new UsernamePasswordToken('test', null, self::VICTOIRE_FIREWALL, $roles);
-        $session->set('_security_' . self::VICTOIRE_FIREWALL, serialize($token));
+        $session->set('_security_'.self::VICTOIRE_FIREWALL, serialize($token));
         $session->save();
 
         $cookie = new Cookie($session->getName(), $session->getId());
@@ -86,7 +86,7 @@ class VictoireWebTestCase extends WebTestCase
     }
 
     /**
-     * Load seeds fixtures and given fixtures
+     * Load seeds fixtures and given fixtures.
      *
      * @param array $fixtures
      */
@@ -108,7 +108,7 @@ class VictoireWebTestCase extends WebTestCase
     }
 
     /**
-     * Reset Victoire ViewReferences
+     * Reset Victoire ViewReferences.
      */
     protected function resetViewsReference()
     {
@@ -117,7 +117,7 @@ class VictoireWebTestCase extends WebTestCase
     }
 
     /**
-     * Set up Symfony Kernel and provide container
+     * Set up Symfony Kernel and provide container.
      */
     private function setUpSymfonyKernel()
     {
@@ -128,7 +128,7 @@ class VictoireWebTestCase extends WebTestCase
     }
 
     /**
-     * Provide doctrine and entity manager
+     * Provide doctrine and entity manager.
      */
     private function setUpDoctrine()
     {
@@ -137,16 +137,16 @@ class VictoireWebTestCase extends WebTestCase
     }
 
     /**
-     * Get seeds files for Users, Pages and Templates
+     * Get seeds files for Users, Pages and Templates.
      *
      * @return array
      */
     private function getSeeds()
     {
         return [
-            __DIR__ . '/../../../Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml',
-            __DIR__ . '/../../../Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml',
-            __DIR__ . '/../../../Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml',
+            __DIR__.'/../../../Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml',
+            __DIR__.'/../../../Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml',
+            __DIR__.'/../../../Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml',
         ];
     }
 

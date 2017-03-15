@@ -54,27 +54,27 @@ class VictoireContext extends RawMinkContext
         /* @var Session $session */
         $session = $this->getSession();
 
-        if(!($session->getDriver() instanceof Selenium2Driver)) {
+        if (!($session->getDriver() instanceof Selenium2Driver)) {
             return;
         }
 
         try {
-            $errors = $session->evaluateScript("window.jsErrors");
-            $session->evaluateScript("window.jsErrors = []");
+            $errors = $session->evaluateScript('window.jsErrors');
+            $session->evaluateScript('window.jsErrors = []');
         } catch (\Exception $e) {
             throw $e;
         }
         if (!$errors || empty($errors)) {
             return;
         }
-        $file = sprintf("%s:%d", $scope->getFeature()->getFile(), $scope->getStep()->getLine());
-        $message = sprintf("Found %d javascript error%s", count($errors), count($errors) > 0 ? 's' : '');
-        echo '-------------------------------------------------------------' . PHP_EOL;
-        echo $file . PHP_EOL;
-        echo $message . PHP_EOL;
-        echo '-------------------------------------------------------------' . PHP_EOL;
+        $file = sprintf('%s:%d', $scope->getFeature()->getFile(), $scope->getStep()->getLine());
+        $message = sprintf('Found %d javascript error%s', count($errors), count($errors) > 0 ? 's' : '');
+        echo '-------------------------------------------------------------'.PHP_EOL;
+        echo $file.PHP_EOL;
+        echo $message.PHP_EOL;
+        echo '-------------------------------------------------------------'.PHP_EOL;
         foreach ($errors as $index => $error) {
-            echo sprintf("   #%d: %s", $index, $error) . PHP_EOL;
+            echo sprintf('   #%d: %s', $index, $error).PHP_EOL;
         }
     }
 
@@ -178,6 +178,7 @@ class VictoireContext extends RawMinkContext
         }
         $element->click();
     }
+
     /**
      * @When I open the widget style tab :key
      */
@@ -223,7 +224,6 @@ class VictoireContext extends RawMinkContext
             '[id^="picker-'.strtolower($entity).'"][data-state="visible"] [id^="picker-'.strtolower($entity).'"][data-state="visible"] .v-widget-form__quantum-btn'
         );
 
-
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
@@ -241,7 +241,6 @@ class VictoireContext extends RawMinkContext
             'css',
             '[data-state="visible"] [id^="picker-static"] .v-widget-form__quantum-btn'
         );
-
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
@@ -332,8 +331,8 @@ class VictoireContext extends RawMinkContext
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
 
-        foreach($elements as $element) {
-            if($element->getText() === $name) {
+        foreach ($elements as $element) {
+            if ($element->getText() === $name) {
                 $element->click();
             }
         }
@@ -434,7 +433,6 @@ class VictoireContext extends RawMinkContext
     {
         $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::*[contains(@class, \'v-drop__anchor--disabled\') and normalize-space(.) = "%s"]', $name));
 
-
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
@@ -522,8 +520,8 @@ class VictoireContext extends RawMinkContext
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
 
-        foreach($menus as $menu) {
-            if($menu->isVisible()) {
+        foreach ($menus as $menu) {
+            if ($menu->isVisible()) {
                 $menu->click();
             }
         }
@@ -535,8 +533,8 @@ class VictoireContext extends RawMinkContext
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
 
-        foreach($links as $link) {
-            if($link->getText() === $name) {
+        foreach ($links as $link) {
+            if ($link->getText() === $name) {
                 $link->click();
             }
         }
