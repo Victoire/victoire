@@ -1,12 +1,12 @@
 <?php
 
-namespace Bundle\SitemapBundle\Tests;
+namespace Victoire\Bundle\SitemapBundle\Tests;
 
 use Symfony\Component\DomCrawler\Crawler;
-use Victoire\Bundle\CoreBundle\Tests\VictoireWebTestCase;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\SeoBundle\Entity\PageSeo;
+use Victoire\Tests\Functional\VictoireWebTestCase;
 
 class SitemapTest extends VictoireWebTestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\CoreBundle\Tests;
+namespace Victoire\Tests\Functional;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -144,9 +144,9 @@ class VictoireWebTestCase extends WebTestCase
     private function getSeeds()
     {
         return [
-            __DIR__ . '/../../../Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml',
-            __DIR__ . '/../../../Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml',
-            __DIR__ . '/../../../Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml',
+            __DIR__ . '/../App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml',
+            __DIR__ . '/../App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml',
+            __DIR__ . '/../App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml',
         ];
     }
 

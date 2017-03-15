@@ -81,6 +81,7 @@
             "Acme\\AppBundle\\": "Tests/App/src/Acme/AppBundle",
             "Victoire\\Bundle\\": "Bundle",
             "Victoire\\Tests\\Features\\": "Tests/Features",
+            "Victoire\\Tests\\Functional\\": "Tests/Functional",
             "Victoire\\Widget\\": "Tests/App/src/Victoire/Widget"
         }
     },

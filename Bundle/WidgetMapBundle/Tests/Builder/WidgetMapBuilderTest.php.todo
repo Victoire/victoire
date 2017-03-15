@@ -3,7 +3,7 @@
 namespace Bundle\WidgetMapBundle\Tests\Builder;
 
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\CoreBundle\Tests\VictoireWebTestCase;
+use Victoire\Tests\Functional\VictoireWebTestCase;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
