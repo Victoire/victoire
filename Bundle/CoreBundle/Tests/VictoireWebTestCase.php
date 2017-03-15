@@ -144,9 +144,9 @@ class VictoireWebTestCase extends WebTestCase
     private function getSeeds()
     {
         return [
-            __DIR__.'/../../../Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml',
-            __DIR__.'/../../../Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml',
-            __DIR__.'/../../../Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml',
+            __DIR__ . '/../../../Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml',
+            __DIR__ . '/../../../Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml',
+            __DIR__ . '/../../../Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml',
         ];
     }
 

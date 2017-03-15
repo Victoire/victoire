@@ -7,7 +7,7 @@
          bootstrap="vendor/autoload.php">
     <php>
         <ini name="memory_limit" value="-1"/>
-        <server name="KERNEL_DIR" value="./Tests/Functionnal/app" />
+        <server name="KERNEL_DIR" value="./Tests/App/app" />
     </php>
 
     <testsuites>
