@@ -101,7 +101,7 @@ class ViewRepository extends NestedTreeRepository
     }
 
     /**
-     * Get the the view that is a homepage and a published one.
+     * Get the the view that is a aage and a published one.
      *
      * @param string $locale
      *
