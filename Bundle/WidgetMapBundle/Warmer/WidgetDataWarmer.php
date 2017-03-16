@@ -179,9 +179,6 @@ class WidgetDataWarmer
                     }
                 }
             }
-            if ($entity instanceof Widget && $proxy = $entity->getEntityProxy()) {
-                $entity->setEntity($this->businessEntityResolver->getBusinessEntity($proxy));
-            }
         }
 
         $newEntities = $this->setAssociatedEntities($associatedEntities);

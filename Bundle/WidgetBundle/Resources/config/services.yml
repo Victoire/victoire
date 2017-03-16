@@ -103,3 +103,4 @@ services:
             - "@=service('victoire_criteria.chain.data_source_chain')"
             - "@security.authorization_checker"
             - "@victoire_core.current_view"
+            - "@victoire_business_entity.resolver.business_entity_resolver"
