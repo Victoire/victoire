@@ -4,15 +4,20 @@ namespace Victoire\Bundle\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
+use Victoire\Bundle\CoreBundle\Annotations as VIC;
 
 /**
  * Tag.
  *
  * @ORM\Table("vic_tag")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\TagRepository")
+ * @VIC\BusinessEntity("Listing")
  */
 class Tag
 {
+    use BusinessEntityTrait;
+
     /**
      * @var int
      *
