@@ -6,6 +6,10 @@
         <source>form.widget.tab.article.label</source>
         <target state="new">Artículo</target>
       </trans-unit>
+      <trans-unit id="58893b9921bc9" resname="form.widget.tab.tag.label">
+        <source>form.widget.tab.article.label</source>
+        <target>Etiquetas</target>
+      </trans-unit>
       <trans-unit id="58893b9923171" resname="entity_proxy.form.article.label">
         <source>entity_proxy.form.article.label</source>
         <target>Artículo</target>
