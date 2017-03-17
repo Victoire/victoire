@@ -54,6 +54,7 @@ class Blog extends Page
 
     /**
      * @param $articles
+     *
      * @return $this
      */
     public function setArticles($articles)
@@ -65,11 +66,14 @@ class Blog extends Page
 
     /**
      * @param Article $article
+     *
      * @return $this
      */
-    public function addArticle(Article $article) {
+    public function addArticle(Article $article)
+    {
         $article->setBlog($this);
         $this->articles->add($article);
+
         return $this;
     }
 
@@ -92,12 +96,14 @@ class Blog extends Page
 
     /**
      * @param Category $category
+     *
      * @return $this
      */
     public function addCategorie(Category $category)
     {
         $category->setBlog($this);
         $this->categories->add($category);
+
         return $this;
     }
 
@@ -144,12 +150,14 @@ class Blog extends Page
 
     /**
      * @param Category $rootCategory
+     *
      * @return $this
      */
     public function addRootCategory(Category $rootCategory)
     {
         $rootCategory->setBlog($this);
         $this->categories->add($rootCategory);
+
         return $this;
     }
 
@@ -185,12 +193,14 @@ class Blog extends Page
 
     /**
      * @param Tag $tag
+     *
      * @return Tag
      */
     public function addTag(Tag $tag)
     {
         $tag->setBlog($this);
         $this->tags->add($tag);
+
         return $tag;
     }
 }
