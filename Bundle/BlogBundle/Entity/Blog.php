@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
@@ -16,20 +17,19 @@ class Blog extends Page
     const TYPE = 'blog';
 
     /**
+     * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Category", mappedBy="blog", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $categories;
 
     /**
-     * @var string
-     *
+     * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="\Victoire\Bundle\BlogBundle\Entity\Article", mappedBy="blog")
      */
     protected $articles;
 
     /**
-     * @var string
-     *
+     * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="\Victoire\Bundle\BlogBundle\Entity\Tag", mappedBy="blog")
      */
     protected $tags;
@@ -39,19 +39,37 @@ class Blog extends Page
      */
     public function __construct()
     {
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->articles = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function getArticles()
     {
         return $this->articles;
     }
 
+    /**
+     * @param $articles
+     * @return $this
+     */
     public function setArticles($articles)
     {
         $this->articles = $articles;
 
+        return $this;
+    }
+
+    /**
+     * @param Article $article
+     * @return $this
+     */
+    public function addArticle(Article $article) {
+        $article->setBlog($this);
+        $this->articles->add($article);
         return $this;
     }
 
@@ -73,17 +91,13 @@ class Blog extends Page
     }
 
     /**
-     * Add category.
-     *
-     * @param string $category
-     *
-     * @return Blog
+     * @param Category $category
+     * @return $this
      */
-    public function addCategorie($category)
+    public function addCategorie(Category $category)
     {
         $category->setBlog($this);
-        $this->categories[] = $category;
-
+        $this->categories->add($category);
         return $this;
     }
 
@@ -129,17 +143,13 @@ class Blog extends Page
     }
 
     /**
-     * Add rootCategory.
-     *
-     * @param string $rootCategory
-     *
-     * @return Blog
+     * @param Category $rootCategory
+     * @return $this
      */
-    public function addRootCategory($rootCategory)
+    public function addRootCategory(Category $rootCategory)
     {
         $rootCategory->setBlog($this);
-        $this->categories[] = $rootCategory;
-
+        $this->categories->add($rootCategory);
         return $this;
     }
 
@@ -171,5 +181,16 @@ class Blog extends Page
     public function setTags($tags)
     {
         $this->tags = $tags;
+    }
+
+    /**
+     * @param Tag $tag
+     * @return Tag
+     */
+    public function addTag(Tag $tag)
+    {
+        $tag->setBlog($this);
+        $this->tags->add($tag);
+        return $tag;
     }
 }
