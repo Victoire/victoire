@@ -81,11 +81,13 @@ class WidgetStyleType extends AbstractType
             $builder
                 ->add('containerMargin'.$key, null, [
                     'label'          => 'widget_layout.form.containerMargin'.$key.'.label',
+                    'attr'           => ['placeholder' => 'widget_layout.form.containerMargin.placeholder'],
                     'vic_help_block' => 'widget_layout.form.containerMargin.help_block',
                     'required'       => false,
                 ])
                 ->add('containerPadding'.$key, null, [
                     'label'          => 'widget_layout.form.containerPadding'.$key.'.label',
+                    'attr'           => ['placeholder' => 'widget_layout.form.containerPadding.placeholder'],
                     'vic_help_block' => 'widget_layout.form.containerPadding.help_block',
                     'required'       => false,
                 ])

@@ -116,9 +116,9 @@ Scenario: I delete widget from simple page
   And I am on the homepage
   Then I should see "Widget 1"
   When I switch to "edit" mode
-  Then I edit the "Text" widget
-  Then I should see "SUPPRIMER"
-  Given I follow the link containing "SUPPRIMER"
+  And I edit the "Text" widget
+  Then I should see "Supprimer"
+  Given I follow "Supprimer"
   Then I should see "Cette action va définitivement supprimer ce contenu. Cette action est irréversible."
   And I should see "Êtes-vous sûr ?"
   Given I press "J'ai bien compris, je confirme la suppression"

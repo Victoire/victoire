@@ -37,7 +37,7 @@
       </trans-unit>
       <trans-unit id="58893b9932d78" resname="menu.business_template">
         <source>menu.business_template</source>
-        <target>Plantilla de negocio</target>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-sandbox"></i> Plantilla de negocio]]></target>
       </trans-unit>
       <trans-unit id="58893b9932d89" resname="victoire.business_template.create.success">
         <source>victoire.business_template.create.success</source>
@@ -77,7 +77,7 @@
       </trans-unit>
       <trans-unit id="58893b9932e54" resname="victoire.form.business_template.query.vic_help_block">
         <source>victoire.form.business_template.query.vic_help_block</source>
-        <target><![CDATA[<em>Esta parte está reservada para los programadores</em>. Utilice este campo para determinar qué organismos están autorizados a utilizar la plantilla de negocio]]></target>
+        <target><![CDATA[<i class="fa fa-info-circle"></i> <em>Esta parte está reservada para los programadores</em>. Utilice este campo para determinar qué organismos están autorizados a utilizar la plantilla de negocio]]></target>
       </trans-unit>
       <trans-unit id="58893b9932e5f" resname="victoire.form.business_template.query.url.fieldset">
         <source>victoire.form.business_template.query.url.fieldset</source>
@@ -97,15 +97,11 @@
       </trans-unit>
       <trans-unit id="58893b9932e9a" resname="business_template.listEntities.empty">
         <source>business_template.listEntities.empty</source>
-        <target>Esta plantilla de negocio no sigue utilizada.</target>
+        <target><![CDATA[<div class="vic-alert vic-alert-info">Esta plantilla de negocio no sigue utilizada.</div>]]></target>
       </trans-unit>
       <trans-unit id="58893b9932ee2" resname="business_template.listEntities">
         <source>business_template.listEntities</source>
         <target>Lista de las plantillas de negocios para</target>
-      </trans-unit>
-      <trans-unit id="3" resname="business_template.noEntities">
-        <source>business_template.noEntities</source>
-        <target>Esta entidad no alcanza actuaciones de negocios</target>
       </trans-unit>
     </body>
   </file>

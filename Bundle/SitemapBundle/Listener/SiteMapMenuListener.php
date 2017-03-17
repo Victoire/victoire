@@ -34,12 +34,14 @@ class SiteMapMenuListener
      */
     public function addGlobal(Event $event)
     {
-        $topNavbar = $this->menuBuilder->getTopNavbar();
+        $this->mainItem = $this->menuBuilder->getLeftNavbar();
 
-        $topNavbar
+        $this->mainItem
             ->addChild('menu.sitemap', [
-                'route'      => 'victoire_sitemap_reorganize',
+                'route' => 'victoire_sitemap_reorganize',
             ])
             ->setLinkAttribute('data-toggle', 'vic-modal');
+
+        return $this->mainItem;
     }
 }

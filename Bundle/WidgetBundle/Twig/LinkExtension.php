@@ -173,7 +173,7 @@ class LinkExtension extends \Twig_Extension
                 }
 
                 //Add anchor part
-                $url .= '#widget-'.$attachedWidget->getId();
+                $url .= '#vic-widget-'.$attachedWidget->getId().'-container-anchor';
                 break;
             default:
                 $url = $parameters['url'];

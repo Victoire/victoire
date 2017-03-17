@@ -1,6 +1,0 @@
-@mixin inputimages--aspect-ratio($value, $flags) {
-  $width: nth($value, 1);
-  $height: nth($value, 2);
-  $padding-bottom: $height / $width * 100%;
-  @include declaration('padding-bottom', $padding-bottom, $flags);
-}

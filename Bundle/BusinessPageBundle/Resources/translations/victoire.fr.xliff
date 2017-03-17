@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="58893b9934455" resname="list.action.add">
         <source>list.action.add</source>
-        <target>AJOUTER UNE REPRÉSENTATION MÉTIER</target>
+        <target>Ajouter une représentation métier</target>
       </trans-unit>
       <trans-unit id="58893b993447e" resname="list.action.edit">
         <source>list.action.edit</source>
@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="58893b99344f8" resname="menu.business_template">
         <source>menu.business_template</source>
-        <target>Représentation métier</target>
+        <target><![CDATA[<i class="vic-menuImg vic-menuImg-sandbox"></i> Représentation métier]]></target>
       </trans-unit>
       <trans-unit id="58893b993450b" resname="victoire.business_template.create.success">
         <source>victoire.business_template.create.success</source>
@@ -76,7 +76,7 @@
       </trans-unit>
       <trans-unit id="58893b99345b3" resname="victoire.form.business_template.query.vic_help_block">
         <source>victoire.form.business_template.query.vic_help_block</source>
-        <target><![CDATA[<em>Cette partie est réservée aux développeurs</em>. Utilisez ce champ pour définir quelles instances sont autorisées à utiliser cette représentation métier]]></target>
+        <target><![CDATA[<i class="fa fa-info-circle"></i> <em>Cette partie est réservée aux développeurs</em>. Utilisez ce champ pour définir quelles instances sont autorisées à utiliser cette représentation métier]]></target>
       </trans-unit>
       <trans-unit id="58893b99345c6" resname="victoire.form.business_template.query.url.fieldset">
         <source>victoire.form.business_template.query.url.fieldset</source>
@@ -96,15 +96,11 @@
       </trans-unit>
       <trans-unit id="58893b9934612" resname="business_template.listEntities.empty">
         <source>business_template.listEntities.empty</source>
-        <target>Cette représentation métier n'est pas utilisée.</target>
+        <target><![CDATA[<div class="vic-alert vic-alert-info">Cette représentation métier n'est pas utilisée.</div>]]></target>
       </trans-unit>
       <trans-unit id="58893b9934626" resname="business_template.listEntities">
         <source>business_template.listEntities</source>
         <target>Liste des représentations de l’objet métier</target>
-      </trans-unit>
-      <trans-unit id="3" resname="business_template.noEntities">
-        <source>business_template.noEntities</source>
-        <target>Cette entité n'à pas de représentations métier</target>
       </trans-unit>
     </body>
   </file>

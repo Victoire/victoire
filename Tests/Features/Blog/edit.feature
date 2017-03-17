@@ -8,6 +8,7 @@ Background:
     And I am on homepage
 
     Scenario: I create a new article and update its slug
+        Given I open the hamburger menu
         Then I should see "Blog"
         When I follow "Blog"
         Then I should see "The Jedi Network"
@@ -22,7 +23,7 @@ Background:
         And I wait 5 seconds
         Then I should be on "/fr/the-jedi-network/i-m-your-father"
         And I wait 3 seconds
-        When I open the settings menu
+        When I select the option "Paramètres de la page" in the dropdown "Page"
         And I wait 3 seconds
         Then I should see "Paramètres de l'article"
         And I should see "I'm your father"

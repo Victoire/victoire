@@ -14,19 +14,19 @@ function displaySlugIcons(inputSlug, slug, allowEmpty){
     var notCorrectSlugIcon = $vic('#' + inputSlugId + '-not-correct');
     if (slug != 'undefined' && slug != "") {
         if (validSlug(slug)) {
-            correctSlugIcon.removeClass('v-hidden');
-            notCorrectSlugIcon.addClass('v-hidden');
+            correctSlugIcon.removeClass('vic-hidden');
+            notCorrectSlugIcon.addClass('vic-hidden');
         }else{
-            correctSlugIcon.addClass('v-hidden');
-            notCorrectSlugIcon.removeClass('v-hidden');
+            correctSlugIcon.addClass('vic-hidden');
+            notCorrectSlugIcon.removeClass('vic-hidden');
         }
     }else{
         if (allowEmpty && slug != 'undefined') {
-            correctSlugIcon.removeClass('v-hidden');
-            notCorrectSlugIcon.addClass('v-hidden');
+            correctSlugIcon.removeClass('vic-hidden');
+            notCorrectSlugIcon.addClass('vic-hidden');
         } else {
-            correctSlugIcon.addClass('v-hidden');
-            notCorrectSlugIcon.removeClass('v-hidden');
+            correctSlugIcon.addClass('vic-hidden');
+            notCorrectSlugIcon.removeClass('vic-hidden');
         }
     };
 }

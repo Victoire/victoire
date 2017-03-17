@@ -33,20 +33,28 @@ class BlogMenuListener implements MenuListenerInterface
      */
     public function addContextual($event)
     {
-        $floatActionDropdown = $this->menuBuilder->getFloatActionDropdown();
-
+        $mainItem = $this->getMainItem();
         $currentArticle = $event->getPage()->getBusinessEntity();
         $currentBlog = $currentArticle->getBlog();
 
-        $floatActionDropdown->addChild('menu.blog.article.new',
+        $mainItem->addChild('menu.blog.settings',
             [
-                'route'           => 'victoire_blog_article_new',
-                'routeParameters' => ['id' => $currentBlog->getId()],
-                'linkAttributes'  => [
-                    'class' => 'v-drop__anchor',
+                'route'           => 'victoire_blog_index',
+                'routeParameters' => [
+                    'blogId' => $currentBlog->getId(),
+                    'tab'    => 'settings',
                 ],
             ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        $mainItem->addChild('menu.blog.article.new',
+            [
+                'route'           => 'victoire_blog_article_new',
+                'routeParameters' => ['id' => $currentBlog->getId()],
+            ]
+        )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        return $mainItem;
     }
 
     /**
@@ -58,14 +66,26 @@ class BlogMenuListener implements MenuListenerInterface
      */
     public function addBlogContextual($event)
     {
-        $floatActionDropdown = $this->menuBuilder->getFloatActionDropdown();
+        $mainItem = $this->getMainItem();
 
-        $floatActionDropdown->addChild('menu.blog.article.new',
+        $mainItem->addChild('menu.blog.settings',
+            [
+                'route'           => 'victoire_blog_index',
+                'routeParameters' => [
+                    'blogId' => $event->getPage()->getId(),
+                    'tab'    => 'settings',
+                ],
+            ]
+        )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        $mainItem->addChild('menu.blog.article.new',
             [
                 'route'           => 'victoire_blog_article_new',
                 'routeParameters' => ['id' => $event->getPage()->getId()],
                 ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        return $mainItem;
     }
 
     /**
@@ -80,9 +100,9 @@ class BlogMenuListener implements MenuListenerInterface
     public function addGlobal(Event $event)
     {
         if ($this->menuBuilder->isGranted('ROLE_VICTOIRE_BLOG')) {
-            $this->menuBuilder->getTopNavbar()->addChild(
+            $this->menuBuilder->getLeftNavbar()->addChild(
                 'menu.leftnavbar.blog.label', [
-                    'route'      => 'victoire_blog_index',
+                    'route' => 'victoire_blog_index',
                 ]
             )->setLinkAttribute('data-toggle', 'vic-modal');
         }

@@ -102,15 +102,7 @@
         <source>victoire.menu.publication.scheduled.tooltip</source>
         <target>This page will be published from %publication_date%.</target>
       </trans-unit>
-      <trans-unit id="b6ce69459413ff95ae62ceaad270428e249379ba" resname="victoire.menu.publication.draft.tooltip">
-        <source>victoire.menu.publication.draft.tooltip</source>
-        <target>This page is actually in draft</target>
-      </trans-unit>
-      <trans-unit id="13ff95ae62b6ce694594ceaad270428e249379ba" resname="victoire.menu.publication.unpublished.tooltip">
-        <source>victoire.menu.publication.unpublished.tooltip</source>
-        <target>This page is actually unpublished</target>
-      </trans-unit>
-      <trans-unit id="ceb669459413ff95ae62ceaad270428e24379ba9" resname="victoire_core.edit_mode_switch">
+      <trans-unit id="58893b995d203" resname="victoire_core.edit_mode_switch">
         <source>victoire_core.edit_mode_switch</source>
         <target>Edit mode</target>
       </trans-unit>
@@ -132,7 +124,7 @@
       </trans-unit>
       <trans-unit id="58893b995d42c" resname="victoire.widget.inherited.notice">
         <source>victoire.widget.inherited.notice</source>
-        <target><![CDATA[<strong>Warning! </strong>This content is owned by a parent template (<i>%templateName%</i>).<br/>If you want to edit the content ONLY on this page, keep on going, you're in the right place.<br/>However, if you want to edit this widget on the parent template, and affect it wherever it is used on the website, you have to click on this link :<a href="%templateEditLink%" data-modal="close" class="v-btn v-btn--warning" data-toggle="vic-modal">edit the original content</a>.]]></target>
+        <target><![CDATA[<strong>Warning! </strong>This content is owned by a parent template (<i>%templateName%</i>).<br/>If you want to edit the content ONLY on this page, keep on going, you're in the right place.<br/>However, if you want to edit this widget on the parent template, and affect it wherever it is used on the website, you have to click on this link :<a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal"> edit the original content</a>.]]></target>
       </trans-unit>
       <trans-unit id="58893b995d4c9" resname="navbar.mode.edit">
         <source>navbar.mode.edit</source>
@@ -178,7 +170,19 @@
         <source>victoire.login.meta.title</source>
         <target>Boarding imminent</target>
       </trans-unit>
-      <trans-unit id="58893b995d7e2" resname="hamburger_menu.backend.back_home">
+      <trans-unit id="58893b995d7e2" resname="victoire.widget.stylize.container.heading">
+        <source>victoire.widget.stylize.container.heading</source>
+        <target>General</target>
+      </trans-unit>
+      <trans-unit id="58893b995d8d8" resname="victoire.widget.stylize.layout.heading">
+        <source>victoire.widget.stylize.layout.heading</source>
+        <target>Specific</target>
+      </trans-unit>
+      <trans-unit id="58893b995d8fa" resname="victoire.widget.stylize.global.heading">
+        <source>victoire.widget.stylize.global.heading</source>
+        <target>Advanced</target>
+      </trans-unit>
+      <trans-unit id="58893b995d930" resname="hamburger_menu.backend.back_home">
         <source>hamburger_menu.backend.back_home</source>
         <target>Back to website</target>
       </trans-unit>
@@ -220,39 +224,11 @@
       </trans-unit>
       <trans-unit id="58893b995da20" resname="victoire.widget.type.criterias.label">
         <source>victoire.widget.type.criterias.label</source>
-        <target>QUANTUM</target>
+        <target>Criterias</target>
       </trans-unit>
       <trans-unit id="58893b995da32" resname="victoire.widget.modal.title">
         <source>victoire.widget.modal.title</source>
         <target>Widget %id% (%type%)</target>
-      </trans-unit>
-      <trans-unit id="36" resname="menu.additionals">
-        <source>menu.additionals</source>
-        <target><![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="6" height="22" viewBox="29 13 6 22"><path fill="currentColor" fill-rule="evenodd" d="M30 32.5006C30 33.881 31.12 35 32.5006 35 33.881 35 35 33.881 35 32.5006 35 31.12 33.881 30 32.5006 30 31.12 30 30 31.12 30 32.5006zm0-8C30 25.88 31.12 27 32.5006 27 33.881 27 35 25.88 35 24.5006 35 23.12 33.881 22 32.5006 22 31.12 22 30 23.12 30 24.5006zM30 16.5c0 1.381 1.12 2.5 2.5006 2.5C33.881 19 35 17.881 35 16.5S33.881 14 32.5006 14C31.12 14 30 15.119 30 16.5z"></path></svg>]]></target>
-      </trans-unit>
-      <trans-unit id="37" resname="form.widget.tab.entities.label">
-          <source>form.widget.tab.entities.label</source>
-          <target>Entities</target>
-      </trans-unit>
-      <trans-unit id="38" resname="form.widget.tab.mode.label">
-          <source>form.widget.tab.mode.label</source>
-          <target>Mode</target>
-      </trans-unit>
-      <trans-unit id="39" resname="form.widget.tab.mode_picker.label">
-          <source>form.widget.tab.mode_picker.label</source>
-          <target>Selection mode</target>
-      </trans-unit>
-      <trans-unit id="40" resname="form.widget.tab.mode_query.label">
-          <source>form.widget.tab.mode_query.label</source>
-          <target>Request mode</target>
-      </trans-unit>
-      <trans-unit id="41" resname="form.widget.tab.mode_entity_instance.label">
-          <source>form.widget.tab.mode_entity_instance.label</source>
-          <target>Current object mode</target>
-      </trans-unit>
-      <trans-unit id="42" resname="victoire.widget.type.quantum.label">
-          <source>victoire.widget.type.quantum.label</source>
-          <target>Quantum name</target>
       </trans-unit>
     </body>
   </file>

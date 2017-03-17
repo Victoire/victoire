@@ -2,19 +2,27 @@
 {% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
 
 {{ form_start(form, {'attr' : {'class' : 'vic-form-active'}}) }}
-    <div class="v-grid v-grid--large">
-        <div class="v-col v-col--large v-col--md-8">
+
+<div id="vic-stylize">
+
+    <h3 class="vic-h3">
+        {{ 'victoire.widget.stylize.global.heading'|trans() }}
+    </h3>
+    <div class="vic-row">
+        <div class="vic-col-sm-6 vic-col-md-4">{{ form_row(form.containerTag) }}</div>
+        <div class="vic-col-sm-6 vic-col-md-4">{{ form_row(form.containerClass) }}</div>
+        {% if form.theme is defined and form.theme %}<div class="vic-col-sm-6 vic-col-md-4">{{ form_row(form.theme) }}</div>{% endif %}
+    </div>
+    <hr>
+    <div class="vic-row">
+        <div class="vic-col-md-6">
+            {%  include 'VictoireCoreBundle:Widget/Form/stylize:static.html.twig' %}
+        </div>
+        <div class="vic-col-md-6">
             {%  include 'VictoireCoreBundle:Widget/Form/stylize:responsive.html.twig' %}
         </div>
-
-        <div class="v-col v-col--large v-col--md-4" style="margin-top: 78px;">
-            {% if form.theme is defined and form.theme %}
-                {{ form_row(form.theme) }}
-            {% endif %}
-
-            {{ form_row(form.containerTag) }}
-            {{ form_row(form.containerClass) }}
-            {{ form_row(attribute(form, 'containerBackground')) }}
-        </div>
     </div>
+
+</div>
+
 {{ form_end(form) }}

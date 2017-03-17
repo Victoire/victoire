@@ -30,7 +30,6 @@ dependencies:
     - npm install less
     - mkdir fails
     - composer install --prefer-dist
-    - (cd Bundle/UIBundle/Resources/config/ && bower install)
     - php Tests/Functionnal/bin/console --env=ci doctrine:database:create --no-debug
     - php Tests/Functionnal/bin/console --env=ci doctrine:schema:create --no-debug
     - php Tests/Functionnal/bin/console --env=ci cache:warmup --no-debug
@@ -67,6 +66,7 @@ test:
       if [ -n "${RUN_NIGHTLY_BUILD}" ]; then
         mkdir -p cp $CIRCLE_TEST_REPORTS/coverage && cp -R $(php -r "echo sys_get_temp_dir();")/Victoire/logs/coverage $CIRCLE_TEST_REPORTS
       fi
+
 general:
   artifacts:
     - "fails"

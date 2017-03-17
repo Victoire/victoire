@@ -44,7 +44,6 @@
 
 		this.element = $vic(element);
 
-
 		this.language = options.language || this.element.data('date-language') || "fr";
 		this.language = this.language in dates ? this.language : "fr";
 		this.isRTL = dates[this.language].rtl || false;
@@ -54,10 +53,10 @@
 		this.isVisible = false;
 		this.isInput = this.element.is('input');
 
-		this.bootcssVer = this.isInput ? (this.element.is('.v-form-group__input') ? 3 : 2) : ( this.bootcssVer = this.element.is('.v-form-group__input-group') ? 3 : 2 );
+		this.bootcssVer = this.isInput ? (this.element.is('.vic-form-control') ? 3 : 2) : ( this.bootcssVer = this.element.is('.vic-input-group') ? 3 : 2 );
 
-		this.component = this.element.is('.v-date') ? ( this.bootcssVer == 3 ? this.element.find('.v-form-group__addon svg, .v-form-group__addon .v-glyphicon-th, .v-form-group__addon .v-glyphicon-time, .v-form-group__addon .v-glyphicon-calendar').parent() : this.element.find('.v-add-on .icon-th, .add-on .icon-time, .add-on .icon-calendar').parent()) : false;
-		this.componentReset = this.element.is('.v-date') ? ( this.bootcssVer == 3 ? this.element.find('.v-form-group__addon .v-glyphicon-remove').parent() : this.element.find('.v-add-on .icon-remove').parent()) : false;
+		this.component = this.element.is('.vic-date') ? ( this.bootcssVer == 3 ? this.element.find('.vic-input-group-addon .vic-glyphicon-th, .vic-input-group-addon .vic-glyphicon-time, .vic-input-group-addon .vic-glyphicon-calendar').parent() : this.element.find('.vic-add-on .icon-th, .add-on .icon-time, .add-on .icon-calendar').parent()) : false;
+		this.componentReset = this.element.is('.vic-date') ? ( this.bootcssVer == 3 ? this.element.find('.vic-input-group-addon .vic-glyphicon-remove').parent() : this.element.find('.vic-add-on .icon-remove').parent()) : false;
 		this.hasInput = this.component && this.element.find('input').length;
 		if (this.component && this.component.length === 0) {
 			this.component = false;
@@ -156,23 +155,23 @@
 		}
 
 		if (this.isInline) {
-			this.picker.addClass('v-datetimepicker-inline');
+			this.picker.addClass('vic-datetimepicker-inline');
 		} else {
-			this.picker.addClass('v-datetimepicker-dropdown-' + this.pickerPosition + ' v-dropdown-menu');
+			this.picker.addClass('vic-datetimepicker-dropdown-' + this.pickerPosition + ' vic-dropdown-menu');
 		}
 		if (this.isRTL) {
-			this.picker.addClass('v-datetimepicker-rtl');
+			this.picker.addClass('vic-datetimepicker-rtl');
 			if (this.bootcssVer == 3) {
-				this.picker.find('.v-prev span, .v-next span')
-					.toggleClass('v-glyphicon-arrow-left v-glyphicon-arrow-right');
+				this.picker.find('.vic-prev span, .vic-next span')
+					.toggleClass('vic-glyphicon-arrow-left vic-glyphicon-arrow-right');
 			} else {
-				this.picker.find('.v-prev i, .v-next i')
+				this.picker.find('.vic-prev i, .vic-next i')
 					.toggleClass('icon-arrow-left icon-arrow-right');
 			}
         }
 		$vic(document).on('mousedown', function (e) {
 			// Clicked outside the datetimepicker, hide it
-			if ($vic(e.target).closest('.v-datetimepicker').length === 0) {
+			if ($vic(e.target).closest('.vic-datetimepicker').length === 0) {
 				that.hide();
 			}
 		});
@@ -273,7 +272,6 @@
 		},
 
 		show: function (e) {
-			console.log('hello world !');
 			this.picker.show();
 			this.height = this.component ? this.component.outerHeight() : this.element.outerHeight();
 			if (this.forceParse) {
@@ -484,19 +482,19 @@
 			var dowCnt = this.weekStart,
 				html = '<tr>';
 			while (dowCnt < this.weekStart + 7) {
-				html += '<th class="v-dow">' + dates[this.language].daysMin[(dowCnt++) % 7] + '</th>';
+				html += '<th class="vic-dow">' + dates[this.language].daysMin[(dowCnt++) % 7] + '</th>';
 			}
 			html += '</tr>';
-			this.picker.find('.v-datetimepicker-days thead').append(html);
+			this.picker.find('.vic-datetimepicker-days thead').append(html);
 		},
 
 		fillMonths: function () {
 			var html = '',
 				i = 0;
 			while (i < 12) {
-				html += '<span class="v-month">' + dates[this.language].monthsShort[i++] + '</span>';
+				html += '<span class="vic-month">' + dates[this.language].monthsShort[i++] + '</span>';
 			}
-			this.picker.find('.v-datetimepicker-months td').html(html);
+			this.picker.find('.vic-datetimepicker-months td').html(html);
 		},
 
 		fill: function () {
@@ -515,24 +513,24 @@
 				endMonth = this.endDate !== Infinity ? this.endDate.getUTCMonth() : Infinity,
 				currentDate = (new UTCDate(this.date.getUTCFullYear(), this.date.getUTCMonth(), this.date.getUTCDate())).valueOf(),
 				today = new Date();
-			this.picker.find('.v-datetimepicker-days thead th:eq(1)')
+			this.picker.find('.vic-datetimepicker-days thead th:eq(1)')
 				.text(dates[this.language].months[month] + ' ' + year);
 			if (this.formatViewType == "time") {
 				var hourConverted = hours % 12 ? hours % 12 : 12;
 				var hoursDisplay = (hourConverted < 10 ? '0' : '') + hourConverted;
 				var minutesDisplay = (minutes < 10 ? '0' : '') + minutes;
 				var meridianDisplay = dates[this.language].meridiem[hours < 12 ? 0 : 1];
-				this.picker.find('.v-datetimepicker-hours thead th:eq(1)')
+				this.picker.find('.vic-datetimepicker-hours thead th:eq(1)')
 					.text(hoursDisplay + ':' + minutesDisplay + ' ' + meridianDisplay.toUpperCase());
-				this.picker.find('.v-datetimepicker-minutes thead th:eq(1)')
+				this.picker.find('.vic-datetimepicker-minutes thead th:eq(1)')
 					.text(hoursDisplay + ':' + minutesDisplay + ' ' + meridianDisplay.toUpperCase());
 			} else {
-				this.picker.find('.v-datetimepicker-hours thead th:eq(1)')
+				this.picker.find('.vic-datetimepicker-hours thead th:eq(1)')
 					.text(dayMonth + ' ' + dates[this.language].months[month] + ' ' + year);
-				this.picker.find('.v-datetimepicker-minutes thead th:eq(1)')
+				this.picker.find('.vic-datetimepicker-minutes thead th:eq(1)')
 					.text(dayMonth + ' ' + dates[this.language].months[month] + ' ' + year);
 			}
-			this.picker.find('tfoot th.v-today')
+			this.picker.find('tfoot th.vic-today')
 				.text(dates[this.language].today)
 				.toggle(this.todayBtn !== false);
 			this.updateNavArrows();
@@ -554,31 +552,31 @@
 				}
 				clsName = '';
 				if (prevMonth.getUTCFullYear() < year || (prevMonth.getUTCFullYear() == year && prevMonth.getUTCMonth() < month)) {
-					clsName += ' v-old';
+					clsName += ' vic-old';
 				} else if (prevMonth.getUTCFullYear() > year || (prevMonth.getUTCFullYear() == year && prevMonth.getUTCMonth() > month)) {
-					clsName += ' v-new';
+					clsName += ' vic-new';
 				}
 				// Compare internal UTC date with local today, not UTC today
 				if (this.todayHighlight &&
 					prevMonth.getUTCFullYear() == today.getFullYear() &&
 					prevMonth.getUTCMonth() == today.getMonth() &&
 					prevMonth.getUTCDate() == today.getDate()) {
-					clsName += ' v-today';
+					clsName += ' vic-today';
 				}
 				if (prevMonth.valueOf() == currentDate) {
-					clsName += ' v-active';
+					clsName += ' vic-active';
 				}
 				if ((prevMonth.valueOf() + 86400000) <= this.startDate || prevMonth.valueOf() > this.endDate ||
 					$vic.inArray(prevMonth.getUTCDay(), this.daysOfWeekDisabled) !== -1) {
-					clsName += ' v-disabled';
+					clsName += ' vic-disabled';
 				}
-				html.push('<td class="v-day' + clsName + '">' + prevMonth.getUTCDate() + '</td>');
+				html.push('<td class="vic-day' + clsName + '">' + prevMonth.getUTCDate() + '</td>');
 				if (prevMonth.getUTCDay() == this.weekEnd) {
 					html.push('</tr>');
 				}
 				prevMonth.setUTCDate(prevMonth.getUTCDate() + 1);
 			}
-			this.picker.find('.v-datetimepicker-days tbody').empty().append(html.join(''));
+			this.picker.find('.vic-datetimepicker-days tbody').empty().append(html.join(''));
 
 			html = [];
 			var txt = '', meridian = '', meridianOld = '';
@@ -587,9 +585,9 @@
 				clsName = '';
 				// We want the previous hour for the startDate
 				if ((actual.valueOf() + 3600000) <= this.startDate || actual.valueOf() > this.endDate) {
-					clsName += ' v-disabled';
+					clsName += ' vic-disabled';
 				} else if (hours == i) {
-					clsName += ' v-active';
+					clsName += ' vic-active';
 				}
 				if (this.showMeridian && dates[this.language].meridiem.length == 2) {
 					meridian = (i < 12 ? dates[this.language].meridiem[0] : dates[this.language].meridiem[1]);
@@ -597,20 +595,20 @@
 						if (meridianOld != '') {
 							html.push('</fieldset>');
 						}
-						html.push('<fieldset class="v-hour"><legend>' + meridian.toUpperCase() + '</legend>');
+						html.push('<fieldset class="vic-hour"><legend>' + meridian.toUpperCase() + '</legend>');
 					}
 					meridianOld = meridian;
 					txt = (i % 12 ? i % 12 : 12);
-					html.push('<span class="v-hour' + clsName + ' v-hour_' + (i < 12 ? 'am' : 'pm') + '">' + txt + '</span>');
+					html.push('<span class="vic-hour' + clsName + ' vic-hour_' + (i < 12 ? 'am' : 'pm') + '">' + txt + '</span>');
 					if (i == 23) {
 						html.push('</fieldset>');
 					}
 				} else {
 					txt = i + ':00';
-					html.push('<span class="v-hour' + clsName + '">' + txt + '</span>');
+					html.push('<span class="vic-hour' + clsName + '">' + txt + '</span>');
 				}
 			}
-			this.picker.find('.v-datetimepicker-hours td').html(html.join(''));
+			this.picker.find('.vic-datetimepicker-hours td').html(html.join(''));
 
 			html = [];
 			txt = '', meridian = '', meridianOld = '';
@@ -618,9 +616,9 @@
 				var actual = UTCDate(year, month, dayMonth, hours, i, 0);
 				clsName = '';
 				if (actual.valueOf() < this.startDate || actual.valueOf() > this.endDate) {
-					clsName += ' v-disabled';
+					clsName += ' vic-disabled';
 				} else if (Math.floor(minutes / this.minuteStep) == Math.floor(i / this.minuteStep)) {
-					clsName += ' v-active';
+					clsName += ' vic-active';
 				}
 				if (this.showMeridian && dates[this.language].meridiem.length == 2) {
 					meridian = (hours < 12 ? dates[this.language].meridiem[0] : dates[this.language].meridiem[1]);
@@ -628,52 +626,52 @@
 						if (meridianOld != '') {
 							html.push('</fieldset>');
 						}
-						html.push('<fieldset class="v-minute"><legend>' + meridian.toUpperCase() + '</legend>');
+						html.push('<fieldset class="vic-minute"><legend>' + meridian.toUpperCase() + '</legend>');
 					}
 					meridianOld = meridian;
 					txt = (hours % 12 ? hours % 12 : 12);
-					//html.push('<span class="v-minute'+clsName+' minute_'+(hours<12?'am':'pm')+'">'+txt+'</span>');
-					html.push('<span class="v-minute' + clsName + '">' + txt + ':' + (i < 10 ? '0' + i : i) + '</span>');
+					//html.push('<span class="vic-minute'+clsName+' minute_'+(hours<12?'am':'pm')+'">'+txt+'</span>');
+					html.push('<span class="vic-minute' + clsName + '">' + txt + ':' + (i < 10 ? '0' + i : i) + '</span>');
 					if (i == 59) {
 						html.push('</fieldset>');
 					}
 				} else {
 					txt = i + ':00';
-					//html.push('<span class="v-hour'+clsName+'">'+txt+'</span>');
-					html.push('<span class="v-minute' + clsName + '">' + hours + ':' + (i < 10 ? '0' + i : i) + '</span>');
+					//html.push('<span class="vic-hour'+clsName+'">'+txt+'</span>');
+					html.push('<span class="vic-minute' + clsName + '">' + hours + ':' + (i < 10 ? '0' + i : i) + '</span>');
 				}
 			}
-			this.picker.find('.v-datetimepicker-minutes td').html(html.join(''));
+			this.picker.find('.vic-datetimepicker-minutes td').html(html.join(''));
 
 			var currentYear = this.date.getUTCFullYear();
-			var months = this.picker.find('.v-datetimepicker-months')
+			var months = this.picker.find('.vic-datetimepicker-months')
 				.find('th:eq(1)')
 				.text(year)
 				.end()
-				.find('span').removeClass('v-active');
+				.find('span').removeClass('vic-active');
 			if (currentYear == year) {
-				months.eq(this.date.getUTCMonth()).addClass('v-active');
+				months.eq(this.date.getUTCMonth()).addClass('vic-active');
 			}
 			if (year < startYear || year > endYear) {
-				months.addClass('v-disabled');
+				months.addClass('vic-disabled');
 			}
 			if (year == startYear) {
-				months.slice(0, startMonth).addClass('v-disabled');
+				months.slice(0, startMonth).addClass('vic-disabled');
 			}
 			if (year == endYear) {
-				months.slice(endMonth + 1).addClass('v-disabled');
+				months.slice(endMonth + 1).addClass('vic-disabled');
 			}
 
 			html = '';
 			year = parseInt(year / 10, 10) * 10;
-			var yearCont = this.picker.find('.v-datetimepicker-years')
+			var yearCont = this.picker.find('.vic-datetimepicker-years')
 				.find('th:eq(1)')
 				.text(year + '-' + (year + 9))
 				.end()
 				.find('td');
 			year -= 1;
 			for (var i = -1; i < 11; i++) {
-				html += '<span class="v-year' + (i == -1 || i == 10 ? ' v-old' : '') + (currentYear == year ? ' v-active' : '') + (year < startYear || year > endYear ? ' v-disabled' : '') + '">' + year + '</span>';
+				html += '<span class="vic-year' + (i == -1 || i == 10 ? ' vic-old' : '') + (currentYear == year ? ' vic-active' : '') + (year < startYear || year > endYear ? ' vic-disabled' : '') + '">' + year + '</span>';
 				year += 1;
 			}
 			yearCont.html(html);
@@ -692,60 +690,60 @@
 						&& month <= this.startDate.getUTCMonth()
 						&& day <= this.startDate.getUTCDate()
 						&& hour <= this.startDate.getUTCHours()) {
-						this.picker.find('.v-prev').css({visibility: 'hidden'});
+						this.picker.find('.vic-prev').css({visibility: 'hidden'});
 					} else {
-						this.picker.find('.v-prev').css({visibility: 'visible'});
+						this.picker.find('.vic-prev').css({visibility: 'visible'});
 					}
 					if (this.endDate !== Infinity && year >= this.endDate.getUTCFullYear()
 						&& month >= this.endDate.getUTCMonth()
 						&& day >= this.endDate.getUTCDate()
 						&& hour >= this.endDate.getUTCHours()) {
-						this.picker.find('.v-next').css({visibility: 'hidden'});
+						this.picker.find('.vic-next').css({visibility: 'hidden'});
 					} else {
-						this.picker.find('.v-next').css({visibility: 'visible'});
+						this.picker.find('.vic-next').css({visibility: 'visible'});
 					}
 					break;
 				case 1:
 					if (this.startDate !== -Infinity && year <= this.startDate.getUTCFullYear()
 						&& month <= this.startDate.getUTCMonth()
 						&& day <= this.startDate.getUTCDate()) {
-						this.picker.find('.v-prev').css({visibility: 'hidden'});
+						this.picker.find('.vic-prev').css({visibility: 'hidden'});
 					} else {
-						this.picker.find('.v-prev').css({visibility: 'visible'});
+						this.picker.find('.vic-prev').css({visibility: 'visible'});
 					}
 					if (this.endDate !== Infinity && year >= this.endDate.getUTCFullYear()
 						&& month >= this.endDate.getUTCMonth()
 						&& day >= this.endDate.getUTCDate()) {
-						this.picker.find('.v-next').css({visibility: 'hidden'});
+						this.picker.find('.vic-next').css({visibility: 'hidden'});
 					} else {
-						this.picker.find('.v-next').css({visibility: 'visible'});
+						this.picker.find('.vic-next').css({visibility: 'visible'});
 					}
 					break;
 				case 2:
 					if (this.startDate !== -Infinity && year <= this.startDate.getUTCFullYear()
 						&& month <= this.startDate.getUTCMonth()) {
-						this.picker.find('.v-prev').css({visibility: 'hidden'});
+						this.picker.find('.vic-prev').css({visibility: 'hidden'});
 					} else {
-						this.picker.find('.v-prev').css({visibility: 'visible'});
+						this.picker.find('.vic-prev').css({visibility: 'visible'});
 					}
 					if (this.endDate !== Infinity && year >= this.endDate.getUTCFullYear()
 						&& month >= this.endDate.getUTCMonth()) {
-						this.picker.find('.v-next').css({visibility: 'hidden'});
+						this.picker.find('.vic-next').css({visibility: 'hidden'});
 					} else {
-						this.picker.find('.v-next').css({visibility: 'visible'});
+						this.picker.find('.vic-next').css({visibility: 'visible'});
 					}
 					break;
 				case 3:
 				case 4:
 					if (this.startDate !== -Infinity && year <= this.startDate.getUTCFullYear()) {
-						this.picker.find('.v-prev').css({visibility: 'hidden'});
+						this.picker.find('.vic-prev').css({visibility: 'hidden'});
 					} else {
-						this.picker.find('.v-prev').css({visibility: 'visible'});
+						this.picker.find('.vic-prev').css({visibility: 'visible'});
 					}
 					if (this.endDate !== Infinity && year >= this.endDate.getUTCFullYear()) {
-						this.picker.find('.v-next').css({visibility: 'hidden'});
+						this.picker.find('.vic-next').css({visibility: 'hidden'});
 					} else {
-						this.picker.find('.v-next').css({visibility: 'visible'});
+						this.picker.find('.vic-next').css({visibility: 'visible'});
 					}
 					break;
 			}
@@ -787,7 +785,7 @@
 			e.preventDefault();
 			var target = $vic(e.target).closest('span, td, th, legend');
 			if (target.length == 1) {
-				if (target.is('.v-disabled')) {
+				if (target.is('.vic-disabled')) {
 					this.element.trigger({
 						type:      'outOfRange',
 						date:      this.viewDate,
@@ -799,12 +797,12 @@
 				switch (target[0].nodeName.toLowerCase()) {
 					case 'th':
 						switch (target[0].className) {
-							case 'v-switch':
+							case 'vic-switch':
 								this.showMode(1);
 								break;
-							case 'v-prev':
-							case 'v-next':
-								var dir = DPGlobal.modes[this.viewMode].navStep * (target[0].className == 'v-prev' ? -1 : 1);
+							case 'vic-prev':
+							case 'vic-next':
+								var dir = DPGlobal.modes[this.viewMode].navStep * (target[0].className == 'vic-prev' ? -1 : 1);
 								switch (this.viewMode) {
 									case 0:
 										this.viewDate = this.moveHour(this.viewDate, dir);
@@ -822,7 +820,7 @@
 								}
 								this.fill();
 								break;
-							case 'v-today':
+							case 'vic-today':
 								var date = new Date();
 								date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), 0);
 
@@ -841,7 +839,7 @@
 						}
 						break;
 					case 'span':
-						if (!target.is('.v-disabled')) {
+						if (!target.is('.vic-disabled')) {
 							var year = this.viewDate.getUTCFullYear(),
 								month = this.viewDate.getUTCMonth(),
 								day = this.viewDate.getUTCDate(),
@@ -849,7 +847,7 @@
 								minutes = this.viewDate.getUTCMinutes(),
 								seconds = this.viewDate.getUTCSeconds();
 
-							if (target.is('.v-month')) {
+							if (target.is('.vic-month')) {
 								this.viewDate.setUTCDate(1);
 								month = target.parent().find('span').index(target);
 								day = this.viewDate.getUTCDate();
@@ -861,7 +859,7 @@
 								if (this.viewSelect >= 3) {
 									this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
 								}
-							} else if (target.is('.v-year')) {
+							} else if (target.is('.vic-year')) {
 								this.viewDate.setUTCDate(1);
 								year = parseInt(target.text(), 10) || 0;
 								this.viewDate.setUTCFullYear(year);
@@ -872,12 +870,12 @@
 								if (this.viewSelect >= 4) {
 									this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
 								}
-							} else if (target.is('.v-hour')) {
+							} else if (target.is('.vic-hour')) {
 								hours = parseInt(target.text(), 10) || 0;
-								if (target.hasClass('v-hour_am') || target.hasClass('v-hour_pm')) {
-									if (hours == 12 && target.hasClass('v-hour_am')) {
+								if (target.hasClass('vic-hour_am') || target.hasClass('vic-hour_pm')) {
+									if (hours == 12 && target.hasClass('vic-hour_am')) {
 										hours = 0;
-									} else if (hours != 12 && target.hasClass('v-hour_pm')) {
+									} else if (hours != 12 && target.hasClass('vic-hour_pm')) {
 										hours += 12;
 									}
 								}
@@ -889,7 +887,7 @@
 								if (this.viewSelect >= 1) {
 									this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
 								}
-							} else if (target.is('.v-minute')) {
+							} else if (target.is('.vic-minute')) {
 								minutes = parseInt(target.text().substr(target.text().indexOf(':') + 1), 10) || 0;
 								this.viewDate.setUTCMinutes(minutes);
 								this.element.trigger({
@@ -916,21 +914,21 @@
 						}
 						break;
 					case 'td':
-						if (target.is('.v-day') && !target.is('.v-disabled')) {
+						if (target.is('.vic-day') && !target.is('.vic-disabled')) {
 							var day = parseInt(target.text(), 10) || 1;
 							var year = this.viewDate.getUTCFullYear(),
 								month = this.viewDate.getUTCMonth(),
 								hours = this.viewDate.getUTCHours(),
 								minutes = this.viewDate.getUTCMinutes(),
 								seconds = this.viewDate.getUTCSeconds();
-							if (target.is('.v-old')) {
+							if (target.is('.vic-old')) {
 								if (month === 0) {
 									month = 11;
 									year -= 1;
 								} else {
 									month -= 1;
 								}
-							} else if (target.is('.v-new')) {
+							} else if (target.is('.vic-new')) {
 								if (month == 11) {
 									month = 0;
 									year += 1;
@@ -1212,8 +1210,8 @@
 
 			 In jquery 1.7.2+ everything works fine.
 			 */
-			//this.picker.find('>div').hide().filter('.v-datetimepicker-'+DPGlobal.modes[this.viewMode].clsName).show();
-			this.picker.find('>div').hide().filter('.v-datetimepicker-' + DPGlobal.modes[this.viewMode].clsName).css('display', 'block');
+			//this.picker.find('>div').hide().filter('.vic-datetimepicker-'+DPGlobal.modes[this.viewMode].clsName).show();
+			this.picker.find('>div').hide().filter('.vic-datetimepicker-' + DPGlobal.modes[this.viewMode].clsName).css('display', 'block');
 			this.updateNavArrows();
 		},
 
@@ -1229,11 +1227,9 @@
 			var $this = $vic(this),
 				data = $this.data('datetimepicker'),
 				options = typeof option == 'object' && option;
-
 			if (!data) {
 				$this.data('datetimepicker', (data = new Datetimepicker(this, $vic.extend({}, $vic.fn.datetimepicker.defaults, options))));
 			}
-
 			if (typeof option == 'string' && typeof data[option] == 'function') {
 				data[option].apply(data, args);
 			}
@@ -1552,23 +1548,23 @@
 		convertViewMode:  function (viewMode) {
 			switch (viewMode) {
 				case 4:
-				case 'v-decade':
+				case 'vic-decade':
 					viewMode = 4;
 					break;
 				case 3:
-				case 'v-year':
+				case 'vic-year':
 					viewMode = 3;
 					break;
 				case 2:
-				case 'v-month':
+				case 'vic-month':
 					viewMode = 2;
 					break;
 				case 1:
-				case 'v-day':
+				case 'vic-day':
 					viewMode = 1;
 					break;
 				case 0:
-				case 'v-hour':
+				case 'vic-hour':
 					viewMode = 0;
 					break;
 			}
@@ -1577,89 +1573,89 @@
 		},
 		headTemplate:     '<thead>' +
 							  '<tr>' +
-							  '<th class="v-prev"><i class="v-icon-arrow-left"/></th>' +
-							  '<th colspan="5" class="v-switch"></th>' +
-							  '<th class="v-next"><i class="v-icon-arrow-right"/></th>' +
+							  '<th class="vic-prev"><i class="vic-icon-arrow-left"/></th>' +
+							  '<th colspan="5" class="vic-switch"></th>' +
+							  '<th class="vic-next"><i class="vic-icon-arrow-right"/></th>' +
 							  '</tr>' +
 			'</thead>',
 		headTemplateV3:   '<thead>' +
 							  '<tr>' +
-							  '<th class="v-prev"><i class="v-glyphicon v-glyphicon-arrow-left"></i> </th>' +
-							  '<th colspan="5" class="v-switch"></th>' +
-							  '<th class="v-next"><i class="v-glyphicon v-glyphicon-arrow-right"></i> </th>' +
+							  '<th class="vic-prev"><i class="vic-glyphicon vic-glyphicon-arrow-left"></i> </th>' +
+							  '<th colspan="5" class="vic-switch"></th>' +
+							  '<th class="vic-next"><i class="vic-glyphicon vic-glyphicon-arrow-right"></i> </th>' +
 							  '</tr>' +
 			'</thead>',
 		contTemplate:     '<tbody><tr><td colspan="7"></td></tr></tbody>',
-		footTemplate:     '<tfoot><tr><th colspan="7" class="v-today"></th></tr></tfoot>'
+		footTemplate:     '<tfoot><tr><th colspan="7" class="vic-today"></th></tr></tfoot>'
 	};
-	DPGlobal.template = '<div class="v-datetimepicker">' +
-		'<div class="v-datetimepicker-minutes">' +
-		'<table class="v-table-condensed">' +
+	DPGlobal.template = '<div class="vic-datetimepicker">' +
+		'<div class="vic-datetimepicker-minutes">' +
+		'<table class="vic-table-condensed">' +
 		DPGlobal.headTemplate +
 		DPGlobal.contTemplate +
 		DPGlobal.footTemplate +
 		'</table>' +
 		'</div>' +
-		'<div class="v-datetimepicker-hours">' +
-		'<table class="v-table-condensed">' +
+		'<div class="vic-datetimepicker-hours">' +
+		'<table class="vic-table-condensed">' +
 		DPGlobal.headTemplate +
 		DPGlobal.contTemplate +
 		DPGlobal.footTemplate +
 		'</table>' +
 		'</div>' +
-		'<div class="v-datetimepicker-days">' +
-		'<table class="v-table-condensed">' +
+		'<div class="vic-datetimepicker-days">' +
+		'<table class="vic-table-condensed">' +
 		DPGlobal.headTemplate +
 		'<tbody></tbody>' +
 		DPGlobal.footTemplate +
 		'</table>' +
 		'</div>' +
-		'<div class="v-datetimepicker-months">' +
-		'<table class="v-table-condensed">' +
+		'<div class="vic-datetimepicker-months">' +
+		'<table class="vic-table-condensed">' +
 		DPGlobal.headTemplate +
 		DPGlobal.contTemplate +
 		DPGlobal.footTemplate +
 		'</table>' +
 		'</div>' +
-		'<div class="v-datetimepicker-years">' +
-		'<table class="v-table-condensed">' +
+		'<div class="vic-datetimepicker-years">' +
+		'<table class="vic-table-condensed">' +
 		DPGlobal.headTemplate +
 		DPGlobal.contTemplate +
 		DPGlobal.footTemplate +
 		'</table>' +
 		'</div>' +
 		'</div>';
-	DPGlobal.templateV3 = '<div class="v-datetimepicker">' +
-		'<div class="v-datetimepicker-minutes">' +
-		'<table class="v-table-condensed">' +
+	DPGlobal.templateV3 = '<div class="vic-datetimepicker">' +
+		'<div class="vic-datetimepicker-minutes">' +
+		'<table class="vic-table-condensed">' +
 		DPGlobal.headTemplateV3 +
 		DPGlobal.contTemplate +
 		DPGlobal.footTemplate +
 		'</table>' +
 		'</div>' +
-		'<div class="v-datetimepicker-hours">' +
-		'<table class="v-table-condensed">' +
+		'<div class="vic-datetimepicker-hours">' +
+		'<table class="vic-table-condensed">' +
 		DPGlobal.headTemplateV3 +
 		DPGlobal.contTemplate +
 		DPGlobal.footTemplate +
 		'</table>' +
 		'</div>' +
-		'<div class="v-datetimepicker-days">' +
-		'<table class="v-table-condensed">' +
+		'<div class="vic-datetimepicker-days">' +
+		'<table class="vic-table-condensed">' +
 		DPGlobal.headTemplateV3 +
 		'<tbody></tbody>' +
 		DPGlobal.footTemplate +
 		'</table>' +
 		'</div>' +
-		'<div class="v-datetimepicker-months">' +
-		'<table class="v-table-condensed">' +
+		'<div class="vic-datetimepicker-months">' +
+		'<table class="vic-table-condensed">' +
 		DPGlobal.headTemplateV3 +
 		DPGlobal.contTemplate +
 		DPGlobal.footTemplate +
 		'</table>' +
 		'</div>' +
-		'<div class="v-datetimepicker-years">' +
-		'<table class="v-table-condensed">' +
+		'<div class="vic-datetimepicker-years">' +
+		'<table class="vic-table-condensed">' +
 		DPGlobal.headTemplateV3 +
 		DPGlobal.contTemplate +
 		DPGlobal.footTemplate +
@@ -1680,8 +1676,8 @@
 	 * ================== */
 
 	$vic(document).on(
-		'focus.v-datetimepicker.data-api click.v-datetimepicker.data-api',
-		'[data-provide="v-datetimepicker"]',
+		'focus.vic-datetimepicker.data-api click.vic-datetimepicker.data-api',
+		'[data-provide="vic-datetimepicker"]',
 		function (e) {
 			var $this = $vic(this);
 			if ($this.data('datetimepicker')) return;
@@ -1691,7 +1687,7 @@
 		}
 	);
 	$vic(function () {
-		$vic('[data-provide="v-datetimepicker-inline"]').datetimepicker();
+		$vic('[data-provide="vic-datetimepicker-inline"]').datetimepicker();
 	});
 
 }(window.$vic);

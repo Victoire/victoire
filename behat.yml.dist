@@ -32,7 +32,6 @@ default:
          Lakion\Behat\MinkDebugExtension:
              directory: fails
              screenshot: true
-             clean_start: false
          Behat\MinkExtension\ServiceContainer\MinkExtension:
              base_url:           'http://anakin@victoire.io:test@fr.victoire.io:8000/app_ci.php'
              selenium2: ~

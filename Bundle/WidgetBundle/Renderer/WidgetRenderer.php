@@ -228,7 +228,7 @@ class WidgetRenderer
      */
     public function getExtraCssClass(Widget $widget)
     {
-        $cssClass = 'v-widget--'.strtolower($this->container->get('victoire_widget.widget_helper')->getWidgetName($widget));
+        $cssClass = 'vic-widget-'.strtolower($this->container->get('victoire_widget.widget_helper')->getWidgetName($widget));
 
         return $cssClass;
     }

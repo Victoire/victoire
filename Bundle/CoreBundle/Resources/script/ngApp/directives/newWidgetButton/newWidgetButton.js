@@ -12,10 +12,6 @@ angular.module('ngApp').directive('newWidgetButton', function ($compile) {
                 });
             }
 
-            // Eval width of the slots to add or not a class
-            // function declared into the widget.js script file
-            evalSlotWidth(element[0].querySelector('.v-slot'));
-
             scope.selectedChoices = choices[0];
             scope.choices = choices;
 

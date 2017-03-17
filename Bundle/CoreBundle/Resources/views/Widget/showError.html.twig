@@ -1,25 +1,13 @@
 {% trans_default_domain "victoire" %}
 
 {% if widget != null %}
-    <div class="vic-widget {{ cms_widget_extra_css_class(widget) }}" id="widget-{{widget.id}}">
-        {% if is_granted('ROLE_VICTOIRE') %}
-            <a class="v-widget__overlay">
-                <svg class="v-widget__overlay-icon v-widget__overlay-icon--edit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
-                    <rect width="80" height="80" fill="currentColor" transform="rotate(-90 40 40)" rx="40" fill-rule="evenodd"/>
-                    <path fill="rgb(255, 255, 255)" d="M24.7717 53.005l3.2255 3.2254 6.4984-2.308-7.4158-7.4173-2.308 6.5zm-1.7758 5.0013l3.77-1.374-2.3963-2.3962-1.374 3.7704zm34.289-29.984l-4.3193-4.3178c-.9537-.9538-2.507-.9468-3.469.0154l-2.668 2.668 7.7728 7.773 2.668-2.6683c.9622-.962.9692-2.5153.0155-3.4705zM27.682 45.4856l7.8332 7.833 18.3092-18.3062-7.8346-7.8332L27.682 45.4856z" fill-rule="evenodd"/>
-                </svg>
-
-                <svg class="v-widget__overlay-icon v-widget__overlay-icon--style" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
-                    <rect width="80" height="80" fill="currentColor" transform="rotate(-90 40 40)" rx="40" fill-rule="evenodd"/>
-                    <path fill="rgb(255, 255, 255)" d="M53.055 25.304c0-.7205-.5835-1.304-1.304-1.304H25.304c-.27 0-.521.0822-.729.223-.1388.094-.258.2132-.352.352-.1408.208-.223.459-.223.729v6.0127c0 .27.0822.521.223.729.094.139.2132.2582.352.352.208.141.459.223.729.223h26.447c.7205 0 1.304-.5835 1.304-1.304v-2.029h1.3008v4.3313l-15.577 2.844c-.4648.0847-.802.4896-.802.9623v4.1898h-.9935c-.7205 0-1.304.584-1.304 1.304v14.777c0 .721.5835 1.304 1.304 1.304h3.944c.7204 0 1.304-.583 1.304-1.304V42.92c0-.7204-.5836-1.304-1.304-1.304h-.9937v-3.374l15.577-2.844c.4648-.085.802-.4897.802-.9624v-6.125c0-.5398-.4383-.978-.978-.978h-2.279V25.304h-.0005zm-11.8663 2.8727c1.2616 0 1.2616 1.956 0 1.956s-1.2616-1.956 0-1.956zM51.2914 25.22c-.124.3428-.412.6317-.8665.6747-.389.0346-.768.111-1.141.2067-.115.912-.3768 1.8002-.3807 2.7273-.0033.9102-1.407 1.4188-1.8224.4936-.9538-2.1268-1.7923-2.601-4.0104-2.5767-1.3647.0143-2.5853-.2158-3.828-.6866-.5685.073-1.141.1298-1.6854.1128-.3925 1.332.225 2.4437-.3156 3.7862-.2965.7367-1.3345 1.0412-1.7877.2334-.579-1.0328-.6135-2.014-.9388-2.6197-.06.4316-.3704.822-.9337.822-.8072 0-1.0954-.8-.869-1.377-.1957.0314-.405.0725-.6443.1325-1.1788.2947-2.175-.0007-3.1596-.2595v1.8243c0 .5333-.445.978-.978.978-.5335 0-.978-.4447-.978-.978v-2.0584c0-.017.0044-.0333.005-.0502-.5607.0287-1.1495.1845-1.7936.5685-.057.0333-.1203.06-.1862.08v-1.95c0-.18.146-.326.326-.326h26.447c.1623 0 .2914.121.3162.277-.2583-.014-.5165-.027-.776-.035z" fill-rule="evenodd"/>
-                </svg>
-            </a>
-        {% endif %}
+<div class="vic-widget {{ cms_widget_extra_css_class(widget) }}" id="widget-{{widget.id}}">
+    <a href="#" class="vic-hover-widget"><i></i></a>
 {% elseif widgetId != null %}
-    <div class="vic-widget vic-alert vic-alert-danger" id="widget-{{widgetId}}">
-        {{ cms_widget_unlink_action(widgetId, currentView) }}
+<div class="vic-widget vic-alert vic-alert-danger" id="widget-{{widgetId}}">
+    {{ cms_widget_unlink_action(widgetId, currentView) }}
 {% else %}
-    <div class="vic-widget vic-alert vic-alert-danger">
+<div class="vic-widget vic-alert vic-alert-danger">
 {% endif %}
     {{ error|raw }}
 </div>

@@ -31,23 +31,20 @@ Feature: Edit a widget
         Given the following WidgetMap:
             | view | action | slot |
             |  fiche-jedi-{{item.slug}}| create | main_content |
-        And the following WidgetForce:
+        Given the following WidgetForce:
             | widgetMap                | side |
             | fiche-jedi-{{item.slug}} | Obscur |
-        And I am on "/fr/victoire-dcms/business-template/show/4"
-        Then I should see "Le côté Obscur de la force"
+        Given I am on "/fr/victoire-dcms/business-template/show/4"
+        And I should see "Le côté Obscur de la force"
         When I switch to "edit" mode
         And I edit the "Force" widget
         Then I should see "Mettre à jour"
-        When I follow the tab "Entités"
-        Then I should see "Jedi"
-        When I follow the drop anchor "Jedi"
-        And I open the widget mode drop for entity "Jedi"
-        Then I should see "Requête"
-        When I follow the drop anchor "Requête"
-        And I select "side" from "jedi_a_query_widget_force[fields][side]"
+        When I follow the tab "Jedi"
+        And I should see "Requête"
+        And I follow "Requête"
+        When I select "side" from "jedi_a_query_widget_force[fields][side]"
         And I submit the widget
-        Then I should see "Le côté obscur de la force"
+        And I should see "Le côté obscur de la force"
 
     Scenario: I cannot edit widget for an entity with missing business parameter
         Given I am on "/fr/victoire-dcms/business-template/show/4"
@@ -55,8 +52,7 @@ Feature: Edit a widget
         Then I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
-        When I follow the tab "Entités"
-        And I should see disable drop anchor "Vaisseaux"
+        And I should see disable tab "Vaisseaux"
 
     Scenario: I can edit the original widget from a child page
         Given the following Jedis:
@@ -77,8 +73,7 @@ Feature: Edit a widget
         And I wait 3 seconds
         Then I should see "Attention !"
         And I should see "Ce contenu appartient à un modèle parent"
-        And I should see "MODIFIER LE CONTENU ORIGINAL"
-        When I follow "MODIFIER LE CONTENU ORIGINAL"
+        And I follow "modifier le contenu original"
         And I wait 5 seconds
         Then I should not see "Attention !"
         And I should not see "Ce contenu appartient à un modèle parent"

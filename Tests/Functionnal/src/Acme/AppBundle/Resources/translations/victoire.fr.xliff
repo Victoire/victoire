@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="58893bce99c36" resname="hamburger_menu.jedi">
         <source>hamburger_menu.jedi</source>
-        <target>Jedi</target>
+        <target><![CDATA[<i class="fa fa-empire"></i> Jedi]]></target>
       </trans-unit>
       <trans-unit id="58893bce99c47" resname="acme.app.jedi.index.title">
         <source>acme.app.jedi.index.title</source>

@@ -1,47 +1,39 @@
 {% trans_default_domain "victoire" %}
 
 {% block modal_container %}
-    <section class="{% block modal_container_classes %}v-modal{% endblock modal_container_classes %}" id="{% block modal_container_id %}vic-modal{% endblock %}">
-        {% block modal_header %}
-            <div class="v-modal__header">
-                <nav class="v-navbar v-navbar--grey">
-                    <div class="v-container v-container--fluid">
-                        <div class="v-flex-grid">
-                            <div class="v-flex-col">
-                                {% block modal_header_title_container %}
-                                    <h2 class="v-modal__heading">{% block modal_header_title %}{% endblock %}</h2>
-                                {% endblock modal_header_title_container %}
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        {% endblock modal_header %}
-
-        {% block modal_body %}
-            <div class="v-modal__body">
-                <div>
-                    {% block modal_body_sidebar %}{% endblock %}
-                </div>
-
-                <div class="v-modal__content">
-                    <div class="v-modal__content-inner">
-                        <div class="v-container">
-                            {% block modal_body_content %}{% endblock %}
-                        </div>
-                    </div>
+<div id="{% block modal_container_id %}vic-modal{% endblock modal_container_id %}" class="{% block modal_container_classes %}vic-modal vic-fade{% endblock modal_container_classes %}" role="dialog" aria-labelledby="victoire-modal-label" aria-hidden="true">
+    <div class="vic-modal-dialog">
+        <div class="vic-modal-content">
+            {% block modal_header %}
+            <div class="vic-modal-header">
+                <div class="vic-container-fluid">
+                    <button type="button" class="vic-close" data-modal="close">&times;</button>
+                    {% block modal_header_title_container %}
+                    <h4 class="vic-modal-title" id="victoire-modal-label">{% block modal_header_title %}{% endblock modal_header_title %}</h4>
+                    {% endblock modal_header_title_container %}
                 </div>
             </div>
-        {% endblock modal_body %}
+            {% endblock modal_header %}
 
-        {% block modal_footer %}
-            <div class="v-modal__footer">
-                <nav class="v-navbar">
-                    <div class="v-container">
-                        {% block modal_footer_content %}{% endblock %}
-                    </div>
-                </nav>
+            {% block modal_body %}
+            <div class="vic-modal-body">
+                <div class="vic-container-fluid">
+                    {% block modal_body_content %}{% endblock modal_body_content %}
+                </div>
             </div>
-        {% endblock modal_footer %}
-    </section>
+            {% endblock modal_body %}
+
+            {% block modal_footer %}
+            <div class="vic-modal-footer">
+                <div class="vic-container-fluid">
+                    <div class="vic-modal-footer-content">
+                    {% block modal_footer_content %}
+                    {% endblock modal_footer_content %}
+                    </div>
+                </div>
+            </div>
+            {% endblock modal_footer %}
+        </div>
+    </div>
+</div>
 {% endblock modal_container %}

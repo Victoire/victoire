@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Victoire\Bundle\MediaBundle\Entity\Media;
 use Victoire\Bundle\MediaBundle\Form\BulkUploadType;
@@ -23,8 +22,6 @@ use Victoire\Bundle\MediaBundle\Helper\MediaManager;
  */
 class MediaController extends Controller
 {
-    use VictoireAlertifyControllerTrait;
-
     /**
      * @param Request $request
      * @param int     $mediaId
@@ -87,7 +84,7 @@ class MediaController extends Controller
 
         $em->getRepository('VictoireMediaBundle:Media')->delete($media);
 
-        $this->congrat('Entry \''.$medianame.'\' has been deleted!');
+        $this->get('session')->getFlashBag()->add('success', 'Entry \''.$medianame.'\' has been deleted!');
 
         return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', ['folderId'  => $folder->getId()]));
     }
@@ -124,7 +121,7 @@ class MediaController extends Controller
                     $em->getRepository('VictoireMediaBundle:Media')->save($media);
                 }
 
-                $this->congrat('New entry has been uploaded');
+                $this->get('session')->getFlashBag()->add('success', 'New entry has been uploaded');
 
                 return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', ['folderId'  => $folder->getId()]));
             }
@@ -241,7 +238,7 @@ class MediaController extends Controller
                 $media->setFolder($folder);
                 $em->getRepository('VictoireMediaBundle:Media')->save($media);
 
-                $this->congrat('Media \''.$media->getName().'\' has been created!');
+                $this->get('session')->getFlashBag()->add('success', 'Media \''.$media->getName().'\' has been created!');
 
                 return new RedirectResponse($this->generateUrl($redirectUrl, ['folderId' => $folder->getId()]));
             }

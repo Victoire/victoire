@@ -2,11 +2,10 @@
 
 // PAGE MODAL EVENTS
 // Create new page after submit
-$vic(document).on('click', '.v-modal.v-modal--view *[data-modal="create"]', function(event) {
-
+$vic(document).on('click', '.vic-modal.vic-view-modal *[data-modal="create"]', function(event) {
     $vic(document).trigger('victoire_modal_page_save_create_before');
     event.preventDefault();
-    var form = $vic(this).parents('.v-modal').find('.v-modal__content form');
+    var form = $vic(this).parents('.vic-modal-content').find('form');
 
     loading(true);
 
@@ -33,10 +32,10 @@ $vic(document).on('click', '.v-modal.v-modal--view *[data-modal="create"]', func
 });
 
 // Update an existing page
-$vic(document).on('click', '.v-modal.v-modal--view a[data-modal="update"]', function(event) {
+$vic(document).on('click', '.vic-modal.vic-view-modal a[data-modal="update"]', function(event) {
     $vic(document).trigger('victoire_modal_page_save_update_before');
     event.preventDefault();
-    var form = $vic(this).parents('.v-modal').find('.v-modal__content form');
+    var form = $vic(this).parents('.vic-modal-content').find('form');
 
     loading(true);
     $vic.ajax({
@@ -62,7 +61,7 @@ $vic(document).on('click', '.v-modal.v-modal--view a[data-modal="update"]', func
 });
 
 // Create new page after submit
-$vic(document).on('click', '.v-modal.v-modal--view a.vic-confirmed', function(event) {
+$vic(document).on('click', '.vic-modal.vic-view-modal a.vic-confirmed', function(event) {
     //Check there isn't any data-toggle="vic-confirm" on it
     event.preventDefault();
     loading(true);

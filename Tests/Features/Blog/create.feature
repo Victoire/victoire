@@ -6,6 +6,7 @@ Background:
     And I am on homepage
 
     Scenario: I create a new blog
+        Given I open the hamburger menu
         Then I should see "Blog"
         When I follow "Blog"
         Then I should see "Aucun résultat"
@@ -23,6 +24,7 @@ Background:
 
     @alice(Blog) @alice(BlogTemplate)
     Scenario: I create a new article
+        Given I open the hamburger menu
         Then I should see "Blog"
         When I follow "Blog"
         Then I should see "The Jedi Network"
@@ -39,6 +41,7 @@ Background:
 
     @alice(Blog) @alice(BlogTemplate)
     Scenario: I create a new article with a slug
+        Given I open the hamburger menu
         Then I should see "Blog"
         When I follow "Blog"
         Then I should see "The Jedi Network"
@@ -56,6 +59,7 @@ Background:
 
     @alice(Blog) @alice(Article) @alice(BlogTemplate)
     Scenario: I can view the Article list in the blog management window
+        Given I open the hamburger menu
         Then I should see "Blog"
         When I follow "Blog"
         Then I should see "Listes des articles"

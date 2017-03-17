@@ -18,4 +18,3 @@
 | Form           |          | ViewReference  |          |
 | I18n           |          | Widget         |          |
 | Media          |          | WidgetMap      |          |
-| UI             |          |                |          |

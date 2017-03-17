@@ -1,132 +1,53 @@
-<div class="v-collapse" id="widget-{{ id }}-tab-pane" data-flag="v-collapse" data-group="tab-widget-quantum" {% if forms.active is defined and forms.active == true %}data-state="visible"{% endif %}>
+
+<div class="vic-tab-quantum vic-tab-pane{% if forms.active is defined and forms.active == true %} vic-active{% endif %}" id="widget-{{ id }}-tab-pane">
+
     {% if widget.id and widget.widgetMap.view != view %}
-        {% embed "VictoireUIBundle:Bricks:alert.html.twig" with { theme: "warning" } %}
-            {% block body %}
-                {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.widgetMap.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'viewReference': widget.widgetMap.view.reference.id })}, 'victoire')|raw }}
-            {% endblock body %}
-        {% endembed %}
-    {% endif %}
-
-    {% if classes|length %}
-        <div class="v-tabs-nav v-tabs-nav--widget-modal">
-            <div class="v-tabs-nav__item">
-                <a class="v-tabs-nav__anchor {% if constant('MODE_STATIC', widget) == widget.mode %}v-tabs-nav__anchor--active{% endif %}" data-collapse="show" data-href="#picker-static-{{ quantum }}" data-activeclass="v-tabs-nav__anchor--active">
-                    {{ ('form.widget.tab.manual.label')|trans({}, 'victoire') }}
-                </a>
-            </div>
-
-            <div class="v-tabs-nav__item">
-                <a class="v-tabs-nav__anchor" data-flag="v-drop" data-position="bottomout center" data-droptarget="#picker-entities-{{ quantum }}">
-                    {{ ('form.widget.tab.entities.label')|trans({}, 'victoire') }}
-
-                    <svg style="margin-left: 0.4em;" xmlns="http://www.w3.org/2000/svg" width="8" height="6" viewBox="65 6 8 6">
-                        <path fill="currentColor" fill-rule="evenodd" d="M65.94 7L69 10.0904 72.06 7l.94.9514L69 12l-4-4.0486"/>
-                    </svg>
-                </a>
-
-                {% if classes|length %}
-                    <div class="v-drop" id="picker-entities-{{ quantum }}">
-                        <nav class="v-drop__menu">
-                            {% for class, namespace in classes %}
-                                {% if namespace.disable %}
-                                    <span class="v-drop__anchor v-drop__anchor--disabled" title="{{ ('form.widget.tab.entity.disable.label')|trans({}, 'victoire') }}">
-                                        {{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}
-                                    </span>
-                                {% else %}
-                                    <a class="v-drop__anchor {% if widget.businessEntityId == class|lower %} v-drop__anchor--active{% endif %}" data-href="#picker-{{ class|lower }}-{{ quantum }}" data-collapse="show" data-activeclass="v-drop__anchor--active">
-                                        {{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}
-                                    </a>
-                                {% endif %}
-                            {% endfor %}
-                        </nav>
-                    </div>
-                {% endif %}
-            </div>
+        <div class="vic-alert vic-alert-warning vic-alert-dismissible">
+            {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.widgetMap.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'viewReference': widget.widgetMap.view.reference.id })}, 'victoire')|raw }}
         </div>
     {% endif %}
 
-    {% for class, form in forms %}
-        {% set isActive = (class == widget.mode) or (widget.businessEntityId == class|lower and widget.mode != constant('MODE_STATIC', widget)) %}
+    {% if classes|length %}
+        <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
+            <li class="{% if constant('MODE_STATIC', widget) == widget.mode %}vic-active {% endif %}vic-separate"><a href="#picker-static-{{ quantum }}" data-toggle="vic-tab">{{ ('form.widget.tab.manual.label')|trans({}, 'victoire') }}</a></li>
+            {% for class, namespace in classes %}
+                {% if namespace.disable %}
+                    <li class="vic-disable"><span title="{{ ('form.widget.tab.entity.disable.label')|trans({}, 'victoire') }}">{{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}</span></li>
+                {% else %}
+                    <li class="{% if not loop.last %}vic-separate{% endif %}{% if widget.businessEntityId == class|lower %} vic-active{% endif %}"><a href="#picker-{{ class|lower }}-{{ quantum }}" data-toggle="vic-tab">{{ ('form.widget.tab.' ~ class|lower ~ '.label')|trans({}, 'victoire') }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
 
-        <div class="v-collapse" id="picker-{{ class|lower }}-{{ quantum }}" data-group="picker-{{ quantum }}" data-flag="v-collapse"{% if isActive %} data-state="visible"{% endif %}>
-            <div class="v-widget-form">
+    <div class="vic-tab-content vic-modal-tab-content">
+        {% for class, form in forms %}
+            {% set isActive = class == widget.mode or widget.businessEntityId == class|lower and widget.mode == constant('MODE_BUSINESS_ENTITY', widget) %}
+            <div class="vic-tab-mode vic-tab-pane{% if isActive %} vic-active{% endif %}" id="picker-{{ class|lower }}-{{ quantum }}">
+
                 {% if class != constant('MODE_STATIC', widget) and is_granted('ROLE_VICTOIRE_DEVELOPER') %}
-                    <a class="v-btn v-btn--info / v-mode-trigger / v-widget-form__mode-btn"
-                       data-flag="v-drop v-mode-drop"
-                       data-droptarget="#picker-modes-{{ class|lower }}-{{ quantum }}"
-                    >
-                        <span class="v-mode-trigger__placeholder-label">
-                            {{ ('form.widget.tab.mode.label')|trans({}, 'victoire') }}
-                        </span>
-
-                        <span class="v-mode-trigger__entity-label">
-                            {{ ('form.widget.tab.mode_picker.label')|trans({}, 'victoire') }}
-                        </span>
-
-                        <span class="v-mode-trigger__query-label">
-                            {{ ('form.widget.tab.mode_query.label')|trans({}, 'victoire') }}
-                        </span>
+                    <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
+                        <li class="{% if widget.mode == constant('MODE_ENTITY', widget) %}vic-active {% endif %}vic-separate"><a href="#picker-{{ class|lower }}-{{ quantum }}-entity" data-toggle="vic-tab">{{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}</a></li>
+                        <li{% if widget.mode == constant('MODE_QUERY', widget) %} class="vic-active"{% endif %}><a href="#picker-{{ class|lower }}-{{ quantum }}-query" data-toggle="vic-tab">{{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}</a></li>
 
                         {% if is_business_entity_allowed(class|lower, view) %}
-                            <span class="v-mode-trigger__businessEntity-label">
-                                {{ ('form.widget.tab.mode_entity_instance.label')|trans({}, 'victoire') }}
-                            </span>
+                            <li{% if widget.mode == constant('MODE_BUSINESS_ENTITY', widget) %} class="vic-active"{% endif %}><a href="#picker-{{ class|lower }}-{{ quantum }}-businessEntity" data-toggle="vic-tab">{{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}</a></li>
                         {% endif %}
-
-                        {% include 'VictoireUIBundle:SVG:caret.html.twig' with { class: 'v-btn__ic v-btn__ic--after' } %}
-                    </a>
-
-                    <div class="v-drop" id="picker-modes-{{ class|lower }}-{{ quantum }}">
-                        <nav class="v-drop__menu">
-                            {% spaceless %}
-                                <a class="v-drop__anchor"
-                                   data-collapse="show"
-                                   data-href="#picker-{{ class|lower }}-{{ quantum }}-entity"
-                                   title="{{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}"
-                                   data-activeclass="v-drop__anchor--active"
-                                   data-triggerclass="v-mode-trigger--entity"
-                                >
-                                    {{ ('form.widget.tab.picker.label')|trans({}, 'victoire') }}
-                                </a>
-                            {% endspaceless %}
-
-                            {% spaceless %}
-                                <a class="v-drop__anchor"
-                                   data-collapse="show"
-                                   data-href="#picker-{{ class|lower }}-{{ quantum }}-query"
-                                   data-activeclass="v-drop__anchor--active"
-                                   data-triggerclass="v-mode-trigger--query"
-                                   title="{{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}"
-                                >
-                                    {{ ('form.widget.tab.query.label')|trans({}, 'victoire') }}
-                                </a>
-                            {% endspaceless %}
-
-                            {% if is_business_entity_allowed(class|lower, view) %}
-                                {% spaceless %}
-                                    <a class="v-drop__anchor"
-                                       data-collapse="show"
-                                       data-href="#picker-{{ class|lower }}-{{ quantum }}-businessEntity"
-                                       data-activeclass="v-drop__anchor--active"
-                                       data-triggerclass="v-mode-trigger--businessEntity"
-                                       title="{{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}"
-                                    >
-                                        {{ ('form.widget.tab.entity_instance.label')|trans({}, 'victoire') }}
-                                    </a>
-                                {% endspaceless %}
-                            {% endif %}
-                        </nav>
+                    </ul>
+                    <div class="vic-tab-content vic-modal-tab-content">
+                        {% for subForm in form %}
+                            {{ subForm|raw }}
+                        {% endfor %}
                     </div>
-
-                    {% for subForm in form %}
-                        {{ subForm|raw }}
-                    {% endfor %}
                 {% else %}
                     {% for el, subForm in form %}
                         {{ subForm|raw }}
                     {% endfor %}
                 {% endif %}
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 </div>
+
+
+

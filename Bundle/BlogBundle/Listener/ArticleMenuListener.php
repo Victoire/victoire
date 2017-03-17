@@ -33,24 +33,21 @@ class ArticleMenuListener implements MenuListenerInterface
      */
     public function addContextual($event)
     {
+        $mainItem = $this->getMainItem();
         $page = $event->getPage();
         $currentArticle = $event->getPage()->getBusinessEntity();
 
-        $bottomRightNavbar = $this->menuBuilder->getBottomRightNavbar();
-
-        $bottomRightNavbar->addChild('menu.page.settings',
+        $mainItem->addChild('menu.page.settings',
             [
                 'route'           => 'victoire_blog_article_settings',
                 'routeParameters' => [
                     'id'      => $currentArticle->getId(),
                     'page_id' => $page->getId(),
                 ],
-                'linkAttributes'  => [
-                    'class' => 'v-btn v-btn--sm v-btn--transparent',
-                    'id'    => 'v-settings-link',
-                ],
             ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        return $mainItem;
     }
 
     /**

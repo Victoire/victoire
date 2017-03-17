@@ -4,11 +4,11 @@
         <body>
             <trans-unit id="58893b9a04f33" resname="menu.leftnavbar.sitemap.label">
                 <source>menu.leftnavbar.sitemap.label</source>
-                <target>Plan du site</target>
+                <target><![CDATA[<i class="vic-menuImg vic-menuImg-sitemap"></i> Plan du site]]></target>
             </trans-unit>
             <trans-unit id="58893b9a04f61" resname="menu.sitemap">
                 <source>menu.sitemap</source>
-                <target>Plan du site</target>
+                <target><![CDATA[<i class="vic-menuImg vic-menuImg-sitemap"></i> Plan du site]]></target>
             </trans-unit>
             <trans-unit id="58893b9a04f7f" resname="modal.sitemap.title">
                 <source>modal.sitemap.title</source>

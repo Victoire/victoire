@@ -16,7 +16,7 @@ $vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox
     var form = $vic(this).parents('form');
     loading(true);
 
-    var targetClass = '.v-modal__body .v-container [data-group="tab-widget-quantum"][data-state="visible"]';
+    var targetClass = ".vic-modal-body .vic-container-fluid .vic-tab-quantum.vic-tab-pane.vic-active";
     if ($vic(this).data('target')) {
         targetClass = $vic(this).data('target');
     }

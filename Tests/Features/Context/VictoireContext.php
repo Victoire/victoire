@@ -2,11 +2,8 @@
 
 namespace Victoire\Tests\Features\Context;
 
-use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
-use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\Element;
-use Behat\Mink\Session;
 use Behat\Symfony2Extension\Context\KernelDictionary;
 use Knp\FriendlyContexts\Context\RawMinkContext;
 
@@ -20,11 +17,7 @@ class VictoireContext extends RawMinkContext
     use KernelDictionary;
     protected $minkContext;
 
-    /**
-     * @BeforeScenario
-     *
-     * @param BeforeScenarioScope $scope
-     */
+    /** @BeforeScenario */
     public function gatherContexts(BeforeScenarioScope $scope)
     {
         $environment = $scope->getEnvironment();
@@ -40,42 +33,6 @@ class VictoireContext extends RawMinkContext
     {
         $viewsReferences = $this->getContainer()->get('victoire_core.view_helper')->buildViewsReferences();
         $this->getContainer()->get('victoire_view_reference.manager')->saveReferences($viewsReferences);
-    }
-
-    /**
-     * @AfterStep
-     *
-     * @param AfterStepScope $scope
-     *
-     * @throws \Exception
-     */
-    public function lookForJSErrors(AfterStepScope $scope)
-    {
-        /* @var Session $session */
-        $session = $this->getSession();
-
-        if(!($session->getDriver() instanceof Selenium2Driver)) {
-            return;
-        }
-
-        try {
-            $errors = $session->evaluateScript("window.jsErrors");
-            $session->evaluateScript("window.jsErrors = []");
-        } catch (\Exception $e) {
-            throw $e;
-        }
-        if (!$errors || empty($errors)) {
-            return;
-        }
-        $file = sprintf("%s:%d", $scope->getFeature()->getFile(), $scope->getStep()->getLine());
-        $message = sprintf("Found %d javascript error%s", count($errors), count($errors) > 0 ? 's' : '');
-        echo '-------------------------------------------------------------' . PHP_EOL;
-        echo $file . PHP_EOL;
-        echo $message . PHP_EOL;
-        echo '-------------------------------------------------------------' . PHP_EOL;
-        foreach ($errors as $index => $error) {
-            echo sprintf("   #%d: %s", $index, $error) . PHP_EOL;
-        }
     }
 
     /**
@@ -95,8 +52,7 @@ class VictoireContext extends RawMinkContext
     public function iLoginAsVisitor()
     {
         $this->getSession()->getDriver()->stop();
-        $baseUrl = $this->minkContext->getMinkParameter('base_url');
-        $url = str_replace('anakin@victoire.io:test', 'z6po@victoire.io:test', $baseUrl);
+        $url = 'http://z6po@victoire.io:test@fr.victoire.io:8000';
         $this->minkContext->setMinkParameter('base_url', $url);
     }
 
@@ -135,7 +91,7 @@ class VictoireContext extends RawMinkContext
      */
     public function iSwitchToMode($mode)
     {
-        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', 'descendant-or-self::*[@for="mode-switcher--'.$mode.'"]');
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', 'descendant-or-self::*[@data-mode="admin-'.$mode.'"]');
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
@@ -149,135 +105,7 @@ class VictoireContext extends RawMinkContext
      */
     public function iOpenTheHamburgerMenu()
     {
-        $element = $this->findOrRetry(
-            $this->getSession()->getPage(),
-            'xpath',
-            'descendant-or-self::*[@id="vic-menu-leftnavbar-trigger"]'
-        );
-
-        if (null === $element) {
-            $message = sprintf('Element not found in the page after 10 seconds"');
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
-        }
-        $element->click();
-    }
-
-    /**
-     * @When I open the widget mode drop for entity :entity
-     */
-    public function iOpenTheWidgetModeDrop($entity)
-    {
-        $element = $this->findOrRetry(
-            $this->getSession()->getPage(),
-            'css',
-            '[id^="picker-'.strtolower($entity).'"] .v-mode-trigger'
-        );
-        if (null === $element) {
-            $message = sprintf('Element not found in the page after 10 seconds"');
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
-        }
-        $element->click();
-    }
-    /**
-     * @When I open the widget style tab :key
-     */
-    public function iOpenTheWidgetStyleTab($key)
-    {
-        $element = $this->findOrRetry(
-            $this->getSession()->getPage(),
-            'css',
-            '[title="style-'.$key.'"]'
-        );
-        if (null === $element) {
-            $message = sprintf('Element not found in the page after 10 seconds"');
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
-        }
-        $element->click();
-    }
-
-    /**
-     * @When I follow the float action button
-     */
-    public function iFollowTheFloatAction()
-    {
-        $element = $this->findOrRetry(
-            $this->getSession()->getPage(),
-            'css',
-            '#v-float-container [data-flag="v-drop v-drop-fab"]'
-        );
-        if (null === $element) {
-            $message = sprintf('Element not found in the page after 10 seconds"');
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
-        }
-        $element->click();
-    }
-
-    /**
-     * @When I open the widget quantum collapse for entity :entity
-     */
-    public function iOpenTheWidgetQuantumCollapse($entity)
-    {
-        $element = $this->findOrRetry(
-            $this->getSession()->getPage(),
-            'css',
-            '[id^="picker-'.strtolower($entity).'"][data-state="visible"] [id^="picker-'.strtolower($entity).'"][data-state="visible"] .v-widget-form__quantum-btn'
-        );
-
-
-        if (null === $element) {
-            $message = sprintf('Element not found in the page after 10 seconds"');
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
-        }
-        $element->click();
-    }
-
-    /**
-     * @When I open the widget quantum collapse when static
-     */
-    public function iOpenTheWidgetQuantumCollapseWhenStatic()
-    {
-        $element = $this->findOrRetry(
-            $this->getSession()->getPage(),
-            'css',
-            '[data-state="visible"] [id^="picker-static"] .v-widget-form__quantum-btn'
-        );
-
-
-        if (null === $element) {
-            $message = sprintf('Element not found in the page after 10 seconds"');
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
-        }
-        $element->click();
-    }
-
-    /**
-     * @Then /^I open the settings menu$/
-     */
-    public function iOpenTheSettingsMenu()
-    {
-        $element = $this->findOrRetry(
-            $this->getSession()->getPage(),
-            'xpath',
-            'descendant-or-self::*[@id="v-settings-link"]'
-        );
-
-        if (null === $element) {
-            $message = sprintf('Element not found in the page after 10 seconds"');
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
-        }
-        $element->click();
-    }
-
-    /**
-     * @Then /^I open the additionals menu drop$/
-     */
-    public function iOpenTheAdditionalsMenuDrop()
-    {
-        $element = $this->findOrRetry(
-            $this->getSession()->getPage(),
-            'xpath',
-            'descendant-or-self::*[@id="v-additionals-drop"]'
-        );
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', 'descendant-or-self::*[@id="vic-menu-leftnavbar-trigger"]');
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
@@ -291,52 +119,13 @@ class VictoireContext extends RawMinkContext
      */
     public function iFollowTheTab($name)
     {
-        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::a[contains(@class, "v-tabs-nav__anchor") and normalize-space(text()) = "%s"]', $name));
-
-        // @TODO When the new styleguide is completly integrated, remove.
-        if (null === $element) {
-            $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::a[@data-toggle="vic-tab" and normalize-space(text()) = "%s"]', $name));
-        }
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::a[@data-toggle="vic-tab" and normalize-space(text()) = "%s"]', $name));
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
-    }
-
-    /**
-     * @When I follow the drop trigger :name
-     */
-    public function iFollowTheDropTrigger($name)
-    {
-        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::a[@data-flag*="v-drop" and normalize-space(text()) = "%s"]', $name));
-
-        if (null === $element) {
-            $message = sprintf('Element not found in the page after 10 seconds"');
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
-        }
-        $element->click();
-    }
-
-    /**
-     * @When I follow the drop anchor :name
-     */
-    public function iFollowTheDropAnchor($name)
-    {
-        $page = $this->getSession()->getPage();
-        $elements = $page->findAll('xpath', sprintf('descendant-or-self::a[contains(@class, "v-drop__anchor") and normalize-space(text()) = "%s"]', $name));
-
-        if (count($elements) < 1) {
-            $message = sprintf('Element not found in the page after 10 seconds"');
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
-        }
-
-        foreach($elements as $element) {
-            if($element->getText() === $name) {
-                $element->click();
-            }
-        }
     }
 
     /**
@@ -360,7 +149,7 @@ class VictoireContext extends RawMinkContext
      */
     public function iEditTheWidget($widgetType)
     {
-        $selector = sprintf('.v-widget--%s > a.v-widget__overlay', strtolower($widgetType));
+        $selector = sprintf('.vic-widget-%s > a.vic-hover-widget', strtolower($widgetType));
         $session = $this->getSession(); // get the mink session
         $element = $this->findOrRetry($session->getPage(), 'css', $selector);
 
@@ -428,20 +217,6 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * @Then I should see disable drop anchor :name
-     */
-    public function iShouldSeeDisableDropAnchor($name)
-    {
-        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::*[contains(@class, \'v-drop__anchor--disabled\') and normalize-space(.) = "%s"]', $name));
-
-
-        if (null === $element) {
-            $message = sprintf('Element not found in the page after 10 seconds"');
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
-        }
-    }
-
-    /**
      * @Then I should see disable tab :name
      */
     public function iShouldSeeDisableTab($name)
@@ -493,20 +268,39 @@ class VictoireContext extends RawMinkContext
     {
         $session = $this->getSession();
 
-        $quantumSelector = sprintf('descendant-or-self::a[contains(@class, \'v-btn--quantum\') and normalize-space(.) = "%s"]', $quantumName);
+        $quantumSelector = sprintf('descendant-or-self::ul[contains(@class, \'vic-quantum-nav\')]/li[normalize-space(.) = "%s"]/a', $quantumName);
         $quantum = $this->findOrRetry($session->getPage(), 'xpath', $quantumSelector);
         $quantum->click();
     }
 
     /**
-     * @When /^I create a new quantum$/
+     * @When /^I create a new quantum "(.+)"$/
      */
-    public function iCreateANewQuantum()
+    public function iCreateANewQuantum($name)
     {
         $session = $this->getSession();
 
-        $element = $this->findOrRetry($session->getPage(), 'css', '#widget-new-tab');
-        $element->click();
+        $list = $this->findOrRetry($session->getPage(), 'css', '.vic-quantum-nav .edit.fa-plus');
+        $list->click();
+
+        $newQuantumSelector = 'descendant-or-self::ul[contains(@class, \'vic-quantum-nav\')]/li[normalize-space(.) = "Défault" and position() = (last()-1)]';
+        $newQuantum = $this->findOrRetry($session->getPage(), 'xpath', $newQuantumSelector);
+
+        if (null === $newQuantum) {
+            $message = sprintf('New quantum not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+
+        $pencilSelector = 'descendant-or-self::ul[contains(@class, \'vic-quantum-nav\')]/li[position() = (last()-1)]/a/i[contains(@class, \'fa-pencil\')]';
+        $pencil = $this->findOrRetry($session->getPage(), 'xpath', $pencilSelector);
+        $pencil->click();
+
+        $input = $this->findOrRetry($session->getPage(), 'css', '.quantum-edit-field');
+        $input->setValue($name);
+
+        //Click outside
+        $list = $this->findOrRetry($session->getPage(), 'css', '.vic-quantum-nav');
+        $list->click();
     }
 
     /**

@@ -35,7 +35,7 @@ class BusinessPageMenuListener implements MenuListenerInterface
      */
     public function addGlobal(Event $event)
     {
-        $this->mainItem = $this->menuBuilder->getBottomLeftNavbar()->getChild('menu.additionals');
+        $this->mainItem = $this->menuBuilder->getLeftNavbar();
 
         if ($this->menuBuilder->isGranted('ROLE_VICTOIRE_BET')) {
             $this
@@ -43,10 +43,7 @@ class BusinessPageMenuListener implements MenuListenerInterface
                 ->addChild(
                     'menu.business_template',
                     [
-                        'route'          => 'victoire_business_template_index',
-                        'linkAttributes' => [
-                            'class' => 'v-drop__anchor',
-                        ],
+                        'route' => 'victoire_business_template_index',
                     ]
                 )
                 ->setLinkAttribute('data-toggle', 'vic-modal');
@@ -64,26 +61,41 @@ class BusinessPageMenuListener implements MenuListenerInterface
      */
     public function addContextual($event)
     {
-        $bottomRightNavbar = $this->menuBuilder->getBottomRightNavbar();
+        $mainItem = $this->getMainItem();
 
         //if there is a template, we add the link in the top bar
-        $bottomRightNavbar->addChild('menu.page.settings',
+        $mainItem->addChild('menu.page.settings',
             [
                 'route'           => 'victoire_business_template_edit',
                 'routeParameters' => ['id' => $event->getPage()->getId()],
-                'linkAttributes'  => [
-                    'class' => 'v-btn v-btn--sm v-btn--transparent',
-                ],
             ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
-        $bottomRightNavbar->addChild('menu.page.seoSettings',
+        $mainItem->addChild('menu.page.seoSettings',
             [
                 'route'           => 'victoire_seo_pageSeo_settings',
                 'routeParameters' => ['id' => $event->getPage()->getId()],
-                'linkAttributes'  => [
-                    'class' => 'v-btn v-btn--sm v-btn--transparent',
-                ],
             ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
+
+        return $mainItem;
+    }
+
+    /**
+     * Get the main item.
+     *
+     * @return \Knp\Menu\ItemInterface <\Knp\Menu\ItemInterface, NULL>|\Knp\Menu\ItemInterface
+     */
+    public function getMainItem()
+    {
+        $menuPage = $this->menuBuilder->getTopNavbar()->getChild('menu.page');
+
+        if ($menuPage) {
+            return $menuPage;
+        } else {
+            return $this->menuBuilder->createDropdownMenuItem(
+                $this->menuBuilder->getTopNavbar(),
+                'menu.page'
+            );
+        }
     }
 }

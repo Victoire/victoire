@@ -50,6 +50,7 @@ class IsLoggedDataSource
                     true  => 'victoire_criteria.request_user.is.connected.criteria.label',
                     false => 'victoire_criteria.request_user.is.not.connected.criteria.label',
                 ],
+                'expanded' => true,
                 'multiple' => false,
             ],
         ];

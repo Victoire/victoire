@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="58893bce97e2a" resname="hamburger_menu.jedi">
         <source>hamburger_menu.jedi</source>
-        <target>Jedi</target>
+        <target><![CDATA[<i class="fa fa-empire"></i> Jedi]]></target>
       </trans-unit>
       <trans-unit id="58893bce97e42" resname="acme.app.jedi.index.title">
         <source>acme.app.jedi.index.title</source>
@@ -25,7 +25,7 @@
       <trans-unit id="58893bce97e68" resname="acme.app.jedi.index.th.Name">
         <source>acme.app.jedi.index.th.Name</source>
         <target>Name</target>
-      </trans-unit>
+      </trans-unit>      
       <trans-unit id="58893bce97e71" resname="acme.app.jedi.index.th.Midichlorians">
         <source>acme.app.jedi.index.th.Midichlorians</source>
         <target>Midichlorians</target>
