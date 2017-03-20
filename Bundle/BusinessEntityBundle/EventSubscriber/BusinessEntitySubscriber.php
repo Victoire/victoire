@@ -245,7 +245,7 @@ class BusinessEntitySubscriber implements EventSubscriber
         $entity = $eventArgs->getEntity();
 
         //if entity is a translation, get its translatable entity
-        if(method_exists($entity, 'getTranslatable')) {
+        if (method_exists($entity, 'getTranslatable') && null !== $entity->getTranslatable()) {
             $entity = $entity->getTranslatable();
         }
 
