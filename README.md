@@ -38,6 +38,13 @@ You can see the list of our lovely [contributors](https://github.com/Victoire/Vi
 
 Victoire and its Widgets are tested with Behat through CircleCI. For further information please take a look at [victoire-test-suite](https://github.com/Victoire/test-suite).
 
+### Maintenance
+
+Victoire follows the [maintenance rules of Symfony](http://symfony.com/doc/master/contributing/code/maintenance.html). In summary:
+
+- New features and backward compatibility breaks can only be pushed to the `master` branch
+- Bug and security fixes must target the lowest applicable and maintained version
+
 ### Frontend contribution
 
 If you want to contribute to Victoire frontend, please read this [contribution guideline](doc/frontend-contribution.md).
