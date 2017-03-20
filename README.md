@@ -9,7 +9,7 @@
 [![Dependency Status](https://www.versioneye.com/php/victoire:victoire/badge.svg)](https://www.versioneye.com/php/victoire:victoire)
 [![Features in Progress](https://badge.waffle.io/Victoire/victoire.svg?label=In%20Progress&title=In%20Progress)](http://waffle.io/Victoire/victoire)
 
-##Overview
+## Overview
 
 Victoire is a **Symfony** overlay integrating a Dynamic-CMS that use the core business datas in a dynamic and automated way.
 It can be setup in any Symfony project in just some few minutes.
@@ -21,11 +21,11 @@ Many criterias can be used such as website locale, log in status, and so much mo
 
 A french documentation has been started and is being completed _slowly_ [here](http://github.com/victoire/documentation-fr/).
 
-##Roadmap
+## Roadmap
 
 We define a raw roadmap [here](https://docs.google.com/spreadsheets/d/1MTdt5ZsGNPOZp5e_to2LvS39j59M59c29HddpvaVb70/edit?usp=sharing)
 
-##Contribution
+## Contribution
 
 Victoire is an open-source, community driven project.
 We are keen on getting your participation for the development of this product and every help is more than welcome, regardless of your mastering level.
@@ -53,7 +53,7 @@ If you want to contribute to Victoire frontend, please read this [contribution g
 
 To do so, follow the [setup guide](doc/setup.md).
 
-##What's inside?
+## What's inside?
 
 Component | Description
 ------------ | -------------
@@ -79,15 +79,15 @@ Component | Description
 [**WidgetBundle**][15] | Contains all the base widget logic to be able to use Widgets
 [**WidgetMapBundle**][16] | Each view has a widget map, this bundle contains all the widget maps logic
 
-##Widgets
+## Widgets
 
 All the widgets that you can use with a Victoire's website are available on the *[Friends Of Victoire](https://github.com/FriendsOfVictoire)* page.
 
-##Troubleshooting
+## Troubleshooting
 
 Victoire uses GitHub issues, feel free to [create your own](https://github.com/victoire/victoire/issues/new) or develop [an existing one](https://github.com/victoire/victoire/issues).
 
-##MIT License
+## MIT License
 
 License can be found [here](license.md).
 
