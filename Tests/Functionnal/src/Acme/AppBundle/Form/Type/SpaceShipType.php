@@ -2,11 +2,10 @@
 
 namespace Acme\AppBundle\Form\Type;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 
 class SpaceShipType extends AbstractType
 {
@@ -21,8 +20,8 @@ class SpaceShipType extends AbstractType
                 'fields' => [
                     'name' => [
                         'label' => 'acme.app.spaceship.form.name.label',
-                    ]
-                ]
+                    ],
+                ],
             ])
             ->remove('visibleOnFront');
     }
