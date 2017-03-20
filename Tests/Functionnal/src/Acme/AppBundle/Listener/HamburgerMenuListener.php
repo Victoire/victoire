@@ -37,7 +37,7 @@ class HamburgerMenuListener implements MenuListenerInterface
         $this->mainItem = $this->menuBuilder->getTopNavbar();
 
         $this->mainItem->addChild('hamburger_menu.jedi', [
-                'route' => 'acme_app_jedi_index',
+                'route'      => 'acme_app_jedi_index',
                 'attributes' => [
                     'class' => 'v-menu__item',
                 ],
