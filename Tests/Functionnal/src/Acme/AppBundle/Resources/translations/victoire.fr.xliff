@@ -134,6 +134,82 @@
         <source>form.widget.tab.stormtrooper.label</source>
         <target>Stormtrooper</target>
       </trans-unit>
+      <trans-unit id="s1p2a358893bce99c1c" resname="form.widget.tab.spaceship.label">
+        <source>form.widget.tab.spaceship.label</source>
+        <target>Vaisseau Spatial</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99c36" resname="hamburger_menu.spaceship">
+        <source>hamburger_menu.spaceship</source>
+        <target><![CDATA[<i class="fa fa-space-shuttle"></i> Vaisseau Spatial]]></target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99c47" resname="acme.app.spaceship.index.title">
+        <source>acme.app.spaceship.index.title</source>
+        <target>Liste des Vaisseaux Spatiaux</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99c57" resname="acme.app.spaceship.new.title">
+        <source>acme.app.spaceship.new.title</source>
+        <target>Nouveau vaisseau spatial</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99c66" resname="acme.app.spaceship.edit.title">
+        <source>acme.app.spaceship.edit.title</source>
+        <target>Modification de Spaceship</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99c76" resname="acme.app.spaceship.index.th.Name">
+        <source>acme.app.spaceship.index.th.Name</source>
+        <target>Nom</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99ca4" resname="acme.app.spaceship.index.th.Slug">
+        <source>acme.app.spaceship.index.th.Slug</source>
+        <target>Slug</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99cd3" resname="acme.app.spaceship.index.th.Visibleonfront">
+        <source>acme.app.spaceship.index.th.Visibleonfront</source>
+        <target>Public</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99ce2" resname="acme.app.spaceship.index.th.Actions">
+        <source>acme.app.spaceship.index.th.Actions</source>
+        <target>Actions</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99d1f" resname="acme.app.spaceship.form.name.label">
+        <source>acme.app.spaceship.form.name.label</source>
+        <target>Nom</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99d3e" resname="acme.app.spaceship.form.slug.label">
+        <source>acme.app.spaceship.form.slug.label</source>
+        <target>Identifiant</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99d7a" resname="acme.app.spaceship.form.action.new">
+        <source>acme.app.spaceship.form.action.new</source>
+        <target>Nouveau vaisseau spatial</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99d89" resname="acme.app.spaceship.form.action.edit">
+        <source>acme.app.spaceship.form.action.edit</source>
+        <target>Modifier</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99d98" resname="acme.app.spaceship.form.action.delete">
+        <source>acme.app.spaceship.form.action.delete</source>
+        <target>Supprimer</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99da7" resname="acme.app.spaceship.form.action.index">
+        <source>acme.app.spaceship.form.action.index</source>
+        <target>Liste des spaceships</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99db6" resname="acme.app.spaceship.index.noresult">
+        <source>acme.app.spaceship.index.noresult</source>
+        <target>Aucun résultat</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99dc5" resname="acme.app.spaceship.form.button.create">
+        <source>acme.app.spaceship.form.button.create</source>
+        <target>Créer</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99dd4" resname="acme.app.spaceship.form.button.update">
+        <source>acme.app.spaceship.form.button.update</source>
+        <target>Mettre à jour</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99de3" resname="acme.app.spaceship.form.button.delete">
+        <source>acme.app.spaceship.form.button.delete</source>
+        <target>Supprimer</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
