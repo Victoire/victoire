@@ -13,7 +13,7 @@ use Victoire\Bundle\CoreBundle\Annotations as VIC;
  *
  * @ORM\Entity
  * @ORM\Table("space_ship")
- * @VIC\BusinessEntity({"Force"})
+ * @VIC\BusinessEntity({"Force", "Text"})
  */
 class SpaceShip
 {
