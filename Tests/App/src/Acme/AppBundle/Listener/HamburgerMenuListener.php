@@ -47,6 +47,11 @@ class HamburgerMenuListener implements MenuListenerInterface
             ]
         );
 
+        $this->mainItem->addChild('hamburger_menu.spaceship', [
+                'route' => 'acme_app_spaceship_index',
+            ]
+        );
+
         return $this->mainItem;
     }
 
