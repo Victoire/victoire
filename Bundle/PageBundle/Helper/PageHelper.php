@@ -4,7 +4,6 @@ namespace Victoire\Bundle\PageBundle\Helper;
 
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\Orm\EntityManager;
-use Doctrine\ORM\ORMInvalidArgumentException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -307,20 +306,6 @@ class PageHelper
         }
 
         return $page;
-    }
-
-    /**
-     * @param View $page
-     * @param $locale
-     */
-    private function refreshPage($page, $locale)
-    {
-        if ($page && $page instanceof View) {
-            try {
-                $this->entityManager->refresh($page->setTranslatableLocale($locale));
-            } catch (ORMInvalidArgumentException $e) {
-            }
-        }
     }
 
     /**

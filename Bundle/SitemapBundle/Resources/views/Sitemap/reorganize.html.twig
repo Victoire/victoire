@@ -13,12 +13,39 @@
     <i class="fa fa-info"></i>&nbsp;&nbsp;{{ 'modal.sitemap.caption'|trans({}, 'victoire') }}
 </div>
 
+<div class="vic-sitemap-head">
+    <div class="vic-sitemap-head-column">
+        {{ 'modal.sitemap.priority.label'|trans({}, 'victoire')}}
+    </div>
+    <div class="vic-sitemap-head-column">
+        {{ 'modal.sitemap.indexed.label'|trans({}, 'victoire')}}
+    </div>
+</div>
+
 <ul class="vic-bordered-list" id="sortable">
     {% for _page in pages %}
         {% set level = 0 %}
         {% include 'VictoireSitemapBundle:Sitemap:_sitemapItem.html.twig' with {'page': _page} %}
     {% endfor %}
 </ul>
+
+{# @TODO add this in UiBundle when refactoring sitemap template #}
+<style>
+    .vic-sitemap-head {
+        margin-right: 85px;
+        color: #737373;
+    }
+    .vic-sitemap-head,
+    .vic-sitemap-item {
+        display: -webkit-box;
+        -webkit-box-pack: end;
+    }
+
+    .vic-sitemap-head-column,
+    .vic-sitemap-item-column {
+        width: 60px;
+    }
+</style>
 
 <script>
     $vic(document).ready(function () {

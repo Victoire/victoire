@@ -102,7 +102,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     protected $entity;
 
     /**
-     * @deprecated
+     * @deprecated Remove Doctrine mapping and property
      *
      * @var string
      *
