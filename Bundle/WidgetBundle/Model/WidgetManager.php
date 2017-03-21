@@ -54,7 +54,6 @@ class WidgetManager
      * @param Request               $request
      * @param WidgetMapManager      $widgetMapManager
      * @param WidgetMapBuilder      $widgetMapBuilder
-     * @param BusinessEntityHelper  $cacheReader
      * @param EngineInterface       $templating
      * @param PageHelper            $pageHelper
      * @param array                 $slots

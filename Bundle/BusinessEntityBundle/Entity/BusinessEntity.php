@@ -55,7 +55,7 @@ abstract class BusinessEntity
     /**
      * Get the id.
      *
-     * @return string The id
+     * @return integer The id
      */
     public function getId()
     {
@@ -95,7 +95,7 @@ abstract class BusinessEntity
     /**
      * Get the business properties.
      *
-     * @return array The business properties
+     * @return BusinessProperty[] The business properties
      */
     public function getBusinessProperties()
     {
@@ -131,7 +131,7 @@ abstract class BusinessEntity
      *
      * @param string $type
      *
-     * @return BusinessProperty[] The businnes properties
+     * @return ArrayCollection The businnes properties
      */
     public function getBusinessPropertiesByType($type)
     {
@@ -151,7 +151,6 @@ abstract class BusinessEntity
     /**
      * Get the business properties names by type.
      *
-     * @param string $type
      *
      * @return ArrayCollection The businnes properties
      */
@@ -171,7 +170,6 @@ abstract class BusinessEntity
     /**
      * Get the business identifiers.
      *
-     * @param string $type
      *
      * @return ArrayCollection The businnes properties
      */

@@ -388,7 +388,7 @@ class BusinessTemplateController extends Controller
      *
      * @throws Exception If the business entity was not found
      *
-     * @return template
+     * @return \Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity
      */
     private function getBusinessEntity($id)
     {

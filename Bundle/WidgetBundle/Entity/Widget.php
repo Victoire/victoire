@@ -172,7 +172,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     /**
      * Get businessEntityName.
      *
-     * @return int
+     * @return string
      */
     public function getBusinessEntityName()
     {
@@ -369,7 +369,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     /**
      * Set widgets.
      *
-     * @param [WidgetMap] $widgetMaps
+     * @param [WidgetMap] $widgetMap
      *
      * @return Widget
      */
@@ -500,7 +500,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     }
 
     /**
-     * @param $criteriaAlias
+     * @param string $criteriaAlias
      *
      * @return bool
      */

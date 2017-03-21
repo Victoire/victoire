@@ -38,7 +38,7 @@ class BusinessTemplateRepository extends EntityRepository
     /**
      * get the pagePatterns for the business entity query.
      *
-     * @param string $businessEntityId
+     * @param BusinessEntity $businessEntity
      *
      * @return QueryBuilder
      */
