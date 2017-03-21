@@ -9,7 +9,6 @@ use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityInterface;
-use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityRepository;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
@@ -205,8 +204,7 @@ class BusinessPageHelper
     /**
      * Guess the best pattern to represent given reflectionClass.
      *
-     * @param \ReflectionClass $refClass
-     * @param int              $entityId
+     * @param int              $entity
      * @param EntityManager    $em
      * @param string           $originalRefClassName When digging into parentClass, we do not have to forget originalClass to be able to get reference after all
      *

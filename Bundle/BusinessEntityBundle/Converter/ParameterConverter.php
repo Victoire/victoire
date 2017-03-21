@@ -14,7 +14,6 @@ class ParameterConverter
     /**
      * Replace the code string with the value of the entity attribute.
      *
-     * @param string           $string
      * @param BusinessProperty $businessProperty
      * @param object           $entity
      *
@@ -41,7 +40,6 @@ class ParameterConverter
     /**
      * Replace the code string with the value of the entity attribute.
      *
-     * @param string $string
      * @param string $entityProperty
      * @param string $attributeValue
      *

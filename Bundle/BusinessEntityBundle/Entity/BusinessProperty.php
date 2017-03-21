@@ -62,7 +62,7 @@ class BusinessProperty
     /**
      * Set the type.
      *
-     * @param string $type
+     * @param string $types
      */
     public function setTypes($types)
     {
@@ -196,6 +196,9 @@ class BusinessProperty
         $this->filterMethod = $filterMethod;
     }
 
+    /**
+     * @param string $type
+     */
     public function hasType($type)
     {
         return in_array($type, $this->getTypes());

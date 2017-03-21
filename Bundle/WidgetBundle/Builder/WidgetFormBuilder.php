@@ -126,9 +126,10 @@ class WidgetFormBuilder
      *
      * @param string           $slot
      * @param View             $view
-     * @param Widget           $widget
+     * @param Widget           $widgets
      * @param BusinessEntity[] $classes
      * @param int              $position
+     * @param \Victoire\Bundle\WidgetBundle\Model\Widget $activeWidget
      *
      * @throws \Exception
      *
@@ -174,7 +175,6 @@ class WidgetFormBuilder
      * @param Widget $widget
      * @param View   $view
      * @param string $businessEntityId
-     * @param string $namespace
      * @param int    $position
      * @param string $slot
      *
@@ -205,7 +205,6 @@ class WidgetFormBuilder
      * @param Widget $widget
      * @param View   $view
      * @param string $businessEntityId
-     * @param string $namespace
      * @param string $formMode
      * @param int    $position
      *
@@ -368,9 +367,9 @@ class WidgetFormBuilder
      * @param Widget $widget           the widget
      * @param View   $view             the page
      * @param string $businessEntityId the entity class
-     * @param string $namespace        the namespace
      * @param string $formMode         the form mode
      * @param int    $position
+     * @param string $slotId
      *
      * @throws \Exception
      *

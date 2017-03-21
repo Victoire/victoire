@@ -36,7 +36,7 @@ class ORMBusinessEntityResolver implements BusinessEntityResolverInterface
      * filter repo to get a list of entities.
      *
      * @param ORMBusinessEntity $businessEntity
-     * @param array             $filters
+     * @param array             $filter
      *
      * @return mixed
      */

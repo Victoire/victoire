@@ -185,7 +185,7 @@ class EntityProxy
     }
 
     /**
-     * @param mixed $ressource
+     * @param mixed $ressourceId
      */
     public function setRessourceId($ressourceId)
     {
