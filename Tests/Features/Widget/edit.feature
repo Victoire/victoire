@@ -52,7 +52,6 @@ Feature: Edit a widget
         Then I should see "Nouveau contenu"
         When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Créer"
-        When I follow the tab "Entités"
         And I should see disable tab "Vaisseau Spatial"
 
     Scenario: I can edit the original widget from a child page
