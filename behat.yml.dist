@@ -50,21 +50,22 @@ default:
              smartTag: smartStep
              alice:
                  fixtures:
-                     Media:             Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/Media/folder.yml
-                     MediaFile:         Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/Media/media.yml
-                     User:              Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml
-                     Template:          Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml
-                     Page:              Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml
-                     ErrorPage:         Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml
-                     Blog:              Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/blog.yml
-                     BlogTemplate:      Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/template.yml
-                     ArticleI18n:       Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article_i18n.yml
-                     Article:           Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article.yml
-                     BlogBP:            Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/businessPage.yml
-                     Character:         Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/character.yml
-                     Mercenary:         Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/mercenary.yml
-                     Jedi:              Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/jedi.yml
+                     Media:              Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/Media/folder.yml
+                     MediaFile:          Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/Media/media.yml
+                     User:               Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml
+                     Template:           Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml
+                     Page:               Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml
+                     ErrorPage:          Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml
+                     Blog:               Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/blog.yml
+                     BlogTemplate:       Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/template.yml
+                     ArticleI18n:        Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article_i18n.yml
+                     Article:            Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article.yml
+                     BlogBP:             Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/businessPage.yml
+                     Character:          Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/character.yml
+                     Mercenary:          Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/mercenary.yml
+                     Jedi:               Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/jedi.yml
                      CharacterTemplates: Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/template.yml
+                     SpaceshipTemplates: Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Spaceship/template.yml
                  dependencies:
                      Template:           [User]
                      ErrorPage:          [Template, User]
