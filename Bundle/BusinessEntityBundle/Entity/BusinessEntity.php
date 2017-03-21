@@ -55,7 +55,7 @@ abstract class BusinessEntity
     /**
      * Get the id.
      *
-     * @return integer The id
+     * @return int The id
      */
     public function getId()
     {
