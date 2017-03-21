@@ -2,18 +2,45 @@
 
 namespace Victoire\Bundle\TwigBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\TwigBundle\Controller\ExceptionController as BaseExceptionController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\FlattenException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
+use Symfony\Component\Routing\Router;
 
+/**
+ * Redirects to a victoire error page when facing a Flatted Exception.
+ */
 class ExceptionController extends BaseExceptionController
 {
     private $em;
 
-    public function __construct(\Twig_Environment $twig, $debug, $em, $httpKernel, $requestStack, $router)
+    /**
+     * @var array Available locales for the Victoire website
+     */
+    private $availableLocales;
+    /**
+     * @var string the fallback locale
+     */
+    private $defaultLocale;
+
+    /**
+     * ExceptionController constructor.
+     *
+     * @param \Twig_Environment   $twig
+     * @param bool                $debug
+     * @param EntityManager       $em
+     * @param HttpKernelInterface $httpKernel
+     * @param RequestStack        $requestStack
+     * @param Router              $router
+     * @param array               $availableLocales
+     * @param string              $defaultLocale
+     */
+    public function __construct(\Twig_Environment $twig, $debug, EntityManager $em, HttpKernelInterface $httpKernel, RequestStack $requestStack, Router $router, array $availableLocales, $defaultLocale)
     {
         parent::__construct($twig, $debug);
         $this->twig = $twig;
@@ -22,6 +49,8 @@ class ExceptionController extends BaseExceptionController
         $this->kernel = $httpKernel;
         $this->request = $requestStack->getCurrentRequest();
         $this->router = $router;
+        $this->availableLocales = $availableLocales;
+        $this->defaultLocale = $defaultLocale;
     }
 
     /**
@@ -46,14 +75,17 @@ class ExceptionController extends BaseExceptionController
 
         $matches = preg_match('/^.*(\..*)$/', array_pop($uriArray), $matches);
 
+        $locale = $request->getLocale();
+        if (!in_array($locale, $this->availableLocales, true)) {
+            $request->setLocale($this->defaultLocale);
+        }
         //if in production environment and the query is not a file
         if ($this->debug === false && 0 === $matches) {
             $page = $this->em->getRepository('VictoireTwigBundle:ErrorPage')->findOneByCode($code);
             if ($page) {
                 return $this->forward('VictoireTwigBundle:ErrorPage:show', [
-                        'code' => $page->getCode(),
-                    ]
-                );
+                        'code'    => $page->getCode(),
+                ]);
             }
         }
 
