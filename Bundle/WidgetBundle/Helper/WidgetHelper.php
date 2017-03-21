@@ -51,8 +51,8 @@ class WidgetHelper
     /**
      * create a new WidgetRedactor.
      *
-     * @param string                                  $type
-     * @param string                                  $mode
+     * @param string $type
+     * @param string $mode
      *
      * @return Widget $widget
      */

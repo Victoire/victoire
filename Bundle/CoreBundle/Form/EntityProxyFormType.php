@@ -73,7 +73,7 @@ class EntityProxyFormType extends AbstractType
                         'attr'         => [
                             'class' => 'add_'.$options['business_entity_id'].'_link picker_entity_select',
                         ],
-                        'query_builder' => function(EntityRepository $er) use ($businessEntity, $locale) {
+                        'query_builder' => function (EntityRepository $er) use ($businessEntity, $locale) {
                             // Don't display entities that don't have translations in the current locale.
                             if (in_array(Translatable::class, class_uses($businessEntity->getClass()))) {
                                 return $er->createQueryBuilder('entity')
@@ -89,11 +89,11 @@ class EntityProxyFormType extends AbstractType
 
                 $builder->get('ressourceId')->addModelTransformer(
                     new CallbackTransformer(
-                        function($idToEntity) use ($entityManager, $businessEntity) {
+                        function ($idToEntity) use ($entityManager, $businessEntity) {
                             // transform the array to a string
                             return $entityManager->getRepository($businessEntity->getClass())->findOneById($idToEntity);
                         },
-                        function($entityToId) {
+                        function ($entityToId) {
                             // transform the string back to an array
                             return $entityToId->getId();
                         }
@@ -149,10 +149,10 @@ class EntityProxyFormType extends AbstractType
 
         $builder->get('businessEntity')->addModelTransformer(
                 new CallbackTransformer(
-                    function($businessEntity) {
+                    function ($businessEntity) {
                         return $businessEntity;
                     },
-                function($nameToBusinessEntity) use ($entityManager) {
+                function ($nameToBusinessEntity) use ($entityManager) {
                     return $entityManager->getRepository(
                         'VictoireBusinessEntityBundle:BusinessEntity'
                     )->findOneByName(

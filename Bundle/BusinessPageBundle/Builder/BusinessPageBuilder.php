@@ -98,7 +98,7 @@ class BusinessPageBuilder
          * @param bool $autoload
          * @return array
          */
-        $class_uses_deep = function($class, $autoload = true) {
+        $class_uses_deep = function ($class, $autoload = true) {
             $traits = [];
             do {
                 $traits = array_merge(class_uses($class, $autoload), $traits);

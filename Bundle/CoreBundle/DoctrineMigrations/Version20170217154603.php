@@ -231,7 +231,7 @@ class Version20170217154603 extends AbstractMigration implements ContainerAwareI
     }
 
     /**
-     * @param string $className
+     * @param string         $className
      * @param BusinessEntity $annotationObj
      * @param $businessProperties
      *
