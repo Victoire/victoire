@@ -5,7 +5,7 @@ Background:
     Given I maximize the window
     And I am on homepage
 
-  Scenario: I cannot acces a non exitant page
+  Scenario: I cannot acces a non-existant page
     And I am on "/fr/imaginary-page"
     Then the title should be "Page introuvable"
   Scenario: I cannot acces a page for a non exitant locale
