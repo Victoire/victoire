@@ -20,7 +20,7 @@ Feature: Create a seo
             | Yoda   | bright | 17500         | yoda   |
         Given the following BusinessTemplate:
             | currentLocale | name                         | backendName  | slug                       | businessEntity   | parent | template |
-            | en            | Jedi profile - {{item.name}} | Jedi profile | jedi-profile-{{item.slug}} | jedi             | home   | base     |
+            | en            | Jedi profile - {{item.name}} | Jedi profile | jedi-profile-{{item.slug}} | Jedi             | home   | base     |
         And I am on "/en/jedi-profile-anakin"
         Then the title should be "Jedi profile - Anakin"
         Given I am on "/en/victoire-dcms/business-template/show/4"
