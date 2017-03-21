@@ -29,7 +29,7 @@ class Version20170217154603 extends AbstractMigration implements ContainerAwareI
     }
 
     /**
-     * @return mixed
+     * @return null|ContainerInterface
      */
     public function getContainer()
     {
@@ -231,8 +231,8 @@ class Version20170217154603 extends AbstractMigration implements ContainerAwareI
     }
 
     /**
-     * @param $className
-     * @param $annotationObj
+     * @param string $className
+     * @param BusinessEntity $annotationObj
      * @param $businessProperties
      *
      * @return ORMBusinessEntity

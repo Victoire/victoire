@@ -42,7 +42,6 @@ class EntityProxyFieldsBuilder
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param string                                       $widgetName
-     * @param string                                       $namespace
      *
      * @throws \Exception
      *

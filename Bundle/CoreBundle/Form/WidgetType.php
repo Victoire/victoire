@@ -73,7 +73,7 @@ class WidgetType extends AbstractType
         //we use the PRE_SUBMIT event to set the mode option
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($options) {
+            function(FormEvent $event) use ($options) {
                 //we get the raw data for the widget form
                 $rawData = $event->getData();
 
@@ -117,7 +117,7 @@ class WidgetType extends AbstractType
         ]);
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($options) {
+            function(FormEvent $event) use ($options) {
                 $dataSources = $options['dataSources']->getDataSources();
                 $widget = $event->getData();
                 foreach ($dataSources as $alias => $dataSource) {
@@ -131,7 +131,7 @@ class WidgetType extends AbstractType
         );
         $builder->addEventListener(
             FormEvents::POST_SUBMIT,
-            function (FormEvent $event) {
+            function(FormEvent $event) {
                 $widget = $event->getData();
                 /** @var Criteria $criteria */
                 foreach ($widget->getCriterias() as $criteria) {

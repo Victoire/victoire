@@ -32,7 +32,7 @@ class ViewReferenceHelper
 
     /**
      * @param View  $view
-     * @param mixed $entity
+     * @param mixed $entityId
      *
      * @return string
      */
@@ -65,7 +65,7 @@ class ViewReferenceHelper
     }
 
     /**
-     * @param [] $tree
+     * @param WebViewInterface[] $tree
      */
     public function buildViewReferenceRecursively($tree, EntityManager $entityManager, $isRoot = true)
     {
