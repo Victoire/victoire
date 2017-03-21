@@ -17,6 +17,7 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\BusinessPageBundle\Repository\BusinessPageRepository;
+use Victoire\Bundle\I18nBundle\Entity\ViewTranslation;
 use Victoire\Bundle\ViewReferenceBundle\Event\ViewReferenceEvent;
 use Victoire\Bundle\ViewReferenceBundle\ViewReferenceEvents;
 
@@ -114,8 +115,8 @@ class BusinessEntitySubscriber implements EventSubscriber
     {
         $businessTemplates = $entityManager->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
         foreach ($businessTemplates as $businessTemplate) {
-            // Generate viewRef for each BT translation
-            /** @var ViewTra $translation */
+            // Generate a viewReference for each BT translation
+            /** @var ViewTranslation $translation */
             foreach ($businessTemplate->getTranslations() as $translation) {
                 $businessTemplate->setCurrentLocale($translation->getLocale());
                 if ($this->businessPageHelper->isEntityAllowed($businessTemplate, $entity, $entityManager)) {
@@ -174,7 +175,7 @@ class BusinessEntitySubscriber implements EventSubscriber
             //find all BT that can represent the businessEntity
             $businessTemplates = $em->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
             foreach ($businessTemplates as $businessTemplate) {
-                //generate a viewReference for each BT translation
+                // Generate a viewReference for each BT translation
                 foreach ($businessTemplate->getTranslations() as $translation) {
                     $businessTemplate->setCurrentLocale($translation->getLocale());
 
@@ -205,7 +206,7 @@ class BusinessEntitySubscriber implements EventSubscriber
             $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
             //find all entities
             $entities = $this->businessPageHelper->getEntitiesAllowed($entity, $em);
-            //generate a viewReference for each BT translation
+            // Generate a viewReference for each BT translation
             foreach ($entity->getTranslations() as $translation) {
                 $entity->setCurrentLocale($translation->getLocale());
                 foreach ($entities as $be) {
@@ -293,7 +294,7 @@ class BusinessEntitySubscriber implements EventSubscriber
             $businessTemplates = $em->getRepository('VictoireBusinessPageBundle:BusinessTemplate')->findPagePatternByBusinessEntity($businessEntity);
             foreach ($businessTemplates as $businessTemplate) {
 
-                //generate a viewReference for each BT translation
+                // Generate a viewReference for each BT translation
                 foreach ($businessTemplate->getTranslations() as $translation) {
                     $businessTemplate->setCurrentLocale($translation->getLocale());
                     if ($page = $em->getRepository('Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage')->findPageByBusinessEntityAndPattern($businessTemplate, $entity, $businessEntity)) {
@@ -316,7 +317,7 @@ class BusinessEntitySubscriber implements EventSubscriber
             $em = $eventArgs->getEntityManager();
             $entities = $this->businessPageHelper->getEntitiesAllowed($entity, $em);
 
-            //generate a viewReference for each BT translation
+            // Generate a viewReference for each BT translation
             foreach ($entity->getTranslations() as $translation) {
                 $entity->setCurrentLocale($translation->getLocale());
                 foreach ($entities as $be) {
