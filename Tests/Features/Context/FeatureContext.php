@@ -4,14 +4,14 @@ namespace Victoire\Tests\Features\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Hook\Scope\AfterStepScope;
+use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\Element;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Behat\Symfony2Extension\Context\KernelDictionary;
 use Behat\Symfony2Extension\Driver\KernelDriver;
 use Knp\FriendlyContexts\Context\RawMinkContext;
-use Behat\Behat\Hook\Scope\AfterStepScope;
-use Behat\Mink\Driver\Selenium2Driver;
 
 /**
  * Feature context.
@@ -124,7 +124,6 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
         $filename = microtime(true).'.png';
         $path = $this->getContainer()
                 ->getParameter('kernel.root_dir').'/../behat_screenshots';
-
 
         if (!file_exists($path)) {
             mkdir($path);
