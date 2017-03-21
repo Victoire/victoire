@@ -8,7 +8,7 @@ const $ = gulpLoadPlugins();
 
 const style_src_dir = '../stylesheets';
 const style_dest_dir = '../public/stylesheets';
-const style_dest_dir_web = '../../../../Tests/Functionnal/web/bundles/victoireui/stylesheets';
+const style_dest_dir_web = '../../../../Tests/App/web/bundles/victoireui/stylesheets';
 
 // For displaying sass compilation errors
 var reportError = function(err) {

@@ -1,38 +1,49 @@
 <li class="item -level{{ level }}{% if page.children|length %} -subcontainer{% endif %}" id="page-{{ page.id }}">
     <div class="vic-bordered-line -map">
         {% spaceless %}
-        <img src="{{ asset('bundles/victoirecore/images/move_cross.png') }}" height="20">
+            <img src="{{ asset('bundles/victoirecore/images/move_cross.png') }}" height="20">
 
-        <a class="title" href="{{ path('victoire_core_page_show', {'url': page.url}) }}" title="{{ 'sitemap.goto'|trans({'%pageName%': page.name}, 'victoire') }}">
-            {{ page.name }}
-        </a>
+            <a class="title" href="{{ path('victoire_core_page_show', {'url': page.url}) }}" title="{{ 'sitemap.goto'|trans({'%pageName%': page.name}, 'victoire') }}">
+                {{ page.name }}
+            </a>
         {% endspaceless %}
 
         {% set sitemapPriorityForm = attribute(forms, page.id) %}
 
-        {{ form_start(sitemapPriorityForm) }}
 
-        {{ 'modal.sitemap.priority.label'|trans({}, 'victoire')}}
-        {{ form_widget(sitemapPriorityForm.sitemapPriority, {
-            'attr': {
-                'onchange':'$vic(this).parents("form").submit();'
-            }})
-        }}
-        {{ form_end(sitemapPriorityForm) }}
+            {{ form_start(sitemapPriorityForm) }}
+            <div class="vic-sitemap-item">
+                <div class="vic-sitemap-item-column">
+                    {{ form_widget(sitemapPriorityForm.sitemapPriority, {
+                        'attr': {
+                            'onchange':'$vic(this).parents("form").submit();'
+                        }})
+                    }}
+                </div>
+                <div class="vic-sitemap-item-column">
+                    {{ form_widget(sitemapPriorityForm.sitemapIndexed, {
+                        'attr': {
+                            'onchange':'$vic(this).parents("form").submit();'
+                        }})
+                    }}
+                </div>
+            </div>
 
-        {% if not page.undeletable %}
-            <a href="{{ path('victoire_core_page_delete', {'id': page.id}) }}" data-toggle="vic-confirm" class="vic-btn vic-btn-danger -square -framed" data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire') }}" data-modal="delete"><i class="fa fa-trash-o"></i></a>
-        {% endif %}
+            {{ form_end(sitemapPriorityForm) }}
+
+            {% if not page.undeletable %}
+                <a href="{{ path('victoire_core_page_delete', {'id': page.id}) }}" data-toggle="vic-confirm" class="vic-btn vic-btn-danger -square -framed" data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire') }}" data-modal="delete"><i class="fa fa-trash-o"></i></a>
+            {% endif %}
 
 
     </div>
 
     {% if page.children|length %}
-    <ul class="sublist">
-        {% set level = level + 1 %}
-        {% for _page in page.webViewChildren %}
-        {% include 'VictoireSitemapBundle:Sitemap:_sitemapItem.html.twig' with {'page': _page, 'level': level} %}
-        {% endfor %}
-    </ul>
+        <ul class="sublist">
+            {% set level = level + 1 %}
+            {% for _page in page.webViewChildren %}
+                {% include 'VictoireSitemapBundle:Sitemap:_sitemapItem.html.twig' with {'page': _page, 'level': level} %}
+            {% endfor %}
+        </ul>
     {% endif %}
 </li>

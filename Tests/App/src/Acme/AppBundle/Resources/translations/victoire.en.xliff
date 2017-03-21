@@ -126,6 +126,74 @@
         <source>form.widget.tab.spaceship.label</source>
         <target>Spaceships</target>
       </trans-unit>
+      <trans-unit id="s1p2a358893bce97e17" resname="form.widget.tab.spaceship.label">
+        <source>form.widget.tab.spaceship.label</source>
+        <target>Spaceship</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97e2a" resname="hamburger_menu.spaceship">
+        <source>hamburger_menu.spaceship</source>
+        <target><![CDATA[<i class="fa fa-space-shuttle"></i> Spaceship]]></target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97e42" resname="acme.app.spaceship.index.title">
+        <source>acme.app.spaceship.index.title</source>
+        <target>Spaceships list</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97e55" resname="acme.app.spaceship.new.title">
+        <source>acme.app.spaceship.new.title</source>
+        <target>New Spaceship</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97e5f" resname="acme.app.spaceship.edit.title">
+        <source>acme.app.spaceship.edit.title</source>
+        <target>Spaceship edit</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97e68" resname="acme.app.spaceship.index.th.Name">
+        <source>acme.app.spaceship.index.th.Name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97e84" resname="acme.app.spaceship.index.th.Slug">
+        <source>acme.app.spaceship.index.th.Slug</source>
+        <target>Slug</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97e9f" resname="acme.app.spaceship.index.th.Visibleonfront">
+        <source>acme.app.spaceship.index.th.Visibleonfront</source>
+        <target>Visibleonfront</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97ea9" resname="acme.app.spaceship.index.th.Actions">
+        <source>acme.app.spaceship.index.th.Actions</source>
+        <target>Actions</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97ecd" resname="acme.app.spaceship.form.name.label">
+        <source>acme.app.spaceship.form.name.label</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97edf" resname="acme.app.spaceship.form.slug.label">
+        <source>acme.app.spaceship.form.slug.label</source>
+        <target>Slug</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97f03" resname="acme.app.spaceship.form.action.new">
+        <source>acme.app.spaceship.form.action.new</source>
+        <target>New spaceship</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97f0c" resname="acme.app.spaceship.form.action.edit">
+        <source>acme.app.spaceship.form.action.edit</source>
+        <target>Edit</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97f15" resname="acme.app.spaceship.form.action.delete">
+        <source>acme.app.spaceship.form.action.delete</source>
+        <target>Delete</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97f1e" resname="acme.app.spaceship.form.action.index">
+        <source>acme.app.spaceship.form.action.index</source>
+        <target>Spaceships list</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97f27" resname="acme.app.spaceship.form.button.create">
+        <source>acme.app.spaceship.form.button.create</source>
+        <target>Create</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce97f30" resname="acme.app.spaceship.form.button.update">
+        <source>acme.app.spaceship.form.button.update</source>
+        <target>Update</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

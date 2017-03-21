@@ -31,6 +31,8 @@ class PageSeo
     /**
      * @var string
      *
+     * @deprecated Remove Doctrine mapping
+     *
      * @ORM\Column(name="meta_title", type="string", nullable=true)
      * @Assert\Length(max = 65)
      */
@@ -38,6 +40,8 @@ class PageSeo
 
     /**
      * @var string
+     *
+     * @deprecated Remove Doctrine mapping
      *
      * @ORM\Column(name="meta_description", type="string", length=255, nullable=true)
      * @Assert\Length(max = 155)
@@ -47,12 +51,16 @@ class PageSeo
     /**
      * @var string
      *
+     * @deprecated Remove Doctrine mapping
+     *
      * @ORM\Column(name="rel_author", type="string", length=255, nullable=true)
      */
     protected $relAuthor;
 
     /**
      * @var string
+     *
+     * @deprecated Remove Doctrine mapping
      *
      * @ORM\Column(name="rel_publisher", type="string", length=255, nullable=true)
      */
@@ -61,6 +69,8 @@ class PageSeo
     /**
      * @var string
      *
+     * @deprecated Remove Doctrine mapping
+     *
      * @ORM\Column(name="ogTitle", type="string", length=255, nullable=true)
      */
     protected $ogTitle;
@@ -68,12 +78,16 @@ class PageSeo
     /**
      * @var string
      *
+     * @deprecated Remove Doctrine mapping
+     *
      * @ORM\Column(name="ogType", type="string", length=255, nullable=true)
      */
     protected $ogType;
 
     /**
      * @var string
+     *
+     * @deprecated Remove Doctrine mapping
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="ogImage_id", referencedColumnName="id", onDelete="SET NULL")
@@ -83,12 +97,16 @@ class PageSeo
     /**
      * @var string
      *
+     * @deprecated Remove Doctrine mapping
+     *
      * @ORM\Column(name="ogUrl", type="string", length=255, nullable=true)
      */
     protected $ogUrl;
 
     /**
      * @var text
+     *
+     * @deprecated Remove Doctrine mapping
      *
      * @ORM\Column(name="ogDescription", type="text", nullable=true)
      */
@@ -97,6 +115,8 @@ class PageSeo
     /**
      * @var string
      *
+     * @deprecated Remove Doctrine mapping
+     *
      * @ORM\Column(name="fbAdmins", type="string", length=255, nullable=true)
      */
     protected $fbAdmins;
@@ -104,12 +124,16 @@ class PageSeo
     /**
      * @var string
      *
+     * @deprecated Remove Doctrine mapping
+     *
      * @ORM\Column(name="twitterCard", type="string", length=255, nullable=true)
      */
     protected $twitterCard = 'summary';
 
     /**
      * @var string
+     *
+     * @deprecated Remove Doctrine mapping
      *
      * @ORM\Column(name="twitterUrl", type="string", length=255, nullable=true)
      * @Assert\Length(max = 15)
@@ -119,6 +143,8 @@ class PageSeo
     /**
      * @var string
      *
+     * @deprecated Remove Doctrine mapping
+     *
      * @ORM\Column(name="twitterCreator", type="string", length=255, nullable=true)
      * @Assert\Length(max = 15)
      */
@@ -126,6 +152,8 @@ class PageSeo
 
     /**
      * @var string
+     *
+     * @deprecated Remove Doctrine mapping
      *
      * @ORM\Column(name="twitterTitle", type="string", length=255, nullable=true)
      * @Assert\Length(max = 70)
@@ -135,6 +163,8 @@ class PageSeo
     /**
      * @var string
      *
+     * @deprecated Remove Doctrine mapping
+     *
      * @ORM\Column(name="twitterDescription", type="string", length=255, nullable=true)
      * @Assert\Length(max = 200)
      */
@@ -142,6 +172,8 @@ class PageSeo
 
     /**
      * @var string
+     *
+     * @deprecated Remove Doctrine mapping
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="twitterImage_id", referencedColumnName="id", onDelete="SET NULL")
@@ -151,12 +183,16 @@ class PageSeo
     /**
      * @var string
      *
+     * @deprecated Remove Doctrine mapping
+     *
      * @ORM\Column(name="schemaPageType", type="string", length=255, nullable=true)
      */
     protected $schemaPageType;
 
     /**
      * @var string
+     *
+     * @deprecated Remove Doctrine mapping
      *
      * @ORM\Column(name="schemaName", type="string", length=255, nullable=true)
      */
@@ -165,12 +201,16 @@ class PageSeo
     /**
      * @var string
      *
+     * @deprecated Remove Doctrine mapping
+     *
      * @ORM\Column(name="schemaDescription", type="string", length=255, nullable=true)
      */
     protected $schemaDescription;
 
     /**
      * @var string
+     *
+     * @deprecated Remove Doctrine mapping
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="schemaImage_id", referencedColumnName="id", onDelete="SET NULL")
@@ -180,12 +220,16 @@ class PageSeo
     /**
      * @var string
      *
+     * @deprecated Remove Doctrine mapping
+     *
      * @ORM\Column(name="meta_robots_index", type="string", length=255, nullable=true)
      */
     protected $metaRobotsIndex;
 
     /**
      * @var string
+     *
+     * @deprecated Remove Doctrine mapping
      *
      * @ORM\Column(name="meta_robots_follow", type="string", length=255, nullable=true)
      */
@@ -194,6 +238,8 @@ class PageSeo
     /**
      * @var string
      *
+     * @deprecated Remove Doctrine mapping
+     *
      * @ORM\Column(name="meta_robots_advanced", type="string", length=255, nullable=true)
      */
     protected $metaRobotsAdvanced;
@@ -201,19 +247,25 @@ class PageSeo
     /**
      * @var bool
      *
-     * @ORM\Column(name="sitemap_indexed", type="boolean", nullable=true, options={"default" = true})
+     * @deprecated Remove Doctrine mapping
+     *
+     * @ORM\Column(name="sitemap_indexed", type="boolean", nullable=true)
      */
-    protected $sitemapIndexed = true;
+    protected $sitemapIndexed;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="sitemap_priority", type="float", nullable=true, options={"default" = "0.8"})
+     * @deprecated Remove Doctrine mapping
+     *
+     * @ORM\Column(name="sitemap_priority", type="float", nullable=true)
      */
-    protected $sitemapPriority = 0.8;
+    protected $sitemapPriority;
 
     /**
      * @var string
+     *
+     * @deprecated Remove Doctrine mapping
      *
      * @ORM\Column(name="sitemap_changeFreq", type="string", length=20, nullable=true, options={"default" = "monthly"})
      */
@@ -222,6 +274,8 @@ class PageSeo
     /**
      * @var string
      *
+     * @deprecated Remove Doctrine mapping
+     *
      * @ORM\Column(name="rel_canonical", type="string", length=255, nullable=true)
      */
     protected $relCanonical;
@@ -229,12 +283,16 @@ class PageSeo
     /**
      * @var string
      *
+     * @deprecated Remove Doctrine mapping
+     *
      * @ORM\Column(name="keyword", type="string", length=255, nullable=true)
      */
     protected $keyword;
 
     /**
      * @var string
+     *
+     * @deprecated Remove Doctrine mapping
      *
      * @ORM\ManyToOne(
      *     targetEntity="\Victoire\Bundle\PageBundle\Entity\Page",
@@ -244,6 +302,14 @@ class PageSeo
      * @ORM\JoinColumn(name="redirect_to", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $redirectTo;
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getTranslationEntityClass()
+    {
+        return '\\Victoire\\Bundle\\SeoBundle\\Entity\PageSeoTranslation';
+    }
 
     /**
      * Set redirectTo w/ proxy.
@@ -867,7 +933,7 @@ class PageSeo
      */
     public function isSitemapIndexed()
     {
-        return $this->sitemapIndexed;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'isSitemapIndexed');
     }
 
     /**

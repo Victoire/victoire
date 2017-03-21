@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\FormBundle\Form\Type\LinkType;
 use Victoire\Bundle\MediaBundle\Form\Type\MediaType;
+use Victoire\Bundle\SeoBundle\Entity\PageSeoTranslation;
 
 class PageSeoType extends AbstractType
 {
@@ -154,6 +155,7 @@ class PageSeoType extends AbstractType
                     ],
                     'sitemapIndexed' => [
                         'label' => 'form.pageSeo.sitemapIndexed.label',
+                        'data'  => $builder->getData() ? $builder->getData()->isSitemapIndexed() : PageSeoTranslation::SITEMAP_INDEXED_DEFAULT,
                     ],
                     'sitemapChangeFreq' => [
                         'field_type' => ChoiceType::class,
@@ -174,7 +176,7 @@ class PageSeoType extends AbstractType
                         'field_type'        => ChoiceType::class,
                         'label'             => 'form.pageSeo.sitemapPriority.label',
                         'choices'           => array_combine(range(0, 1, 0.1), range(0, 1, 0.1)),
-                        'choices_as_values' => true,
+                        'data'              => $builder->getData() ? $builder->getData()->getSitemapPriority() : PageSeoTranslation::SITEMAP_PRIORITY_DEFAULT,
                     ],
                     'relCanonical' => [
                         'label' => 'form.pageSeo.relCanonical.label',

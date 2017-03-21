@@ -29,6 +29,7 @@ framework:
     session:
         handler_id:  ~
         name: victoire
+        storage_id: session.storage.mock_file
     fragments:       ~
     http_method_override: true
     test: ~
