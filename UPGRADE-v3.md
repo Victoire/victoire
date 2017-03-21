@@ -6,3 +6,17 @@ so you have to execute the doctrine migrations to use the new way described
 in the [BusinessEntityBundle readme](https://github.com/victoire/victoire/blob/3.0/Bundle/BusinessEntityBundle/README.md)
 
 `php bin/console doctrine:migrations:migrate --configuration=vendor/victoire/victoire/migration.yml`
+
+
+New bundles appears, you have to declare them in your AppKernel.php:
+
+```
+ public function registerBundles()
+  {
+      return [
+          [...]
+          new Victoire\Bundle\ORMBusinessEntityBundle\VictoireORMBusinessEntityBundle(),
+          new Victoire\Bundle\APIBusinessEntityBundle\VictoireAPIBusinessEntityBundle(),
+      ]
+  }
+```
