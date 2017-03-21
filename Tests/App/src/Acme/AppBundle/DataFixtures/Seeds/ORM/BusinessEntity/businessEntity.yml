@@ -14,7 +14,7 @@ Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity:
     spaceship_business_entity:
         class: Acme\AppBundle\Entity\SpaceShip
         name: Spaceship
-        availableWidgets: 'a:1:{i:0;s:5:"Force";}'
+        availableWidgets: 'a:2:{i:0;s:5:"Force";i:1;s:4:"Text";}'
 
 Victoire\Bundle\APIBusinessEntityBundle\Entity\APIEndpoint:
     placeholder_endpoint:
@@ -64,6 +64,14 @@ Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty:
         types: a:2:{i:0;s:8:"textable";i:1;s:17:"businessParameter";}
         name: midiChlorians
         businessEntity: @character_business_entity
+    spaceship_name:
+        types: a:3:{i:0;s:8:"textable";i:1;s:17:"businessParameter";i:2;s:7:"seoable";}
+        name: name
+        businessEntity: @spaceship_business_entity
+    spaceship_slug:
+        types: a:3:{i:0;s:8:"textable";i:1;s:18:"businessIdentifier";i:2;s:17:"businessParameter";}
+        name: slug
+        businessEntity: @spaceship_business_entity
     users_id:
         types: a:2:{i:0;s:18:"businessIdentifier";i:1;s:17:"businessParameter";}
         name: id

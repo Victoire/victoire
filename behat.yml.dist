@@ -75,6 +75,7 @@ default:
                      Article:            [ArticleI18n, Template, Blog, BlogTemplate, BlogBP, User, BusinessEntity]
                      CharacterTemplates: [Template, User, BusinessEntity]
                      Jedi:               [BusinessEntity]
+                     SpaceshipTemplates: [BusinessEntity]
                      MediaFile:          [Media]
              symfony_kernel:
                  bootstrap: Tests/App/app/autoload.php
