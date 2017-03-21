@@ -65,11 +65,11 @@ Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty:
         name: midiChlorians
         businessEntity: @character_business_entity
     spaceship_name:
-        types: a:3:{i:0;s:8:"textable";i:1;s:17:"businessParameter";i:2;s:7:"seoable";}
+        types: a:2:{i:0;s:17:"businessParameter";i:1;s:7:"seoable";}
         name: name
         businessEntity: @spaceship_business_entity
     spaceship_slug:
-        types: a:3:{i:0;s:8:"textable";i:1;s:18:"businessIdentifier";i:2;s:17:"businessParameter";}
+        types: a:2:{i:0;s:18:"businessIdentifier";i:1;s:17:"businessParameter";}
         name: slug
         businessEntity: @spaceship_business_entity
     users_id:
