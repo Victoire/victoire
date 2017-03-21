@@ -121,11 +121,11 @@ class WidgetFormBuilder
     /**
      * Generates new forms for each available business entities.
      *
-     * @param string           $slot
-     * @param View             $view
-     * @param Widget           $widgets
-     * @param BusinessEntity[] $classes
-     * @param int              $position
+     * @param string                                     $slot
+     * @param View                                       $view
+     * @param Widget                                     $widgets
+     * @param BusinessEntity[]                           $classes
+     * @param int                                        $position
      * @param \Victoire\Bundle\WidgetBundle\Model\Widget $activeWidget
      *
      * @throws \Exception

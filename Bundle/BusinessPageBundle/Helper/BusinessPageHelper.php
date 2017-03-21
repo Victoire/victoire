@@ -217,9 +217,9 @@ class BusinessPageHelper
     /**
      * Guess the best pattern to represent given reflectionClass.
      *
-     * @param int              $entity
-     * @param EntityManager    $em
-     * @param string           $originalRefClassName When digging into parentClass, we do not have to forget originalClass to be able to get reference after all
+     * @param int           $entity
+     * @param EntityManager $em
+     * @param string        $originalRefClassName When digging into parentClass, we do not have to forget originalClass to be able to get reference after all
      *
      * @throws \Exception
      *

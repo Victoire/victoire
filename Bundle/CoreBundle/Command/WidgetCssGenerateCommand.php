@@ -118,7 +118,7 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
             ->getQuery()
             ->getResult();
         $templates = [];
-        $recursiveGetTemplates = function($template) use (&$recursiveGetTemplates, &$templates) {
+        $recursiveGetTemplates = function ($template) use (&$recursiveGetTemplates, &$templates) {
             array_push($templates, $template);
             foreach ($template->getInheritors() as $_template) {
                 if ($_template instanceof Template) {

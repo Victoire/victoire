@@ -50,7 +50,7 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
         $getMethod = $businessEntity->getGetMethod();
         preg_match_all('/{{([a-zA-Z]+)}}/', $getMethod, $matches);
         // build an array with businessIdentifiers properties names
-        $identifiers = array_map(function($property) {
+        $identifiers = array_map(function ($property) {
             return $property->getName();
         },
             $businessEntity->getBusinessIdentifiers()->toArray()
@@ -123,7 +123,7 @@ class APIBusinessEntityResolver implements BusinessEntityResolverInterface
      * Sends a curl request to a given path.
      *
      * @param APIEndpoint $endPoint
-     * @param string $getMethod
+     * @param string      $getMethod
      *
      * @return array
      */

@@ -241,7 +241,7 @@ class PageHelper
     /**
      * populate the page with given entity.
      *
-     * @param View           $page
+     * @param View                    $page
      * @param BusinessEntityInterface $entity
      */
     public function updatePageWithEntity(BusinessTemplate $page, $entity)
