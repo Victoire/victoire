@@ -78,10 +78,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Acme\\AppBundle\\": "Tests/Functionnal/src/Acme/AppBundle",
+            "Acme\\AppBundle\\": "Tests/App/src/Acme/AppBundle",
             "Victoire\\Bundle\\": "Bundle",
             "Victoire\\Tests\\Features\\": "Tests/Features",
-            "Victoire\\Widget\\": "Tests/Functionnal/src/Victoire/Widget"
+            "Victoire\\Tests\\Functional\\": "Tests/Functional",
+            "Victoire\\Widget\\": "Tests/App/src/Victoire/Widget"
         }
     },
     "extra": {

@@ -9,7 +9,6 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\UnitOfWork;
-use Gedmo\Translatable\TranslatableListener;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
@@ -33,10 +32,7 @@ class PageSubscriber implements EventSubscriber
     protected $userCallableHelper;
     protected $urlBuilder;
     protected $viewReferenceRepository;
-    /**
-     * @var APIBusinessEntityResolver
-     */
-    private $apiBusinessEntityResolver;
+    protected $apiBusinessEntityResolver;
 
     /**
      * Constructor.
@@ -46,7 +42,6 @@ class PageSubscriber implements EventSubscriber
      * @param string                    $userClass                 %victoire_core.user_class%
      * @param ViewReferenceBuilder      $viewReferenceBuilder
      * @param ViewReferenceRepository   $viewReferenceRepository
-     * @param TranslatableListener      $translatableListener
      * @param APIBusinessEntityResolver $apiBusinessEntityResolver
      *
      * @internal param ViewReferenceBuilder $urlBuilder @victoire_view_reference.builder
@@ -57,7 +52,6 @@ class PageSubscriber implements EventSubscriber
         $userClass,
         ViewReferenceBuilder $viewReferenceBuilder,
         ViewReferenceRepository $viewReferenceRepository,
-        TranslatableListener $translatableListener,
         APIBusinessEntityResolver $apiBusinessEntityResolver
     ) {
         $this->router = $router;
@@ -65,7 +59,6 @@ class PageSubscriber implements EventSubscriber
         $this->userCallableHelper = $userCallableHelper;
         $this->viewReferenceBuilder = $viewReferenceBuilder;
         $this->viewReferenceRepository = $viewReferenceRepository;
-        $this->translatableListener = $translatableListener;
         $this->apiBusinessEntityResolver = $apiBusinessEntityResolver;
     }
 

@@ -1,0 +1,44 @@
+Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
+    template_character:
+        name: "Character {{item.name}}"
+        backendName: "Character template"
+        slug: "character-{{item.slug}}"
+        url: "character-{{item.slug}}"
+        businessEntity: @character_business_entity
+        author: @anakin
+        locale: fr
+        template: @template_base
+        status: published
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        parent: @home
+
+    template_jedi:
+        name: "Jedi {{item.name}}"
+        slug: "jedi-{{item.slug}}"
+        url: "jedi-{{item.slug}}"
+        businessEntity: @jedi_business_entity
+        author: @anakin
+        locale: fr
+        template: @template_base
+        status: published
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        parent: @home
+
+    template_mercenary:
+        name: "Mercenary {{item.name}}"
+        slug: "mercenary-{{item.slug}}"
+        url: "mercenary-{{item.slug}}"
+        businessEntity: @character_business_entity
+        query: WHERE item.type = 'mercenary'
+        author: @anakin
+        locale: fr
+        template: @template_base
+        status: published
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        parent: @home

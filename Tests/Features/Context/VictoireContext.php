@@ -509,6 +509,39 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
+     * @When I select :arg1 from the collapse menu
+     */
+    public function iSelectFromTheCollapseMenu($name)
+    {
+        $page = $this->getSession()->getPage();
+
+        $menus = $page->findAll('xpath', sprintf('descendant-or-self::a[contains(@class, "v-mode-trigger")]'));
+        if (count($menus) < 1) {
+            $message = sprintf('Collapse menu not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+
+        foreach ($menus as $menu) {
+            if ($menu->isVisible()) {
+                $menu->click();
+            }
+        }
+
+        $links = $menu = $page->findAll('xpath', sprintf('descendant-or-self::div[contains(@class, "v-drop__menu")]//a[contains(@class, "v-drop__anchor") and normalize-space(text()) = "%s"]', $name));
+
+        if (count($links) < 1) {
+            $message = sprintf('Menu link not found in the page after 10 seconds"');
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+
+        foreach ($links as $link) {
+            if ($link->getText() === $name) {
+                $link->click();
+            }
+        }
+    }
+
+    /**
      * Try to find value in element and retry for a given time.
      *
      * @param Element $element

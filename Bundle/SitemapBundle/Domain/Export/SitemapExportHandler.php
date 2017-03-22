@@ -5,6 +5,7 @@ namespace Victoire\Bundle\SitemapBundle\Domain\Export;
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
+use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
@@ -18,17 +19,23 @@ class SitemapExportHandler
 {
     private $entityManager;
     private $pageHelper;
+    private $viewReferenceRepo;
 
     /**
      * SitemapExportHandler constructor.
      *
-     * @param EntityManager $entityManager
-     * @param PageHelper    $pageHelper
+     * @param EntityManager           $entityManager
+     * @param PageHelper              $pageHelper
+     * @param ViewReferenceRepository $viewReferenceRepo
      */
-    public function __construct(EntityManager $entityManager, PageHelper $pageHelper)
-    {
+    public function __construct(
+        EntityManager $entityManager,
+        PageHelper $pageHelper,
+        ViewReferenceRepository $viewReferenceRepo
+    ) {
         $this->entityManager = $entityManager;
         $this->pageHelper = $pageHelper;
+        $this->viewReferenceRepo = $viewReferenceRepo;
     }
 
     /**
@@ -49,7 +56,7 @@ class SitemapExportHandler
             ->findOneByHomepage($locale);
 
         /** @var ViewReference $tree */
-        $tree = $this->get('victoire_view_reference.repository')->getOneReferenceByParameters(
+        $tree = $this->viewReferenceRepo->getOneReferenceByParameters(
             ['viewId' => $homepage->getId()],
             true,
             true
@@ -63,12 +70,13 @@ class SitemapExportHandler
                 $ids = array_merge($ids, $getChildrenIds($child));
             }
 
-            return $ids;
+            return array_unique($ids);
         };
 
         $pages = $this->entityManager->getRepository('VictoirePageBundle:BasePage')
             ->getAll(true)
             ->joinSeo()
+            ->joinSeoTranslations($locale)
             ->filterByIds($getChildrenIds($tree))
             ->run();
 

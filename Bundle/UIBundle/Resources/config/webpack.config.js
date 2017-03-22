@@ -31,7 +31,7 @@ const bundleConfig = {
 
 const devConfig = {
     output: {
-        path: path.join(__dirname, '../../../../Tests/Functionnal/web/bundles/victoireui/scripts'),
+        path: path.join(__dirname, '../../../../Tests/App/web/bundles/victoireui/scripts'),
         filename: 'victoire.bundle.js',
         chunkFilename: '[id].bundle.js'
     }

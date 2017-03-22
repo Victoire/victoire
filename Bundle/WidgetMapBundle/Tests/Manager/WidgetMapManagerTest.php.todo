@@ -1,0 +1,170 @@
+<?php
+
+namespace Bundle\WidgetMapBundle\Tests\Manager;
+
+use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Tests\Functional\VictoireWebTestCase;
+use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
+use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
+use Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager;
+use Victoire\Widget\TextBundle\Entity\WidgetText;
+
+class WidgetMapManagerTest extends VictoireWebTestCase
+{
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->resetSchema();
+    }
+
+    public function testMove()
+    {
+        $builder = $this->container->get('victoire_widget_map.builder');
+        $manager = $this->container->get('victoire_widget_map.manager');
+        $widgetMapRepo = $this->entityManager->getRepository('VictoireWidgetMapBundle:WidgetMap');
+
+        $view = new Page();
+        $this->entityManager->persist($view);
+        $widgetMap3 = $this->newWidgetMap(null, null, $view, $this->newWidget());
+        $widgetMap2 = $this->newWidgetMap($widgetMap3, WidgetMap::POSITION_BEFORE, $view, $this->newWidget());
+        $widgetMap1 = $this->newWidgetMap($widgetMap2, WidgetMap::POSITION_AFTER, $view, $this->newWidget());
+        $widgetMap4 = $this->newWidgetMap($widgetMap3, WidgetMap::POSITION_AFTER, $view, $this->newWidget());
+        $this->entityManager->flush();
+
+        $this->assertEquals($widgetMapRepo->find(1), $widgetMap3);
+        $this->assertEquals($widgetMapRepo->find(2), $widgetMap2);
+        $this->assertEquals($widgetMapRepo->find(3), $widgetMap1);
+        $this->assertEquals($widgetMapRepo->find(4), $widgetMap4);
+
+        $builtWidgetMap = $builder->build($view);
+
+        $order = [2, 3, 1, 4];
+        $i = 0;
+        foreach ($builtWidgetMap['content'] as $widgetMap) {
+            $this->assertEquals($order[$i++], $widgetMap->getWidget()->getId());
+        }
+
+        $this->moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder);
+    }
+
+    /**
+     * @param int[]            $order
+     * @param Page             $view
+     * @param WidgetMapManager $manager
+     * @param WidgetMapBuilder $builder
+     */
+    private function moveWidgetMap($builtWidgetMap, $order, $view, $manager, $builder)
+    {
+        $sortedWidget = [
+            'parentWidgetMap'    => null,
+            'position'           => null,
+            'slot'               => 'content',
+            'widgetMap'          => null,
+        ];
+
+        for ($i = 1; $i <= 1000; $i++) {
+            $buildSortedWidget = function ($builtWidgetMap) use (&$order, &$buildSortedWidget, $view) {
+                $sortedWidget['widgetMap'] = $builtWidgetMap['content'][array_rand($builtWidgetMap['content'])];
+                $availablePositions = [];
+                $positions = [WidgetMap::POSITION_AFTER, WidgetMap::POSITION_BEFORE];
+                $shuffled = $builtWidgetMap['content'];
+                shuffle($shuffled);
+                foreach ($shuffled as $widgetMap) {
+                    if ($widgetMap->getId() !== $sortedWidget['widgetMap']->getId()) {
+                        foreach ($positions as $position) {
+                            if (!$widgetMap->hasChild($position, $view)) {
+                                $availablePositions[] = [
+                                    'parentWidgetMap'    => $widgetMap,
+                                    'position'           => $position,
+                                ];
+                                if (array_rand([0, 1]) === 0) {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                $randomPosition = $availablePositions[array_rand($availablePositions)];
+                $offset = array_search(
+                        $randomPosition['parentWidgetMap']->getWidget()->getId(),
+                        $order
+                    ) + ($randomPosition['position'] == WidgetMap::POSITION_AFTER ? 1 : 0);
+                if (!empty($order[$offset]) && $order[$offset] == $sortedWidget['widgetMap']->getId()) {
+                    return $buildSortedWidget($builtWidgetMap);
+                }
+
+                $sortedWidget = array_merge($sortedWidget, $randomPosition);
+
+                $order[array_search($sortedWidget['widgetMap']->getWidget()->getId(), $order)] = null;
+                $offset = array_search(
+                        $sortedWidget['parentWidgetMap']->getWidget()->getId(),
+                        $order
+                    ) + ($sortedWidget['position'] == WidgetMap::POSITION_AFTER ? 1 : 0);
+                array_splice($order, $offset, 0, $sortedWidget['widgetMap']->getWidget()->getId());
+
+                unset($order[array_search(null, $order)]);
+
+                $order = array_values($order);
+                $sortedWidget['widgetMap'] = $sortedWidget['widgetMap']->getId();
+                $sortedWidget['parentWidgetMap'] = $sortedWidget['parentWidgetMap']->getId();
+
+                return $sortedWidget;
+            };
+
+            $sortedWidget = array_merge($sortedWidget, $buildSortedWidget($builtWidgetMap));
+
+            $manager->move($view, $sortedWidget);
+            $newBuiltWidgetMap = $builder->build($view);
+
+            $newOrder = [];
+            foreach ($newBuiltWidgetMap['content'] as $newWidgetMap) {
+                $newOrder[] = $newWidgetMap->getWidget()->getId();
+            }
+
+            $this->assertEquals($order, $newOrder,
+                sprintf("move widget %s %s widget %s didn't worked at iteration %s",
+                    $sortedWidget['widgetMap'], $sortedWidget['position'], $sortedWidget['parentWidgetMap'], $i));
+
+            $builtWidgetMap = $newBuiltWidgetMap;
+        }
+    }
+
+    /**
+     * @param $parent
+     * @param $position
+     * @param View $view
+     * @param Widget $widget
+     * @return WidgetMap
+     *
+     * @throws \Exception
+     */
+    private function newWidgetMap($parent, $position, View $view, Widget $widget)
+    {
+        $widgetMap = new WidgetMap();
+        $this->entityManager->persist($widgetMap);
+        if ($parent) {
+            $widgetMap->setParent($parent);
+        }
+        $widgetMap->setPosition($position);
+        $widgetMap->setWidget($widget);
+        $widgetMap->setSlot('content');
+        $widgetMap->setAction(WidgetMap::ACTION_CREATE);
+        $view->addWidgetMap($widgetMap);
+
+        return $widgetMap;
+    }
+
+    /**
+     * @return WidgetText
+     */
+    private function newWidget()
+    {
+        $widget = new WidgetText();
+        $this->entityManager->persist($widget);
+
+        return $widget;
+    }
+}

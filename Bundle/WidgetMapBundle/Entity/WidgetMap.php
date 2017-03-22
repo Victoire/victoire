@@ -63,7 +63,7 @@ class WidgetMap
     protected $widgets;
 
     /**
-     * @deprecated
+     * @deprecated Remove Doctrine mapping and property
      *
      * @var Widget
      *
@@ -121,6 +121,7 @@ class WidgetMap
     {
         $this->children = new ArrayCollection();
         $this->substitutes = new ArrayCollection();
+        $this->widgets = new ArrayCollection();
     }
 
     /**
@@ -194,7 +195,9 @@ class WidgetMap
      */
     public function addWidget(Widget $widget)
     {
-        $this->widgets[] = $widget;
+        if (!$this->widgets->contains($widget)) {
+            $this->widgets->add($widget);
+        }
 
         return $this;
     }

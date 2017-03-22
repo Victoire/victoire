@@ -103,6 +103,7 @@ framework:
 ```yml
 imports:
     - { resource: @VictoireCoreBundle/Resources/config/config.yml }
+    - { resource: @VictoireTwigBundle/Resources/config/config.yml }
 
 assetic:
     use_controller: false
@@ -274,7 +275,7 @@ php app/console victoire:viewReference:generate -e=dev
 ```
 
 #### Do you prefer the fixtures way ?
-There are some fixtures in `vendor/victoire/victoire/Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/LoadFixtureData.php`. These are used in the victoire behat tests so you can't use them directly from your project but feel free to start from it by copying/pasting it into your own project.
+There are some fixtures in `vendor/victoire/victoire/Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/LoadFixtureData.php`. These are used in the victoire behat tests so you can't use them directly from your project but feel free to start from it by copying/pasting it into your own project.
 
 ### Add the wanted widgets:
 
