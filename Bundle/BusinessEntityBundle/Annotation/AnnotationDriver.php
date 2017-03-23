@@ -7,6 +7,7 @@ use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver as DoctrineAnnotationDriver;
 use Doctrine\ORM\Mapping\MappingException;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Psr\Log\LoggerInterface;
@@ -55,6 +56,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         $this->eventDispatcher = $eventDispatcher;
         $this->widgetHelper = $widgetHelper;
         $this->paths = $paths;
+        $this->logger = $logger;
     }
 
     /**
