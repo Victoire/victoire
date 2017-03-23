@@ -136,9 +136,9 @@ victoire_core:
         - "customModal"
     slots: ~
     base_paths: #(optional) required for a non standard installation
-        - "%kernel.root_dir%/../../../Bundle/BlogBundle"
-        - "%kernel.root_dir%/../../../vendor/friendsofvictoire"
         - "%kernel.root_dir%/../src"
+        - "%kernel.root_dir%/../../../Bundle/BlogBundle"
+        - "%kernel.root_dir%/../../../vendor/victoire"
     business_entity_debug: false
 
 services:
