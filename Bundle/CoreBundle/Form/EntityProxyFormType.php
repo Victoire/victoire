@@ -14,7 +14,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
-use Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver;
 use Victoire\Bundle\CoreBundle\Form\Field\APISelect2Type;
 use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
@@ -38,7 +37,7 @@ class EntityProxyFormType extends AbstractType
      * EntityProxyFormType constructor.
      *
      * @param EntityManager $entityManager
-     * @param RequestStack $requestStack
+     * @param RequestStack  $requestStack
      */
     public function __construct(EntityManager $entityManager, RequestStack $requestStack)
     {

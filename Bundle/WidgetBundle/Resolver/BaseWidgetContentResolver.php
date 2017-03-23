@@ -13,17 +13,17 @@ use Victoire\Bundle\WidgetBundle\Entity\Widget;
 class BaseWidgetContentResolver
 {
     /**
-     * @var QueryHelper $queryHelper
+     * @var QueryHelper
      */
     protected $queryHelper;
 
     /**
-     * @var EntityManager $entityManager
+     * @var EntityManager
      */
     protected $entityManager;
 
     /**
-     * @var APIBusinessEntityResolver $apiResolver
+     * @var APIBusinessEntityResolver
      */
     protected $apiResolver;
 
