@@ -321,7 +321,7 @@ There are some fixtures in `vendor/victoire/victoire/Tests/App/src/Acme/AppBundl
 ### Add the wanted widgets:
 
 ```sh
-    composer require victoire/text-widget victoire/button-widget victoire/image-widget ...
+    composer require victoire/text-widget victoire/button-widget victoire/image-widget victoire/render-widget victoire/breadcrumb-widget ...
 ```
 
 Don't forget to enable these widget in the AppKernel. To keep the previous example:
