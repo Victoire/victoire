@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver as DoctrineAnnotationDriver;
 use Doctrine\ORM\Mapping\MappingException;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -30,6 +31,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     protected $eventDispatcher;
     protected $widgetHelper;
     protected $paths;
+    protected $logger;
 
     /**
      * construct.
@@ -38,19 +40,28 @@ class AnnotationDriver extends DoctrineAnnotationDriver
      * @param EventDispatcherInterface $eventDispatcher
      * @param WidgetHelper             $widgetHelper
      * @param array                    $paths           The paths where to search about Entities
+     * @param LoggerInterface          $logger
      */
-    public function __construct(Reader $reader, EventDispatcherInterface $eventDispatcher, $widgetHelper, $paths)
-    {
+    public function __construct(
+        Reader $reader,
+        EventDispatcherInterface $eventDispatcher,
+        $widgetHelper,
+        $paths,
+        LoggerInterface $logger
+    ) {
         $this->reader = $reader;
         $this->eventDispatcher = $eventDispatcher;
         $this->widgetHelper = $widgetHelper;
         $this->paths = $paths;
+        $this->logger = $logger;
     }
 
     /**
      * Get all class names.
      *
-     * @return string[]
+     * @return array
+     *
+     * @throws MappingException
      */
     public function getAllClassNames()
     {
@@ -61,7 +72,11 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         $includedFiles = [];
         foreach ($this->paths as $path) {
             if (!is_dir($path)) {
-                throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
+                $this->logger->error(sprintf(
+                    'The given path "%s" seems to be incorrect. You need to edit victoire_core.base_paths configuration.',
+                    $path
+                ));
+                continue;
             }
             $iterator = new \RegexIterator(
                 new \RecursiveIteratorIterator(
