@@ -101,7 +101,7 @@ class Version20170217154603 extends AbstractMigration implements ContainerAwareI
         /** @var EntityManager $entityManager */
         $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-        $sql = 'SELECT * FROM vic_entity_proxy';
+        $sql = 'SELECT * FROM vic_entity_proxy_old';
         $oldProxies = $conn->fetchAll($sql);
 
         foreach ($oldProxies as $k => $oldProxy) {
@@ -231,8 +231,8 @@ class Version20170217154603 extends AbstractMigration implements ContainerAwareI
     }
 
     /**
-     * @param string         $className
-     * @param BusinessEntity $annotationObj
+     * @param $className
+     * @param $annotationObj
      * @param $businessProperties
      *
      * @return ORMBusinessEntity
