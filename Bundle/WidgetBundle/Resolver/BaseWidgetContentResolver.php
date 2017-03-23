@@ -8,7 +8,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
 use Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
+use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 class BaseWidgetContentResolver
 {
