@@ -285,13 +285,8 @@ There are some fixtures in `vendor/victoire/victoire/Tests/App/src/Acme/AppBundl
 
 ### Add the wanted widgets:
 
-```json
-    "friendsofvictoire/text-widget"      : "~2.0",
-    "friendsofvictoire/button-widget"    : "~2.0",
-    "friendsofvictoire/image-widget"     : "~2.0",
-    "friendsofvictoire/render-widget"    : "~2.0",
-    "friendsofvictoire/breadcrumb-widget": "~2.0",
-    ...
+```sh
+    composer require victoire/text-widget victoire/button-widget victoire/image-widget victoire/render-widget victoire/breadcrumb-widget ...
 ```
 
 Get the whole Victoire Widget list [**here**](http://packagist.org/search/?tags=victoire)

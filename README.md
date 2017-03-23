@@ -9,7 +9,7 @@
 [![Dependency Status](https://www.versioneye.com/php/victoire:victoire/badge.svg)](https://www.versioneye.com/php/victoire:victoire)
 [![Features in Progress](https://badge.waffle.io/Victoire/victoire.svg?label=In%20Progress&title=In%20Progress)](http://waffle.io/Victoire/victoire)
 
-##Overview
+## Overview
 
 Victoire is a **Symfony** overlay integrating a Dynamic-CMS that use the core business datas in a dynamic and automated way.
 It can be setup in any Symfony project in just some few minutes.
@@ -17,15 +17,16 @@ It can be setup in any Symfony project in just some few minutes.
 The main goal is to give to the final customer the ability to **create**/**edit**/**delete** each content on its website, as much for a static content than a business entity based content and **without any development skill**, with the minimum of training.
 
 Victoire is the first CMS ever that allows content's personalization! Indeed you can define which content is shown regarding the criterias you define.
+Victoire is the first CMS ever that allows content's personalization! Indeed you can define which content is shown regarding the criterias you define.
 Many criterias can be used such as website locale, log in status, and so much more that can be created for each particular project.
 
 A french documentation has been started and is being completed _slowly_ [here](http://github.com/victoire/documentation-fr/).
 
-##Roadmap
+## Roadmap
 
 We define a raw roadmap [here](https://docs.google.com/spreadsheets/d/1MTdt5ZsGNPOZp5e_to2LvS39j59M59c29HddpvaVb70/edit?usp=sharing)
 
-##Contribution
+## Contribution
 
 Victoire is an open-source, community driven project.
 We are keen on getting your participation for the development of this product and every help is more than welcome, regardless of your mastering level.
@@ -42,11 +43,11 @@ Victoire and its Widgets are tested with Behat through CircleCI. For further inf
 
 If you want to contribute to Victoire frontend, please read this [contribution guideline](doc/frontend-contribution.md).
 
-##Install Victoire
+## Install Victoire
 
 To do so, follow the [setup guide](doc/setup.md).
 
-##What's inside?
+## What's inside?
 
 Component | Description
 ------------ | -------------
@@ -72,15 +73,17 @@ Component | Description
 [**WidgetBundle**][15] | Contains all the base widget logic to be able to use Widgets
 [**WidgetMapBundle**][16] | Each view has a widget map, this bundle contains all the widget maps logic
 
-##Widgets
+## Widgets
 
-All the widgets that you can use with a Victoire's website are available on the *[Friends Of Victoire](https://github.com/FriendsOfVictoire)* page.
+All the widgets that you can use with a Victoire's website are available on 
+  - *[Victoire](https://github.com/Victoire)* 
+  - *[Friends Of Victoire](https://github.com/FriendsOfVictoire)* 
 
-##Troubleshooting
+## Troubleshooting
 
 Victoire uses GitHub issues, feel free to [create your own](https://github.com/victoire/victoire/issues/new) or develop [an existing one](https://github.com/victoire/victoire/issues).
 
-##MIT License
+## MIT License
 
 License can be found [here](license.md).
 
