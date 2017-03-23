@@ -25,8 +25,6 @@
 | doctrine/orm                         | ^2.5         |                             |
 | friendsofsymfony/jsrouting-bundle    | ^1.0 or ^2.0 |                             |
 | friendsofsymfony/user-bundle         | ~2.0@dev     | 2.0 is not yet stable       |
-| friendsofvictoire/text-widget        | ^2.0         |                             |
-| friendsofvictoire/button-widget      | ^2.0         |                             |
 | incenteev/composer-parameter-handler | ^2.0         |                             |
 | jms/serializer-bundle                | ^1.0         |                             |
 | knplabs/gaufrette                    | ^0.1         |                             |
@@ -46,4 +44,6 @@
 | troopers/assetic-injector-bundle     | ^1.0         |                             |
 | twig/extensions                      | ~1.0         |                             |
 | twig/twig                            | ~1.0         |                             |
+| victoire/text-widget                 | ~2.0         |                             |
+| victoire/button-widget               | ~2.0         |                             |
 | willdurand/js-translation-bundle     | ^2.5         |                             |
