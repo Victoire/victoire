@@ -9,6 +9,7 @@ services:
         calls:
             - [setQueryHelper, ["@victoire_query.query_helper"]]
             - [setEntityManager, ["@doctrine.orm.entity_manager"]]
+            - [setApiBusinessEntityResolver, ["@victoire_api_business_entity.resolver.api_business_entity_resolver"]]
 
     victoire_widget.widget_helper:
         class: Victoire\Bundle\WidgetBundle\Helper\WidgetHelper
