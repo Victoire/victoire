@@ -17,6 +17,7 @@ It can be setup in any Symfony project in just some few minutes.
 The main goal is to give to the final customer the ability to **create**/**edit**/**delete** each content on its website, as much for a static content than a business entity based content and **without any development skill**, with the minimum of training.
 
 Victoire is the first CMS ever that allows content's personalization! Indeed you can define which content is shown regarding the criterias you define.
+Victoire is the first CMS ever that allows content's personalization! Indeed you can define which content is shown regarding the criterias you define.
 Many criterias can be used such as website locale, log in status, and so much more that can be created for each particular project.
 
 A french documentation has been started and is being completed _slowly_ [here](http://github.com/victoire/documentation-fr/).
@@ -49,7 +50,7 @@ Victoire follows the [maintenance rules of Symfony](http://symfony.com/doc/maste
 
 If you want to contribute to Victoire frontend, please read this [contribution guideline](doc/frontend-contribution.md).
 
-##Install Victoire
+## Install Victoire
 
 To do so, follow the [setup guide](doc/setup.md).
 
@@ -81,7 +82,9 @@ Component | Description
 
 ## Widgets
 
-All the widgets that you can use with a Victoire's website are available on the *[Friends Of Victoire](https://github.com/FriendsOfVictoire)* page.
+All the widgets that you can use with a Victoire's website are available on 
+  - *[Victoire](https://github.com/Victoire)* 
+  - *[Friends Of Victoire](https://github.com/FriendsOfVictoire)* 
 
 ## Troubleshooting
 
