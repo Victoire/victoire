@@ -54,9 +54,9 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     /**
      * Get all class names.
      *
-     * @return array
-     *
      * @throws MappingException
+     *
+     * @return array
      */
     public function getAllClassNames()
     {
