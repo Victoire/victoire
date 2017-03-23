@@ -51,6 +51,7 @@ services:
             - "@event_dispatcher"
             - "@victoire_widget.widget_helper"
             - "%victoire_core.base_paths%"
+            - "@logger"
 
 #  ==================  Provider ================== #
 
