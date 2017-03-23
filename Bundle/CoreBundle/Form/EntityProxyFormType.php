@@ -30,19 +30,20 @@ class EntityProxyFormType extends AbstractType
      * @var EntityManager
      */
     private $entityManager;
-    /**
-     * @var APIBusinessEntityResolver
-     */
-    private $apiBusinessEntityResolver;
 
     /** @var RequestStack */
     private $requestStack;
 
-    public function __construct(EntityManager $entityManager, RequestStack $requestStack, APIBusinessEntityResolver $apiBusinessEntityResolver)
+    /**
+     * EntityProxyFormType constructor.
+     *
+     * @param EntityManager $entityManager
+     * @param RequestStack $requestStack
+     */
+    public function __construct(EntityManager $entityManager, RequestStack $requestStack)
     {
         $this->entityManager = $entityManager;
         $this->requestStack = $requestStack;
-        $this->apiBusinessEntityResolver = $apiBusinessEntityResolver;
     }
 
     /**
@@ -175,7 +176,6 @@ class EntityProxyFormType extends AbstractType
             [
                 'data_class'         => 'Victoire\Bundle\CoreBundle\Entity\EntityProxy',
                 'business_entity_id' => null,
-                'namespace'          => null,
                 'widget'             => null,
                 'mode'               => null,
                 'translation_domain' => 'victoire',

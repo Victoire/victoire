@@ -5,13 +5,27 @@ namespace Victoire\Bundle\WidgetBundle\Resolver;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
+use Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
-use Victoire\Bundle\WidgetBundle\Model\Widget;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 class BaseWidgetContentResolver
 {
+    /**
+     * @var QueryHelper $queryHelper
+     */
     protected $queryHelper;
+
+    /**
+     * @var EntityManager $entityManager
+     */
     protected $entityManager;
+
+    /**
+     * @var APIBusinessEntityResolver $apiResolver
+     */
+    protected $apiResolver;
 
     /**
      * Get the static content of the widget.
@@ -83,10 +97,14 @@ class BaseWidgetContentResolver
     {
         $parameters = $this->getWidgetStaticContent($widget);
 
-        $entity = $this->getWidgetQueryBuilder($widget)
-                        ->setMaxResults(1)
-                        ->getQuery()
-                        ->getOneOrNullResult();
+        if (APIBusinessEntity::TYPE === $widget->getBusinessEntity()->getType()) {
+            $entity = $this->apiResolver->getBusinessEntities($widget->getBusinessEntity());
+        } else {
+            $entity = $this->getWidgetQueryBuilder($widget)
+                            ->setMaxResults(1)
+                            ->getQuery()
+                            ->getOneOrNullResult();
+        }
 
         $this->populateParametersWithWidgetFields($widget, $entity, $parameters);
 
@@ -145,5 +163,13 @@ class BaseWidgetContentResolver
     public function setEntityManager(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
+    }
+
+    /**
+     * @param APIBusinessEntityResolver $resolver
+     */
+    public function setBusinesssetApiBusinessEntityResolver(APIBusinessEntityResolver $resolver)
+    {
+        $this->apiResolver = $resolver;
     }
 }
