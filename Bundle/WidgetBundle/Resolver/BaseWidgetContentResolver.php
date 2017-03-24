@@ -168,7 +168,7 @@ class BaseWidgetContentResolver
     /**
      * @param APIBusinessEntityResolver $resolver
      */
-    public function setBusinesssetApiBusinessEntityResolver(APIBusinessEntityResolver $resolver)
+    public function setApiBusinessEntityResolver(APIBusinessEntityResolver $resolver)
     {
         $this->apiResolver = $resolver;
     }
