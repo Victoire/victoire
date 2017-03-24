@@ -141,13 +141,13 @@ victoire_core:
     business_entity_debug: true
     layouts:
         defaultLayout: "Default layout"
-    # Here you need to list all folders containing your BusinessEntities
-    # Remove friendsofvictoire if you don't need it
+    # Here you need to list all folders containing your BusinessEntities and you Widgets
     base_paths:
         - "%kernel.root_dir%/../src"
-        - "%kernel.root_dir%/../vendor/victoire/victoire/Bundle/BlogBundle"
+        - "%kernel.root_dir%/../vendor/victoire"
         - "%kernel.root_dir%/../vendor/friendsofvictoire"
-
+        - "%kernel.root_dir%/../vendor/myorganization"
+        
 #if you need i18n
 victoire_i18n:
     available_locales:
