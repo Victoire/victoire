@@ -2,6 +2,8 @@ services:
 
     victoire_core.widget.form.type:
         class: Victoire\Bundle\CoreBundle\Form\WidgetType
+        arguments:
+            - "@doctrine.orm.entity_manager"
         tags:
             - { name: form.type }
 
@@ -18,5 +20,12 @@ services:
         class: Victoire\Bundle\CoreBundle\Form\WidgetFieldsFormType
         arguments:
             - "@victoire_core.entity_proxy.fields_builder"
+        tags:
+            - { name: form.type }
+
+    victoire_core.widget_fields.business_entity_hidden.type:
+        class: Victoire\Bundle\CoreBundle\Form\Field\BusinessEntityHiddenType
+        arguments:
+            - "@doctrine.orm.entity_manager"
         tags:
             - { name: form.type }

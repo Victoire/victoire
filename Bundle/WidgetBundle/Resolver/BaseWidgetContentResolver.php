@@ -97,8 +97,8 @@ class BaseWidgetContentResolver
     {
         $parameters = $this->getWidgetStaticContent($widget);
 
-        if (APIBusinessEntity::TYPE === $widget->getEntityProxy()->getBusinessEntity()->getType()) {
-            $entity = $this->apiResolver->getBusinessEntities($widget->getEntityProxy()->getBusinessEntity());
+        if (APIBusinessEntity::TYPE === $widget->getBusinessEntity()->getType()) {
+            $entity = $this->apiResolver->getBusinessEntities($widget->getBusinessEntity());
         } else {
             $entity = $this->getWidgetQueryBuilder($widget)
                             ->setMaxResults(1)
