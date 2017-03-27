@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Victoire\Bundle\CoreBundle\Form\Field\BusinessEntityHiddenType;
 use Victoire\Bundle\CriteriaBundle\Entity\Criteria;
 use Victoire\Bundle\CriteriaBundle\Form\Type\CriteriaType;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
@@ -34,17 +35,16 @@ class WidgetType extends AbstractType
             }
         }
 
-        if ($options['mode'] === Widget::MODE_ENTITY) {
-            $this->addEntityFields($builder, $options, $options['mode']);
-        }
-
-        if ($options['mode'] === Widget::MODE_QUERY) {
-            $this->addEntityFields($builder, $options, $options['mode']);
-            $this->addQueryFields($builder, $options);
-        }
-
-        if ($options['mode'] === Widget::MODE_BUSINESS_ENTITY) {
-            $this->addBusinessEntityFields($builder, $options);
+        switch ($options['mode']) {
+            case Widget::MODE_ENTITY:
+                $this->addEntityFields($builder, $options, $options['mode']);
+                break;
+            case Widget::MODE_QUERY:
+                $this->addQueryFields($builder, $options);
+                break;
+            case Widget::MODE_BUSINESS_ENTITY:
+                $this->addBusinessEntityFields($builder, $options);
+                break;
         }
 
         //add the mode to the form
@@ -84,16 +84,17 @@ class WidgetType extends AbstractType
                 $form = $event->getForm();
 
                 //the controller does not use the mode to construct the form, so we update it automatically
-                if ($mode === Widget::MODE_ENTITY) {
-                    $this->addEntityFields($form, $options, $mode);
-                }
 
-                if ($mode === Widget::MODE_QUERY) {
-                    $this->addEntityFields($form, $options, $mode);
-                    $this->addQueryFields($form, $options);
-                }
-                if ($mode === Widget::MODE_BUSINESS_ENTITY) {
-                    $this->addBusinessEntityFields($form, $options);
+                switch ($options['mode']) {
+                    case Widget::MODE_ENTITY:
+                        $this->addEntityFields($form, $options, $mode);
+                        break;
+                    case Widget::MODE_QUERY:
+                        $this->addQueryFields($form, $options);
+                        break;
+                    case Widget::MODE_BUSINESS_ENTITY:
+                        $this->addBusinessEntityFields($form, $options);
+                        break;
                 }
             }
         );
@@ -188,6 +189,15 @@ class WidgetType extends AbstractType
     protected function addQueryFields($form, $options)
     {
         $form->add('query');
+        $form->add('fields', WidgetFieldsFormType::class, [
+            'label'            => 'widget.form.entity.fields.label',
+            'businessEntityId' => $options['businessEntityId'],
+            'widget'           => $options['widget'],
+        ]);
+
+        $form->add('businessEntity', BusinessEntityHiddenType::class, [
+            'data' => $options['businessEntityId'],
+        ]);
     }
 
     /**

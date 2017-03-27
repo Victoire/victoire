@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
 use Victoire\Bundle\CoreBundle\Form\Field\APISelect2Type;
+use Victoire\Bundle\CoreBundle\Form\Field\BusinessEntityHiddenType;
 use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
@@ -139,28 +140,10 @@ class EntityProxyFormType extends AbstractType
                 );
             }
         }
-        $builder->add(
-            'businessEntity',
-            HiddenType::class,
-            [
-                'data' => $options['business_entity_id'],
-            ]
-        );
 
-        $builder->get('businessEntity')->addModelTransformer(
-                new CallbackTransformer(
-                    function ($businessEntity) {
-                        return $businessEntity;
-                    },
-                function ($nameToBusinessEntity) use ($entityManager) {
-                    return $entityManager->getRepository(
-                        'VictoireBusinessEntityBundle:BusinessEntity'
-                    )->findOneByName(
-                        $nameToBusinessEntity
-                    );
-                }
-            )
-        );
+        $builder->add('businessEntity', BusinessEntityHiddenType::class, [
+            'data' => $options['business_entity_id'],
+        ]);
     }
 
     /**
