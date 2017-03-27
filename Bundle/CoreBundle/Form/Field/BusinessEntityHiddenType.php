@@ -6,25 +6,25 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BusinessEntityHiddenType extends AbstractType
 {
-
     protected $entityManager;
 
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
-
     }
-    public function getParent() {
+
+    public function getParent()
+    {
         return HiddenType::class;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         $entityManager = $this->entityManager;
         parent::buildForm($builder, $options);
 
@@ -55,5 +55,4 @@ class BusinessEntityHiddenType extends AbstractType
             'translation_domain' => 'victoire',
         ]);
     }
-
 }
