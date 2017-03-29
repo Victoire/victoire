@@ -1,5 +1,5 @@
 @mink:selenium2 @alice(Page) @reset-schema
-Feature: Create business entity pages
+Feature: Delete Business Entity pages
 
     Background:
         Given the following Jedis:
@@ -9,23 +9,21 @@ Feature: Create business entity pages
         And I maximize the window
         And I am on homepage
 
-    Scenario: I can delete an BE and his BEP
+    Scenario: I can delete a Business Entity and its Business Entity page
         Given the following BusinessTemplate:
-            | currentLocale |name                       | backendName  | slug                     |  businessEntityId | parent  | template |
-            | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi   | fiche-jedi-{{item.slug}} |  jedi             | home    | base     |
-        Given I am on "/fr/fiche-jedi-anakin"
+            | currentLocale | name                         | backendName  | slug                       | businessEntity | parent | template |
+            | en            | Jedi profile - {{item.name}} | Jedi profile | jedi-profile-{{item.slug}} | Jedi           | home   | base     |
+        When I am on "/en/jedi-profile-anakin"
         And I switch to "layout" mode
-        And I should see "Nouveau contenu"
-        When I select "Force" from the "1" select of "main_content" slot
-        Then I should see "Créer"
-        When I fill in "Côté de la force" with "Nouveau"
+        And I should see "New content"
+        And I select "Force" from the "1" select of "main_content" slot
+        Then I should see "Force side"
+        When I fill in "Force side" with "new"
         And I submit the widget
         And I wait 5 seconds
-        Then I should see "Le côté Nouveau de la force"
-
-        Given I am on "/victoire-dcms/backend/jedi/1/edit"
-        And I press "Supprimer"
-        And I should be on "victoire-dcms/backend/jedi/"
-
-        Given I am on "/fr/fiche-jedi-anakin"
+        Then I should see "The new side of the force"
+        When I am on "/victoire-dcms/backend/jedi/1/edit"
+        And I press "Delete"
+        Then I should be on "victoire-dcms/backend/jedi/"
+        When I am on "/en/jedi-profile-anakin"
         Then I should see "404 Not Found"

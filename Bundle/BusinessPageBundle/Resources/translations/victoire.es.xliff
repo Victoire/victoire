@@ -13,7 +13,7 @@
       </trans-unit>
       <trans-unit id="58893b9932bb9" resname="list.action.add">
         <source>list.action.add</source>
-        <target>Añadir una plantilla de negocio</target>
+        <target>AÑADIR UNA PLANTILLA DE NEGOCIO</target>
       </trans-unit>
       <trans-unit id="58893b9932c40" resname="list.action.edit">
         <source>list.action.edit</source>
