@@ -6,26 +6,24 @@ Background:
     And I am on homepage
 
     Scenario: I can delete a blog article
-        Given I am on "/fr/the-jedi-network/i-m-your-father"
+        Given I am on "/en/the-jedi-network/i-m-your-father"
         And I wait 3 seconds
         When I open the settings menu
-        Then I should see "SUPPRIMER"
-        When I follow the link containing "SUPPRIMER"
-        Then I should see "Cette action va supprimer définitivement cet article. Cette action est irréversible. Êtes-vous sûr ?"
-        Given I press "J'ai bien compris, je confirme la suppression"
-        #TODO Then I should see "L'article a bien été supprimé"
-        And I wait 10 seconds
-        And I should be on "/fr/the-jedi-network"
+        Then I should see "DELETE"
+        When I follow the link containing "DELETE"
+        Then I should see "This action will permanently remove the post. This action is irreversible. Are you sure?"
+        Given I press "YES, I WANT TO DELETE IT!"
+        Then I should see "The post has been removed"
+        And I should be on "/en/the-jedi-network"
 
     Scenario: I can delete a blog
         Then I should see "Blog"
         When I follow "Blog"
-        And I wait 2 seconds
-	    Then I should see "Gestion des blogs"
+	    Then I should see "Blog index"
         And I should see "The Jedi Network"
-        And I follow "Paramètres"
-        And I should see "SUPPRIMER"
-        When I follow the link containing "SUPPRIMER"
-        Then I should see "Cette action va supprimer définitivement cette page. Cette action est irréversible. Êtes-vous sûr ?"
-        Given I press "J'ai bien compris, je confirme la suppression"
-        And I should be on "/fr/"
+        And I follow "Settings"
+        And I should see "DELETE"
+        When I follow the link containing "DELETE"
+        Then I should see "This action will permanently delete this page from the database. This action is irreversible."
+        Given I press "YES, I WANT TO DELETE IT!"
+        And I should be on "/en/"
