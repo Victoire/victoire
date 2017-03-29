@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="58893bce9aa3d" resname="widget_force.show.forceSide">
 	<source>widget_force.show.forceSide</source>
-	<target>The %side% Side of the force</target>
+	<target>The %side% side of the force</target>
       </trans-unit>
     </body>
   </file>
