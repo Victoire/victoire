@@ -58,7 +58,6 @@ Feature: Manage jedis
             | Name | Midichlorians | Side   |
             | Yoda | 17700         | bright |
 
-    @current
     Scenario: I can rename the url of a jedi
         Given I maximize the window
         And the following Jedis:
