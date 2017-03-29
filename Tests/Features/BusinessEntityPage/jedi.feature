@@ -59,7 +59,6 @@ Feature: Manage jedis
             | Name | Midichlorians | Side   |
             | Yoda | 17700         | bright |
 
-    @current
     Scenario: I can rename the url of a jedi
         And the following Jedis:
             | name   | side | midiChlorians | slug   |
