@@ -114,11 +114,7 @@ class ArticleType extends AbstractType
         if (!$blog instanceof Blog) {
             $blog = $this->entityManager->getRepository('VictoireBlogBundle:Blog')->findOneById($blog);
         }
-        $translations = $blog->getTranslations();
-        $availableLocales = [];
-        foreach ($translations as $translation) {
-            $availableLocales[] = $translation->getLocale();
-        }
+        $availableLocales = $blog->getAvailableLocales();
 
         $options = [
             'required_locales' => $availableLocales,
