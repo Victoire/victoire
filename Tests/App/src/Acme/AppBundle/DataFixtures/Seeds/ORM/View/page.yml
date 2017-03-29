@@ -11,7 +11,7 @@ Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
 
 Victoire\Bundle\PageBundle\Entity\Page:
     home:
-        currentLocale: fr
+        currentLocale: en
         template: @template_base
         author: @anakin
         name: Page d'accueil
@@ -26,7 +26,7 @@ Victoire\Bundle\PageBundle\Entity\Page:
         translations: [@home_en]
 
     test:
-        currentLocale: fr
+        currentLocale: en
         template: @template_base
         author: @anakin
         name: Test

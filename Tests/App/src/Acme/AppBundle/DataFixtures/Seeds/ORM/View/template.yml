@@ -6,7 +6,7 @@ Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
 
 Victoire\Bundle\TemplateBundle\Entity\Template:
     template_base:
-        currentLocale: fr
+        currentLocale: en
         name: Base
         slug: base
         layout: defaultLayout
