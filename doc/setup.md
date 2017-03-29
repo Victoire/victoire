@@ -49,6 +49,8 @@ class AppKernel extends Kernel
             new Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
+
             //Victoire bundles
             new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
             new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
@@ -300,6 +302,16 @@ Run the following command to fetch the Victoire assets:
 `CAUTION` you need to install bower first
 ```shell
 php app/console victoire:ui:fetchAssets
+```
+
+#### Dump JS Translation File
+
+Victoire uses [BazingaJsTranslationBundle](https://github.com/willdurand/BazingaJsTranslationBundle) to 
+make translations available in the JS based Frontend. 
+
+To dump the needed file run:
+```shell
+php app/console bazinga:js-translation:dump
 ```
 
 #### Dump with assetic
