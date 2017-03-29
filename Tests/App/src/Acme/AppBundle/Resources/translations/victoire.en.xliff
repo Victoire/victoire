@@ -190,6 +190,10 @@
         <source>acme.app.spaceship.form.action.index</source>
         <target>Spaceships list</target>
       </trans-unit>
+      <trans-unit id="s1p2a358893bce99db6" resname="acme.app.spaceship.index.noresult">
+        <source>acme.app.spaceship.index.noresult</source>
+        <target>No result</target>
+      </trans-unit>
       <trans-unit id="s1p2a358893bce97f27" resname="acme.app.spaceship.form.button.create">
         <source>acme.app.spaceship.form.button.create</source>
         <target>Create</target>
