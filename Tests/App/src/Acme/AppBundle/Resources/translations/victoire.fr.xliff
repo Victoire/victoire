@@ -136,7 +136,7 @@
       </trans-unit>
       <trans-unit id="s1p2a358893bce99c36" resname="hamburger_menu.spaceship">
         <source>hamburger_menu.spaceship</source>
-        <target><![CDATA[<i class="fa fa-space-shuttle"></i> Vaisseau Spatial]]></target>
+        <target>Vaisseau Spatial</target>
       </trans-unit>
       <trans-unit id="s1p2a358893bce99c47" resname="acme.app.spaceship.index.title">
         <source>acme.app.spaceship.index.title</source>
