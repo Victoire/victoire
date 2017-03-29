@@ -166,6 +166,10 @@
         <source>modal.blog.list.articlesList.empty.notice.label</source>
         <target>Créer un article maintenant</target>
       </trans-unit>
+      <trans-unit id="58893b99220d8" resname="modal.blog.list.articlesList.change.parameters.label">
+        <source>modal.blog.list.articlesList.change.parameters.label</source>
+        <target>Modifier les paramètres</target>
+      </trans-unit>
       <trans-unit id="58893b9924cea" resname="modal.blog.list.articlesList.status.draft">
         <source>modal.blog.list.articlesList.status.draft</source>
         <target>Brouillon</target>
