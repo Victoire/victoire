@@ -76,23 +76,23 @@
       </trans-unit>
       <trans-unit id="58893b995ce71" resname="modal.button.delete.confirm.ok.label">
         <source>modal.button.delete.confirm.ok.label</source>
-        <target>YES, I want to delete it!</target>
+        <target>YES, I WANT TO DELETE IT!</target>
       </trans-unit>
       <trans-unit id="58893b995cebc" resname="modal.button.delete.confirm.cancel.label">
         <source>modal.button.delete.confirm.cancel.label</source>
-        <target>Cancel</target>
+        <target>CANCEL</target>
       </trans-unit>
       <trans-unit id="58893b995cf89" resname="modal.button.delete.title">
         <source>modal.button.delete.title</source>
-        <target>Delete</target>
+        <target>DELETE</target>
       </trans-unit>
       <trans-unit id="58893b995cfc0" resname="modal.button.update.title">
         <source>modal.button.update.title</source>
-        <target>Update</target>
+        <target>UPDATE</target>
       </trans-unit>
       <trans-unit id="58893b995cfe8" resname="modal.button.update-bulk.title">
         <source>modal.button.update-bulk.title</source>
-        <target>Update</target>
+        <target>UPDATE</target>
       </trans-unit>
       <trans-unit id="58893b995d057" resname="modal.mandatory_fields.label">
         <source>modal.mandatory_fields.label</source>

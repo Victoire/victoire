@@ -72,11 +72,11 @@
       </trans-unit>
       <trans-unit id="58893b99637d6" resname="modal.button.delete.confirm.ok.label">
         <source>modal.button.delete.confirm.ok.label</source>
-        <target>J'ai bien compris, je confirme la suppression</target>
+        <target>J'AI BIEN COMPRIS, JE CONFIRME LA SUPPRESSION</target>
       </trans-unit>
       <trans-unit id="58893b9963817" resname="modal.button.delete.confirm.cancel.label">
         <source>modal.button.delete.confirm.cancel.label</source>
-        <target>Annuler</target>
+        <target>ANNULER</target>
       </trans-unit>
       <trans-unit id="58893b9963c02" resname="modal.button.delete.title">
         <source>modal.button.delete.title</source>
@@ -84,11 +84,11 @@
       </trans-unit>
       <trans-unit id="58893b9963c67" resname="modal.button.update.title">
         <source>modal.button.update.title</source>
-        <target>Mettre à jour</target>
+        <target>METTRE À JOUR</target>
       </trans-unit>
       <trans-unit id="58893b9963c9b" resname="modal.button.update-bulk.title">
         <source>modal.button.update-bulk.title</source>
-        <target>Mettre à jour</target>
+        <target>METTRE À JOUR</target>
       </trans-unit>
       <trans-unit id="58893b9963cce" resname="modal.mandatory_fields.label">
         <source>modal.mandatory_fields.label</source>
