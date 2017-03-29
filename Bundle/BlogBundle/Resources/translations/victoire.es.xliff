@@ -166,6 +166,10 @@
         <source>modal.blog.list.articlesList.empty.notice.label</source>
         <target>Crear artículo ahora</target>
       </trans-unit>
+      <trans-unit id="58893b99220d8" resname="modal.blog.list.articlesList.change.parameters.label">
+        <source>modal.blog.list.articlesList.change.parameters.label</source>
+        <target>Cambiar la configuración</target>
+      </trans-unit>
       <trans-unit id="58893b9923688" resname="modal.blog.list.articlesList.status.draft">
         <source>modal.blog.list.articlesList.status.draft</source>
         <target>Borrador</target>

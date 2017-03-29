@@ -166,6 +166,10 @@
         <source>modal.blog.list.articlesList.empty.notice.label</source>
         <target>Create a post now</target>
       </trans-unit>
+      <trans-unit id="58893b99220d8" resname="modal.blog.list.articlesList.change.parameters.label">
+        <source>modal.blog.list.articlesList.change.parameters.label</source>
+        <target>Change parameters</target>
+      </trans-unit>
       <trans-unit id="58893b99220ef" resname="modal.blog.list.articlesList.status.draft">
         <source>modal.blog.list.articlesList.status.draft</source>
         <target>Draft</target>
