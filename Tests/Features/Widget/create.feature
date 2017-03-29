@@ -13,7 +13,7 @@ Feature: Create a widget
         When I switch to "layout" mode
         And I should see "New content"
         And I select "Plain Text" from the "1" select of "main_content" slot
-        Then I should see "Asynchronous load?"
+        Then I should see "Widget  (Plain Text)"
         When I fill in "_a_static_widget_text[content]" with "test"
         And I submit the widget
         Then I should see "test"
