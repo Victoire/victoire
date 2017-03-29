@@ -1,6 +1,6 @@
 Victoire\Bundle\BlogBundle\Entity\Article:
     article:
-        currentLocale: fr
+        currentLocale: en
         author: @anakin
         name: "I'm your father."
         description: This is a great article description

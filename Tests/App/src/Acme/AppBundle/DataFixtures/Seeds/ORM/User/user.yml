@@ -6,7 +6,7 @@ Victoire\Bundle\UserBundle\Entity\User:
         firstname: Anakin
         lastname: Skywalker
         enabled: true
-        locale: fr
+        locale: en
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         roles:
@@ -19,6 +19,6 @@ Victoire\Bundle\UserBundle\Entity\User:
         firstname: Z
         lastname: 6PO
         enabled: true
-        locale: fr
+        locale: en
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
