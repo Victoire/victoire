@@ -1,0 +1,13 @@
+services:
+    victoire_core.entity.orm_business_entity_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity
+
+    victoire_orm_business_entity.resolver.orm_business_entity_resolver:
+        class: Victoire\Bundle\ORMBusinessEntityBundle\Resolver\ORMBusinessEntityResolver
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: victoire_business_entity.resolver, type: "orm" }

@@ -3,6 +3,8 @@
 namespace Victoire\Bundle\ViewReferenceBundle\Provider;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
 use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
@@ -54,7 +56,14 @@ class ViewReferenceProvider
                     $currentTemplate = clone $view;
                     $page = $this->businessPageBuilder->generateEntityPageFromTemplate($currentTemplate, $entity, $em);
                     $this->businessPageBuilder->updatePageParametersByEntity($page, $entity);
-                    if (!array_key_exists(ViewReferenceHelper::generateViewReferenceId($page, $entity), $businessPages)) {
+                    $entityId = null;
+                    if (method_exists($entity, 'getId')) {
+                        $entityId = $entity->getId();
+                    } elseif ($page->getBusinessEntity()->getType() === APIBusinessEntity::TYPE) {
+                        $accessor = new PropertyAccessor();
+                        $entityId = $accessor->getValue($entity, $page->getBusinessEntity()->getBusinessIdentifiers()->first()->getName());
+                    }
+                    if (!array_key_exists(ViewReferenceHelper::generateViewReferenceId($page, $entityId), $businessPages)) {
                         $referencableViews[] = ['view' => $page];
                     }
                 }
@@ -75,7 +84,7 @@ class ViewReferenceProvider
         $businessPages = [];
         foreach ($tree as $view) {
             if ($view instanceof BusinessPage) {
-                $businessPages[ViewReferenceHelper::generateViewReferenceId($view, $view->getBusinessEntity())] = $view;
+                $businessPages[ViewReferenceHelper::generateViewReferenceId($view, $view->getEntity())] = $view;
             }
             if ($view->hasChildren()) {
                 self::findBusinessPages($view->getChildren());

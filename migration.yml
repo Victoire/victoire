@@ -1,0 +1,7 @@
+# To execute victoire migrations, please run
+# ./bin/console doctrine:migrations:migrate --configuration=vendor/victoire/victoire/migration.yml
+# from your project root.
+name: Victoire Migrations
+migrations_namespace: Victoire\Migrations
+table_name: vic_migration_versions
+migrations_directory: Bundle/CoreBundle/DoctrineMigrations

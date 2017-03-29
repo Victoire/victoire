@@ -182,7 +182,7 @@ class PageSeoController extends Controller
 
         if ($view instanceof BusinessTemplate) {
             //we can use the business entity properties on the seo
-            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($view->getBusinessEntityId());
+            $businessEntity = $this->get('victoire_core.entity.business_entity_repository')->findOneBy(['name' => $view->getBusinessEntityName()]);
             $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
         }
 

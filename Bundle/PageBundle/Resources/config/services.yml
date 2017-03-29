@@ -7,11 +7,12 @@ services:
     page.subscriber:
         class: Victoire\Bundle\PageBundle\EventSubscriber\PageSubscriber
         arguments:
-            - @router.default
-            - @victoire_page.user_callable
-            - %victoire_core.user_class%
-            - @victoire_view_reference.builder
-            - @victoire_view_reference.repository
+            - "@router.default"
+            - "@victoire_page.user_callable"
+            - "%victoire_core.user_class%"
+            - "@victoire_view_reference.builder"
+            - "@victoire_view_reference.repository"
+            - "@victoire_api_business_entity.resolver.api_business_entity_resolver"
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -11 }
 
@@ -33,6 +34,7 @@ services:
             - "@victoire_business_page.business_page_helper"
             - "@victoire_widget_map.widget_data_warmer"
             - "@victoire_view_reference.repository"
+            - "@victoire_api_business_entity.resolver.api_business_entity_resolver"
 
     ####################################################################################################################
     # Security voter

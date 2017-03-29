@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 class WidgetCssGenerateCommand extends ContainerAwareCommand
@@ -121,9 +120,9 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
         $templates = [];
         $recursiveGetTemplates = function ($template) use (&$recursiveGetTemplates, &$templates) {
             array_push($templates, $template);
-            foreach ($template->getInheritors() as $template) {
-                if ($template instanceof Template) {
-                    $recursiveGetTemplates($template);
+            foreach ($template->getInheritors() as $_template) {
+                if ($_template instanceof Template) {
+                    $recursiveGetTemplates($_template);
                 }
             }
         };

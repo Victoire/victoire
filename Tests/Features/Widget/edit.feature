@@ -7,83 +7,86 @@ Feature: Edit a widget
             | Anakin | dark   | 20000         | anakin |
             | Yoda   | bright | 17500         | yoda   |
         Given the following BusinessTemplate:
-            | currentLocale |name                       | backendName  | slug                    |  businessEntityId | parent  | template |
-            | fr            |Fiche Jedi - {{item.name}} | Fiche Jedi  | fiche-jedi-{{item.slug}} |  jedi             | home    | base |
+            | currentLocale | name                         | backendName  | slug                       | businessEntity | parent | template |
+            | en            | Jedi profile - {{item.name}} | Jedi profile | jedi-profile-{{item.slug}} | Jedi           | home   | base     |
         And I maximize the window
 
     Scenario: I can create a new Business entity page pattern, create a widget and edit this widget
         Given the following WidgetMap:
-            | view | action | slot |
-            | fiche-jedi-{{item.slug}} | create | main_content |
+            | view                       | action | slot         |
+            | jedi-profile-{{item.slug}} | create | main_content |
+        Given the following EntityProxy:
+            | businessEntity |
+            | Jedi           |
         Given the following WidgetForce:
-            | widgetMap                | fields                       | mode           | businessEntityId |
-            | fiche-jedi-{{item.slug}} | a:1:{s:4:"side";s:4:"side";} | businessEntity | jedi             |
-        Given I am on "/fr/victoire-dcms/business-template/show/4"
-        And I should see "Le côté obscur de la force"
+            | widgetMap                  | fields                       | mode           | entityProxy |
+            | jedi-profile-{{item.slug}} | a:1:{s:4:"side";s:4:"side";} | businessEntity | Jedi        |
+        Given I am on "/en/victoire-dcms/business-template/show/4"
+        And I should see "The dark side of the force"
         When I switch to "edit" mode
         And I edit the "Force" widget
-        Then I should see "Mettre à jour"
+        Then I should see "UPDATE"
         When I select "slug" from "jedi_a_businessEntity_widget_force[fields][side]"
         And I submit the widget
-        And I should see "Le côté anakin de la force"
+        And I should see "The anakin side of the force"
 
     Scenario: I can create a new Business entity page pattern, create a static widget and edit this widget in query mode
         Given the following WidgetMap:
-            | view | action | slot |
-            |  fiche-jedi-{{item.slug}}| create | main_content |
+            | view                       | action | slot         |
+            | jedi-profile-{{item.slug}} | create | main_content |
         And the following WidgetForce:
-            | widgetMap                | side |
-            | fiche-jedi-{{item.slug}} | Obscur |
-        And I am on "/fr/victoire-dcms/business-template/show/4"
-        Then I should see "Le côté Obscur de la force"
+            | widgetMap                  | side |
+            | jedi-profile-{{item.slug}} | dark |
+        And I am on "/en/victoire-dcms/business-template/show/4"
+        Then I should see "The dark side of the force"
         When I switch to "edit" mode
         And I edit the "Force" widget
-        Then I should see "Mettre à jour"
-        When I follow the tab "Entités"
+        Then I should see "UPDATE"
+        When I follow the tab "Entities"
         Then I should see "Jedi"
         When I follow the drop anchor "Jedi"
         And I open the widget mode drop for entity "Jedi"
-        Then I should see "Requête"
-        When I follow the drop anchor "Requête"
+        Then I should see "Query"
+        When I follow the drop anchor "Query"
         And I select "side" from "jedi_a_query_widget_force[fields][side]"
         And I submit the widget
-        Then I should see "Le côté obscur de la force"
+        Then I should see "The dark side of the force"
 
     Scenario: I cannot edit widget for an entity with missing business parameter
-        Given I am on "/fr/victoire-dcms/business-template/show/4"
+        Given I am on "/en/victoire-dcms/business-template/show/4"
         When I switch to "layout" mode
-        Then I should see "Nouveau contenu"
+        Then I should see "New content"
         When I select "Force" from the "1" select of "main_content" slot
-        Then I should see "Créer"
-        When I follow the tab "Entités"
-        And I should see disable drop anchor "Vaisseau Spatial"
+        Then I should see "Create"
+        When I follow the tab "Entities"
+        And I should see disable drop anchor "Spaceship"
 
     Scenario: I can edit the original widget from a child page
         Given the following Jedis:
-            | name   | side   | midiChlorians | slug   |
-            | Anakin | Dark   | 20000         | anakin |
+            | name   | side | midiChlorians | slug   |
+            | Anakin | dark | 20000         | anakin |
         Given the following WidgetMap:
-            | view | action | slot |
-            | fiche-jedi-{{item.slug}} | create | main_content |
+            | view                       | action | slot         |
+            | jedi-profile-{{item.slug}} | create | main_content |
         Given the following WidgetForce:
-            | widgetMap                | side |
-            | fiche-jedi-{{item.slug}} | Obscur |
-        Given I am on "/fr/victoire-dcms/business-template/show/4"
-        And I should see "Le côté Obscur de la force"
-        Given I am on "/fr/fiche-jedi-anakin"
-        And I should see "Le côté Obscur de la force"
+            | widgetMap                  | side |
+            | jedi-profile-{{item.slug}} | dark |
+        Given I am on "/en/victoire-dcms/business-template/show/4"
+        And I should see "The dark side of the force"
+        Given I am on "/en/jedi-profile-anakin"
+        And I should see "The dark side of the force"
         When I switch to "edit" mode
         And I edit the "Force" widget
         And I wait 3 seconds
-        Then I should see "Attention !"
-        And I should see "Ce contenu appartient à un modèle parent"
-        And I should see "MODIFIER LE CONTENU ORIGINAL"
-        When I follow "MODIFIER LE CONTENU ORIGINAL"
+        Then I should see "Warning!"
+        And I should see "This content is owned by a parent template"
+        And I should see "EDIT THE ORIGINAL CONTENT"
+        When I follow "EDIT THE ORIGINAL CONTENT"
         And I wait 5 seconds
-        Then I should not see "Attention !"
-        And I should not see "Ce contenu appartient à un modèle parent"
-        When I fill in "Côté de la force" with "Dark"
+        Then I should not see "Warning!"
+        And I should not see "This content is owned by a parent template"
+        When I fill in "Force side" with "dark"
         And I submit the widget
-        Given I am on "/fr/victoire-dcms/business-template/show/4"
-        Then I should see "Le côté Dark de la force"
+        Given I am on "/en/victoire-dcms/business-template/show/4"
+        Then I should see "The dark side of the force"
 

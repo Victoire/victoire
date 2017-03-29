@@ -11,10 +11,10 @@ use Victoire\Bundle\CoreBundle\DataCollector\VictoireCollector;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetRenderEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
+use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
 use Victoire\Bundle\WidgetBundle\Cache\WidgetCache;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
-use Victoire\Bundle\WidgetMapBundle\Entity\Slot;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 class WidgetRenderer
@@ -72,13 +72,15 @@ class WidgetRenderer
 
         //if entity is given and it's not the object, retrieve it and set the entity for the widget
         if ($mode == Widget::MODE_BUSINESS_ENTITY && $view instanceof BusinessPage) {
-            $widget->setEntity($view->getBusinessEntity());
+            $widget->setEntity($view->getEntity());
         } elseif ($view instanceof BusinessTemplate) {
             //We'll try to find a sample entity to mock the widget behavior
             /** @var EntityManager $entityManager */
             $entityManager = $this->container->get('doctrine.orm.entity_manager');
-            if ($mock = $this->bepHelper->getEntitiesAllowedQueryBuilder($view, $entityManager)->setMaxResults(1)->getQuery()->getOneOrNullResult()) {
-                $widget->setEntity($mock);
+            if ($view->getBusinessEntity()->getType() === ORMBusinessEntity::TYPE) {
+                if ($mock = $this->bepHelper->getEntitiesAllowedQueryBuilder($view, $entityManager)->setMaxResults(1)->getQuery()->getOneOrNullResult()) {
+                    $widget->setEntity($mock);
+                }
             }
         }
 
@@ -186,7 +188,7 @@ class WidgetRenderer
     /**
      * Compute slot options.
      *
-     * @param Slot  $slotId
+     * @param int   $slotId
      * @param array $options
      *
      * @return string

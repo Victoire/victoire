@@ -51,14 +51,12 @@ class WidgetHelper
     /**
      * create a new WidgetRedactor.
      *
-     * @param string                                  $type
-     * @param \Victoire\Bundle\CoreBundle\Entity\View $view
-     * @param string                                  $slot
-     * @param string                                  $mode
+     * @param string $type
+     * @param string $mode
      *
      * @return Widget $widget
      */
-    public function newWidgetInstance($type, $view, $slot, $mode)
+    public function newWidgetInstance($type, $mode)
     {
         $widgetAlias = 'victoire.widget.'.strtolower($type);
         $widget = $this->container->get($widgetAlias);

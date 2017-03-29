@@ -5,7 +5,6 @@ namespace Victoire\Bundle\BusinessEntityBundle\Reader;
 use Victoire\Bundle\BusinessEntityBundle\Annotation\AnnotationDriver;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\CoreBundle\Cache\VictoireCache;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 
 /**
@@ -34,65 +33,13 @@ class BusinessEntityCacheReader
     }
 
     /**
-     * this method get annotated business classes (from cache if enabled).
-     *
-     * @return array $businessClasses
-     **/
-    public function getBusinessClasses()
-    {
-        $businessClasses = $this->fetch(BusinessEntity::CACHE_CLASSES);
-
-        return $businessClasses;
-    }
-
-    /**
-     * this method get annotated business classes (from cache if enabled).
-     *
-     * @param Widget $widget
-     *
-     * @return array $businessClasses
-     */
-    public function getBusinessClassesForWidget(Widget $widget)
-    {
-        $widgetName = $this->widgetHelper->getWidgetName($widget);
-        $widgetMetadatas = $this->fetch(BusinessEntity::CACHE_WIDGETS);
-        if (isset($widgetMetadatas[$widgetName]) && array_key_exists('businessEntities', $widgetMetadatas[$widgetName])) {
-            /* @var BusinessEntity[] $businessEntities */
-            $businessEntities = $widgetMetadatas[$widgetName]['businessEntities'];
-
-            foreach ($businessEntities as $businessEntity) {
-                $businessEntity->setDisableForReceiverProperties($widgetMetadatas[$widgetName]['receiverProperties']);
-            }
-
-            return $businessEntities;
-        }
-
-        return [];
-    }
-
-    /**
-     * @param string $namespace
-     */
-    public function getBusinessProperties($namespace)
-    {
-        /** @var BusinessEntity[] $widgetMetadatas */
-        $widgetMetadatas = $this->fetch(BusinessEntity::CACHE_CLASSES);
-
-        if (isset($widgetMetadatas[$namespace])) {
-            return $widgetMetadatas[$namespace]->getBusinessProperties();
-        }
-
-        return [];
-    }
-
-    /**
      * @param string $widgetName
      *
      * @return array
      */
     public function getReceiverProperties($widgetName)
     {
-        $widgetMetadatas = $this->fetch(BusinessEntity::CACHE_WIDGETS);
+        $widgetMetadatas = $this->fetch('victoire_business_entity_widgets');
 
         if (isset($widgetMetadatas[$widgetName]) && array_key_exists('receiverProperties', $widgetMetadatas[$widgetName])) {
             return $widgetMetadatas[$widgetName]['receiverProperties'];
@@ -123,39 +70,5 @@ class BusinessEntityCacheReader
         }
 
         return $results;
-    }
-
-    /**
-     * Get a business entity by its id.
-     *
-     * @param string $id
-     *
-     * @throws \Exception
-     *
-     * @return BusinessEntity
-     */
-    public function findById($id)
-    {
-        if ($id === null) {
-            throw new \Exception('The parameter $id is mandatory');
-        }
-
-        //get all the business entities
-        $businessEntities = $this->getBusinessClasses();
-
-        //the result
-        $businessEntity = null;
-
-        //parse the business entities
-        foreach ($businessEntities as $tempBusinessEntity) {
-            //look for the same id
-            if ($tempBusinessEntity->getId() === $id) {
-                $businessEntity = $tempBusinessEntity;
-                //business entity was found, there is no need to continue
-                continue;
-            }
-        }
-
-        return $businessEntity;
     }
 }

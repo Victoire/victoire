@@ -2,12 +2,10 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Entity;
 
-/**
- * ReceiverProperty.
- */
 class ReceiverProperty
 {
     protected $fieldName = null;
+
     protected $required = false;
 
     /**

@@ -45,6 +45,22 @@ class Blog extends Page
     }
 
     /**
+     * Get available locales for Articles from this Blog.
+     *
+     * @return array
+     */
+    public function getAvailableLocales()
+    {
+        $availableLocales = [];
+        $translations = $this->getTranslations();
+        foreach ($translations as $translation) {
+            $availableLocales[] = $translation->getLocale();
+        }
+
+        return $availableLocales;
+    }
+
+    /**
      * @return ArrayCollection
      */
     public function getArticles()
@@ -80,7 +96,7 @@ class Blog extends Page
     /**
      * Set categories.
      *
-     * @param string $categories
+     * @param array $categories
      *
      * @return Blog
      */

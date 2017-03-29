@@ -146,17 +146,15 @@ class BusinessEntitySubscriber implements EventSubscriber
                     }
 
                     if ($businessPage && !$scheduledForRemove) {
-                        $oldSlug = $businessPage->getSlug();
-                        $newSlug = $entity->getSlug();
                         $businessPage->setName($virtualBusinessPage->getName());
                         $businessPage->setSlug($virtualBusinessPage->getSlug());
 
                         $entityManager->persist($businessPage);
-                        $entityManager->flush();
                     }
                 }
             }
         }
+        $entityManager->flush();
     }
 
     /**
@@ -202,8 +200,9 @@ class BusinessEntitySubscriber implements EventSubscriber
         }
 
         foreach ($this->flushedBusinessTemplates as $entity) {
-            $businessEntityId = $entity->getBusinessEntityId();
-            $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
+            $em = $eventArgs->getEntityManager();
+            $businessEntityId = $entity->getBusinessEntityName();
+            $businessEntity = $eventArgs->getEntityManager()->getRepository('VictoireBusinessEntityBundle:BusinessEntity')->findOneBy(['name' => $businessEntityId]);
             //find all entities
             $entities = $this->businessPageHelper->getEntitiesAllowed($entity, $em);
             // Generate a viewReference for each BT translation
@@ -279,7 +278,7 @@ class BusinessEntitySubscriber implements EventSubscriber
             $businessTemplate = $entity->getTemplate();
             $page = $this->businessPageBuilder->generateEntityPageFromTemplate(
                 $businessTemplate,
-                $entity->getBusinessEntity(),
+                $entity->getEntity(),
                 $em
             );
             //create VBP ref

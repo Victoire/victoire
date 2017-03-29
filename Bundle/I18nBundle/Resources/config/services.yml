@@ -15,7 +15,6 @@ services:
         class: Victoire\Bundle\I18nBundle\Subscriber\LocaleSubscriber
         arguments:
             - "%kernel.default_locale%"
-            - "@victoire_i18n.locale_resolver"
         tags:
             - { name: kernel.event_subscriber }
 

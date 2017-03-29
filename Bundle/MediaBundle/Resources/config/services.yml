@@ -50,7 +50,8 @@ services:
 
     victoire_media.menubuilder:
         class: "%victoire_media.menubuilder.class%"
-        arguments: ["@translator", "@service_container"]
+        arguments:
+            - "@request_stack"
 
     victoire_media.menu.twig.extension:
         class: Victoire\Bundle\MediaBundle\Twig\MenuTwigExtension

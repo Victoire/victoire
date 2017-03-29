@@ -35,7 +35,7 @@ class BlogMenuListener implements MenuListenerInterface
     {
         $floatActionDropdown = $this->menuBuilder->getFloatActionDropdown();
 
-        $currentArticle = $event->getPage()->getBusinessEntity();
+        $currentArticle = $event->getPage()->getEntity();
         $currentBlog = $currentArticle->getBlog();
 
         $floatActionDropdown->addChild('menu.blog.article.new',

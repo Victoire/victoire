@@ -13,7 +13,7 @@ Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
 Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
     template_spaceship:
         backendName: "Spaceship template"
-        businessEntityId: spaceship
+        businessEntity: @spaceship_business_entity
         author: @anakin
         template: @template_base
         status: published

@@ -127,7 +127,7 @@
         <target><![CDATA[<span class="v-seo v-seo--success">SEO</span>]]></target>
       </trans-unit>
       <trans-unit id="58893b9a01dc0" resname="modal.form.pageSeo.settings.title">
-        <source><![CDATA[%page.name% > Settings]]></source>
+        <source>modal.form.pageSeo.settings.title</source>
         <target><![CDATA[Paramètres SEO de la page <strong>%pageName%</strong>]]></target>
       </trans-unit>
       <trans-unit id="58893b9a01dd2" resname="modal.mandatory_fields.label">

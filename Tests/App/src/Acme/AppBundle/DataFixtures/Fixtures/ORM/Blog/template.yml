@@ -1,10 +1,10 @@
 Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
     template_article:
-        currentLocale: fr
+        currentLocale: en
         name: "{{item.name}}"
         backendName: "First blog template"
         slug: "{{item.slug}}"
-        businessEntityId: article
+        businessEntity: @article_business_entity
         author: @anakin
         template: @template_base
         status: published
@@ -14,11 +14,11 @@ Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
         updatedAt: <dateTime('now')>
         cssUpToDate: false
     template_article_2:
-        currentLocale: fr
+        currentLocale: en
         name: "{{item.name}}"
         backendName: "Second blog template"
         slug: "{{item.slug}}"
-        businessEntityId: article
+        businessEntity: @article_business_entity
         author: @anakin
         template: @template_base
         status: published
@@ -32,10 +32,10 @@ Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
     template_article_en_name:
         name: "{{item.name}}"
         slug: "{{item.slug}}"
-        locale: en
+        locale: fr
         translatable: @template_article
     template_article_2_en_name:
         name: "{{item.name}}"
         slug: "{{item.slug}}"
-        locale: en
+        locale: fr
         translatable: @template_article_2

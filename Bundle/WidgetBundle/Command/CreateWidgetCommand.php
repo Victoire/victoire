@@ -403,7 +403,7 @@ EOT
      */
     protected function createWidgetGenerator()
     {
-        $generator = new WidgetGenerator($this->getContainer()->get('filesystem'));
+        $generator = new WidgetGenerator();
         $generator->setTemplating($this->getContainer()->get('twig'));
 
         return $generator;

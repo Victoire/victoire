@@ -1,19 +1,20 @@
 @mink:selenium2 @alice(Page) @alice(ErrorPage) @reset-schema
-Feature: Page not found
+Feature: Error 404
 
-Background:
-    Given I maximize the window
-    And I am on homepage
+    Background:
+        Given I maximize the window
+        And I am on homepage
 
-  Scenario: I cannot acces a non-existant page
-    And I am on "/fr/imaginary-page"
-    Then the title should be "Page introuvable"
-  Scenario: I cannot acces a page for a non exitant locale
-    And I am on "/notalocale/"
-    Then the title should be "Page introuvable"
-  Scenario: I cannot acces a non existant page for a non exitant locale
-    And I am on "/notalocale/imaginary-page"
-    Then the title should be "Page introuvable"
-  Scenario: I cannot acces a page for a inconsistant locale
-    And I am on "/notalocale:/"
-    Then the title should be "Page introuvable"
+    Scenario: I cannot access non-existent pages
+        # I cannot access a non-existent page
+        When I am on "/en/imaginary-page"
+        Then the title should be "Error 404"
+        # I cannot access a page for a non existent locale
+        When I am on "/notalocale/"
+        Then the title should be "Error 404"
+        # I cannot access a non existent page for a non existent locale
+        When I am on "/notalocale/imaginary-page"
+        Then the title should be "Error 404"
+        # I cannot access a page for a inconsistent locale
+        When I am on "/notalocale:/"
+        Then the title should be "Error 404"

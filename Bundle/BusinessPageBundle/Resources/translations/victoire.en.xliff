@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="58893b99311f7" resname="list.action.add">
         <source>list.action.add</source>
-        <target>Add a business template</target>
+        <target>ADD A BUSINESS TEMPLATE</target>
       </trans-unit>
       <trans-unit id="58893b993122e" resname="list.action.edit">
         <source>list.action.edit</source>

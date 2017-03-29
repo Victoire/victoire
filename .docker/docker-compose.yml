@@ -17,8 +17,11 @@ victoire-mysql:
     - MYSQL_DATABASE=victoire
     - MYSQL_USER=ubuntu
     - MYSQL_PASSWORD=ubuntu
+  ports:
+   - "3307:3306"
 
 victoire-webserver:
+  hostname: webserver
   image: phpdockerio/nginx:latest
   container_name: victoire-webserver
   volumes:

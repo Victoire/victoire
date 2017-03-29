@@ -54,7 +54,7 @@ class LegacyViewTranslationMigrationCommand extends ContainerAwareCommand
         /** @var ViewTranslationLegacy $legacyTranslation */
         foreach ($legacyTranslations as $legacyTranslation) {
             $view = $legacyTranslation->getObject();
-            $trans = $view->translate($legacyTranslation->getLocale(), false)->{'set'.$legacyTranslation->getField()}($legacyTranslation->getContent());
+            $view->translate($legacyTranslation->getLocale(), false)->{'set'.$legacyTranslation->getField()}($legacyTranslation->getContent());
             $entityManager->persist($view);
             $view->mergeNewTranslations();
 
