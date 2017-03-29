@@ -48,6 +48,8 @@ class AppKernel extends Kernel
             new Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
+
             //Victoire bundles
             new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
             new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
@@ -372,6 +374,16 @@ bin/console victoire:ui:fetchAssets --force
 ```
 bin/console fos:js-routing:dump -e=dev
 bin/console bazinga:js-translation:dump -e=dev
+```
+
+#### Dump JS Translation File
+
+Victoire uses [BazingaJsTranslationBundle](https://github.com/willdurand/BazingaJsTranslationBundle) to 
+make translations available in the JS based Frontend. 
+
+To dump the needed file run:
+```shell
+php app/console bazinga:js-translation:dump
 ```
 
 #### Dump with assetic
