@@ -1,15 +1,11 @@
-{% form_theme chooseBlogForm 'VictoireFormBundle:Form:fields.html.twig' %}
-
-
 <div id="vic-blog-item-header">
     <div class="vic-row">
-
-        {% if blog %}
-        <div class="vic-col-sm-3">
-            {{ form_start(chooseBlogForm, {'attr' : {'id' : 'victoire_blog_choose_form'}, 'action' : path('victoire_blog_index')}) }}
-            {{ form_row(chooseBlogForm.blog) }}
-            {{ form_end(chooseBlogForm) }}
-        </div>
+        {% if chooseBlogForm is defined %}
+            {% form_theme chooseBlogForm 'VictoireFormBundle:Form:fields.html.twig' %}
+            <div class="vic-col-sm-3">
+                {{ form_start(chooseBlogForm, {'attr' : {'id' : 'victoire_blog_choose_form'}, 'action' : path('victoire_blog_index')}) }}
+                {{ form_end(chooseBlogForm) }}
+            </div>
         {% endif %}
 
         {% set addBlogButton %}
@@ -34,6 +30,25 @@
 </div>
 
 <script type="text/javascript">
+    $vic('#choose_blog_locale').on('change', function () {
+
+        var form = $(this).parents('form');
+        var formdata = (window.FormData) ? new FormData(form[0]) : null;
+        var data = (formdata !== null) ? formdata : form.serialize();
+        $.ajax({
+            url         : form.attr('action') + (form.attr('action').split('?')[1] ? '&' : '?') + 'novalidate',
+            data        : data,
+            type        : $(form).attr('method'),
+            contentType : false,
+            dataType    : 'json',
+            processData : false,
+        }).done(function(response){
+            console.log($vic(response.html).find('#vic-modal'));
+            $('#vic-modal').html($vic($vic(response.html)).find('.vic-modal-dialog'));
+        }).fail(function(response) {
+            console.log(response);
+        });
+    })
     $vic('#choose_blog_blog').on('change', function(){
         $('#victoire_blog_choose_form').on('submit', function(event) {
             event.preventDefault();
@@ -56,7 +71,7 @@
                 async       : true,
                 cache       : false,
                 success     : function(jsonResponse) {
-                    $vic('#victoire-blog-modal').html(jsonResponse.html);
+                    $('#vic-modal').html($vic($vic(jsonResponse.html)).find('.vic-modal-dialog'));
                 }
             });
         }).submit();
