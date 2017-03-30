@@ -11,8 +11,8 @@ Feature: Delete Business Entity pages
 
     Scenario: I can delete a Business Entity and its Business Entity page
         Given the following BusinessTemplate:
-            | currentLocale | name                         | backendName  | slug                       | businessEntity | parent | template |
-            | en            | Jedi profile - {{item.name}} | Jedi profile | jedi-profile-{{item.slug}} | jedi           | home   | base     |
+            | currentLocale | name                         | backendName  | slug                       | businessEntityId | parent | template |
+            | en            | Jedi profile - {{item.name}} | Jedi profile | jedi-profile-{{item.slug}} | jedi             | home   | base     |
         When I am on "/en/jedi-profile-anakin"
         And I switch to "layout" mode
         And I should see "New content"
