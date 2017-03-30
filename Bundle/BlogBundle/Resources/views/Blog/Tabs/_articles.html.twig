@@ -8,33 +8,45 @@
 
 <div id="vic-blog-articleList">
 {% for article in blog.articles if not article.deletedAt %}
-    <div>
-        <div class="vic-panel vic-shadow-plan1 -vicBlog">
-            <div class="vic-panelBlog-image" {% if article.image %}style="background-image: url({{ article.image.url }});"{% endif %}>
-                <a class="vic-panelBlog-title" href="{{ vic_business_link(article) }}">
-                    <span class="vic-panelBlog-badge -{{ article.status }}">
-                        <span class="vic-panelBlog-badge-popover">
-                            {% set transKey = 'modal.blog.list.articlesList.status.' ~ article.status %}
-                            {{ transKey |trans }}
+    {% for translation in article.translations %}
+        {% if translation.locale == locale %}
+            {% set articleUrl = vic_link_url({
+            'locale' : locale,
+            'linkType': 'viewReference',
+            'entityId' : article.id,
+            'templateId' : blog.id,
+            }) %}
+        <div>
+            <div class="vic-panel vic-shadow-plan1 -vicBlog">
+
+
+                <div class="vic-panelBlog-image" {% if article.image %}style="background-image: url({{ article.image.url }});"{% endif %}>
+                    <a class="vic-panelBlog-title" href="{{ articleUrl }}">
+                        <span class="vic-panelBlog-badge -{{ article.status }}">
+                            <span class="vic-panelBlog-badge-popover">
+                                {% set transKey = 'modal.blog.list.articlesList.status.' ~ article.status %}
+                                {{ transKey |trans }}
+                            </span>
                         </span>
-                    </span>
-                </a>
-            </div>
+                    </a>
+                </div>
 
-            <div class="vic-panelBlog-body vic-text-center">
-                <a class="vic-panelBlog-title" href="{{vic_business_link(article)}}">
-                    {{ article.name }}
-                </a>
-                {% if article.author %}
-                    <em>{{ article.author.firstname }} {{ article.author.lastname }}</em>
-                {% endif %}
+                <div class="vic-panelBlog-body vic-text-center">
+                    <a class="vic-panelBlog-title" href="{{ articleUrl }}">
+                        {{ translation.name }}
+                    </a>
+                    {% if article.author %}
+                        <em>{{ article.author.firstname }} {{ article.author.lastname }}</em>
+                    {% endif %}
 
-                <time datetime="{{ article.publishedAt|date("Y-m-d") }}" class="vic-panelBlog-date">{{ article.publishedAt|localizeddate("medium", "none", null, null, "cccc d LLLL yyyy") }}</time>
+                    <time datetime="{{ article.publishedAt|date("Y-m-d") }}" class="vic-panelBlog-date">{{ article.publishedAt|localizeddate("medium", "none", null, null, "cccc d LLLL yyyy") }}</time>
 
-                <a class="vic-btn vic-btn-sm vic-btn-default" href="{{ path('victoire_blog_article_settings', {'id' : article.id}) }}" data-toggle="vic-modal">Modifier les paramètres</a>
+                    <a class="vic-btn vic-btn-sm vic-btn-default" href="{{ path('victoire_blog_article_settings', {'id' : article.id}) }}" data-toggle="vic-modal">Modifier les paramètres</a>
+                </div>
             </div>
         </div>
-    </div>
+        {% endif %}
+    {% endfor %}
 {% endfor %}
 </div>
 

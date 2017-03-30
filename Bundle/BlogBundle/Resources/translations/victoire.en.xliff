@@ -126,6 +126,10 @@
         <source>victoire.blog.choose.blog.label</source>
         <target>Pick your blog</target>
       </trans-unit>
+      <trans-unit id="58893b9921f6g" resname="victoire.blog.choose.locale.label">
+        <source>victoire.blog.choose.locale.label</source>
+        <target>Pick your blog's locale</target>
+      </trans-unit>
       <trans-unit id="58893b9921f88" resname="victoire.blog.nav.articles.label">
         <source>victoire.blog.nav.articles.label</source>
         <target>Posts lists</target>

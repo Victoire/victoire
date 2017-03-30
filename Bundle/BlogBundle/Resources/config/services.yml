@@ -108,8 +108,22 @@ services:
 
     victoire_blog.blog_choose.form.type:
         class: Victoire\Bundle\BlogBundle\Form\ChooseBlogType
+        arguments:
+            - "%victoire_i18n.available_locales%"
+            - '@victoire_blog.blog_repository'
         tags:
             - { name: form.type }
+    victoire_blog.locale_choose.form.type:
+        class: Victoire\Bundle\BlogBundle\Form\ChooseLocaleType
+        arguments:
+            - "%victoire_i18n.available_locales%"
+        tags:
+            - { name: form.type }
+    victoire_blog.blog_repository:
+        class: Victoire\Bundle\BlogBundle\Repository\BlogRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - Victoire\Bundle\BlogBundle\Entity\Blog
 
     victoire_blog.blog_settings.form.type:
         parent: "victoire_core.view.form.type"
