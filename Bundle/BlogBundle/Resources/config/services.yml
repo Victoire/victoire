@@ -58,6 +58,12 @@ services:
         class: Victoire\Bundle\BlogBundle\Form\CategoryType
         tags:
             - { name: form.type }
+    #HIDDENENTITY
+    victoire.form.blog.entity_hidden:
+        class: Victoire\Bundle\BlogBundle\Form\Type\EntityHiddenType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type }
     #ARTICLE
 
     victoire_blog.article.subscriber:

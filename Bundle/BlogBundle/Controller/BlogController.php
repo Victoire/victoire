@@ -118,14 +118,15 @@ class BlogController extends BasePageController
     /**
      * Display a form to edit Blog settings.
      *
-     * @param Request  $request
+     * @param Request $request
      * @param BasePage $blog
      *
      * @Route("/{id}/settings", name="victoire_blog_settings")
      * @Method("GET")
      * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
      *
-     * @return JsonResponse
+     * @return Response
+     * @throws \InvalidArgumentException
      */
     public function settingsAction(Request $request, BasePage $blog)
     {

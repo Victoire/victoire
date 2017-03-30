@@ -10,11 +10,11 @@
 {% for article in blog.articles if not article.deletedAt %}
     {% for translation in article.translations %}
         {% if translation.locale == locale %}
-            {% set articleUrl = vic_link_url({
-            'locale' : locale,
-            'linkType': 'viewReference',
+            {% set articleUrl = path('victoire_core_business_page_show_by_id', {
             'entityId' : article.id,
-            'templateId' : blog.id,
+            'type'      : 'article',
+            '_locale' : locale,
+            'viewId': article.template.id
             }) %}
         <div>
             <div class="vic-panel vic-shadow-plan1 -vicBlog">
