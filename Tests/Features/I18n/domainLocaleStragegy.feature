@@ -9,5 +9,4 @@ Feature: Domain strategy
         Given I visit homepage through domain "en.victoire.io"
         Then the title should be "Homepage"
         Given I visit homepage through domain "fr.victoire.io"
-        Then the title should be "Page d'accueil"
-
+        Then the title should be "Accueil"

@@ -10,8 +10,8 @@ Background:
         When I follow "Blog"
         Then I should see "No result"
         When I follow "Create a new blog"
-        Then I should see "Name"
-        When I fill in "Name" with "The Jedi network"
+        Then I should see "Permissions needed to display the page"
+        When I fill in "blog[translations][en][name]" with "The Jedi network"
         And I follow "Create"
         Then I should see "Successfully created page"
         And I switch to "layout" mode
