@@ -27,38 +27,6 @@ Feature: Create business entity pages
         Then I should be on "/en/victoire-dcms/business-template/show/4"
         And I should see "The business template has been successfully created"
 
-    Scenario: I can create a new API Business entity page pattern
-        When I open the additional menu drop
-        Then I should see "Business Template"
-        When I follow "Business Template"
-        Then I should see "Users"
-        Then I should see "ADD A BUSINESS TEMPLATE"
-        When I follow the tab "Users"
-        And I should see "ADD A BUSINESS TEMPLATE"
-        And I follow "ADD A BUSINESS TEMPLATE"
-        Then I should see "Create a business template"
-        When I fill in "Name" with "User profile - {{item.name}}"
-        And I fill in "URL" with "user-profile-{{item.id}}"
-        And I follow "Create"
-        And I wait 2 seconds
-        Then I should be on "/en/victoire-dcms/business-template/show/4"
-        Then I switch to "layout" mode
-        And I should see "New content"
-        When I select "Plain Text" from the "1" select of "main_content" slot
-        Then I should see "Create"
-        Then I follow the tab "Entities"
-        Then I should see "Users"
-        Then I follow the drop anchor "Users"
-        When I open the widget mode drop for entity "Users"
-        And I should see "Current entity"
-        And I follow the drop anchor "Current entity"
-        And I select "name" from "users_a_businessEntity_widget_text[fields][content]"
-        And I submit the widget
-        Given I am on "/en/user-profile-1"
-        Then I should see "Leanne Graham"
-        Given I am on "/en/user-profile-2"
-        Then I should see "Ervin Howell"
-
     Scenario: I can create some content in the pattern
         Given the following BusinessTemplate:
             | currentLocale | name                         | backendName  | slug                       | businessEntityId | parent | template |
