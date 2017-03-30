@@ -117,7 +117,6 @@ class BusinessPageBuilder
 
             $isTranslatableEntity = in_array(Translatable::class, $class_uses_deep($entity));
             foreach ($businessTemplate->getTranslations() as $translation) {
-
                 if ($entity instanceof Article &&
                     !in_array($translation->getLocale(), $entity->getBlog()->getAvailableLocales())
                 ) {
