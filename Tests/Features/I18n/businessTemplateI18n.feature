@@ -6,8 +6,8 @@ Feature: Business Domain Strategy
             | id | action | position | parent | slot         | view               |
             | 1  | create |          |        | main_content | Spaceship template |
         And the following WidgetTexts:
-            | mode           | widgetMap | businessEntity | fields                          |
-            | businessEntity | 1         | spaceship      | a:1:{s:7:"content";s:4:"name";} |
+            | mode           | widgetMap | businessEntityId | fields                          |
+            | businessEntity | 1         | spaceship        | a:1:{s:7:"content";s:4:"name";} |
         And I maximize the window
         And I am on "/victoire-dcms/backend/spaceship/"
         Then I should see "No result"
