@@ -4,7 +4,6 @@ namespace Victoire\Bundle\PageBundle\Helper;
 
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\Orm\EntityManager;
-use Doctrine\ORM\ORMInvalidArgumentException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -192,9 +191,9 @@ class PageHelper
         $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view);
 
         //Set currentView and dispatch victoire.on_render_page event with this currentView
-        $this->currentViewHelper->setCurrentView($view);
         $pageRenderEvent = new PageRenderEvent($view);
         $this->eventDispatcher->dispatch('victoire.on_render_page', $pageRenderEvent);
+        $this->currentViewHelper->setCurrentView($view);
 
         //Build WidgetMap
         $this->widgetMapBuilder->build($view, true);
@@ -310,20 +309,6 @@ class PageHelper
     }
 
     /**
-     * @param View $page
-     * @param $locale
-     */
-    private function refreshPage($page, $locale)
-    {
-        if ($page && $page instanceof View) {
-            try {
-                $this->entityManager->refresh($page->setTranslatableLocale($locale));
-            } catch (ORMInvalidArgumentException $e) {
-            }
-        }
-    }
-
-    /**
      * If the page is not valid, an exception is thrown.
      *
      * @param mixed $page
@@ -377,7 +362,7 @@ class PageHelper
         if (!$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
             $roles = $this->getPageRoles($page);
             if ($roles && !$this->authorizationChecker->isGranted($roles, $entity)) {
-                throw new AccessDeniedException('You are not allowed to see this page, see the access roles defined in the view or it\'s parents and templates');
+                throw new AccessDeniedException('You are not allowed to see this page, see the access roles defined in the view or its parents and templates');
             }
         }
     }

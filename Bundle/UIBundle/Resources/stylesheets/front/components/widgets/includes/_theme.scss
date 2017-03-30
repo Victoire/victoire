@@ -1,0 +1,11 @@
+// scss-lint:disable ColorVariable
+$widgets-overlay--font-family: $app--font-family;
+$widgets-overlay--font-size: rem(1);
+$widgets-overlay--cursor: pointer;
+$widgets-overlay--border-width: 1px;
+$widgets-overlay--border-style: solid;
+$widgets-overlay--border-radius: 0.3125em;
+$widgets-overlay--background-color: color('white', null, 0.66667);
+$widgets-overlay--box-shadow: 0 0 1em color('black', null, 0.33);
+
+$widgets-overlayicon--size: 5em;

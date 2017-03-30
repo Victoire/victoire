@@ -1,32 +1,55 @@
 {% trans_default_domain "victoire" %}
-
 {% extends 'VictoireCoreBundle::_modal.html.twig' %}
-
-{% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
+{% block modal_container_classes %}{{ parent() }} v-modal--view{% endblock modal_container_classes %}
 
 {% block modal_body_content %}
-<div class="vic-container">
-    <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
-        {% for businessEntity in businessEntities %}
-        <li class="{% if not loop.last %} vic-separate{% endif %}{% if loop.first %} vic-active{% endif %}">
-            {% spaceless %}
-            <a href="#picker-{{ businessEntity.getName }}" data-toggle="vic-tab">
-                {{ businessEntity.getName }}
-            </a>
-            {% endspaceless %}
-        </li>
-        {% endfor %}
-    </ul>
+    {% set drop_limit = 5 %}
 
-    <div class="vic-tab-content vic-modal-tab-content">
+    <div class="v-tabs-nav" id="v-businessentity-index__tabs-nav">
         {% for businessEntity in businessEntities %}
-        <div id="picker-{{ businessEntity.getName }}" class="vic-tab-pane{% if loop.first %} vic-active{% endif %}">
-            {% include 'VictoireBusinessPageBundle:BusinessEntity:list.html.twig' with {
-                'businessEntity' : businessEntity,
-                'BusinessTemplates' : BusinessTemplates[businessEntity.getName]
-            } %}
-        </div>
+            {% if loop.index <= drop_limit  %}
+                <div class="v-tabs-nav__item">
+                    {% spaceless %}
+                        <a class="v-tabs-nav__anchor"
+                           data-collapse="show"
+                           data-href="#picker-{{ businessEntity.getName }}"
+                           data-activeclass="v-tabs-nav__anchor--active">
+                            {{ businessEntity.getName }}
+                        </a>
+                    {% endspaceless %}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        {% if businessEntities|length > drop_limit %}
+            <div class="v-tabs-nav__item">
+                <a class="v-tabs-nav__anchor" data-flag="v-drop" data-position="bottomout center" data-droptarget="#business-entity-drop-index">
+                    {% include 'VictoireUIBundle:SVG:dots-horizontal.html.twig' %}
+                </a>
+
+                <div class="v-drop" id="business-entity-drop-index">
+                    <nav class="v-drop__menu">
+                        {% for businessEntity in businessEntities %}
+                            {% if loop.index > drop_limit %}
+                                <a class="v-drop__anchor" data-collapse="show" data-href="#picker-{{ businessEntity.getName }}">
+                                    {{ businessEntity.getName }}
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </nav>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="v-tabs-collapses">
+        {% for businessEntity in businessEntities %}
+            <div class="v-collapse" id="picker-{{ businessEntity.getName }}" data-flag="v-collapse" data-group="business-entity-index"{{ loop.first ? ' data-state="visible"' }}>
+                {% include 'VictoireBusinessPageBundle:BusinessEntity:list.html.twig' with {
+                    'businessEntity' : businessEntity,
+                    'BusinessTemplates' : BusinessTemplates[businessEntity.getName]
+                } %}
+            </div>
         {% endfor %}
     </div>
-</div>
 {% endblock modal_body_content %}

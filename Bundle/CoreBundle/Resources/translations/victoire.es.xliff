@@ -102,7 +102,15 @@
         <source>victoire.menu.publication.scheduled.tooltip</source>
         <target>Esta página se publica a partir de %publication_date%.</target>
       </trans-unit>
-      <trans-unit id="58893b995fe57" resname="victoire_core.edit_mode_switch">
+      <trans-unit id="2ceaad270428e24379baceb669459413ff95ae69" resname="victoire.menu.publication.draft.tooltip">
+        <source>victoire.menu.publication.draft.tooltip</source>
+        <target>Esta página está actualmente un borrador</target>
+      </trans-unit>
+      <trans-unit id="ceb2ceaad270428e24379ba9669459413ff95ae6" resname="victoire.menu.publication.unpublished.tooltip">
+        <source>victoire.menu.publication.unpublished.tooltip</source>
+        <target>Esta página está actualmente non publicadá</target>
+      </trans-unit>
+      <trans-unit id="ceb669459413ff95ae62ceaad270428e24379ba9" resname="victoire_core.edit_mode_switch">
         <source>victoire_core.edit_mode_switch</source>
         <target>Modo de edición</target>
       </trans-unit>
@@ -124,7 +132,7 @@
       </trans-unit>
       <trans-unit id="58893b995feba" resname="victoire.widget.inherited.notice">
         <source>victoire.widget.inherited.notice</source>
-        <target><![CDATA[<strong>¡ Advertencia ! </strong>Este contenido es propiedad de una plantilla padre (<i>%templateName%</i>).<br/>Si desea editar el contenido SOLAMENTE en esta página, seguir adelante, estás en el lugar correcto.<br/>Sin embargo, si desea modificar este widget en la plantilla de los padres, y que afecten a donde quiera que se utiliza en el sitio web, usted tiene que hacer clic en este enlace :<a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal"> editar el contenido original</a>.]]></target>
+        <target><![CDATA[<strong>¡ Advertencia ! </strong>Este contenido es propiedad de una plantilla padre (<i>%templateName%</i>).<br/>Si desea editar el contenido SOLAMENTE en esta página, seguir adelante, estás en el lugar correcto.<br/>Sin embargo, si desea modificar este widget en la plantilla de los padres, y que afecten a donde quiera que se utiliza en el sitio web, usted tiene que hacer clic en este enlace :<a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal" class="v-btn v-btn--warning">editar el contenido original</a>.]]></target>
       </trans-unit>
       <trans-unit id="58893b995fece" resname="navbar.mode.edit">
         <source>navbar.mode.edit</source>
@@ -170,19 +178,7 @@
         <source>victoire.login.meta.title</source>
         <target>Boarding inminente</target>
       </trans-unit>
-      <trans-unit id="58893b995ffac" resname="victoire.widget.stylize.container.heading">
-        <source>victoire.widget.stylize.container.heading</source>
-        <target>General</target>
-      </trans-unit>
-      <trans-unit id="58893b995ffc1" resname="victoire.widget.stylize.layout.heading">
-        <source>victoire.widget.stylize.layout.heading</source>
-        <target>Específico</target>
-      </trans-unit>
-      <trans-unit id="58893b995ffd5" resname="victoire.widget.stylize.global.heading">
-        <source>victoire.widget.stylize.global.heading</source>
-        <target>Avanzado</target>
-      </trans-unit>
-      <trans-unit id="58893b995ffea" resname="hamburger_menu.backend.back_home">
+      <trans-unit id="58893b995ffac" resname="hamburger_menu.backend.back_home">
         <source>hamburger_menu.backend.back_home</source>
         <target>Volver a la página web</target>
       </trans-unit>
@@ -224,11 +220,39 @@
       </trans-unit>
       <trans-unit id="58893b9960266" resname="victoire.widget.type.criterias.label">
         <source>victoire.widget.type.criterias.label</source>
-        <target>Criterios</target>
+        <target>QUANTUM</target>
       </trans-unit>
       <trans-unit id="58893b996029c" resname="victoire.widget.modal.title">
         <source>victoire.widget.modal.title</source>
         <target>Widget %id% (%type%)</target>
+      </trans-unit>
+      <trans-unit id="36" resname="menu.additionals">
+        <source>menu.additionals</source>
+        <target><![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="6" height="22" viewBox="29 13 6 22"><path fill="currentColor" fill-rule="evenodd" d="M30 32.5006C30 33.881 31.12 35 32.5006 35 33.881 35 35 33.881 35 32.5006 35 31.12 33.881 30 32.5006 30 31.12 30 30 31.12 30 32.5006zm0-8C30 25.88 31.12 27 32.5006 27 33.881 27 35 25.88 35 24.5006 35 23.12 33.881 22 32.5006 22 31.12 22 30 23.12 30 24.5006zM30 16.5c0 1.381 1.12 2.5 2.5006 2.5C33.881 19 35 17.881 35 16.5S33.881 14 32.5006 14C31.12 14 30 15.119 30 16.5z"></path></svg>]]></target>
+      </trans-unit>
+      <trans-unit id="37" resname="form.widget.tab.entities.label">
+          <source>form.widget.tab.entities.label</source>
+          <target>Entidades</target>
+      </trans-unit>
+      <trans-unit id="38" resname="form.widget.tab.mode.label">
+          <source>form.widget.tab.mode.label</source>
+          <target>Modo</target>
+      </trans-unit>
+      <trans-unit id="39" resname="form.widget.tab.mode_picker.label">
+          <source>form.widget.tab.mode_picker.label</source>
+          <target>Modo selección</target>
+      </trans-unit>
+      <trans-unit id="40" resname="form.widget.tab.mode_query.label">
+          <source>form.widget.tab.mode_query.label</source>
+          <target>Modo petición</target>
+      </trans-unit>
+      <trans-unit id="41" resname="form.widget.tab.mode_entity_instance.label">
+          <source>form.widget.tab.mode_entity_instance.label</source>
+          <target>Modo objeto actual</target>
+      </trans-unit>
+      <trans-unit id="42" resname="victoire.widget.type.quantum.label">
+          <source>victoire.widget.type.quantum.label</source>
+          <target>Appellido del quantum</target>
       </trans-unit>
     </body>
   </file>

@@ -1,0 +1,39 @@
+{% set name = name|default('mode-switcher') %}
+{% set startMode = startMode|default('preview') %}
+{% set modes = [{
+    'name': 'layout',
+    'value': 'admin-layout',
+    'svg': 'create',
+}, {
+    'name': 'readonly',
+    'value': 'admin-readonly',
+    'svg': 'preview',
+}, {
+    'name': 'edit',
+    'value': 'admin-edit',
+    'svg': 'edit',
+}, {
+    'name': 'style',
+    'value': 'admin-style',
+    'svg': 'style',
+}] %}
+
+<div class="v-mode-switcher">
+    {% for mode in modes %}
+        <input type="radio" name="{{ name }}" value="{{ mode.value }}" id="{{ name }}--{{ mode.name }}"{% if startMode == mode.value %} checked="checked"{% endif %}>
+    {% endfor %}
+
+    {% for mode in modes %}
+        <label class="v-mode-switcher__item" for="{{ name }}--{{ mode.name }}" data-flag="v-drop" data-position="topout center" data-droptarget="#{{ name }}--{{ mode.name }}-popover" data-position="middle rightout" data-behavior="hover">
+            {% include 'VictoireUIBundle:SVG:' ~ mode.svg ~ '.html.twig' %}
+        </label>
+
+        <div class="v-drop v-drop--tooltip" id="{{ name }}--{{ mode.name }}-popover">
+            <div class="v-drop__content">
+                {{ ('navbar.mode.' ~ mode.name)|trans({}, 'victoire') }}
+            </div>
+        </div>
+    {% endfor %}
+
+    <span class="v-mode-switcher__backdrop"></span>
+</div>

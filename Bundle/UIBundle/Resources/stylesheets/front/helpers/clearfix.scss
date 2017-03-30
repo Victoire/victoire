@@ -1,0 +1,6 @@
+@import '../globals/utils/clearfix';
+@import '../globals/utils/synthax';
+
+.#{$app--prefix}clearfix {
+  @include clearfix;
+}

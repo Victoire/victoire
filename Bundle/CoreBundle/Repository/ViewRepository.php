@@ -101,7 +101,7 @@ class ViewRepository extends NestedTreeRepository
     }
 
     /**
-     * Get the the view that is a homepage and a published one.
+     * Get the the view that is a aage and a published one.
      *
      * @param string $locale
      *
@@ -139,9 +139,25 @@ class ViewRepository extends NestedTreeRepository
     }
 
     /**
-     * Get PageSeo.
+     * Join PageSeoTranslation to PageSeo for a locale.
      *
-     * @param string $method leftJoin|innerJoin
+     * @param string $locale
+     *
+     * @return ViewRepository
+     */
+    public function joinSeoTranslations($locale)
+    {
+        $this->getInstance()
+            ->leftJoin('seo.translations', 'translation', Expr\Join::WITH, 'translation.locale = :locale')
+            ->setParameter('locale', $locale);
+
+        return $this;
+    }
+
+    /**
+     * Join ViewTranslation for a locale.
+     *
+     * @param string $locale
      *
      * @return ViewRepository
      */

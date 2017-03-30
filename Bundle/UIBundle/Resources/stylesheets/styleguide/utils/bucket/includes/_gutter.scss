@@ -1,0 +1,64 @@
+/// Generate margin on left & right side for the row of a grid in order to setup a gutter
+/// @access public
+/// @author Loïc Goyet
+/// @example
+///   .row {
+///     @include gutter-row(25px);
+///   }
+///
+///   .row {
+///     @include gutter-row; // default value is `30px`
+///   }
+///
+///   .row {
+///     @include gutter-row(25px, true); // for grid with vertical gutter space
+///   }
+/// @group gutter mixins
+/// @name gutter-row
+/// @output `margin-left`, `margin-right` & maybe `margin-bottom` declarations
+/// @param {numbers} $gutter [30px] - the gutter space expected into your grid
+/// @param {booleans} $vertical [false] - Bool to know if `margin-bottom` will be generated for vertical gutter-space
+/// @since 1.3.0
+@mixin gutter-row($gutter: 30px, $vertical: false) {
+  margin-left: floor(-$gutter / 2);
+  margin-right: ceil(-$gutter / 2);
+
+  @if $vertical {
+    margin-bottom: -$gutter;
+  }
+}
+
+/// Generate padding or margin on left & right side for the col of a grid in order to setup a gutter
+/// @access public
+/// @author Loïc Goyet
+/// @example
+///   .col {
+///     @include gutter-col(25px);
+///   }
+///
+///   .col {
+///     @include gutter-col; // default value is `30px`
+///   }
+///
+///   .col {
+///     @include gutter-col(25px, true); // to generate `padding-bottom` declarations for vertical gutter-space
+///   }
+///
+///   .col {
+///     @include gutter-col(25px, 'margin'); // to generate `margin` declarations instead of `padding`'s
+///   }
+/// @group gutter mixins
+/// @name gutter-col
+/// @output `margin-left` & `margin-right` or `padding-left` & `padding-right` declarations
+/// @param {numbers} $gutter [30px] - the gutter space expected into your grid
+/// @param {booleans} $vertical [false] - Bool to know if `{margin|padding}-bottom` will be generated for vertical gutter-space
+/// @param {string} $property ['padding'] - the properties' declaration generated (can only be `'padding'` or `'margin'`)
+/// @since 1.3.0
+@mixin gutter-col($gutter: 30px, $vertical: false, $property: 'padding') {
+  #{$property}-left: floor($gutter / 2);
+  #{$property}-right: ceil($gutter / 2);
+
+  @if $vertical {
+    #{$property}-bottom: $gutter;
+  }
+}

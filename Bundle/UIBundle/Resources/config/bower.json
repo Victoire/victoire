@@ -1,0 +1,16 @@
+{
+  "name": "victoire",
+  "description": "Fullstack Symfony2 DCMS (Dynamic Content Management System)",
+  "private": true,
+  "dependencies": {
+    "trowel-buttons": "^1.1.0",
+    "trowel-collapses": "^0.1.0",
+    "trowel-core": "^3.2.0",
+    "trowel-drops": "^1.1.1",
+    "trowel-forms": "^1.1.0",
+    "trowel-layouts": "^1.1.0",
+    "jquery": "1.12.4",
+    "angular": "1.5.6",
+    "bootstrap": "3.3.7"
+  }
+}

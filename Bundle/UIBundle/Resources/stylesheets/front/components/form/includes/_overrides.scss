@@ -1,0 +1,52 @@
+@import '../../../globals/utils/synthax';
+@import '../../../globals/utils/color';
+
+// Select
+// ------
+
+.#{$app--prefix}-select__native {
+  padding-top: 0;
+}
+
+.#{$app--prefix}-select {
+  display: block;
+  line-height: 1;
+}
+
+.#{$app--prefix}-form-group__label {
+  top: 0;
+
+  &[data-mdform="folded"] {
+    pointer-events: none;
+  }
+}
+
+.#{$app--prefix}-select::after {
+  background-image: url('/bundles/victoireui/images/components/form/select--caret.svg');
+  background-repeat: no-repeat;
+}
+
+.#{$app--prefix}-form-group__input-group {
+  display: flex;
+}
+
+.#{$app--prefix}-form-group__addon {
+  $gutter: 10px;
+  display: inline-flex;
+  align-items: center;
+  margin-right: $gutter;
+
+  .#{$app--prefix}-form-group__input ~ & {
+    margin-right: 0;
+    margin-left: $gutter;
+  }
+}
+
+.#{$app--prefix}-form-group__addon--url-slug {
+  color: color('grey');
+  padding-bottom: calc(0.5em + 1px);
+}
+
+.#{$app--prefix}-form-group__help svg {
+  vertical-align: bottom;
+}

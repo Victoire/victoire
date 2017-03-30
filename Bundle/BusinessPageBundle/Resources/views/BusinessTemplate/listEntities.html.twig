@@ -1,25 +1,33 @@
 {% trans_default_domain "victoire" %}
 
 {% if items|length %}
-<div class="vic-row">
-    <div class="vic-col-md-8">
-        <ul>
-        {% for item in items %}
-                <li>
-                    <a href="{{ path('victoire_core_page_show_by_id', {viewId: BusinessTemplate.id, entityId: item.id}) }}">
-                        {{ path('victoire_core_page_show_by_id', {viewId: BusinessTemplate.id, entityId: item.id}) }}
-                    </a>
-                </li>
-        {% endfor %}
-        </ul>
-    </div>
-    <div class="vic-col-md-4">
-        {% if BusinessTemplate.query != '' %}
+    {% if BusinessTemplate.query != '' %}
+        <li class="v-list-group__item v-list-group__item--info / v-text--font-small v-text--italic">
             {{ 'list.entities.query'|trans }}: {{ BusinessTemplate.query }}
-        {% endif %}
-    </div>
-</div>
+        </li>
+    {% endif %}
+
+    {% for item in items %}
+        <li class="v-list-group__item">
+            <div class="v-flex-grid v-flex-grid--justify-between v-flex-grid--align-center">
+                <div class="v-flex-col">
+                    <a href="{{ path('victoire_core_page_show_by_id', { viewId: BusinessTemplate.id, entityId: item.id }) }}">
+                        {{ path('victoire_core_page_show_by_id', { viewId: BusinessTemplate.id, entityId: item.id }) }}
+                    </a>
+                </div>
+
+                <div class="v-flex-col">
+                    <a class="v-btn v-btn--square v-btn--sm"
+                       href="{{ path('victoire_core_page_show_by_id', { viewId: BusinessTemplate.id, entityId: item.id }) }}"
+                    >
+                        {% include 'VictoireUIBundle:SVG:angle-right.html.twig' with { 'height': '12', 'width': '7' } %}
+                    </a>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
 {% else %}
-<br/>
-        {{ 'business_template.listEntities.empty'|trans|raw }}
+    <li class="v-list-group__item v-list-group__item--info / v-text--font-small v-text--italic">
+        {{ 'business_template.listEntities.empty'|trans }}
+    </li>
 {% endif %}

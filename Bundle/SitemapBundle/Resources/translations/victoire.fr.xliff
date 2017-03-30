@@ -4,11 +4,11 @@
         <body>
             <trans-unit id="58893b9a04f33" resname="menu.leftnavbar.sitemap.label">
                 <source>menu.leftnavbar.sitemap.label</source>
-                <target><![CDATA[<i class="vic-menuImg vic-menuImg-sitemap"></i> Plan du site]]></target>
+                <target>Plan du site</target>
             </trans-unit>
             <trans-unit id="58893b9a04f61" resname="menu.sitemap">
                 <source>menu.sitemap</source>
-                <target><![CDATA[<i class="vic-menuImg vic-menuImg-sitemap"></i> Plan du site]]></target>
+                <target>Plan du site</target>
             </trans-unit>
             <trans-unit id="58893b9a04f7f" resname="modal.sitemap.title">
                 <source>modal.sitemap.title</source>
@@ -28,7 +28,11 @@
             </trans-unit>
             <trans-unit id="58893b9a05007" resname="modal.sitemap.priority.label">
                 <source>modal.sitemap.priority.label</source>
-                <target>Priorit&#xE9; :</target>
+                <target>Priorité</target>
+            </trans-unit>
+            <trans-unit id="58893b9a03bd8" resname="modal.sitemap.indexed.label">
+                <source>modal.sitemap.indexed.label</source>
+                <target>Indexée</target>
             </trans-unit>
             <trans-unit id="58893b9a05022" resname="sitemap.goto">
                 <source>sitemap.goto</source>

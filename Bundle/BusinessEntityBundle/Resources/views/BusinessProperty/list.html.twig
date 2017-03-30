@@ -1,21 +1,31 @@
 {% trans_default_domain "victoire" %}
 
 {% if businessProperties|length > 0 %}
-    <div class="businessProperties">
-        {% if description is defined and description %}
-            <div class="businessProperties-description">
-                <i class="fa fa-info-circle"></i> {{ description }}
-            </div>
-        {% endif %}
-        {% for businessProperty in businessProperties %}
-            <div class="businessProperty {{ businessProperty.type }}">
-                <a onClick="businessProperty.addPropertyToCurrentInput('{{ businessProperty.entityProperty }}')" title="{{ businessProperty.type }}">{{ businessProperty.entityProperty }}</a>
-            </div>
-        {% endfor %}
-    </div>
+    {% if description is defined and description %}
+        <div class="v-form-group__help">
+            {% include 'VictoireUIBundle:SVG:information.html.twig' with { 'width': 16, 'height': 16 } %}
+            {{ description }}
+        </div>
+    {% endif %}
 
-    <script type="text/javascript">
-        //init the event handler for the business entity property
-        businessProperty.initPropertyHelper();
-    </script>
+    <div class="v-form-group__help">
+        <div class="v-flex-grid v-flex-grid--gutter-sm">
+            {% for businessProperty in businessProperties %}
+                <div class="v-flex-col">
+                    {% if businessProperty.type == 'businessParameter' %}
+                        {% set btnTheme = 'info' %}
+                    {% elseif businessProperty.type == 'seoable' %}
+                        {% set btnTheme = 'default' %}
+                    {% endif %}
+
+                    <a class="v-btn v-btn--xs v-btn--{{ btnTheme|default('default') }}"
+                            onClick="addPropertyToCurrentInput(this, '{{ businessProperty.entityProperty }}')"
+                            title="{{ businessProperty.type }}"
+                    >
+                        {{ businessProperty.entityProperty }}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endif %}

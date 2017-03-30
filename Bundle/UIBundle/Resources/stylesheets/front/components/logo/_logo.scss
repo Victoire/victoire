@@ -1,0 +1,61 @@
+@import '../../globals/utils/synthax';
+
+@keyframes logo-rocket-lunch {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    $coor: 50px;
+    transform: translate($coor, -$coor);
+    opacity: 0;
+  }
+
+  51% {
+    $coor: 52px;
+    opacity: 0;
+    transform: translate(-$coor, $coor);
+  }
+
+  52% {
+    $coor: 52px;
+    opacity: 1;
+    transform: translate(-$coor, $coor);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+.#{$app--prefix}-logo {
+  overflow: visible;
+}
+
+.#{$app--prefix}-logo__rocket {
+  .v-navbar--loading & {
+    animation-name: logo-rocket-lunch;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+  }
+}
+
+.#{$app--prefix}-logo__circle {
+  fill: $mode-readonly--color;
+  transition: fill 300ms ease-in-out;
+
+  @include when-mode-layout {
+    fill: $mode-layout--color;
+  }
+
+  @include when-mode-edit {
+    fill: $mode-edit--color;
+  }
+
+  @include when-mode-style {
+    fill: $mode-style--color;
+  }
+}

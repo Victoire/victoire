@@ -1,0 +1,17 @@
+@import '../../../globals/utils/rem';
+
+$text--text-align: (
+  '-center': center,
+  '-right': right,
+  '-left': left,
+);
+
+$text--font-size: (
+  '-font-small': rem('small'),
+  '-font-normal': rem('default'),
+  '-font-large': rem('large'),
+);
+
+$text--font-style: (
+  '-italic': italic,
+);

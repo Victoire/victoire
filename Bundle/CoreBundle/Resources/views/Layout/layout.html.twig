@@ -1,102 +1,124 @@
 {% extends 'VictoireCoreBundle:Layout:base.html.twig' %}
 
-    {% trans_default_domain "victoire" %}
+{% trans_default_domain "victoire" %}
 
-    {% block html_attr %}ng-app="ngApp" lang="{{ app.request.locale|split('_')[0] }}"{% endblock html_attr %}
-    {% block title %}Victoire DCMS{% endblock %}
-    {% block meta %}{% include 'VictoireSeoBundle::_meta.html.twig' %}{% endblock %}
-    {% block head_icons %}<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />{% endblock %}
+{% block html_attr %}ng-app="ngApp" lang="{{ app.request.locale|split('_')[0] }}"{% endblock html_attr %}
+{% block title %}Victoire DCMS{% endblock %}
+{% block meta %}{% include 'VictoireSeoBundle::_meta.html.twig' %}{% endblock %}
+{% block head_icons %}<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />{% endblock %}
 
-    {% block head_script %}
-        <!-- HEAD_SCRIPT -->
+{% block head_script %}
+    <!-- HEAD_SCRIPT -->
+    <script type="text/javascript">
+        var locale = '{{ app.request.locale }}';
+        var debug = {{ app.debug ? "true" : "false" }};
+    </script>
+
+    {% if is_granted('ROLE_VICTOIRE') %}
         <script type="text/javascript">
-            {% if is_granted('ROLE_VICTOIRE') %}
-                var adminLocale = '{{ app.user.locale}}';
-            {% endif %}
-            var locale = '{{ app.request.locale }}';
-            var debug = {{ app.debug ? "true" : "false" }};
+            var adminLocale = '{{ app.user.locale }}';
         </script>
-        {% if is_granted('ROLE_VICTOIRE') %}
-            {% javascripts injector="victoire-head, modernizr" %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-        {% endif %}
-        {% javascripts injector="head" %}
+        {% javascripts injector="victoire-head, modernizr" %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
-        <!-- END HEAD_SCRIPT -->
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    {% endblock head_script %}
-    {% block head_style %}
-        <!-- HEAD_STYLE -->
-        {% stylesheets filter='less, cssrewrite' injector="head" %}
+    {% endif %}
+
+    {% javascripts injector="head" %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <!-- END HEAD_SCRIPT -->
+    {% if app.debug %}
+        <script src="{{ asset('/bundles/victoireui/bower_components/jquery/dist/jquery.js') }}"></script>
+        <script src="{{ asset('/bundles/victoireui/bower_components/angular/angular.min.js') }}"></script>
+    {% else %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    {% endif %}
+{% endblock head_script %}
+
+{% block head_style %}
+    <!-- HEAD_STYLE -->
+    {% stylesheets filter='less, cssrewrite' injector="head" %}
         <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+
+    {% if is_granted('ROLE_VICTOIRE') or app.request.attributes.get('_route') == 'fos_user_security_login' %}
+        {% stylesheets filter='less, cssrewrite' injector="victoire-edit, alertify-codrops-notification" %}
+            <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
         {% endstylesheets %}
 
-        {% if is_granted('ROLE_VICTOIRE') or app.request.attributes.get('_route') == 'fos_user_security_login' %}
-            {% stylesheets filter='less, cssrewrite' injector="victoire-edit, alertify-codrops-notification" %}
-                <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
-            {% endstylesheets %}
-        {% endif %}
-        <!-- END HEAD_STYLE -->
-        <!-- CUSTOM PAGE STYLE -->
-        {{ cms_page_css() }}
-        <!-- EN CUSTOM PAGE STYLE -->
-    {% endblock head_style %}
+        <link rel="stylesheet" href="{{ asset('bundles/victoireui/stylesheets/main-front.css') }}"/>
+    {% endif %}
+    <!-- END HEAD_STYLE -->
 
-    {% block container_attributes %}{{ parent() }} {% if app.session.get('victoire.edit_mode') %}role="{{ app.session.get('victoire.edit_mode') }}"{% endif %}{% endblock container_attributes %}
-    {% block container_class %}{% endblock container_class %}
-    {% block container_attr %}{% if view is defined %}ng-controller="PageController as pageCtrl" ng-init="init({{ is_granted("ROLE_VICTOIRE") ? "true" : "false" }})"{% endif %}{% endblock %}
-    {% block victoire_ui %}
-        {% if is_granted('ROLE_VICTOIRE') %}
-            {% include 'VictoireCoreBundle:Menu:admin_navbar.html.twig' %}
-        {% endif %}
-    {% endblock victoire_ui %}
+    <!-- CUSTOM PAGE STYLE -->
+    {{ cms_page_css() }}
+    <!-- EN CUSTOM PAGE STYLE -->
+{% endblock head_style %}
 
-    {% block body_content %}
-        <main role="main" {% block body_content_main_attr %}id="content"{% endblock %}>
-            {% block body_content_main %}
-                {{ cms_slot_widgets('main_content') }}
-            {% endblock body_content_main %}
-        </main>
-    {% endblock body_content %}
+{% block container_attributes %}{{ parent() }} {% if app.session.get('victoire.edit_mode') %}role="{{ app.session.get('victoire.edit_mode') }}"{% endif %}{% endblock container_attributes %}
+{% block container_class %}{% if is_granted('ROLE_VICTOIRE') %}victoire-ui{% endif %}{% endblock container_class %}
+{% block container_attr %}{% if view is defined %}ng-controller="PageController as pageCtrl" ng-init="init({{ is_granted("ROLE_VICTOIRE") ? "true" : "false" }})"{% endif %}{% endblock %}
 
-    {% block foot_script %}
-        <!-- Script foot includes -->
-        {% if victoire_i18n_available_locales|default([])|length > 1 or is_granted('ROLE_VICTOIRE') %}
-            {% javascripts
-                "@BazingaJsTranslationBundle/Resources/public/js/translator.min.js"
-                "js/translations/config.js" %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+{% block victoire_ui %}
+    {% if is_granted('ROLE_VICTOIRE') %}
+        {% include 'VictoireCoreBundle:Menu:admin_navbar.html.twig' %}
+    {% endif %}
+{% endblock victoire_ui %}
 
-        {% endif %}
-        <!-- ==================== -->
-        {% block foot_script__view %}
-            {% block foot_script__view_bootstrap %}
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-            {% endblock foot_script__view_bootstrap %}
-            {% if view is defined %}
-                <script type="text/javascript">
-                    var viewReferenceId = '{{ vic_current_page_reference() }}';
-                </script>
-                {% if not app.debug %}
-                    {{ render_hinclude(controller('VictoireAnalyticsBundle:BrowseEvent:track', {'viewReferenceId': vic_current_page_reference(), 'referer': app.request.headers.get('referer')})) }}
-                {% endif %}
-                {% if app.user %}
-                    {{ render_hinclude(controller('VictoireAnalyticsBundle:BrowseEvent:heartbeat', {'id': app.user.id })) }}
-                {% endif %}
+{% block body_content %}
+    <main role="main" {% block body_content_main_attr %}id="content"{% endblock %}>
+        {% block body_content_main %}
+            {{ cms_slot_widgets('main_content') }}
+        {% endblock body_content_main %}
+    </main>
+{% endblock body_content %}
+
+{% block foot_script %}
+    <!-- Script foot includes -->
+    {% if victoire_i18n_available_locales|default([])|length > 1 or is_granted('ROLE_VICTOIRE') %}
+        {% javascripts
+            "@BazingaJsTranslationBundle/Resources/public/js/translator.min.js"
+            "js/translations/config.js" %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endif %}
+
+    <!-- ==================== -->
+
+    {% block foot_script__view %}
+        {% block foot_script__view_bootstrap %}
+            {% if app.debug %}
+                <script src="{{ asset('/bundles/victoireui/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+            {% else %}
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
             {% endif %}
-        {% endblock foot_script__view %}
-        {% block foot_script_victoire %}
-            {% if is_granted('ROLE_VICTOIRE') %}
+        {% endblock foot_script__view_bootstrap %}
+
+        {% if view is defined %}
+            <script type="text/javascript">
+                var viewReferenceId = '{{ vic_current_page_reference() }}';
+            </script>
+
+            {% if not app.debug %}
+                {{ render_hinclude(controller('VictoireAnalyticsBundle:BrowseEvent:track', {'viewReferenceId': vic_current_page_reference(), 'referer': app.request.headers.get('referer')})) }}
+            {% endif %}
+
+            {% if app.user %}
+                {{ render_hinclude(controller('VictoireAnalyticsBundle:BrowseEvent:heartbeat', {'id': app.user.id })) }}
+            {% endif %}
+        {% endif %}
+    {% endblock foot_script__view %}
+
+    {% block foot_script_victoire %}
+        {% if is_granted('ROLE_VICTOIRE') %}
             {% javascripts injector='victoire-edit, victoire-leftnavbar' %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}
-                <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'victoire'}) }}?locales={{ victoire_i18n_available_locales|join(',') }}"></script>
-            {% endif %}
-            {% if is_granted('ROLE_VICTOIRE') %}
+
+            <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'victoire'}) }}?locales={{ victoire_i18n_available_locales|join(',') }}"></script>
+
             <script type="text/javascript">
                 $vic(document).ready(function(){
                     $vic('a#media-manager').on('click', function(ev) {
@@ -105,25 +127,33 @@
                     });
                 });
             </script>
-            {% endif %}
-            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-            {% if app.environment == "test" or app.environment == "domain" or app.environment == "prod" %}
-                <script src="/js/fos_js_routes_{{ app.environment }}.js"></script>
-            {% else %}
-                <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-            {% endif %}
 
-            {% javascripts injector="foot, victoire-ngApp, alertify-codrops-notification" %}
+            <script src="{{ asset('/bundles/victoireui/bower_components/tether/dist/js/tether.js') }}"></script>
+            <script src="{{ asset('/bundles/victoireui/scripts/victoire.bundle.js') }}"></script>
+        {% endif %}
+
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+
+        {% if app.environment == "test" or app.environment == "domain" or app.environment == "prod" %}
+            <script src="/js/fos_js_routes_{{ app.environment }}.js"></script>
+        {% else %}
+            <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+        {% endif %}
+
+        {% javascripts injector="foot, victoire-ngApp, alertify-codrops-notification" %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-        {% endblock foot_script_victoire %}
-        {% block alertify %}
-            {{ app.session|alertify|raw }}
-        {% endblock %}
-        {% block foot_script_uservoice %}
-            {% if is_granted('ROLE_VICTOIRE') %}
-                {% include 'VictoireCoreBundle::_userVoice.html.twig' %}
-            {% endif %}
-        {% endblock foot_script_uservoice %}
-        <!-- END FOOT_SCRIPT -->
-    {% endblock foot_script %}
+        {% endjavascripts %}
+    {% endblock foot_script_victoire %}
+
+    {% block alertify %}
+        {{ app.session|alertify|raw }}
+    {% endblock %}
+
+    {% block foot_script_uservoice %}
+        {% if is_granted('ROLE_VICTOIRE') %}
+            {% include 'VictoireCoreBundle::_userVoice.html.twig' %}
+        {% endif %}
+    {% endblock foot_script_uservoice %}
+
+    <!-- END FOOT_SCRIPT -->
+{% endblock foot_script %}

@@ -17,6 +17,7 @@ use Victoire\Bundle\BlogBundle\Event\ArticleEvent;
 use Victoire\Bundle\BlogBundle\Form\ArticleSettingsType;
 use Victoire\Bundle\BlogBundle\Form\ArticleType;
 use Victoire\Bundle\BlogBundle\VictoireBlogEvents;
+use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 
 /**
  * article Controller.
@@ -25,6 +26,8 @@ use Victoire\Bundle\BlogBundle\VictoireBlogEvents;
  */
 class ArticleController extends Controller
 {
+    use VictoireAlertifyControllerTrait;
+
     /**
      * Display a form to create a new Blog Article.
      *
@@ -196,7 +199,7 @@ class ArticleController extends Controller
         $this->get('victoire_blog.manager.article')->delete($article);
 
         $message = $this->get('translator')->trans('victoire.blog.article.delete.success', [], 'victoire');
-        $this->get('session')->getFlashBag()->add('success', $message);
+        $this->congrat($message);
 
         $response = [
             'success' => true,

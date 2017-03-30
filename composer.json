@@ -37,8 +37,6 @@
         "doctrine/orm": "^2.5",
         "friendsofsymfony/jsrouting-bundle": "^1.0|^2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "friendsofvictoire/text-widget": "^2.0",
-        "friendsofvictoire/button-widget": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/serializer-bundle": "^1.0",
         "knplabs/gaufrette": "^0.1",
@@ -74,19 +72,22 @@
         "phpunit/phpunit": "4.6.*",
         "sensio/generator-bundle": "~2.3",
         "symfony/var-dumper": "~2.8|~3.1",
-        "doctrine/doctrine-fixtures-bundle": "^2.2"
+        "doctrine/doctrine-fixtures-bundle": "^2.2",
+        "victoire/text-widget": "~2.0",
+        "victoire/button-widget": "~2.0"
     },
     "autoload": {
         "psr-4": {
-            "Acme\\AppBundle\\": "Tests/Functionnal/src/Acme/AppBundle",
+            "Acme\\AppBundle\\": "Tests/App/src/Acme/AppBundle",
             "Victoire\\Bundle\\": "Bundle",
             "Victoire\\Tests\\Features\\": "Tests/Features",
-            "Victoire\\Widget\\": "Tests/Functionnal/src/Victoire/Widget"
+            "Victoire\\Tests\\Functional\\": "Tests/Functional",
+            "Victoire\\Widget\\": "Tests/App/src/Victoire/Widget"
         }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.2.x-dev"
+            "dev-master": "2.3.x-dev"
         }
     }
 }

@@ -1,0 +1,7 @@
+@mixin menu--gutter-row($value, $flags) {
+  @include declaration('margin', (-$value / 2), $flags);
+}
+
+@mixin menu--gutter-col($value, $flags) {
+  @include declaration('margin', ($value / 2), $flags);
+}

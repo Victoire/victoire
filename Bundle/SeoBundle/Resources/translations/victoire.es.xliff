@@ -124,7 +124,7 @@
       </trans-unit>
       <trans-unit id="58893b9a00f01" resname="menu.page.seoSettings">
         <source>menu.page.seoSettings</source>
-        <target><![CDATA[<i class="vic-menuImg vic-menuImg-target"></i> SEO]]></target>
+        <target><![CDATA[<span class="v-seo v-seo--success">SEO</span>]]></target>
       </trans-unit>
       <trans-unit id="58893b9a00f1e" resname="modal.form.pageSeo.settings.title">
         <source>modal.form.pageSeo.settings.title&gt;</source>

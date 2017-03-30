@@ -2,25 +2,30 @@
 
 {% trans_default_domain "victoire" %}
 
-{% block modal_container_id %}{{ id }}{% endblock modal_container_id %}
-{% block modal_container_classes %}{{ parent() }} vic-danger-modal{% endblock %}
-{% block modal_header_title %}{{title}}{% endblock modal_header_title %}
+{% block modal_container_id %}{{ id }}{% endblock %}
+{% block modal_container_classes %}{{ parent() }} v-modal--danger{% endblock %}
+{% block modal_header_title %}{{ title }}{% endblock %}
 
 {% block modal_body_content %}
-{% spaceless %}
-    <div class="vic-row">
-        <div class="vic-col-md-12 vic-text-center">
+    {% spaceless %}
+        <p class="v-text--center" style="margin-bottom: 30px;">
             {{ body|raw }}
+        </p>
+
+        <div class="v-flex-grid v-flex-grid--align-center v-flex-grid--justify-center">
+            <div class="v-flex-col">
+                <button class="v-btn {{ cancel_button_class }}" data-modal="close" aria-hidden="true">
+                    {{ 'modal.button.delete.confirm.cancel.label'|trans }}
+                </button>
+            </div>
+
+            <div class="v-flex-col">
+                <button class="v-btn {{ confirm_button_class }}" aria-hidden="true">
+                    {{ 'modal.button.delete.confirm.ok.label'|trans }}
+                </button>
+            </div>
         </div>
-    </div>
-    <hr/>
-    <div class="vic-row">
-        <div class="vic-col-md-8 vic-col-md-offset-2 vic-text-center">
-            <button class="vic-btn {{ cancel_button_class }}" data-modal="close" aria-hidden="true"><i class="fa fa-times-circle"></i> <span>{{ 'modal.button.delete.confirm.cancel.label'|trans }}</span></button>&nbsp;
-            <button class="vic-btn {{ confirm_button_class }}" aria-hidden="true"><i class="fa fa-trash-o"></i> <span>{{ 'modal.button.delete.confirm.ok.label'|trans }}</span></button>
-        </div>
-    </div>
-{% endspaceless %}
+    {% endspaceless %}
 {% endblock modal_body_content %}
 
 {% block modal_footer %}{% endblock modal_footer %}
@@ -30,6 +35,7 @@
 
 <script>
 $vic('#{{ id }}').vicmodal({ show : true, keyboard: true, backdrop: false });
+$vic('#{{ id }}').attr('data-modal', 'show');
 $vic('#{{ id }} .{{ confirm_button_class }}').focus();
 $vic('#{{ id }}').on('hide',function(){
     $vic('.vic-confirm-waiting').removeClass('vic-confirm-waiting');

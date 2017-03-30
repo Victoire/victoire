@@ -1,0 +1,39 @@
+.#{$app--prefix}-drop {
+  display: none;
+}
+
+[class*="#{$app--prefix}-"][data-flag="drops"]:not([data-behavior="hover"]) {
+  cursor: pointer;
+}
+
+[class*="#{$app--prefix}-"][data-flag="drops"]:not([data-behavior="hover"])::after {
+  $size: 0.6em;
+  $border-width: 2px;
+  content: '';
+  display: inline-block;
+  width: $size;
+  height: $size;
+  border-bottom: $border-width solid currentColor;
+  border-left: $border-width solid currentColor;
+  transform: rotate(-45deg);
+  transform-origin: bottom left;
+  margin-left: 1em;
+  margin-bottom: 0.05em;
+}
+
+[class*="#{$app--prefix}-"][data-flag="drops"][data-position~="topin"]::after,
+[class*="#{$app--prefix}-"][data-flag="drops"][data-position~="topout"]::after {
+  transform: rotate(135deg) translate(-60%, 60%);
+}
+
+// scss-lint:disable ImportantRule
+.#{$app--prefix}-drop-trigger--no-toggle::after {
+  content: none !important;
+}
+// scss-lint:enable ImportantRule
+
+ul.#{$app--prefix}-drop {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}

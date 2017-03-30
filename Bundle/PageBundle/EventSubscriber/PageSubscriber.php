@@ -9,7 +9,6 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\UnitOfWork;
-use Gedmo\Translatable\TranslatableListener;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
@@ -37,7 +36,6 @@ class PageSubscriber implements EventSubscriber
      * @param string                  $userClass               %victoire_core.user_class%
      * @param ViewReferenceBuilder    $viewReferenceBuilder
      * @param ViewReferenceRepository $viewReferenceRepository
-     * @param TranslatableListener    $translatableListener
      *
      * @internal param ViewReferenceBuilder $urlBuilder @victoire_view_reference.builder
      */
@@ -46,15 +44,13 @@ class PageSubscriber implements EventSubscriber
         UserCallableHelper $userCallableHelper,
         $userClass,
         ViewReferenceBuilder $viewReferenceBuilder,
-        ViewReferenceRepository $viewReferenceRepository,
-        TranslatableListener $translatableListener
+        ViewReferenceRepository $viewReferenceRepository
     ) {
         $this->router = $router;
         $this->userClass = $userClass;
         $this->userCallableHelper = $userCallableHelper;
         $this->viewReferenceBuilder = $viewReferenceBuilder;
         $this->viewReferenceRepository = $viewReferenceRepository;
-        $this->translatableListener = $translatableListener;
     }
 
     /**

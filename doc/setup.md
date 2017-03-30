@@ -38,9 +38,9 @@ class AppKernel extends Kernel
         $bundles = [
             ...
             //dependencies
+            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Troopers\AsseticInjectorBundle\TroopersAsseticInjectorBundle(),
             new Troopers\AlertifyBundle\TroopersAlertifyBundle(),
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
@@ -66,6 +66,7 @@ class AppKernel extends Kernel
             new Victoire\Bundle\SitemapBundle\VictoireSitemapBundle(),
             new Victoire\Bundle\TemplateBundle\VictoireTemplateBundle(),
             new Victoire\Bundle\TwigBundle\VictoireTwigBundle(),
+            new Victoire\Bundle\UIBundle\VictoireUIBundle(),
             new Victoire\Bundle\UserBundle\VictoireUserBundle(),
             new Victoire\Bundle\ViewReferenceBundle\ViewReferenceBundle(),
             new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
@@ -102,6 +103,7 @@ framework:
 ```yml
 imports:
     - { resource: @VictoireCoreBundle/Resources/config/config.yml }
+    - { resource: @VictoireTwigBundle/Resources/config/config.yml }
 
 assetic:
     use_controller: false
@@ -113,7 +115,7 @@ assetic:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: Victoire\UserBundle\Entity\User
+    user_class: Victoire\Bundle\UserBundle\Entity\User
     from_email:
         address: hey@victoire.io
         sender_name: Victoire
@@ -135,11 +137,17 @@ stof_doctrine_extensions:
             timestampable: true
 
 victoire_core:
-    user_class: "Victoire\\UserBundle\\Entity\\User"
+    user_class: Victoire\Bundle\UserBundle\Entity\User
     business_entity_debug: true
     layouts:
         defaultLayout: "Default layout"
-
+    # Here you need to list all folders containing your BusinessEntities and you Widgets
+    base_paths:
+        - "%kernel.root_dir%/../src"
+        - "%kernel.root_dir%/../vendor/victoire"
+        - "%kernel.root_dir%/../vendor/friendsofvictoire"
+        - "%kernel.root_dir%/../vendor/myorganization"
+        
 #if you need i18n
 victoire_i18n:
     available_locales:
@@ -205,21 +213,19 @@ parameters:
         victoire.io: fr
 ```
 
-Update the `parameters.yml` with correct values.
-
-```yml
-#app/config/config.yml
-imports:
-    ...
-    - { resource: victoire_core.yml }
-```
-
 ### Add following routes
 
 ```yml
 #app/config/routing.yml
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
@@ -234,8 +240,8 @@ Then you're done with the Victoire steps but your database is empty. Just run th
 
 Start by creating your admin user:
 ```sh
-bin/console -e=dev fos:user:create admin anakin@victoire.io myAwesomePassword
-bin/console -e=dev fos:user:promote admin ROLE_VICTOIRE_DEVELOPER
+app/console -e=dev fos:user:create admin anakin@victoire.io myAwesomePassword
+app/console -e=dev fos:user:promote admin ROLE_VICTOIRE_DEVELOPER
 ```
 
 Then run these sql queries to populates the initial views (error pages, one base template and the homepage):
@@ -271,23 +277,66 @@ VALUES
 ### Generate view references
 
 ```sh
-php bin/console victoire:viewReference:generate -e=dev
+php app/console victoire:viewReference:generate -e=dev
 ```
 
 #### Do you prefer the fixtures way ?
-There are some fixtures in `vendor/victoire/victoire/Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/LoadFixtureData.php`. These are used in the victoire behat tests so you can't use them directly from your project but feel free to start from it by copying/pasting it into your own project.
+There are some fixtures in `vendor/victoire/victoire/Tests/App/src/Acme/AppBundle/DataFixtures/Seeds/ORM/LoadFixtureData.php`. These are used in the victoire behat tests so you can't use them directly from your project but feel free to start from it by copying/pasting it into your own project.
 
 ### Add the wanted widgets:
 
-```json
-    "friendsofvictoire/text-widget"      : "~2.0",
-    "friendsofvictoire/button-widget"    : "~2.0",
-    "friendsofvictoire/image-widget"     : "~2.0",
-    "friendsofvictoire/render-widget"    : "~2.0",
-    "friendsofvictoire/breadcrumb-widget": "~2.0",
-    ...
+```sh
+    composer require victoire/text-widget victoire/button-widget victoire/image-widget victoire/render-widget victoire/breadcrumb-widget ...
 ```
 
 Get the whole Victoire Widget list [**here**](http://packagist.org/search/?tags=victoire)
 
-And it's done, just go to /login to enter in the edit mode.
+### Prepare Victoire assets
+
+#### Fetch bower assets
+
+Run the following command to fetch the Victoire assets:
+
+`CAUTION` you need to install bower first
+```shell
+php app/console victoire:ui:fetchAssets
+```
+
+#### Dump with assetic
+
+Run the following command to dump assets with assetic library:
+
+```shell
+php app/console assetic:dump
+```
+
+
+**And it's done, just go to /login to enter in the edit mode.**
+
+## 3. Production
+
+### Views CSS
+
+When you edit a Widget style parameter in Victoire, CSS rules must be generated and imported in concerned View.
+Unfortunately, Victoire can't simply include inline `<style>` tags for each Widget due to some [IE restrictions][1].  
+That's why for each View, a CSS file is generated compiling all Widgets CSS rules.
+
+When a Widget which belongs to a Template is modified, all inherited Templates and Pages CSS files must be regenerated. Files can be regenerated :
+
+* **on-the-fly** when a user ask for a View that need to regenerate its CSS
+* **with command** `victoire:widget-css:generate`
+
+So you can let Victoire regenerate CSS files on user demand.
+But you may want to set a crontab on your production environment to regenerate a batch of CSS files each minute.
+
+```
+* * * * * php app/console victoire:widget-css:generate --limit=20 --env=prod
+```
+
+If you want to manually force all CSS to be regenerated even if they are up to date, add `--force`.
+
+```sh
+php app/console victoire:widget-css:generate --force
+```
+
+[1]: https://blogs.msdn.microsoft.com/ieinternals/2011/05/14/stylesheet-limits-in-internet-explorer/

@@ -1,0 +1,73 @@
+.#{$app--prefix}-btn {
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+$drop-fab-anchor--box-shadow: 0 0.285714286em 0.571428571em 0 color('black', null, 0.2);
+
+.#{$app--prefix}-btn--fab {
+  transition: all 300ms ease-in-out;
+
+  &:focus {
+    outline-width: 0;
+  }
+}
+
+.#{$app--prefix}-btn--fab-open {
+  transform: rotate(-45deg);
+}
+
+.#{$app--prefix}-drop--fab .#{$app--prefix}-drop__anchor {
+  font-size: rem('small');
+  position: relative;
+}
+
+.#{$app--prefix}-drop--fab .#{$app--prefix}-drop__anchor-label {
+  display: inline-block;
+  background-color: color('green');
+  line-height: 1.285714286;
+  padding: 0.25em 0.714285714em;
+  border-radius: 1em;
+  box-shadow: $drop-fab-anchor--box-shadow;
+  position: absolute;
+  top: 50%;
+  transform: translate(-100%, -50%);
+  margin-left: -0.714285714em;
+}
+
+.#{$app--prefix}-drop--fab .#{$app--prefix}-drop__anchor:hover .#{$app--prefix}-drop__anchor-label,
+.#{$app--prefix}-drop--fab .#{$app--prefix}-drop__anchor:active .#{$app--prefix}-drop__anchor-label,
+.#{$app--prefix}-drop--fab .#{$app--prefix}-drop__anchor:focus .#{$app--prefix}-drop__anchor-label {
+  background-color: color('green', 'dark');
+}
+
+.#{$app--prefix}-drop__anchor-icon {
+  $size: 2.857142857em;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: color('green');
+  height: $size;
+  width: $size;
+  border-radius: $size;
+  box-shadow: $drop-fab-anchor--box-shadow;
+}
+
+.#{$app--prefix}-drop--fab .#{$app--prefix}-drop__anchor:hover .#{$app--prefix}-drop__anchor-icon,
+.#{$app--prefix}-drop--fab .#{$app--prefix}-drop__anchor:active .#{$app--prefix}-drop__anchor-icon,
+.#{$app--prefix}-drop--fab .#{$app--prefix}-drop__anchor:focus .#{$app--prefix}-drop__anchor-icon {
+  background-color: color('green', 'dark');
+}
+
+.#{$app--prefix}-btn--quantum__ic {
+  margin-right: 0.2em;
+}
+
+.#{$app--prefix}-btn__ic--before {
+  margin-right: 0.5em;
+}
+
+.#{$app--prefix}-btn__ic--after {
+  margin-left: 0.5em;
+}

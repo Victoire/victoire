@@ -149,7 +149,7 @@ class WidgetDataWarmer
                 elseif ($metaData->isCollectionValuedAssociation($association['fieldName'])) {
 
                     //Even if Widget is cached, we need its Criterias used before cache call
-                    if (!$widgetCached || $targetClass == Criteria::class) {
+                    if (!$widgetCached || $targetClass === Criteria::class) {
 
                         //If Collection is not null, treat it
                         if ($this->accessor->getValue($entity, $association['fieldName'])) {
@@ -212,15 +212,15 @@ class WidgetDataWarmer
                 /* @var AssociatedEntityToWarm[] $associatedEntitiesToWarm */
                 foreach ($associatedEntitiesToWarm as $associatedEntityToWarm) {
                     foreach ($foundEntities as $foundEntity) {
-                        if ($associatedEntityToWarm->getType() == AssociatedEntityToWarm::TYPE_MANY_TO_ONE
-                            && $foundEntity->getId() == $associatedEntityToWarm->getEntityId()
+                        if ($associatedEntityToWarm->getType() === AssociatedEntityToWarm::TYPE_MANY_TO_ONE
+                            && $foundEntity->getId() === $associatedEntityToWarm->getEntityId()
                         ) {
                             $inheritorEntity = $associatedEntityToWarm->getInheritorEntity();
                             $inheritorPropertyName = $associatedEntityToWarm->getInheritorPropertyName();
                             $this->accessor->setValue($inheritorEntity, $inheritorPropertyName, $foundEntity);
                             continue;
-                        } elseif ($associatedEntityToWarm->getType() == AssociatedEntityToWarm::TYPE_ONE_TO_MANY
-                            && $this->accessor->getValue($foundEntity, $findMethod) == $associatedEntityToWarm->getInheritorEntity()
+                        } elseif ($associatedEntityToWarm->getType() === AssociatedEntityToWarm::TYPE_ONE_TO_MANY
+                            && $this->accessor->getValue($foundEntity, $findMethod) === $associatedEntityToWarm->getInheritorEntity()
                         ) {
                             $inheritorEntity = $associatedEntityToWarm->getInheritorEntity();
                             $inheritorPropertyName = $associatedEntityToWarm->getInheritorPropertyName();

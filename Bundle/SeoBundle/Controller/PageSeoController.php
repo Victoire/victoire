@@ -39,7 +39,7 @@ class PageSeoController extends Controller
      */
     public function settingsAction(Request $request, View $view)
     {
-        $pageSeo = $view->getSeo() ? $view->getSeo() : new PageSeo($view);
+        $pageSeo = $view->getSeo() ?: new PageSeo();
         $form = $this->createSettingsForm($pageSeo, $view);
 
         $form->handleRequest($request);
@@ -69,7 +69,7 @@ class PageSeoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $pageSeo = $view->getSeo() ? $view->getSeo() : new PageSeo($view);
+        $pageSeo = $view->getSeo() ?: new PageSeo();
         $form = $this->createSettingsForm($pageSeo, $view);
 
         $form->handleRequest($request);

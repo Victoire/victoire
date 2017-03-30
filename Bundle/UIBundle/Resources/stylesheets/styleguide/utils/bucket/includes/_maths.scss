@@ -1,0 +1,76 @@
+/// Returns the square root of a number passed as argument.
+/// @name square-root
+/// @access public
+/// @author Mihai Vaduva
+/// @source http://www.antimath.info/css/sass-square-root-function/
+/// @group maths
+/// @param {numbers} $r - number without unit type
+/// @since 1.2.0
+/// @return {number} the square-root of the param $r passed as argument
+/// @example
+///   square-root(4) -> returns 2.
+@function square-root($r) {
+  $x0: 1;
+  $x1: $x0;
+
+  @for $i from 1 through 10 {
+    $x1: $x0 - ($x0 * $x0 - abs($r)) / (2 * $x0);
+    $x0: $x1;
+  }
+
+  @return $x1;
+}
+
+
+/// Returns a number value passed as argument without its unit
+/// @name strip-units
+/// @access public
+/// @author Hugo Giraudel
+/// @source https://css-tricks.com/snippets/sass/strip-unit-function/
+/// @group maths
+/// @param {numbers} $number
+/// @since 1.2.0
+/// @return {number} the same number passed as argument without its unit
+/// @example
+///   strip-units(2px) -> returns 2.
+@function strip-units($number) {
+  @return $number / ($number * 0 + 1);
+}
+
+
+/// Returns the square value of a number (without unit) passed as argument.
+/// @name square
+/// @access public
+/// @author Loïc Goyet
+/// @group maths
+/// @param {numbers} $number
+/// @since 1.2.0
+/// @return {number} the square product of the value passed as argument
+/// @example
+///   square(2) -> returns 4.
+/// @require strip-units
+@function square($number) {
+  $unitless: strip-units($number);
+  @return ($unitless * $unitless);
+}
+
+/// Get the hypotenuse length based on the Pythagoras' theorem.
+/// Reminder : ab² + ac² = bc² on a right-angled triangle.
+/// We pass as argument ab and ac length, and the function returns bc length
+/// @name get-hypotenuse
+/// @access public
+/// @author Loïc Goyet
+/// @group maths
+/// @param {numbers} $ab - first side of the right-angled
+/// @param {numbers} $ac - second side of the right-angled
+/// @return {number} the hypothenuse length
+/// @require square
+/// @require square-root
+/// @since 1.2.0
+@function get-hypotenuse($ab, $ac) {
+  @if unit($ab) == unit($ac) {
+    @return square-root(square($ab) + square($ac)) + unquote(unit($ab));
+  } @else {
+    @error 'The two value into the get-hypotenuse() function must share the same unit type';
+  }
+}

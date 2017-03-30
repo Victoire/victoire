@@ -4,6 +4,8 @@ namespace Victoire\Tests\Features\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Hook\Scope\AfterStepScope;
+use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\Element;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
@@ -92,5 +94,41 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
             $message = sprintf('"%s" is not the title of the page', $title);
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
+    }
+
+    /**
+     * @AfterStep
+     */
+    public function printLastResponseOnError(AfterStepScope $event)
+    {
+        if (!$event->getTestResult()->isPassed()) {
+            $this->saveDebugScreenshot();
+        }
+    }
+
+    /**
+     * @Then /^save screenshot$/
+     */
+    public function saveDebugScreenshot()
+    {
+        $driver = $this->getSession()->getDriver();
+
+        if (!$driver instanceof Selenium2Driver) {
+            return;
+        }
+
+        if (!getenv('BEHAT_SCREENSHOTS')) {
+            return;
+        }
+
+        $filename = microtime(true).'.png';
+        $path = $this->getContainer()
+                ->getParameter('kernel.root_dir').'/../behat_screenshots';
+
+        if (!file_exists($path)) {
+            mkdir($path);
+        }
+
+        $this->saveScreenshot($filename, $path);
     }
 }

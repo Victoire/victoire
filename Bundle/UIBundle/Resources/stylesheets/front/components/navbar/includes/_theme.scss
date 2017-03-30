@@ -1,0 +1,45 @@
+// scss-lint:disable ColorVariable
+$navbars--font-size: rem();
+$navbars--font-family: $app--font-family;
+$navbars--font-weight: font-weight();
+$navbars--z-index: null;
+$navbars--position: null;
+$navbars--width: (
+  '-vertical': 3.125em,
+);
+$navbars--left: null;
+$navbars--top: null;
+$navbars--right: null;
+$navbars--bottom: null;
+$navbars--text-transform: null;
+$navbars--letter-spacing: null;
+$navbars--line-height: null;
+$navbars--border-width: (
+  '-vertical': 1px,
+);
+$navbars--border-style: (
+  '-vertical': solid,
+);
+$navbars--border-color: (
+  '-vertical': color('grey', 'lighter'),
+);
+$navbars--border-radius: null;
+$navbars--box-shadow: null;
+$navbars--text-align: null;
+$navbars--margin: null;
+$navbars--color: color('white');
+$navbars--text-decoration: null;
+$navbars--background-color: (
+  'default': color('black'),
+  '-grey': color('grey', 'darker'),
+  '-vertical': color('white', 'dark'),
+);
+$navbars--padding: null;
+$navbars--height: (
+  'default': rem(3.125),
+  '-lg': rem(3.75),
+  '-vertical': 100%,
+);
+$navbars--box-shadow: (
+  '-header': 0 0.1875em 0.5em 0 rgba(0, 0, 0, 0.5),
+);

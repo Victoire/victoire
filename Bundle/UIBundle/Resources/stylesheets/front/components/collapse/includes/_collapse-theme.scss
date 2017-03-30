@@ -1,0 +1,33 @@
+// scss-lint:disable ColorVariable
+$collapses--font-size: rem();
+$collapses--font-family: $app--font-family;
+$collapses--font-weight: null;
+$collapses--text-transform: null;
+$collapses--letter-spacing: null;
+$collapses--line-height: null;
+$collapses--text-align: null;
+$collapses--text-decoration: null;
+$collapses--margin: (
+  '-plain': 0.625em 0 1.25em,
+  '-criteria': -0.625em 0 2.5em,
+);
+$collapses--border-width: (
+  '-plain': 1px,
+);
+$collapses--border-style: (
+  '-plain': solid
+);
+$collapses--border-color: (
+  '-plain': color('grey', 'lighter'),
+);
+$collapses--border-radius: null;
+$collapses--color: null;
+$collapses--box-shadow: null;
+$collapses--background: null;
+$collapses--background-color: (
+  '-plain': color('white', 'dark'),
+);
+$collapses--padding-x: null;
+$collapses--padding-y: (
+  '-plain': 1.25em,
+);

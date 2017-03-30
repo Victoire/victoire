@@ -1,0 +1,32 @@
+.ts-callout {
+  @include styleguide-base;
+  @include layout-border('left');
+  padding: rem(1) 0 rem(1) rem(1);
+  margin: rem(2) 0;
+  border-left-color: color('gray-dark');
+}
+
+$callout--themes: (
+  'info': color('blue'),
+  'danger': color('red'),
+  'warning': color('yellow'),
+  'success': color('green'),
+);
+
+@each $theme, $color in $callout--themes {
+  .ts-callout--#{$theme} {
+    border-left-color: $color;
+
+    .ts-callout__heading {
+      color: $color;
+    }
+  }
+}
+
+.ts-callout__heading {
+  margin: 0 0 rem(0.5);
+  font-weight: font-weight('bold');
+  line-height: 1;
+  font-size: 20px;
+  color: color('gray-dark');
+}

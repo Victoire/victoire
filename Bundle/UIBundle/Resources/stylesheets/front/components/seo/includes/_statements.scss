@@ -1,0 +1,27 @@
+$seo--selector: selector--constructor(null, 'seo');
+@include selector($seo--selector) {
+  @include declaration('display', inline-flex);
+  @include declaration('align-items', center);
+  @include declaration('font-size', $seos--font-size);
+  @include declaration('font-family', $seos--font-family);
+  @include declaration('text-shadow', $seos--text-shadow);
+  @include declaration('color', $seos--color);
+  @include declaration('font-weight', $seos--font-weight);
+  @include declaration('text-transform', $seos--text-transform);
+  @include declaration('line-height', $seos--line-height);
+
+  @include block-generation($seo--selector);
+}
+
+$seo-indicator--selector: selector--set-pseudo-element($seo--selector, 'before');
+@include selector($seo-indicator--selector) {
+  @include declaration('content', '');
+  @include declaration('width', $seos-indicator--size);
+  @include declaration('height', $seos-indicator--size);
+  @include declaration('border-radius', $seos-indicator--size);
+  @include declaration('margin-right', $seos-indicator--margin-right);
+  @include declaration('background-image', $seos-indicator--background-image);
+  @include declaration('box-shadow', $seos-indicator--box-shadow);
+
+  @include block-generation($seo-indicator--selector);
+}

@@ -1,11 +1,21 @@
 {% extends 'VictoirePageBundle:Page:new.html.twig' %}
 
 {% block modal_body_content %}
-    <form method="POST" action="{{path('victoire_template_new')}}">
-        {{form_row(form.translations)}}
-        {{form_row(form.template)}}
-        {{form_row(form.layout)}}
-        {{form_rest(form)}}
+    <form method="POST" action="{{ path('victoire_template_new') }}">
+        <div class="v-grid">
+            <div class="v-col v-col--xs-12 v-col--md-6">
+                {{ form_widget(form.translations) }}
+            </div>
+
+            <div class="v-col v-col--xs-12 v-col--md-6">
+                <div id="v-template-new--sidebar">
+                    {{ form_row(form.template) }}
+                    {{ form_row(form.layout) }}
+                </div>
+            </div>
+        </div>
+
+        {{ form_rest(form) }}
     </form>
 {% endblock modal_body_content %}
 

@@ -10,7 +10,6 @@ Feature: Manage jedis
             | name   | side   | midiChlorians | slug   |
             | Anakin | dark   | 27700         | anakin |
             | Yoda   | bright | 17700         | yoda   |
-        And I open the hamburger menu
         Then I should see "Jedi"
         When I follow "Jedi"
         Then I should be on "/victoire-dcms/backend/jedi/"
@@ -76,17 +75,17 @@ Feature: Manage jedis
         And I submit the widget
         And I wait 5 seconds
         Then I should see "Le côté Nouveau de la force"
-        Given I select the option "Paramètres de la page" in the dropdown "Page"
+        When I open the settings menu
         And I should see "Mettre à jour"
         When I fill in "page_settings_translations_fr_slug" with "Dark Vador"
-        Then I should see an ".page_settings_translations_fr_a2lix_translationsFields-fr .slug-is-correct.vic-hidden" element
-        And I should not see an ".page_settings_translations_fr_a2lix_translationsFields-fr .slug-is-not-correct.vic-hidden" element
+        Then I should see an ".page_settings_translations_fr_a2lix_translationsFields-fr #page_settings_translations_fr_slug-correct.v-color--green" element
+        And I should not see an ".page_settings_translations_fr_a2lix_translationsFields-fr #page_settings_translations_fr_slug-correct.v-color--red" element
         When I fill in "page_settings_translations_fr_slug" with ""
-        Then I should not see an ".page_settings_translations_fr_a2lix_translationsFields-fr .slug-is-not-correct.vic-hidden" element
-        And I should see an ".page_settings_translations_fr_a2lix_translationsFields-fr .slug-is-correct.vic-hidden" element
+        Then I should not see an ".page_settings_translations_fr_a2lix_translationsFields-fr #page_settings_translations_fr_slug-correct.v-color--red" element
+        And I should see an ".page_settings_translations_fr_a2lix_translationsFields-fr #page_settings_translations_fr_slug-correct.v-color--green" element
         When I fill in "page_settings_translations_fr_slug" with "dark-vador"
-        Then I should not see an ".page_settings_translations_fr_a2lix_translationsFields-fr .slug-is-correct.vic-hidden" element
-        And I should see an ".page_settings_translations_fr_a2lix_translationsFields-fr .slug-is-not-correct.vic-hidden" element
+        Then I should not see an ".page_settings_translations_fr_a2lix_translationsFields-fr #page_settings_translations_fr_slug-correct.v-color--red" element
+        And I should see an ".page_settings_translations_fr_a2lix_translationsFields-fr #page_settings_translations_fr_slug-correct.v-color--green" element
         When I submit the widget
         And I wait 5 seconds
         Then I should see "Page modifiée avec succès"

@@ -18,6 +18,8 @@ services:
         class: Victoire\Bundle\SitemapBundle\Domain\Export\SitemapExportHandler
         arguments:
             - @doctrine.orm.entity_manager
+            - @victoire_page.page_helper
+            - @victoire_view_reference.repository
 
     #  ==================  MENU ================== #
     victoire_sitemap.sitemap_menu_listener:

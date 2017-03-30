@@ -1,0 +1,16 @@
+@mixin reset-button {
+  padding: 0;
+  appearance: initial;
+  border: 0;
+  background-color: transparent;
+
+  &:focus {
+    outline-width: 0;
+  }
+}
+
+@mixin reset-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}

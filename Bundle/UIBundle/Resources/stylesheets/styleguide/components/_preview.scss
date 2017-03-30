@@ -1,0 +1,19 @@
+.ts-preview {
+  @include layout-border('top' 'left' 'right');
+  padding: rem(1);
+
+  @include small-viewport {
+    margin-left: -($main--padding + $sidebar--border-width);
+    margin-right: -($main--padding + $sidebar--border-width);
+  }
+
+  > * {
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

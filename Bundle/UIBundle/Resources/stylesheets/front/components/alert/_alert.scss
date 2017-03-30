@@ -1,0 +1,31 @@
+@import './includes/theme';
+
+$alert--selector: selector--constructor(null, 'alert');
+
+@include selector($alert--selector) {
+  @include declaration('font-family', $alert--font-family);
+  @include declaration('font-size', $alert--font-size);
+  @include declaration('color', $alert--color);
+  @include declaration('background-color', $alert--background-color);
+  @include declaration('border-width', $alert--border-width);
+  @include declaration('border-style', $alert--border-style);
+  @include declaration('border-color', $alert--border-color);
+  @include declaration('border-radius', $alert--border-radius);
+  @include declaration('margin', $alert--margin);
+  @include declaration('text-align', $alert--text-align);
+
+  @include block-generation($alert--selector);
+}
+
+
+$alert-body--selector: selector--set-element($alert--selector, 'body');
+
+@include selector($alert-body--selector) {
+  @include declaration('padding', $alert-body--padding);
+
+  @include block-generation($alert-body--selector);
+
+  svg {
+    vertical-align: middle;
+  }
+}

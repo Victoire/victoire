@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="58893b9963c02" resname="modal.button.delete.title">
         <source>modal.button.delete.title</source>
-        <target>Supprimer</target>
+        <target>SUPPRIMER</target>
       </trans-unit>
       <trans-unit id="58893b9963c67" resname="modal.button.update.title">
         <source>modal.button.update.title</source>
@@ -98,7 +98,15 @@
         <source>victoire.menu.publication.scheduled.tooltip</source>
         <target>Cette page sera publiée à partir du %publication_date%.</target>
       </trans-unit>
-      <trans-unit id="58893b9963e43" resname="victoire_core.edit_mode_switch">
+      <trans-unit id="79ba9ce9459413ff95ae62ceaad270428e26643b" resname="victoire.menu.publication.draft.tooltip">
+        <source>victoire.menu.publication.draft.tooltip</source>
+        <target>Cette page est actuellement en brouillon</target>
+      </trans-unit>
+      <trans-unit id="79ba9ce9459413ff95ae62ceaad270428e243b66" resname="victoire.menu.publication.unpublished.tooltip">
+        <source>victoire.menu.publication.unpublished.tooltip</source>
+        <target>Cette page est actuellement non publiée</target>
+      </trans-unit>
+      <trans-unit id="ceb669459413ff95ae62ceaad270428e24379ba9" resname="victoire_core.edit_mode_switch">
         <source>victoire_core.edit_mode_switch</source>
         <target>Mode édition</target>
       </trans-unit>
@@ -120,7 +128,7 @@
       </trans-unit>
       <trans-unit id="58893b9964059" resname="victoire.widget.inherited.notice">
         <source>victoire.widget.inherited.notice</source>
-        <target><![CDATA[<strong>Attention ! </strong>Ce contenu appartient à un modèle parent (<i>%templateName%</i>).<br/>Si vous voulez uniquement modifier le contenu sur cette page, continuez, vous êtes au bon endroit.<br/>Si toutefois vous voulez que cette modification soit répercutée sur toutes les pages utilisant le modèle <i>%templateName%</i>, cliquez sur ce lien : <a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal">modifier le contenu original</a>.]]></target>
+        <target><![CDATA[<strong>Attention ! </strong>Ce contenu appartient à un modèle parent (<i>%templateName%</i>).<br/>Si vous voulez uniquement modifier le contenu sur cette page, continuez, vous êtes au bon endroit.<br/>Si toutefois vous voulez que cette modification soit répercutée sur toutes les pages utilisant le modèle <i>%templateName%</i>, cliquez sur ce lien : <a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal" class="v-btn v-btn--warning">MODIFIER LE CONTENU ORIGINAL</a>]]></target>
       </trans-unit>
       <trans-unit id="58893b9964135" resname="navbar.mode.edit">
         <source>navbar.mode.edit</source>
@@ -166,19 +174,7 @@
         <source>victoire.login.meta.title</source>
         <target>Embarquement imminent</target>
       </trans-unit>
-      <trans-unit id="58893b9964741" resname="victoire.widget.stylize.container.heading">
-        <source>victoire.widget.stylize.container.heading</source>
-        <target>Général</target>
-      </trans-unit>
-      <trans-unit id="58893b996483a" resname="victoire.widget.stylize.layout.heading">
-        <source>victoire.widget.stylize.layout.heading</source>
-        <target>Spécifique</target>
-      </trans-unit>
-      <trans-unit id="58893b99648c4" resname="victoire.widget.stylize.global.heading">
-        <source>victoire.widget.stylize.global.heading</source>
-        <target>Avancé</target>
-      </trans-unit>
-      <trans-unit id="58893b99649e4" resname="hamburger_menu.backend.back_home">
+      <trans-unit id="58893b9964741" resname="hamburger_menu.backend.back_home">
         <source>hamburger_menu.backend.back_home</source>
         <target>Retour sur le site</target>
       </trans-unit>
@@ -220,11 +216,39 @@
       </trans-unit>
       <trans-unit id="58893b9966c2d" resname="victoire.widget.type.criterias.label">
         <source>victoire.widget.type.criterias.label</source>
-        <target>Critères</target>
+        <target>QUANTUM</target>
       </trans-unit>
       <trans-unit id="58893b9966c5a" resname="victoire.widget.modal.title">
         <source>victoire.widget.modal.title</source>
         <target>Widget %id% (%type%)</target>
+      </trans-unit>
+      <trans-unit id="36" resname="menu.additionals">
+        <source>menu.additionals</source>
+        <target><![CDATA[<svg xmlns="http://www.w3.org/2000/svg" width="6" height="22" viewBox="29 13 6 22"><path fill="currentColor" fill-rule="evenodd" d="M30 32.5006C30 33.881 31.12 35 32.5006 35 33.881 35 35 33.881 35 32.5006 35 31.12 33.881 30 32.5006 30 31.12 30 30 31.12 30 32.5006zm0-8C30 25.88 31.12 27 32.5006 27 33.881 27 35 25.88 35 24.5006 35 23.12 33.881 22 32.5006 22 31.12 22 30 23.12 30 24.5006zM30 16.5c0 1.381 1.12 2.5 2.5006 2.5C33.881 19 35 17.881 35 16.5S33.881 14 32.5006 14C31.12 14 30 15.119 30 16.5z"></path></svg>]]></target>
+      </trans-unit>
+      <trans-unit id="37" resname="form.widget.tab.entities.label">
+          <source>form.widget.tab.entities.label</source>
+          <target>Entités</target>
+      </trans-unit>
+      <trans-unit id="38" resname="form.widget.tab.mode.label">
+          <source>form.widget.tab.mode.label</source>
+          <target>Mode</target>
+      </trans-unit>
+      <trans-unit id="39" resname="form.widget.tab.mode_picker.label">
+          <source>form.widget.tab.mode_picker.label</source>
+          <target>Mode sélection</target>
+      </trans-unit>
+      <trans-unit id="40" resname="form.widget.tab.mode_query.label">
+          <source>form.widget.tab.mode_query.label</source>
+          <target>Mode requête</target>
+      </trans-unit>
+      <trans-unit id="41" resname="form.widget.tab.mode_entity_instance.label">
+          <source>form.widget.tab.mode_entity_instance.label</source>
+          <target>Mode objet courant</target>
+      </trans-unit>
+      <trans-unit id="42" resname="victoire.widget.type.quantum.label">
+          <source>victoire.widget.type.quantum.label</source>
+          <target>Nom du quantum</target>
       </trans-unit>
     </body>
   </file>

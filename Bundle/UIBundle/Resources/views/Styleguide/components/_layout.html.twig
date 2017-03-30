@@ -1,0 +1,196 @@
+{% include "VictoireUIBundle:Styleguide:ui/section-header.html.twig" with {
+    "name": "Layout",
+    "framework": {
+        "name": "trowel-layout",
+        "url": "#",
+    }
+} %}
+
+<h2 class="ts-section__sub-heading">Container</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-container">\n    ...\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-container">
+            This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container This content is inside a container
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Container fluid</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-container v-container--fluid">\n    ...\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-container v-container--fluid">
+            This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid This content is inside a container-fluid
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<style>
+    .col-showcase {
+        border: 1px solid #e72f7e;
+        background-color: #ec5d9a;
+        margin-bottom: 16px;
+        height: 32px;
+        color: white;
+        line-height: 32px;
+        padding: 0 16px;
+    }
+</style>
+
+
+<h2 class="ts-section__sub-heading">Grid</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-grid">\n    <div class="v-col v-col--xs-6 v-col--md-6">\n        .v-col .v-col--xs-6 .v-col--md-6\n    </div>\n\n    <div class="v-col v-col--xs-6 v-col--md-4">\n        .v-col .v-col--xs-6 .v-col--md-4\n    </div>\n\n    <div class="v-col v-col--xs-12 v-col--md-2">\n        .v-col .v-col--xs-12 .v-col--md-2\n    </div>\n\n    <div class="v-col v-col--xs-12">\n        .v-col .v-col--xs-12\n    </div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-grid">
+            <div class="v-col v-col--xs-6 v-col--md-6">
+                <div class="col-showcase">
+                    .v-col .v-col--xs-6 .v-col--md-6
+                </div>
+            </div>
+
+            <div class="v-col v-col--xs-6 v-col--md-4">
+                <div class="col-showcase">
+                    .v-col .v-col--xs-6 .v-col--md-4
+                </div>
+            </div>
+
+            <div class="v-col v-col--xs-12 v-col--md-2">
+                <div class="col-showcase">
+                    .v-col .v-col--xs-12 .v-col--md-2
+                </div>
+            </div>
+
+            <div class="v-col v-col--xs-12">
+                <div class="col-showcase">
+                    .v-col .v-col--xs-12
+                </div>
+            </div>
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+
+<h2 class="ts-section__sub-heading">Flexbox grid</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-flex-grid">\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col v-flex-col--grow-1">flex col</div>\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col">flex col</div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-flex-grid">
+            {% for item in 1..5 %}
+                <div class="v-flex-col{% if item == 3 %} v-flex-col--grow-1{% endif %}">
+                    <div class="col-showcase" style="height: {{ 32 + item * 10 }}px">
+                        flex col
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Flexbox grid / large gutter</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-flex-grid v-flex-grid--gutter-lg">\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col v-flex-col--grow-1">flex col</div>\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col">flex col</div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-flex-grid v-flex-grid--gutter-lg">
+            {% for item in 1..5 %}
+                <div class="v-flex-col{% if item == 3 %} v-flex-col--grow-1{% endif %}">
+                    <div class="col-showcase" style="height: {{ 32 + item * 10 }}px">
+                        flex col
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Flexbox grid / small gutter</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-flex-grid v-flex-grid--gutter-sm">\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col v-flex-col--grow-1">flex col</div>\n    <div class="v-flex-col">flex col</div>\n    <div class="v-flex-col">flex col</div>\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-flex-grid v-flex-grid--gutter-sm">
+            {% for item in 1..5 %}
+                <div class="v-flex-col{% if item == 3 %} v-flex-col--grow-1{% endif %}">
+                    <div class="col-showcase" style="height: {{ 32 + item * 10 }}px">
+                        flex col
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Flexbox grid / aligned center</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-flex-grid v-flex-grid--align-center">\n    ...\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-flex-grid v-flex-grid--align-center">
+            {% for item in 1..5 %}
+                <div class="v-flex-col">
+                    <div class="col-showcase" style="height: {{ 92 - item * 10 }}px">
+                        flex col
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Flexbox grid / justify between</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-flex-grid v-flex-grid--justify-between">\n    ...\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-flex-grid v-flex-grid--justify-between">
+            {% for item in 1..5 %}
+                <div class="v-flex-col">
+                    <div class="col-showcase">
+                        flex col
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
+
+<h2 class="ts-section__sub-heading">Flexbox grid / justify center</h2>
+{% embed 'VictoireUIBundle:Styleguide:ui/snippet.html.twig' with {
+    'snippets': {
+        'html': '<div class="v-flex-grid v-flex-grid--justify-center">\n    ...\n</div>',
+    }
+} %}
+    {% block snippet_preview %}
+        <div class="v-flex-grid v-flex-grid--justify-center">
+            {% for item in 1..5 %}
+                <div class="v-flex-col">
+                    <div class="col-showcase">
+                        flex col
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock snippet_preview %}
+{% endembed %}
