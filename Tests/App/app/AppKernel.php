@@ -101,22 +101,22 @@ class AppKernel extends Kernel
     /**
      * Include Tests Bundles defined in Bundles.php file.
      *
-     * @return array
-     *
      * @throws ErrorException
+     *
+     * @return array
      */
     private function getTestBundles()
     {
         $bundlesFile = __DIR__.'/../../../../../../Tests/Bundles.php';
 
-        if(file_exists($bundlesFile)) {
-            include($bundlesFile);
+        if (file_exists($bundlesFile)) {
+            include $bundlesFile;
 
-            if(!isset($victoireTestBundles)) {
+            if (!isset($victoireTestBundles)) {
                 throw new \ErrorException(sprintf('$victoireTestBundles is not defined in Bundles.php file'));
             }
 
-            if(!is_array($victoireTestBundles)) {
+            if (!is_array($victoireTestBundles)) {
                 throw new \ErrorException(sprintf('$victoireTestBundles defined in Bundles.php must be an array'));
             }
 
