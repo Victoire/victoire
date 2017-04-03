@@ -9,9 +9,6 @@ default:
          default:
              paths:
                  - Tests/Features
-                 - Tests/Features/Page
-                 - Tests/Features/Widget
-                 - Tests/Features/WidgetMap
              contexts:
                  - Victoire\Tests\Features\Context\CoverageContext
                  - Victoire\Tests\Features\Context\FeatureContext

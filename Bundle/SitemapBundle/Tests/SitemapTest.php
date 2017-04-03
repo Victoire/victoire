@@ -66,7 +66,7 @@ class SitemapTest extends VictoireWebTestCase
                 'priority'   => '0.5',
             ],
             [
-                'loc'        => '/fr/test',
+                'loc'        => '/fr/test-francais',
                 'changefreq' => 'monthly',
                 'priority'   => '0.5',
             ],

@@ -12,9 +12,6 @@ class MediaMenuListener
 {
     private $menuBuilder;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(MenuBuilder $menuBuilder)
     {
         $this->menuBuilder = $menuBuilder;

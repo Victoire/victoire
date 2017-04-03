@@ -268,7 +268,7 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * @Then /^I open the additionals menu drop$/
+     * @Then /^I open the additional menu drop$/
      */
     public function iOpenTheAdditionalsMenuDrop()
     {
@@ -290,7 +290,7 @@ class VictoireContext extends RawMinkContext
      */
     public function iFollowTheTab($name)
     {
-        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::a[contains(@class, "v-tabs-nav__anchor") and normalize-space(text()) = "%s"]', $name));
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::a[contains(@class, "v-tabs-nav__anchor") and contains(normalize-space(text()), "%s")]', $name));
 
         // @TODO When the new styleguide is completly integrated, remove.
         if (null === $element) {

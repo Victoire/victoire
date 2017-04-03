@@ -22,7 +22,7 @@ Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
 
 Victoire\Bundle\TwigBundle\Entity\ErrorPage:
     400:
-        currentLocale: fr
+        currentLocale: en
         code: 400
         template: @template_base
         author: @anakin
@@ -34,7 +34,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         cssUpToDate: false
         translations: [@400_trans]
     403:
-        currentLocale: fr
+        currentLocale: en
         code: 403
         template: @template_base
         author: @anakin
@@ -46,7 +46,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         cssUpToDate: false
         translations: [@403_trans]
     404:
-        currentLocale: fr
+        currentLocale: en
         code: 404
         template: @template_base
         author: @anakin
@@ -58,7 +58,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         cssUpToDate: false
         translations: [@404_trans]
     500:
-        currentLocale: fr
+        currentLocale: en
         code: 500
         template: @template_base
         author: @anakin
@@ -70,7 +70,7 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
         cssUpToDate: false
         translations: [@500_trans]
     503:
-        currentLocale: fr
+        currentLocale: en
         code: 503
         template: @template_base
         author: @anakin

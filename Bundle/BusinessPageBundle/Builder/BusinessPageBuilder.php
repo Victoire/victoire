@@ -5,6 +5,7 @@ namespace Victoire\Bundle\BusinessPageBundle\Builder;
 use Doctrine\ORM\EntityManager;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
@@ -116,6 +117,12 @@ class BusinessPageBuilder
 
             $isTranslatableEntity = in_array(Translatable::class, $class_uses_deep($entity));
             foreach ($businessTemplate->getTranslations() as $translation) {
+                if ($entity instanceof Article &&
+                    !in_array($translation->getLocale(), $entity->getBlog()->getAvailableLocales())
+                ) {
+                    continue;
+                }
+
                 if ($isTranslatableEntity) {
                     $entity->setCurrentLocale($translation->getLocale());
                 }
