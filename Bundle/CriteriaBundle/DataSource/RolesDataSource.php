@@ -4,7 +4,6 @@ namespace Victoire\Bundle\CriteriaBundle\DataSource;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
 class RolesDataSource
 {
