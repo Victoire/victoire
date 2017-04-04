@@ -46,7 +46,7 @@ class LinkExtension extends \Twig_Extension
      * @param EntityManager        $em
      * @param LoggerInterface      $logger
      * @param EntityRepository     $errorPageRepository
-     * @param                      $defaultLocale
+     * @param string               $defaultLocale
      * @param array                $abstractBusinessTemplates
      */
     public function __construct(
@@ -166,8 +166,9 @@ class LinkExtension extends \Twig_Extension
                 ) {
                     /** @var View $view */
                     $view = $attachedWidget->getWidgetMap()->getView();
-                    /* @var Widget $attachedWidget */
-                    $locale = $attachedWidget->getLocale($this->request ? $this->request->getLocale() : $this->defaultLocale);
+                    if (!$locale = $attachedWidget->guessLocale()) {
+                        $locale = $this->request ? $this->request->getLocale() : $this->defaultLocale;
+                    }
                     $view->translate($locale);
                     $url .= $this->router->generate('victoire_core_page_show', ['_locale' => $locale, 'url' => $view->getUrl()], $referenceType);
                 }
