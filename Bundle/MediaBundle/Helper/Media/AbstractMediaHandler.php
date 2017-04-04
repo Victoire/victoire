@@ -75,9 +75,6 @@ abstract class AbstractMediaHandler
      */
     abstract public function removeMedia(Media $media);
 
-    /**
-     * {@inheritdoc}
-     */
     public function getShowTemplate(Media $media)
     {
         return 'VictoireMediaBundle:Media:show.html.twig';
