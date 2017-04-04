@@ -548,20 +548,21 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     }
 
     /**
+     * This method parse the widget criterias to discover in which locale this widget is used
      * @param $defaultLocale
      *
-     * @return mixed
+     * @return string|null
      */
-    public function getLocale($defaultLocale)
+    public function guessLocale()
     {
         if ($this->hasCriteriaNamed('locale')) {
             foreach ($this->getCriterias() as $criteria) {
-                if ($criteria->getName() === 'locale' && $criteria->getValue() === $defaultLocale) {
+                if ($criteria->getName() === 'locale') {
                     return $criteria->getValue();
                 }
             }
         }
 
-        return $defaultLocale;
+        return null;
     }
 }
