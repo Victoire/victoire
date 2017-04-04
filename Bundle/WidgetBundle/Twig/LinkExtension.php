@@ -46,7 +46,7 @@ class LinkExtension extends \Twig_Extension
      * @param EntityManager        $em
      * @param LoggerInterface      $logger
      * @param EntityRepository     $errorPageRepository
-     * @param                      $defaultLocale
+     * @param string               $defaultLocale
      * @param array                $abstractBusinessTemplates
      */
     public function __construct(
