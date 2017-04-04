@@ -11,7 +11,7 @@ use Victoire\Bundle\BusinessPageBundle\Transformer\VirtualToBusinessPageTransfor
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
-use Victoire\Bundle\UserBundle\Entity\User;
+use Victoire\Bundle\UserBundle\Model\User;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException;
 
