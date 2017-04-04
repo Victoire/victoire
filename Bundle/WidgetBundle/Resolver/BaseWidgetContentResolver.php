@@ -136,9 +136,12 @@ class BaseWidgetContentResolver
         //parse the field
         foreach ($fields as $widgetField => $field) {
             //get the value of the field
-            if ($entity !== null) {
-                $accessor = new PropertyAccessor();
-                $attributeValue = $accessor->getValue($entity, $field);
+            if (null !== $entity) {
+                $attributeValue = null;
+                if (null !== $field) {
+                    $accessor = new PropertyAccessor();
+                    $attributeValue = $accessor->getValue($entity, $field);
+                }
             } else {
                 $attributeValue = $widget->getBusinessEntityName().' -> '.$field;
             }
