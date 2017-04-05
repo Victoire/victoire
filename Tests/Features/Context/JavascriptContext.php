@@ -3,6 +3,7 @@
 namespace Victoire\Tests\Features\Context;
 
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Mink\Driver\Selenium2Driver;
 use Knp\FriendlyContexts\Context\RawMinkContext;
 
 class JavascriptContext extends RawMinkContext
@@ -14,7 +15,9 @@ class JavascriptContext extends RawMinkContext
      */
     public function maximizeWindow(BeforeScenarioScope $scope)
     {
-        $this->iMaximizeTheWindow();
+        if (($this->getSession()->getDriver() instanceof Selenium2Driver)) {
+            $this->iMaximizeTheWindow();
+        }
     }
 
     /**
