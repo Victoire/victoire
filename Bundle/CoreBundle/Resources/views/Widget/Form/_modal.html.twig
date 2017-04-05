@@ -6,7 +6,7 @@
 {% block modal_header_title %}
     {{ 'victoire.widget.modal.title'|trans({
         '%type%': ('widget.'~widget.type~'.new.action.label')|trans(),
-        '%id%': widget.id ? ('#'~widget.id) : ''
+        '%id%': widget.id ? ('#'~widget.id)~' ' : ''
     }) }}
 {% endblock modal_header_title %}
 
