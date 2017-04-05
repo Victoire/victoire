@@ -99,7 +99,7 @@ Feature: Test widgetMap
         When I switch to "layout" mode
         Then I should see "New content"
         When I select "Plain Text" from the "3" select of "main_content" slot
-        Then I should see "Widget  (Plain Text)"
+        Then I should see "Widget (Plain Text)"
         When I fill in "_a_static_widget_text[content]" with "Widget 4"
         And I submit the widget
         And I reload the page
@@ -207,7 +207,7 @@ Feature: Test widgetMap
         When I switch to "layout" mode
         Then I should see "New content"
         When I select "Plain Text" from the "3" select of "main_content" slot
-        Then I should see "Widget  (Plain Text)"
+        Then I should see "Widget (Plain Text)"
         When I fill in "_a_static_widget_text[content]" with "Widget 4"
         And I submit the widget
         Then "Widget 1" should precede "Widget 3 overwrite"
@@ -287,7 +287,7 @@ Feature: Test widgetMap
         When I switch to "layout" mode
         Then I should see "New content"
         When I select "Plain Text" from the "3" select of "main_content" slot
-        Then I should see "Widget  (Plain Text)"
+        Then I should see "Widget (Plain Text)"
         When I fill in "_a_static_widget_text[content]" with "Widget 4"
         And I submit the widget
         And I reload the page
