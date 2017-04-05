@@ -523,7 +523,7 @@ class VictoireContext extends RawMinkContext
             'findAll'
         );
 
-        if(count($quantums) != $nb) {
+        if (count($quantums) != $nb) {
             $message = sprintf('%s quantum(s) found', count($quantums));
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
