@@ -2,14 +2,25 @@
 
 namespace Victoire\Tests\Features\Context;
 
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Knp\FriendlyContexts\Context\RawMinkContext;
 
 class JavascriptContext extends RawMinkContext
 {
     /**
+     * @BeforeScenario
+     *
+     * @param BeforeScenarioScope $scope
+     */
+    public function maximizeWindow(BeforeScenarioScope $scope)
+    {
+        $this->iMaximizeTheWindow();
+    }
+
+    /**
      * @When /^I maximize the window/
      */
-    public function iMaximizeTheBroswer()
+    public function iMaximizeTheWindow()
     {
         //the window got with maximizeWindow native function is too small
         $this->getSession()->resizeWindow(1600, 1200, 'current');
