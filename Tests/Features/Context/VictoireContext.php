@@ -41,7 +41,7 @@ class VictoireContext extends RawMinkContext
 
         foreach ($finder as $file) {
             $path = $file->getRealPath();
-            include($path);
+            include $path;
             $declaredClases = get_declared_classes();
             $newContext = end($declaredClases);
             $environment->registerContextClass($newContext);
