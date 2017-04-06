@@ -8,7 +8,9 @@ use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\Element;
 use Behat\Mink\Session;
 use Behat\Symfony2Extension\Context\KernelDictionary;
+use Behat\Testwork\Hook\Scope\BeforeSuiteScope;
 use Knp\FriendlyContexts\Context\RawMinkContext;
+use Symfony\Component\Finder\Finder;
 
 /**
  * This class gives some usefull methods for Victoire navigation.
@@ -19,6 +21,32 @@ class VictoireContext extends RawMinkContext
 {
     use KernelDictionary;
     protected $minkContext;
+
+    /**
+     * @BeforeSuite
+     *
+     * @param BeforeSuiteScope $scope
+     */
+    public static function additionalContexts(BeforeSuiteScope $scope)
+    {
+        $environment = $scope->getEnvironment();
+        $contextDir = __DIR__.'/../../../../../../Tests/Context/';
+
+        if (!is_dir($contextDir)) {
+            return;
+        }
+
+        $finder = new Finder();
+        $finder->files()->in($contextDir)->name('*Context.php');
+
+        foreach ($finder as $file) {
+            $path = $file->getRealPath();
+            include($path);
+            $declaredClases = get_declared_classes();
+            $newContext = end($declaredClases);
+            $environment->registerContextClass($newContext);
+        }
+    }
 
     /**
      * @BeforeScenario
