@@ -253,6 +253,7 @@ class WidgetFormBuilder
             'businessEntityId'      => $businessEntityId,
             'namespace'             => $namespace,
             'mode'                  => $formMode,
+            'quantum'               => $quantum,
             'action'                => $formUrl,
             'method'                => 'POST',
             'dataSources'           => $this->container->get('victoire_criteria.chain.data_source_chain'),

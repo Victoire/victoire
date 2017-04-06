@@ -215,6 +215,7 @@ class WidgetType extends AbstractType
             'namespace',
             'businessEntityId',
             'dataSources',
+            'quantum',
         ]);
     }
 }
