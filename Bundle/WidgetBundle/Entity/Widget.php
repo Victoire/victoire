@@ -548,7 +548,8 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     }
 
     /**
-     * This method parse the widget criterias to discover in which locale this widget is used
+     * This method parse the widget criterias to discover in which locale this widget is used.
+     *
      * @param $defaultLocale
      *
      * @return string|null
@@ -562,7 +563,5 @@ class Widget extends BaseWidget implements VictoireQueryInterface
                 }
             }
         }
-
-        return null;
     }
 }
