@@ -80,7 +80,10 @@ class WidgetCache
      */
     public function clear()
     {
-        $this->redis->executeCommand($this->redis->createCommand('FLUSHALL'));
+        $keys = $this->redis->keys('widgets/*');
+        foreach ($keys as $key) {
+            $this->redis->del($key);
+        }
     }
 
     /**
@@ -106,7 +109,7 @@ class WidgetCache
 
     protected function generateBusinessEntityHash(Widget $widget)
     {
-        return sprintf('%s--%s-%s-%s',
+        return sprintf('widgets/%s--%s-%s-%s',
             $widget->generateCacheId(),
             $widget->getEntity()->getId(),
             $widget->getEntity()->getUpdatedAt()->getTimestamp(),
@@ -116,7 +119,7 @@ class WidgetCache
 
     private function generateHash(Widget $widget)
     {
-        return sprintf('%s-%s',
+        return sprintf('widgets/%s-%s',
             $widget->generateCacheId(),
             (string) $this->authorizationChecker->isGranted('ROLE_VICTOIRE')
         );
