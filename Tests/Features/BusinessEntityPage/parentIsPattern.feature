@@ -27,7 +27,7 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
         Then I switch to "layout" mode
         And I should see "New content"
         When I select "Button" from the "1" select of "main_content" slot
-        Then I should see "Widget  (Button)"
+        Then I should see "Widget (Button)"
         When I select "Website page" from "_a_static_widget_button[link][linkType]"
         And I should see "Choose a page"
         When I select "Character profile - Boba fet" from "_a_static_widget_button[link][viewReference]"

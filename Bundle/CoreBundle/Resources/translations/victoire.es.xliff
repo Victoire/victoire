@@ -224,7 +224,7 @@
       </trans-unit>
       <trans-unit id="58893b996029c" resname="victoire.widget.modal.title">
         <source>victoire.widget.modal.title</source>
-        <target>Widget %id% (%type%)</target>
+        <target>Widget %id%(%type%)</target>
       </trans-unit>
       <trans-unit id="36" resname="menu.additionals">
         <source>menu.additionals</source>

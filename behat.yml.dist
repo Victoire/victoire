@@ -10,13 +10,13 @@ default:
              paths:
                  - Tests/Features
              contexts:
+                 - Knp\FriendlyContexts\Context\EntityContext
+                 - Knp\FriendlyContexts\Context\AliceContext
+                 - Victoire\Tests\Features\Context\VictoireContext
                  - Victoire\Tests\Features\Context\CoverageContext
                  - Victoire\Tests\Features\Context\FeatureContext
                  - Victoire\Tests\Features\Context\JavascriptContext
                  - Victoire\Tests\Features\Context\MinkContext
-                 - Victoire\Tests\Features\Context\VictoireContext
-                 - Knp\FriendlyContexts\Context\AliceContext
-                 - Knp\FriendlyContexts\Context\EntityContext
                  - Knp\FriendlyContexts\Context\TableContext
 
     extensions:
