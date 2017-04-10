@@ -11,7 +11,7 @@ class WidgetFormPreCreateEvent extends Event
      * @var array
      */
     public $optionsContainer;
-    
+
     /**
      * @var string
      */
