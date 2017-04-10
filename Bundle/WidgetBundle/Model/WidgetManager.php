@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
@@ -13,6 +14,8 @@ use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Transformer\VirtualToBusinessPageTransformer;
 use Victoire\Bundle\CoreBundle\Entity\View;
+use Victoire\Bundle\CoreBundle\Event\WidgetFlushedEvent;
+use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\FormBundle\Helper\FormErrorHelper;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\WidgetBundle\Builder\WidgetFormBuilder;
@@ -32,6 +35,8 @@ class WidgetManager
     protected $widgetFormBuilder;
     protected $widgetHelper;
     protected $widgetContentResolver;
+    protected $widgetRenderer;
+    protected $eventDispatcher;
     protected $entityManager;
     protected $formErrorHelper; // @victoire_form.error_helper
     protected $request; // @request
@@ -49,6 +54,7 @@ class WidgetManager
      * @param WidgetFormBuilder         $widgetFormBuilder
      * @param WidgetContentResolver     $widgetContentResolver
      * @param WidgetRenderer            $widgetRenderer
+     * @param EventDispatcherInterface  $eventDispatcher,
      * @param EntityManager             $entityManager
      * @param FormErrorHelper           $formErrorHelper
      * @param Request                   $request
@@ -64,6 +70,7 @@ class WidgetManager
         WidgetFormBuilder $widgetFormBuilder,
         WidgetContentResolver $widgetContentResolver,
         WidgetRenderer $widgetRenderer,
+        EventDispatcherInterface $eventDispatcher,
         EntityManager $entityManager,
         FormErrorHelper $formErrorHelper,
         Request $request,
@@ -79,6 +86,7 @@ class WidgetManager
         $this->widgetHelper = $widgetHelper;
         $this->widgetContentResolver = $widgetContentResolver;
         $this->widgetRenderer = $widgetRenderer;
+        $this->eventDispatcher = $eventDispatcher;
         $this->entityManager = $entityManager;
         $this->formErrorHelper = $formErrorHelper;
         $this->request = $request;
@@ -183,6 +191,10 @@ class WidgetManager
             $this->entityManager->flush();
 
             $widget->setCurrentView($view);
+
+            $event = new WidgetFlushedEvent($widget);
+            $this->eventDispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_FLUSH, $event);
+            $this->eventDispatcher->dispatch(VictoireCmsEvents::WIDGET_POST_FLUSH.'_'.strtoupper($type), $event);
 
             $this->widgetMapBuilder->build($view);
 
