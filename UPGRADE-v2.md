@@ -19,3 +19,6 @@ It simply remove deprecated associations that are not required anymore and could
 UPDATE vic_widget_map SET widget_id = NULL;
 UPDATE vic_widget SET view_id = NULL;
 ```
+
+## UPGRADE 2.3.10
+Event listeners and subscribers using `WidgetFormEvents::PRE_CREATE` will now receive `WidgetFormPreCreateEvent` instead of `WidgetFormCreateEvent`.
