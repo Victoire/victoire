@@ -10,8 +10,9 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
-use Victoire\Bundle\WidgetBundle\Event\WidgetFormCreateEvent;
 use Victoire\Bundle\WidgetBundle\Event\WidgetFormEvents;
+use Victoire\Bundle\WidgetBundle\Event\WidgetFormPostCreateEvent;
+use Victoire\Bundle\WidgetBundle\Event\WidgetFormPreCreateEvent;
 use Victoire\Bundle\WidgetBundle\Form\WidgetOptionsContainer;
 
 class WidgetFormBuilder
@@ -259,7 +260,7 @@ class WidgetFormBuilder
             'dataSources'           => $this->container->get('victoire_criteria.chain.data_source_chain'),
         ]);
 
-        $event = new WidgetFormCreateEvent($optionsContainer, $widgetFormTypeClass);
+        $event = new WidgetFormPreCreateEvent($optionsContainer, $widgetFormTypeClass);
         $this->container->get('event_dispatcher')->dispatch(WidgetFormEvents::PRE_CREATE, $event);
         $this->container->get('event_dispatcher')->dispatch(WidgetFormEvents::PRE_CREATE.'_'.strtoupper($widgetName), $event);
 
@@ -267,14 +268,18 @@ class WidgetFormBuilder
         $mockForm = $formFactory->create($widgetFormTypeClass, $widget, $optionsContainer->getOptions());
         //Prefix base name with form mode to avoid to have unique form fields ids
 
-        $form = $formFactory->createNamed(
+        $builder = $formFactory->createNamed(
             sprintf('%s_%s_%s_%s', $businessEntityId, $this->convertToString($quantum), $formMode, $mockForm->getName()),
             $widgetFormTypeClass,
             $widget,
             $optionsContainer->getOptions()
         );
 
-        return $form;
+        $event = new WidgetFormPostCreateEvent($builder);
+        $this->container->get('event_dispatcher')->dispatch(WidgetFormEvents::POST_CREATE, $event);
+        $this->container->get('event_dispatcher')->dispatch(WidgetFormEvents::POST_CREATE.'_'.strtoupper($widgetName), $event);
+
+        return $builder;
     }
 
     /**
