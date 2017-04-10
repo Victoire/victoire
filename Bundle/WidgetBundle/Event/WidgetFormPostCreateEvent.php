@@ -4,7 +4,6 @@ namespace Victoire\Bundle\WidgetBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Form\FormInterface;
-use Victoire\Bundle\WidgetBundle\Form\WidgetOptionsContainer;
 
 class WidgetFormPostCreateEvent extends Event
 {
