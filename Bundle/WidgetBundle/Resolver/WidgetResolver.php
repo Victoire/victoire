@@ -13,6 +13,7 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 class WidgetResolver
 {
     const OPERAND_EQUAL = 'equal';
+    const OPERAND_DIFFERENT = 'different';
     /** @deprecated */
     const OPERAND_TRUE = 'true';
     /** @deprecated */
@@ -80,6 +81,9 @@ class WidgetResolver
         switch ($operator) {
             case self::OPERAND_EQUAL:
                 $result = $value == $expected;
+                break;
+            case self::OPERAND_DIFFERENT:
+                $result = $value != $expected;
                 break;
             case self::OPERAND_TRUE:
                 $result = $value == true;
