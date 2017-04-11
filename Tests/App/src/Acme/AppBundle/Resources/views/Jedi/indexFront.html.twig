@@ -1,0 +1,26 @@
+{% if entities|length %}
+    <table class="vic-table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>{{ 'acme.app.jedi.index.th.Name'|trans({}, 'victoire') }}</th>
+            <th>{{ 'acme.app.jedi.index.th.Midichlorians'|trans({}, 'victoire') }}</th>
+            <th>{{ 'acme.app.jedi.index.th.Side'|trans({} , 'victoire') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.id }}</td>
+                <td>{{ entity.name }}</td>
+                <td>{{ entity.midiChlorians }}</td>
+                <td>{{ entity.side }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="vic-alert vic-alert-info" role="alert">
+        {{ 'acme.app.jedi.index.noresult'|trans({}, 'victoire') }}
+    </div>
+{% endif %}
