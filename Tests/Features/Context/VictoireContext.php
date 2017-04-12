@@ -4,6 +4,7 @@ namespace Victoire\Tests\Features\Context;
 
 use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Behat\Hook\Scope\BeforeStepScope;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\Element;
 use Behat\Mink\Session;
@@ -60,11 +61,11 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * @BeforeScenario
+     * @AfterBackground
      *
-     * @param BeforeScenarioScope $scope
+     * @param BeforeStepScope $scope
      */
-    public function resetViewsReference(BeforeScenarioScope $scope)
+    public function resetViewsReference(BeforeStepScope $scope)
     {
         $viewsReferences = $this->getContainer()->get('victoire_core.view_helper')->buildViewsReferences();
         $this->getContainer()->get('victoire_view_reference.manager')->saveReferences($viewsReferences);
