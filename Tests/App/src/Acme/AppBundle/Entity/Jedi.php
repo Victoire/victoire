@@ -4,12 +4,12 @@ namespace Acme\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Jedi.
  *
  * @ORM\Entity
- * @ORM\Table("character_jedi")
  * @VIC\BusinessEntity({"Text", "Force"})
  */
 class Jedi extends Character
@@ -19,6 +19,7 @@ class Jedi extends Character
      *
      * @ORM\Column(name="side", type="string", length=55)
      * @VIC\BusinessProperty("textable")
+     * @Serializer\Groups({"search"})
      */
     private $side;
 

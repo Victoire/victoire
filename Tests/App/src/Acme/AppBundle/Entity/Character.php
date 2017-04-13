@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\UserBundle\Model\User;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Character.
@@ -14,7 +15,7 @@ use Victoire\Bundle\UserBundle\Model\User;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\Entity
  * @ORM\Table("demo_character")
- * @VIC\BusinessEntity({"Text"})
+ * @VIC\BusinessEntity({"Text", "Force"})
  */
 class Character
 {
@@ -44,6 +45,7 @@ class Character
      *
      * @ORM\Column(name="name", type="string", length=55)
      * @VIC\BusinessProperty({"textable", "businessParameter", "seoable"})
+     * @Serializer\Groups({"search"})
      */
     private $name;
 
@@ -52,6 +54,7 @@ class Character
      *
      * @ORM\Column(name="midi_chlorians", type="integer")
      * @VIC\BusinessProperty("textable")
+     * @Serializer\Groups({"search"})
      */
     private $midiChlorians;
 
