@@ -7,14 +7,6 @@ Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
         name: "Jedi {{item.name}}"
         slug: "jedi-{{item.slug}}"
         locale: fr
-    mercenary_character_en:
-        name: "Mercenary {{item.name}}"
-        slug: "mercenary-{{item.slug}}"
-        locale: en
-    mercenary_character_fr:
-        name: "Mercenaire {{item.name}}"
-        slug: "mercenaire-{{item.slug}}"
-        locale: fr
 
 Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
     template_jedi:
@@ -26,12 +18,3 @@ Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
         updatedAt: <dateTime('now')>
         parent: @home
         translations: [@jedi_character_en, @jedi_character_fr]
-    template_mercenary:
-        backendName: "Mercenaire template"
-        businessEntityId: mercenary
-        author: @anakin
-        template: @template_base
-        createdAt: <dateTime('now')>
-        updatedAt: <dateTime('now')>
-        parent: @home
-        translations: [@mercenary_character_en, @mercenary_character_fr]
