@@ -154,7 +154,7 @@ class VictoireContext extends RawMinkContext
      */
     public function iSelectFromTheSelectOfSlot($widget, $nth, $slot)
     {
-        $slot = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@id="vic-slot-'.$slot.'"]');
+        $slot = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[contains(@id, "vic-slot-'.$slot.'")]');
         $selects = $slot->findAll('css', 'select[role="menu"]');
         $selects[$nth - 1]->selectOption(str_replace('\\"', '"', $widget));
     }
