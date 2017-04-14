@@ -4,9 +4,9 @@ namespace Acme\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation as Serializer;
 use Victoire\Bundle\CoreBundle\Annotations as VIC;
 use Victoire\Bundle\UserBundle\Model\User;
-use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Character.
