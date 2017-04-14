@@ -13,6 +13,8 @@ use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
+use JMS\Serializer\Annotation as Serializer;
+
 
 /**
  * Victoire View
@@ -31,6 +33,11 @@ abstract class View
 {
     use \Gedmo\Timestampable\Traits\TimestampableEntity;
     use Translatable;
+
+    /**
+     * @Serializer\Groups({"search"})
+     */
+    protected $translations;
 
     /**
      * @var int

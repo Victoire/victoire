@@ -48,6 +48,7 @@ class VictoirePageExtension extends Extension implements PrependExtensionInterfa
                                     'type'       => 'nested',
                                     'properties' => [
                                         'name' => null,
+                                        'locale' => null,
                                     ],
                                 ],
                             ],
