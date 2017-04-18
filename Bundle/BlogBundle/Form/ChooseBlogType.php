@@ -112,8 +112,24 @@ class ChooseBlogType extends AbstractType
                 $locale = $data['locale'] !== null ? $data['locale']: $locale;
                 $formModifier($event->getForm(), $locale, $blog);
 
-                $blog = null;
+            }
+        );
+
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) use ($formModifier, $locale, $blog) {
+                $data = $event->getData();
+                $locale = $data['locale'] !== null ? $data['locale']: $locale;
+                $formModifier($event->getForm(), $locale, $blog);
                 $blogs = $this->blogRepository->joinTranslations($locale)->getInstance()->getQuery()->getResult();
+                $blog = null;
+                foreach ($blogs as $currBlog)
+                {
+                    if($currBlog->getId() === (int) $data['blog'])
+                    {
+                        $blog = $currBlog;
+                    }
+                }
                 if($blog === null)
                 {
                     $blog = reset($blogs);
@@ -122,18 +138,9 @@ class ChooseBlogType extends AbstractType
                 $event->setData(
                     [
                         'locale' => $locale,
-                        'blog' => $blog
+                        'blog' => $blog->getId()
                     ]
                 );
-
-            }
-        );
-
-        $builder->get('locale')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($formModifier, $blog) {
-                $locale = $event->getData();
-                $formModifier($event->getForm()->getParent(), $locale, $blog);
             }
         );
     }
