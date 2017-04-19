@@ -2,8 +2,11 @@
 
 namespace Victoire\Bundle\PageBundle\DependencyInjection;
 
+use FOS\ElasticaBundle\DependencyInjection\FOSElasticaExtension;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -36,41 +39,30 @@ class VictoirePageExtension extends Extension implements PrependExtensionInterfa
     {
         // Build fos_elastica config for each widget
         $elasticaConfig = [
-            'indexes' => [
-                'pages' => [
-                    'types' => [
-                         'Pages' => [
-                            'serializer'  => [
-                                'groups' => ['search'],
-                            ],
-                            'mappings'    => [
-                                'translations' => [
-                                    'type'       => 'nested',
-                                    'properties' => [
-                                        'name'   => null,
-                                        'locale' => null,
-                                    ],
-                                ],
-                            ],
-                            'persistence' => [
-                                'driver'   => 'orm',
-                                'model'    => 'Victoire\\Bundle\\PageBundle\\Entity\\BasePage',
-                                'provider' => [],
-                                'listener' => [],
-                                'finder'   => [],
+            'types' => [
+                'Pages' => [
+                    'serializer'  => [
+                        'groups' => ['search'],
+                    ],
+                    'mappings'    => [
+                        'translations' => [
+                            'type'       => 'nested',
+                            'properties' => [
+                                'name'   => null,
+                                'locale' => null,
                             ],
                         ],
+                    ],
+                    'persistence' => [
+                        'driver'   => 'orm',
+                        'model'    => 'Victoire\\Bundle\\PageBundle\\Entity\\BasePage',
+                        'provider' => [],
+                        'listener' => [],
+                        'finder'   => [],
                     ],
                 ],
             ],
         ];
-
-        foreach ($container->getExtensions() as $name => $extension) {
-            switch ($name) {
-                case 'fos_elastica':
-                    $container->prependExtensionConfig($name, $elasticaConfig);
-                    break;
-            }
-        }
+        $container->setParameter('victoire_search_pages_index', $elasticaConfig);
     }
 }
