@@ -40,16 +40,36 @@ class ChooseBlogType extends AbstractType
     {
         $blogs = $this->blogRepository->findAll();
         $this->blogRepository->clearInstance();
-        if(count($this->availableLocales) == 1 && count($blogs) > 1)
+        if (count($this->availableLocales) == 1 && count($blogs) === 1) {
+            $blog = reset($blogs);
+            $locale = reset($this->availableLocales);
+            $builder->add('blog', EntityHiddenType::class, [
+                'data' => reset($blogs),
+                'class' => Blog::class,
+            ])->add('locale', HiddenType::class, [
+                'data' => reset($this->availableLocales)
+            ]);
+
+            $builder->addEventListener(
+                FormEvents::PRE_SET_DATA,
+                function (FormEvent $event) use ($locale, $blog) {
+                    $event->setData([
+                        'locale' => $locale,
+                        'blog' => $blog
+                    ]);
+                }
+            );
+        }
+        if (count($this->availableLocales) === 1 && count($blogs) > 1)
         {
             $this->handleMultipleBlogs($builder);
         }
-        if(count($this->availableLocales) > 1 && count($blogs) == 1)
+        if (count($this->availableLocales) > 1 && count($blogs) == 1)
         {
             $this->handleMultipleLocales($builder, $options);
         }
 
-        if(count($this->availableLocales) > 1 && count($blogs) > 1)
+        if (count($this->availableLocales) > 1 && count($blogs) > 1)
         {
             $this->handleMultipleLocaleBlogs($builder, $options);
         }
@@ -111,6 +131,26 @@ class ChooseBlogType extends AbstractType
                 $data = $event->getData();
                 $locale = $data['locale'] !== null ? $data['locale']: $locale;
                 $formModifier($event->getForm(), $locale, $blog);
+                $blogs = $this->blogRepository->joinTranslations($locale)->getInstance()->getQuery()->getResult();
+                $blog = null;
+                foreach ($blogs as $currBlog)
+                {
+                    if($currBlog->getId() === (int) $data['blog'])
+                    {
+                        $blog = $currBlog;
+                    }
+                }
+                if($blog === null)
+                {
+                    $blog = reset($blogs);
+                }
+                $this->blogRepository->clearInstance();
+                $event->setData(
+                    [
+                        'locale' => $locale,
+                        'blog' => $blog
+                    ]
+                );
 
             }
         );
@@ -141,6 +181,13 @@ class ChooseBlogType extends AbstractType
                         'blog' => $blog->getId()
                     ]
                 );
+            }
+        );
+        $builder->get('locale')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) use ($formModifier, $blog) {
+                $locale = $event->getData();
+                $formModifier($event->getForm()->getParent(), $locale, $blog);
             }
         );
     }
