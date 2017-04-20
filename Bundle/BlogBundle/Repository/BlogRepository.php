@@ -14,8 +14,10 @@ class BlogRepository extends BasePageRepository
         $qb = $this->getInstance('blog')
             ->select('b_translation.id')
             ->join('blog.translations', 'b_translation');
-        return count($qb->getQuery()->getResult()) >= 1 ;
+
+        return count($qb->getQuery()->getResult()) >= 1;
     }
+
     public function getLocalesWithBlogs()
     {
         $qb = $this->createQueryBuilder('blog')
@@ -23,10 +25,10 @@ class BlogRepository extends BasePageRepository
             ->join('blog.translations', 'b_translation');
 
         $locales = [];
-        foreach ($qb->getQuery()->getResult() as $locale)
-        {
+        foreach ($qb->getQuery()->getResult() as $locale) {
             $locales[] = $locale['locale'];
         }
+
         return $locales;
     }
 }
