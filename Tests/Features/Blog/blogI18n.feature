@@ -34,6 +34,7 @@ Feature: I can edit multiple blogs in multiples locales
     When I fill in "article_translations_en_description" with "description en"
     And I follow "Créer"
     Then I should be on "fr/blog-fr/article-fr-article-titre-article"
+    When I am on "/"
     And I open the hamburger menu
     And I should see "Blog"
     When I follow "Blog"
