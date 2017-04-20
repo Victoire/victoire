@@ -1,0 +1,46 @@
+Victoire\Bundle\BlogBundle\Entity\Blog:
+    blog:
+        parent: @home
+        template: @template_base
+        author: @anakin
+        undeletable: true
+        status: published
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        cssUpToDate: false
+
+Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
+    article_template:
+        backendName: "article template"
+        businessEntityId: article
+        author: @anakin
+        template: @template_base
+        status: published
+        parent: @blog
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        cssUpToDate: false
+
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
+    blog_fr:
+        name: blog FR
+        slug: blog-fr
+        locale: fr
+        translatable: @blog
+    blog_en:
+        name: blog EN
+        slug: blog-en
+        locale: en
+        translatable: @blog
+    article_template_fr:
+        name: article FR {{item.name}}
+        slug: article-fr-{{item.slug}}
+        locale: fr
+        translatable: @article_template
+    article_template_en:
+        name: article EN {{item.name}}
+        slug: article-en-{{item.slug}}
+        locale: en
+        translatable: @article_template
