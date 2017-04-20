@@ -1,9 +1,10 @@
 <?php
+
 namespace Victoire\Bundle\BlogBundle\Form\DataTransformer;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
-use Doctrine\Common\Persistence\ObjectManager;
 
 class EntityToIdTransformer implements DataTransformerInterface
 {
@@ -15,8 +16,10 @@ class EntityToIdTransformer implements DataTransformerInterface
      * @var string
      */
     protected $class;
+
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param ObjectManager $objectManager
      * @param string        $class
      */
@@ -25,6 +28,7 @@ class EntityToIdTransformer implements DataTransformerInterface
         $this->objectManager = $objectManager;
         $this->class = $class;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -33,15 +37,17 @@ class EntityToIdTransformer implements DataTransformerInterface
         if (null === $entity) {
             return;
         }
+
         return $entity->getId();
     }
+
     /**
      * {@inheritdoc}
      */
     public function reverseTransform($id)
     {
         if (!$id) {
-            return null;
+            return;
         }
         $entity = $this->objectManager
             ->getRepository($this->class)
@@ -49,6 +55,7 @@ class EntityToIdTransformer implements DataTransformerInterface
         if (null === $entity) {
             throw new TransformationFailedException();
         }
+
         return $entity;
     }
 }

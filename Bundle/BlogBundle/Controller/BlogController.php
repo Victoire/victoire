@@ -31,10 +31,12 @@ class BlogController extends BasePageController
      *
      * @Route("/index/{blogId}/{tab}", name="victoire_blog_index", defaults={"blogId" = null, "tab" = "articles"})
      * @ParamConverter("blog", class="VictoireBlogBundle:Blog", options={"id" = "blogId"})
+     *
      * @param Request $request
      *
-     * @return JsonResponse
      * @throws \OutOfBoundsException
+     *
+     * @return JsonResponse
      */
     public function indexAction(Request $request, $blog = null, $tab = 'articles')
     {
@@ -48,23 +50,22 @@ class BlogController extends BasePageController
             'tabs'               => ['articles', 'settings', 'category'],
             'businessProperties' => $blog ? $this->getBusinessProperties($blog) : null,
         ];
-        if($blogRepo->needChooseForm())
-        {
+        if ($blogRepo->needChooseForm()) {
             $chooseBlogForm = $this->createForm(ChooseBlogType::class, null, [
                 'blog'   => $blog,
-                'locale' => $locale
+                'locale' => $locale,
             ]);
             $chooseBlogForm->handleRequest($request);
             $data = $chooseBlogForm->getData();
             $parameters = array_merge($parameters, [
-                'chooseBlogForm'    => $chooseBlogForm->createView()
+                'chooseBlogForm'    => $chooseBlogForm->createView(),
             ], $data);
         }
 
         return new JsonResponse(
             [
                 'html' => $this->container->get('templating')->render(
-                    $this->getBaseTemplatePath().':index.html.twig',$parameters
+                    $this->getBaseTemplatePath().':index.html.twig', $parameters
                 ),
             ]
         );
@@ -118,15 +119,16 @@ class BlogController extends BasePageController
     /**
      * Display a form to edit Blog settings.
      *
-     * @param Request $request
+     * @param Request  $request
      * @param BasePage $blog
      *
      * @Route("/{id}/settings", name="victoire_blog_settings")
      * @Method("GET")
      * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
      *
-     * @return Response
      * @throws \InvalidArgumentException
+     *
+     * @return Response
      */
     public function settingsAction(Request $request, BasePage $blog)
     {
@@ -238,22 +240,23 @@ class BlogController extends BasePageController
     /**
      * List Blog articles.
      *
-     * @param Request $request
+     * @param Request  $request
      * @param BasePage $blog
      *
      * @Route("/{id}/articles/{articleLocale}", name="victoire_blog_articles")
      * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
      *
-     * @return Response
      * @throws \InvalidArgumentException
+     *
+     * @return Response
      */
     public function articlesAction(Request $request, BasePage $blog, $articleLocale = null)
     {
         return new Response($this->container->get('templating')->render(
             $this->getBaseTemplatePath().':Tabs/_articles.html.twig',
             [
-                'locale' => $articleLocale ? $articleLocale: $request->getLocale(),
-                'blog' => $blog,
+                'locale' => $articleLocale ? $articleLocale : $request->getLocale(),
+                'blog'   => $blog,
             ]
         ));
     }
