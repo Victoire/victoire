@@ -48,7 +48,7 @@ class WidgetFormBuilder
                 'slot'      => $slot,
                 'entity'    => $entity,
                 'view'      => $view,
-                'quantum'   => $quantum,
+                'quantum'   => $this->convertToString($quantum),
             ]
         );
     }
