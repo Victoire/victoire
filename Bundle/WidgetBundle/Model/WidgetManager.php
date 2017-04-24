@@ -114,7 +114,7 @@ class WidgetManager
         $quantum = $this->widgetFormBuilder->convertToString($quantum);
 
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
-        $widgets = ['static' => $widget];
+        $widgets = [$widget];
 
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
