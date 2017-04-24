@@ -52,19 +52,19 @@ $vic(document).on('click', '.v-modal--widget a[data-modal="update"], .v-modal--w
     var forms = [];
     $vic('[data-group="tab-widget-quantum"]').each(function() {
 
-        var quantumLetter = $(this).data('quantum');
+        var quantumLetter = $vic(this).data('quantum');
 
         // matches widget edit form with more than one mode available
-        var activeForm = $(this).find('[data-group="picker-' + quantumLetter + '"][data-state="visible"] [data-flag="v-collapse"][data-state="visible"] > form');
+        var activeForm = $vic(this).find('[data-group="picker-' + quantumLetter + '"][data-state="visible"] [data-flag="v-collapse"][data-state="visible"] > form');
 
         // matches widget edit form with only static mode available
         if (activeForm.length == 0) {
-            activeForm = $(this).find('[data-group="picker-' + quantumLetter + '"][data-state="visible"] form');
+            activeForm = $vic(this).find('[data-group="picker-' + quantumLetter + '"][data-state="visible"] form');
         }
 
         // matches widget stylize form
-        if (activeForm.length == 0 && $(this).attr('data-state') == 'visible') {
-            activeForm = $(this).find('form[name="widget_style"]');
+        if (activeForm.length == 0 && $vic(this).attr('data-state') == 'visible') {
+            activeForm = $vic(this).find('form[name="widget_style"]');
         }
 
         forms = $vic.merge(forms, [activeForm]);
