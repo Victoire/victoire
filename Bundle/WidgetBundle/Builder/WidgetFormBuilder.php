@@ -48,7 +48,7 @@ class WidgetFormBuilder
                 'slot'      => $slot,
                 'entity'    => $entity,
                 'view'      => $view,
-                'quantum'   => $this->convertToString($quantum),
+                'quantum'   => $quantum,
             ]
         );
     }
@@ -216,7 +216,7 @@ class WidgetFormBuilder
                 'type'               => $widget->getType(), // @todo: use the config
                 'position'           => $position,
                 'parentWidgetMap'    => $parentWidgetMap,
-                'quantum'            => $this->convertToString($quantum),
+                'quantum'            => $quantum,
             ];
             $action = 'victoire_core_widget_create';
             if ($businessEntityId) {
@@ -234,7 +234,7 @@ class WidgetFormBuilder
                     'viewReference'    => $viewReference->getId(),
                     'businessEntityId' => $businessEntityId,
                     'mode'             => $formMode,
-                    'quantum'          => $this->convertToString($quantum),
+                    'quantum'          => $quantum,
                 ]
             );
         }
@@ -254,7 +254,7 @@ class WidgetFormBuilder
             'businessEntityId'      => $businessEntityId,
             'namespace'             => $namespace,
             'mode'                  => $formMode,
-            'quantum'               => $this->convertToString($quantum),
+            'quantum'               => $quantum,
             'action'                => $formUrl,
             'method'                => 'POST',
             'dataSources'           => $this->container->get('victoire_criteria.chain.data_source_chain'),
@@ -269,7 +269,7 @@ class WidgetFormBuilder
         //Prefix base name with form mode to avoid to have unique form fields ids
 
         $builder = $formFactory->createNamed(
-            sprintf('%s_%s_%s_%s', $businessEntityId, $this->convertToString($quantum), $formMode, $mockForm->getName()),
+            sprintf('%s_%s_%s_%s', $businessEntityId, $quantum, $formMode, $mockForm->getName()),
             $widgetFormTypeClass,
             $widget,
             $optionsContainer->getOptions()
@@ -291,8 +291,12 @@ class WidgetFormBuilder
      *
      * @return string
      */
-    private function convertToString($number, $letter = 'a', $i = 0)
+    public function convertToString($number, $letter = 'a', $i = 0)
     {
+        if(!is_numeric($number)) {
+            return $number;
+        }
+
         while ($i < $number) {
             $i++;
             $letter++;
