@@ -216,7 +216,7 @@ class WidgetFormBuilder
                 'type'               => $widget->getType(), // @todo: use the config
                 'position'           => $position,
                 'parentWidgetMap'    => $parentWidgetMap,
-                'quantum'            => $quantum,
+                'quantum'            => $this->convertToString($quantum),
             ];
             $action = 'victoire_core_widget_create';
             if ($businessEntityId) {
@@ -234,7 +234,7 @@ class WidgetFormBuilder
                     'viewReference'    => $viewReference->getId(),
                     'businessEntityId' => $businessEntityId,
                     'mode'             => $formMode,
-                    'quantum'          => $quantum,
+                    'quantum'          => $this->convertToString($quantum),
                 ]
             );
         }
@@ -254,7 +254,7 @@ class WidgetFormBuilder
             'businessEntityId'      => $businessEntityId,
             'namespace'             => $namespace,
             'mode'                  => $formMode,
-            'quantum'               => $quantum,
+            'quantum'               => $this->convertToString($quantum),
             'action'                => $formUrl,
             'method'                => 'POST',
             'dataSources'           => $this->container->get('victoire_criteria.chain.data_source_chain'),
