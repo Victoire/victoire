@@ -293,7 +293,7 @@ class WidgetFormBuilder
      */
     public function convertToString($number, $letter = 'a', $i = 0)
     {
-        if(!is_numeric($number)) {
+        if (!is_numeric($number)) {
             return $number;
         }
 

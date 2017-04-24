@@ -112,7 +112,7 @@ class WidgetManager
     public function newWidget($mode, $type, $slot, $view, $position, $parentWidgetMap, $quantum)
     {
         $quantum = $this->widgetFormBuilder->convertToString($quantum);
-        
+
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
         $widgets = ['static' => $widget];
 
