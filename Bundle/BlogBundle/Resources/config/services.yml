@@ -111,7 +111,6 @@ services:
     victoire_blog.blog_choose.form.type:
         class: Victoire\Bundle\BlogBundle\Form\ChooseBlogType
         arguments:
-            - "%victoire_i18n.available_locales%"
             - '@victoire_blog.blog_repository'
         tags:
             - { name: form.type }
