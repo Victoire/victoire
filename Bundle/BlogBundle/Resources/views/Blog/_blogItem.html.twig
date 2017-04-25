@@ -43,7 +43,6 @@
             dataType    : 'json',
             processData : false,
         }).done(function(response){
-            console.log($vic(response.html).find('#vic-modal'));
             $('#vic-modal').html($vic($vic(response.html)).find('.vic-modal-dialog'));
         }).fail(function(response) {
             console.log(response);
