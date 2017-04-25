@@ -5,20 +5,30 @@ namespace Victoire\Bundle\BlogBundle\Repository;
 use Victoire\Bundle\PageBundle\Repository\BasePageRepository;
 
 /**
- * The Page repository.
+ * The Blog repository.
  */
 class BlogRepository extends BasePageRepository
 {
-    public function needChooseForm()
+    /**
+     * Return true if at least one Blog has multiple translations.
+     *
+     * @return bool
+     */
+    public function hasMultipleBlog()
     {
-        $qb = $this->getInstance('blog')
+        $qb = $this->createQueryBuilder('blog')
             ->select('b_translation.id')
             ->join('blog.translations', 'b_translation');
 
         return count($qb->getQuery()->getResult()) >= 1;
     }
 
-    public function getLocalesWithBlogs()
+    /**
+     * Get all locales used by Blogs.
+     *
+     * @return array
+     */
+    public function getUsedLocales()
     {
         $qb = $this->createQueryBuilder('blog')
             ->select('DISTINCT(b_translation.locale) AS locale')
@@ -30,5 +40,21 @@ class BlogRepository extends BasePageRepository
         }
 
         return $locales;
+    }
+
+    /**
+     * Get all Blogs for a given locale.
+     *
+     * @param $locale
+     *
+     * @return array
+     */
+    public function getBlogsForLocale($locale)
+    {
+        $blogs = $this->joinTranslations($locale)->getInstance()->getQuery()->getResult();
+
+        $this->clearInstance();
+
+        return $blogs;
     }
 }
