@@ -52,16 +52,17 @@ class BlogController extends BasePageController
             'tabs'               => ['articles', 'settings', 'category'],
             'businessProperties' => $blog ? $this->getBusinessProperties($blog) : null,
         ];
-        if ($blogRepo->needChooseForm()) {
+        if ($blogRepo->hasMultipleBlog()) {
             $chooseBlogForm = $this->createForm(ChooseBlogType::class, null, [
                 'blog'   => $blog,
                 'locale' => $locale,
             ]);
             $chooseBlogForm->handleRequest($request);
-            $data = $chooseBlogForm->getData();
-            $parameters = array_merge($parameters, [
-                'chooseBlogForm'    => $chooseBlogForm->createView(),
-            ], $data);
+            $parameters = array_merge(
+                $parameters,
+                ['chooseBlogForm' => $chooseBlogForm->createView()],
+                $chooseBlogForm->getData()
+            );
         }
 
         return new JsonResponse(
