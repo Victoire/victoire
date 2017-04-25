@@ -1,44 +1,20 @@
-Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
-    template_character:
-        name: "Character {{item.name}}"
-        backendName: "Character template"
-        slug: "character-{{item.slug}}"
-        url: "character-{{item.slug}}"
-        businessEntityId: character
-        author: @anakin
-        locale: fr
-        template: @template_base
-        status: published
-        publishedAt: <dateTime('now')>
-        createdAt: <dateTime('now')>
-        updatedAt: <dateTime('now')>
-        parent: @home
-
-    template_jedi:
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
+    jedi_character_en:
         name: "Jedi {{item.name}}"
         slug: "jedi-{{item.slug}}"
-        url: "jedi-{{item.slug}}"
+        locale: en
+    jedi_character_fr:
+        name: "Jedi {{item.name}}"
+        slug: "jedi-{{item.slug}}"
+        locale: fr
+
+Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
+    template_jedi:
+        backendName: "Jedi template"
         businessEntityId: jedi
         author: @anakin
-        locale: fr
         template: @template_base
-        status: published
-        publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         parent: @home
-
-    template_mercenary:
-        name: "Mercenary {{item.name}}"
-        slug: "mercenary-{{item.slug}}"
-        url: "mercenary-{{item.slug}}"
-        businessEntityId: character
-        query: WHERE item.type = 'mercenary'
-        author: @anakin
-        locale: fr
-        template: @template_base
-        status: published
-        publishedAt: <dateTime('now')>
-        createdAt: <dateTime('now')>
-        updatedAt: <dateTime('now')>
-        parent: @home
+        translations: [@jedi_character_en, @jedi_character_fr]

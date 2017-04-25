@@ -4,6 +4,7 @@ namespace Victoire\Tests\Features\Context;
 
 use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Behat\Hook\Scope\BeforeStepScope;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\Element;
 use Behat\Mink\Session;
@@ -60,11 +61,11 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * @BeforeScenario
+     * @AfterBackground
      *
-     * @param BeforeScenarioScope $scope
+     * @param BeforeStepScope $scope
      */
-    public function resetViewsReference(BeforeScenarioScope $scope)
+    public function resetViewsReference(BeforeStepScope $scope)
     {
         $viewsReferences = $this->getContainer()->get('victoire_core.view_helper')->buildViewsReferences();
         $this->getContainer()->get('victoire_view_reference.manager')->saveReferences($viewsReferences);
@@ -153,7 +154,7 @@ class VictoireContext extends RawMinkContext
      */
     public function iSelectFromTheSelectOfSlot($widget, $nth, $slot)
     {
-        $slot = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@id="vic-slot-'.$slot.'"]');
+        $slot = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[contains(@id, "vic-slot-'.$slot.'")]');
         $selects = $slot->findAll('css', 'select[role="menu"]');
         $selects[$nth - 1]->selectOption(str_replace('\\"', '"', $widget));
     }

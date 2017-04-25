@@ -58,7 +58,6 @@ default:
                      ArticleI18n:        Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article_i18n.yml
                      Article:            Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article.yml
                      BlogBP:             Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/businessPage.yml
-                     Character:          Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/character.yml
                      Mercenary:          Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/mercenary.yml
                      Jedi:               Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/jedi.yml
                      CharacterTemplates: Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/template.yml
@@ -69,7 +68,7 @@ default:
                      Page:               [Template, User]
                      Blog:               [Template, BlogTemplate, User]
                      Article:            [ArticleI18n, Template, Blog, BlogTemplate, BlogBP, User]
-                     CharacterTemplates: [Template, User]
+                     CharacterTemplates: [Template, User, Jedi, Mercenary]
                      MediaFile:          [Media]
              symfony_kernel:
                  bootstrap: Tests/App/app/autoload.php
