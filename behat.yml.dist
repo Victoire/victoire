@@ -67,17 +67,17 @@ default:
                      BlogWithLocalesi18n:   Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/blogWithLocales.yml
                      LocaleWithBlogsi18n:   Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/localeWithBlogs.yml
                  dependencies:
-                     Template:           [User]
-                     ErrorPage:          [Template, User]
-                     Page:               [Template, User]
-                     Blog:               [Template, BlogTemplate, User]
-                     Article:            [ArticleI18n, Template, Blog, BlogTemplate, BlogBP, User]
-                     CharacterTemplates: [Template, User, Jedi, Mercenary]
-                     MediaFile:          [Media]
-                     Blogi18n:               [Template, User]
-                     BlogsWithLocalesi18n:               [Template, User]
-                     BlogWithLocalesi18n:               [Template, User]
-                     LocalesWithBlogi18n:               [Template, User]
+                     Template:             [User]
+                     ErrorPage:            [Template, User]
+                     Page:                 [Template, User]
+                     Blog:                 [Template, BlogTemplate, User]
+                     Article:              [ArticleI18n, Template, Blog, BlogTemplate, BlogBP, User]
+                     CharacterTemplates:   [Template, User, Jedi, Mercenary]
+                     MediaFile:            [Media]
+                     Blogi18n:             [Template, User]
+                     BlogsWithLocalesi18n: [Template, User]
+                     BlogWithLocalesi18n:  [Template, User]
+                     LocalesWithBlogi18n:  [Template, User]
              symfony_kernel:
                  bootstrap: Tests/App/app/autoload.php
                  path: Tests/App/app/AppKernel.php
