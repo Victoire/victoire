@@ -169,3 +169,8 @@ snc_redis:
 
 parameters:
     locale: en
+
+troopers_alertify:
+    contexts:
+        front:
+            engine: "notie"

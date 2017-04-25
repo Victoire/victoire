@@ -136,7 +136,7 @@ class WidgetFormBuilder
     {
         $forms = [];
         foreach ($widgets as $key => $widget) {
-            $_quantum = null !== $quantum ? $quantum : $key;
+            $_quantum = null !== $quantum ? $quantum : $this->convertToString($key);
             $forms[$key] = $this->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap, $_quantum);
             $forms[$key]['quantum'] = $_quantum;
             if ($widget === $activeWidget) {
@@ -269,7 +269,7 @@ class WidgetFormBuilder
         //Prefix base name with form mode to avoid to have unique form fields ids
 
         $builder = $formFactory->createNamed(
-            sprintf('%s_%s_%s_%s', $businessEntityId, $this->convertToString($quantum), $formMode, $mockForm->getName()),
+            sprintf('%s_%s_%s_%s', $businessEntityId, $quantum, $formMode, $mockForm->getName()),
             $widgetFormTypeClass,
             $widget,
             $optionsContainer->getOptions()
@@ -291,8 +291,12 @@ class WidgetFormBuilder
      *
      * @return string
      */
-    private function convertToString($number, $letter = 'a', $i = 0)
+    public function convertToString($number, $letter = 'a', $i = 0)
     {
+        if (!is_numeric($number)) {
+            return $number;
+        }
+
         while ($i < $number) {
             $i++;
             $letter++;
