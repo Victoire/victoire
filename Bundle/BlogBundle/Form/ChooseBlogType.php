@@ -34,7 +34,7 @@ class ChooseBlogType extends AbstractType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -58,7 +58,7 @@ class ChooseBlogType extends AbstractType
                 $data = $event->getData();
                 $event->setData([
                     'locale' => $data['locale'] !== null ? $data['locale'] : $currentLocale,
-                    'blog' => $currentBlog,
+                    'blog'   => $currentBlog,
                 ]);
             }
         );
@@ -79,8 +79,8 @@ class ChooseBlogType extends AbstractType
 
     /**
      * @param FormInterface|FormBuilderInterface $builder
-     * @param string $currentLocale
-     * @param array $availableLocales
+     * @param string                             $currentLocale
+     * @param array                              $availableLocales
      */
     public function addLocaleField($builder, $currentLocale, $availableLocales)
     {
@@ -91,7 +91,7 @@ class ChooseBlogType extends AbstractType
         $additionalParameters = [];
         if ($localesNb > 1) {
             $additionalParameters = [
-                'choices' => array_combine($availableLocales, $availableLocales),
+                'choices'           => array_combine($availableLocales, $availableLocales),
                 'preferred_choices' => $currentLocale,
             ];
         }
@@ -100,7 +100,7 @@ class ChooseBlogType extends AbstractType
             array_merge(
                 [
                     'label' => 'victoire.blog.choose.locale.label',
-                    'data' => $currentLocale,
+                    'data'  => $currentLocale,
                 ],
                 $additionalParameters
             )
@@ -109,9 +109,9 @@ class ChooseBlogType extends AbstractType
 
     /**
      * @param FormInterface|FormBuilderInterface $builder
-     * @param Blog $currentBlog
-     * @param array $availableBlogs
-     * @param string $currentLocale
+     * @param Blog                               $currentBlog
+     * @param array                              $availableBlogs
+     * @param string                             $currentLocale
      */
     public function addBlogField($builder, Blog $currentBlog, $availableBlogs, $currentLocale)
     {
@@ -121,13 +121,14 @@ class ChooseBlogType extends AbstractType
 
         if ($blogsNb > 1) {
             $additionalParameters = [
-                'choices' => $availableBlogs,
+                'choices'           => $availableBlogs,
                 'choices_as_values' => true,
-                'choice_value' => function (Blog $currentBlog) {
+                'choice_value'      => function (Blog $currentBlog) {
                     return $currentBlog->getId();
                 },
                 'choice_label' => function (Blog $currentBlog) use ($currentLocale) {
                     $currentBlog->setCurrentLocale($currentLocale);
+
                     return $currentBlog->getName();
                 },
             ];
@@ -139,7 +140,7 @@ class ChooseBlogType extends AbstractType
             array_merge(
                 [
                     'label' => 'victoire.blog.choose.blog.label',
-                    'data' => $currentBlog,
+                    'data'  => $currentBlog,
                 ],
                 $additionalParameters
             )
@@ -155,10 +156,10 @@ class ChooseBlogType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => null,
+                'data_class'         => null,
                 'translation_domain' => 'victoire',
-                'blog' => null,
-                'locale' => null,
+                'blog'               => null,
+                'locale'             => null,
             ]
         );
     }
