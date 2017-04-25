@@ -1,10 +1,17 @@
 <div id="vic-blog-item-header">
-    <div class="vic-row">
-        {% if chooseBlogForm is defined %}
+    {% if chooseBlogForm is defined %}
+        <div class="vic-row">
             {% form_theme chooseBlogForm 'VictoireFormBundle:Form:fields.html.twig' %}
             <div class="vic-col-sm-3">
                 {{ form_start(chooseBlogForm, {'attr' : {'id' : 'victoire_blog_choose_form'}, 'action' : path('victoire_blog_index')}) }}
                 {{ form_end(chooseBlogForm) }}
+            </div>
+        </div>
+    {% endif %}
+    <div class="vic-row">
+        {% if blog.name %}
+            <div class="vic-col-sm-3">
+                <h3>{{ blog.name }}</h3>
             </div>
         {% endif %}
 
