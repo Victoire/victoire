@@ -4,6 +4,7 @@ Feature: I can edit multiple blogs in multiples locales
   Background:
     Given I maximize the window
     And I am on homepage
+
   @alice(Blogi18n)
   Scenario: I have one blog and one locale
     Then I open the hamburger menu
@@ -22,7 +23,7 @@ Feature: I can edit multiple blogs in multiples locales
     Then I open the hamburger menu
     And I should see "Blog"
     When I follow "Blog"
-    Then I should see "Choisissez la locale du blog"
+    Then I should see "Choisissez la langue du blog"
     And I should see "Créer un article maintenant"
     When I follow "Créer un article maintenant"
     Then I should see "Créer un nouvel article"
@@ -46,7 +47,7 @@ Feature: I can edit multiple blogs in multiples locales
     Then I should be on "en/blog-en/article-en-title-article"
 
   @alice(LocaleWithBlogsi18n)
-  Scenario: I have one locales and multiple blogs
+  Scenario: I have one locale and multiple blogs
     Then I open the hamburger menu
     And I should see "Blog"
     When I follow "Blog"

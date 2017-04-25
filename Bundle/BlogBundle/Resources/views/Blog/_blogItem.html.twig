@@ -3,7 +3,6 @@
         {% if chooseBlogForm is defined %}
             {% form_theme chooseBlogForm 'VictoireFormBundle:Form:fields.html.twig' %}
             <div class="vic-col-sm-3">
-                {% if blog.name %}<h2>{{ blog.name }}</h2>{% endif %}
                 {{ form_start(chooseBlogForm, {'attr' : {'id' : 'victoire_blog_choose_form'}, 'action' : path('victoire_blog_index')}) }}
                 {{ form_end(chooseBlogForm) }}
             </div>
