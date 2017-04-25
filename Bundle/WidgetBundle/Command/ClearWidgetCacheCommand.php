@@ -32,5 +32,7 @@ class ClearWidgetCacheCommand extends ContainerAwareCommand
         $widgetCache = $this->getContainer()->get('victoire_widget.widget_cache');
 
         $widgetCache->clear();
+
+        $output->writeln('Widget cache has been cleared');
     }
 }
