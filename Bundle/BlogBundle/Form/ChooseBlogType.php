@@ -5,6 +5,7 @@ namespace Victoire\Bundle\BlogBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -19,284 +20,133 @@ use Victoire\Bundle\BlogBundle\Repository\BlogRepository;
  */
 class ChooseBlogType extends AbstractType
 {
-    protected $availableLocales;
     protected $blogRepository;
 
-    public function __construct(
-        array $availableLocales,
-        BlogRepository $blogRepository
-    ) {
+    /**
+     * ChooseBlogType constructor.
+     *
+     * @param BlogRepository $blogRepository
+     */
+    public function __construct(BlogRepository $blogRepository)
+    {
         $this->blogRepository = $blogRepository;
-        $this->availableLocales = $this->blogRepository->getLocalesWithBlogs();
     }
 
     /**
-     * define form fields.
-     *
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $blogs = $this->blogRepository->findAll();
-        $this->blogRepository->clearInstance();
-        if (count($this->availableLocales) == 1 && count($blogs) === 1) {
-            $blog = reset($blogs);
-            $locale = reset($this->availableLocales);
-            $builder->add('blog', EntityHiddenType::class, [
-                'data'  => reset($blogs),
-                'class' => Blog::class,
-            ])->add('locale', HiddenType::class, [
-                'data' => reset($this->availableLocales),
-            ]);
+        //Manage locale
+        $availableLocales = $this->blogRepository->getUsedLocales();
+        $localesNb = count($availableLocales);
+        $currentLocale = $options['locale'] !== null ? $options['locale'] : ($localesNb >= 1 ? reset($availableLocales) : null);
 
+        //Manage blog
+        $availableBlogs = $localesNb > 1 ? $this->blogRepository->getBlogsForLocale($currentLocale) : $this->blogRepository->findAll();
+        $blogsNb = count($availableBlogs);
+        $currentBlog = $options['blog'] !== null ? $options['blog'] : ($blogsNb >= 1 ? reset($availableBlogs) : null);
+
+        //Add fields
+        $this->addLocaleField($builder, $currentLocale, $availableLocales);
+        $this->addBlogField($builder, $currentBlog, $availableBlogs, $currentLocale);
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) use ($currentLocale, $currentBlog, $localesNb, $blogsNb) {
+                $data = $event->getData();
+                $event->setData([
+                    'locale' => $data['locale'] !== null ? $data['locale'] : $currentLocale,
+                    'blog' => $currentBlog,
+                ]);
+            }
+        );
+
+        //Hide blog field when a locale with only one blog is selected
+        if ($localesNb > 1 && $blogsNb > 1) {
             $builder->addEventListener(
-                FormEvents::PRE_SET_DATA,
-                function (FormEvent $event) use ($locale, $blog) {
-                    $event->setData([
-                        'locale' => $locale,
-                        'blog'   => $blog,
-                    ]);
+                FormEvents::PRE_SUBMIT,
+                function (FormEvent $event) use ($currentLocale, $currentBlog, $blogsNb, $localesNb) {
+                    $data = $event->getData();
+                    $currentLocale = $data['locale'] !== null ? $data['locale'] : $currentLocale;
+                    $availableBlogs = $localesNb > 1 ? $this->blogRepository->getBlogsForLocale($currentLocale) : $this->blogRepository->findAll();
+                    $this->addBlogField($event->getForm(), $currentBlog, $availableBlogs, $currentLocale);
                 }
             );
         }
-        if (count($this->availableLocales) === 1 && count($blogs) > 1) {
-            $this->handleMultipleBlogs($builder);
-        }
-        if (count($this->availableLocales) > 1 && count($blogs) == 1) {
-            $this->handleMultipleLocales($builder, $options);
-        }
-
-        if (count($this->availableLocales) > 1 && count($blogs) > 1) {
-            $this->handleMultipleLocaleBlogs($builder, $options);
-        }
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
-            $event->stopPropagation();
-        }, 900);
     }
 
     /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     *
-     * @throws \Symfony\Component\Form\Exception\InvalidArgumentException
-     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
-     * @throws \Symfony\Component\Form\Exception\LogicException
-     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @param FormInterface|FormBuilderInterface $builder
+     * @param string $currentLocale
+     * @param array $availableLocales
      */
-    private function handleMultipleLocaleBlogs(FormBuilderInterface $builder, array $options = [])
+    public function addLocaleField($builder, $currentLocale, $availableLocales)
     {
-        $blog = $options['blog'];
-        $locale = $options['locale'] === null ? reset($this->availableLocales) : isset($this->availableLocales[$options['locale']]) ? $options['locale'] : reset($this->availableLocales);
+        if (($localesNb = count($availableLocales)) < 1) {
+            return;
+        }
 
-        $builder->add('locale', ChoiceType::class, [
-            'label'             => 'victoire.blog.choose.locale.label',
-            'choices'           => array_combine($this->availableLocales, $this->availableLocales),
-            'preferred_choices' => $locale,
-            'data'              => $locale,
-        ]);
+        $additionalParameters = [];
+        if ($localesNb > 1) {
+            $additionalParameters = [
+                'choices' => array_combine($availableLocales, $availableLocales),
+                'preferred_choices' => $currentLocale,
+            ];
+        }
 
-        $formModifier = function (FormInterface $form, $currentLocale = null, Blog $blog = null) {
-            $blogs = $this->blogRepository->joinTranslations($currentLocale)->getInstance()->getQuery()->getResult();
-            if ($blog === null) {
-                $blog = reset($blogs);
-            }
-            $this->blogRepository->clearInstance();
-            $form->add('blog', ChoiceType::class, [
-                'label'             => 'victoire.blog.choose.blog.label',
-                'choices'           => $blogs,
+        $builder->add('locale', $localesNb > 1 ? ChoiceType::class : HiddenType::class,
+            array_merge(
+                [
+                    'label' => 'victoire.blog.choose.locale.label',
+                    'data' => $currentLocale,
+                ],
+                $additionalParameters
+            )
+        );
+    }
+
+    /**
+     * @param FormInterface|FormBuilderInterface $builder
+     * @param Blog $currentBlog
+     * @param array $availableBlogs
+     * @param string $currentLocale
+     */
+    public function addBlogField($builder, Blog $currentBlog, $availableBlogs, $currentLocale)
+    {
+        if (($blogsNb = count($availableBlogs)) < 1) {
+            return;
+        }
+
+        if ($blogsNb > 1) {
+            $additionalParameters = [
+                'choices' => $availableBlogs,
                 'choices_as_values' => true,
-                'choice_value'      => function ($blog) {
-                    if (!$blog instanceof Blog) {
-                        return;
-                    }
-
-                    return $blog->getId();
+                'choice_value' => function (Blog $currentBlog) {
+                    return $currentBlog->getId();
                 },
-                'choice_label' => function ($blog) use ($currentLocale) {
-                    if (!$blog instanceof Blog) {
-                        return;
-                    }
-                    $blog->setCurrentLocale($currentLocale);
-
-                    return $blog->getName();
+                'choice_label' => function (Blog $currentBlog) use ($currentLocale) {
+                    $currentBlog->setCurrentLocale($currentLocale);
+                    return $currentBlog->getName();
                 },
-                'data'=> $blog,
-            ]);
-        };
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($formModifier, $locale, $blog) {
-                $data = $event->getData();
-                $locale = $data['locale'] !== null ? $data['locale'] : $locale;
-                $formModifier($event->getForm(), $locale, $blog);
-                $blogs = $this->blogRepository->joinTranslations($locale)->getInstance()->getQuery()->getResult();
-                $blog = null;
-                foreach ($blogs as $currBlog) {
-                    if ($currBlog->getId() === (int) $data['blog']) {
-                        $blog = $currBlog;
-                    }
-                }
-                if ($blog === null) {
-                    $blog = reset($blogs);
-                }
-                $this->blogRepository->clearInstance();
-                $event->setData(
-                    [
-                        'locale' => $locale,
-                        'blog'   => $blog,
-                    ]
-                );
-            }
-        );
-
-        $builder->addEventListener(
-            FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($formModifier, $locale, $blog) {
-                $data = $event->getData();
-                $locale = $data['locale'] !== null ? $data['locale'] : $locale;
-                $formModifier($event->getForm(), $locale, $blog);
-                $blogs = $this->blogRepository->joinTranslations($locale)->getInstance()->getQuery()->getResult();
-                $blog = null;
-                foreach ($blogs as $currBlog) {
-                    if ($currBlog->getId() === (int) $data['blog']) {
-                        $blog = $currBlog;
-                    }
-                }
-                if ($blog === null) {
-                    $blog = reset($blogs);
-                }
-                $this->blogRepository->clearInstance();
-                $event->setData(
-                    [
-                        'locale' => $locale,
-                        'blog'   => $blog->getId(),
-                    ]
-                );
-            }
-        );
-        $builder->get('locale')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($formModifier, $blog) {
-                $locale = $event->getData();
-                $formModifier($event->getForm()->getParent(), $locale, $blog);
-            }
-        );
-    }
-
-    /**
-     * @param FormBuilderInterface $builder
-     */
-    private function handleMultipleBlogs(FormBuilderInterface $builder)
-    {
-        $locale = reset($this->availableLocales);
-
-        $blog = null;
-        $blogs = $this->blogRepository->joinTranslations($locale)->getInstance()->getQuery()->getResult();
-        if ($blog === null) {
-            $blog = reset($blogs);
+            ];
+        } else {
+            $additionalParameters = ['class' => Blog::class];
         }
-        $this->blogRepository->clearInstance();
-        $builder->add('blog', ChoiceType::class, [
-            'label'             => 'victoire.blog.choose.blog.label',
-            'choices'           => $blogs,
-            'choices_as_values' => true,
-            'choice_value'      => function ($blog) {
-                if (!$blog instanceof Blog) {
-                    return;
-                }
 
-                return $blog->getId();
-            },
-            'choice_label' => function ($blog) use ($locale) {
-                if (!$blog instanceof Blog) {
-                    return;
-                }
-                $blog->setCurrentLocale($locale);
-
-                return $blog->getName();
-            },
-            'data'=> $blog,
-        ])->add('locale', HiddenType::class, [
-            'data' => $locale,
-        ]);
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($locale, $blog) {
-                $data = $event->getData();
-                $locale = $data['locale'] !== null ? $data['locale'] : $locale;
-
-                $blog = null;
-                $blogs = $this->blogRepository->joinTranslations($locale)->getInstance()->getQuery()->getResult();
-                if ($blog === null) {
-                    $blog = reset($blogs);
-                }
-                $this->blogRepository->clearInstance();
-                $event->setData(
-                    [
-                        'locale' => $locale,
-                        'blog'   => $blog,
-                    ]
-                );
-            }
-        );
-    }
-
-    private function handleMultipleLocales(FormBuilderInterface $builder, $options)
-    {
-        $locale = $options['locale'] === null ? reset($this->availableLocales) : $options['locale'];
-        $blog = $options['blog'];
-        $builder->add('locale', ChoiceType::class, [
-            'label'             => 'victoire.blog.choose.locale.label',
-            'choices'           => array_combine($this->availableLocales, $this->availableLocales),
-            'preferred_choices' => $locale,
-            'data'              => $locale,
-        ]);
-        $formModifier = function (FormInterface $form, $currentLocale = null, Blog $blog = null) {
-            $blogs = $this->blogRepository->joinTranslations($currentLocale)->getInstance()->getQuery()->getResult();
-            if ($blog === null) {
-                $blog = reset($blogs);
-            }
-            $this->blogRepository->clearInstance();
-            $form->add('blog', EntityHiddenType::class, [
-                'data'  => $blog,
-                'class' => Blog::class,
-            ]);
-        };
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($formModifier, $locale, $blog) {
-                $data = $event->getData();
-                $locale = $data['locale'] !== null ? $data['locale'] : $locale;
-                $formModifier($event->getForm(), $locale, $blog);
-
-                $blog = null;
-                $blogs = $this->blogRepository->joinTranslations($locale)->getInstance()->getQuery()->getResult();
-                if ($blog === null) {
-                    $blog = reset($blogs);
-                }
-                $this->blogRepository->clearInstance();
-                $event->setData(
-                    [
-                        'locale' => $locale,
-                        'blog'   => $blog,
-                    ]
-                );
-            }
-        );
-
-        $builder->get('locale')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($formModifier, $blog) {
-                $locale = $event->getData();
-                $formModifier($event->getForm()->getParent(), $locale, $blog);
-            }
+        $builder->add('blog', $blogsNb > 1 ? ChoiceType::class : EntityHiddenType::class,
+            array_merge(
+                [
+                    'label' => 'victoire.blog.choose.blog.label',
+                    'data' => $currentBlog,
+                ],
+                $additionalParameters
+            )
         );
     }
 
     /**
-     * bind to Page entity.
-     *
      * @param OptionsResolver $resolver
      *
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
@@ -305,10 +155,10 @@ class ChooseBlogType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class'           => null,
-                'translation_domain'   => 'victoire',
-                'blog'                 => null,
-                'locale'               => null,
+                'data_class' => null,
+                'translation_domain' => 'victoire',
+                'blog' => null,
+                'locale' => null,
             ]
         );
     }
