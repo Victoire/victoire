@@ -54,7 +54,7 @@ class ChooseBlogType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($currentLocale, $currentBlog, $localesNb, $blogsNb) {
+            function (FormEvent $event) use ($currentLocale, $currentBlog, $localesNb) {
                 $data = $event->getData();
                 $event->setData([
                     'locale' => $data['locale'] !== null ? $data['locale'] : $currentLocale,
