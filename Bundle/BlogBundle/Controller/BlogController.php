@@ -63,7 +63,7 @@ class BlogController extends BasePageController
             );
 
             // If locale has changed, we need to load first blog for this locale
-            if ($chooseBlogForm->isSubmitted()){
+            if ($chooseBlogForm->isSubmitted()) {
                 $blog = $parameters['blog'];
                 $blogs = $this->getDoctrine()->getRepository('VictoireBlogBundle:Blog')->getBlogsForLocale($parameters['locale']);
                 if (!in_array($blog, $blogs)) {
