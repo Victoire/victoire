@@ -20,7 +20,7 @@ class SitemapExportHandler
     private $entityManager;
     private $pageHelper;
     private $viewReferenceRepo;
-    
+
     /**
      * SitemapExportHandler constructor.
      *
