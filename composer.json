@@ -69,7 +69,7 @@
         "nelmio/alice": "~2.0",
         "phpunit/php-code-coverage": "2.2.3",
         "phpunit/phpunit-mock-objects": "2.3.7",
-        "phpunit/phpunit": "4.6.*",
+        "phpunit/phpunit": "~5.7|~6.1",
         "sensio/generator-bundle": "~2.3",
         "symfony/var-dumper": "~2.8|~3.1",
         "doctrine/doctrine-fixtures-bundle": "^2.2",
