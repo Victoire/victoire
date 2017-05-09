@@ -9,10 +9,12 @@
         </div>
     {% endif %}
     <div class="vic-row">
-        {% if blog.name %}
-            <div class="vic-col-sm-3">
-                <h3>{{ blog.name }}</h3>
-            </div>
+        {% if blog %}
+            {% if blog.name %}
+                <div class="vic-col-sm-3">
+                    <h3>{{ blog.name }}</h3>
+                </div>
+            {% endif %}
         {% endif %}
 
         {% set addBlogButton %}
@@ -20,11 +22,13 @@
             {{ ('modal.blog.button.new.label')|trans({}, 'victoire') }}
         </a>
         {% endset %}
+
         {% if blog %}
         <div class="vic-col-sm-9 vic-text-right">
             {{ addBlogButton|raw }}
         </div>
         {% else %}
+
         <div class="vic-col-sm-12 vic-text-center">
 
             <div class="vic-alert vic-alert-info" role="alert">
