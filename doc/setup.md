@@ -40,7 +40,6 @@ class AppKernel extends Kernel
             //dependencies
             new Troopers\AsseticInjectorBundle\TroopersAsseticInjectorBundle(),
             new Troopers\AlertifyBundle\TroopersAlertifyBundle(),
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
