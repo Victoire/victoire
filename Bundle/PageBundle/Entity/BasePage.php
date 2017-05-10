@@ -42,7 +42,6 @@ abstract class BasePage extends View implements WebViewInterface
         $webViewChildren = [];
         foreach ($this->children as $child) {
             if (!$child instanceof BusinessTemplate) {
-
                 $notPublished = $child->getStatus() != PageStatus::PUBLISHED;
                 $scheduledDateNotReached = $child->getStatus() == PageStatus::SCHEDULED && $child->getPublishedAt() > new \DateTime();
 
