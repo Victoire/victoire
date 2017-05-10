@@ -171,7 +171,7 @@ class ArticleController extends Controller
                 ]),
             ];
         } else {
-            $response = $this->getNotPersistedSettingsResponse($request, $article, $novalidate);
+            $response = $this->getNotPersistedSettingsResponse($form, $article, $novalidate);
         }
 
         return new JsonResponse($response);

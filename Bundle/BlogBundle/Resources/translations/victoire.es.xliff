@@ -54,6 +54,10 @@
         <source>modal.blog.list.articlesList.new_article</source>
         <target><![CDATA[<span class="fa fa-check-circle"></span> Crear un nuevo artículo]]></target>
       </trans-unit>
+      <trans-unit id="58893b9921dav" resname="modal.blog.list.articlesList.change.parameters">
+        <source>modal.blog.list.articlesList.change.parameters</source>
+        <target>Cambiar los parámetros</target>
+      </trans-unit>
       <trans-unit id="58893b99232df" resname="modal.blog.list.articlesList.empty.notice">
         <source>modal.blog.list.articlesList.empty.notice</source>
         <target>Aún no ha creado ningún artículo. Este es el momento :)</target>
@@ -125,6 +129,10 @@
       <trans-unit id="58893b9923564" resname="victoire.blog.choose.blog.label">
         <source>victoire.blog.choose.blog.label</source>
         <target>Eliges a tu blog</target>
+      </trans-unit>
+      <trans-unit id="58893b9923565" resname="victoire.blog.choose.locale.label">
+        <source>victoire.blog.choose.locale.label</source>
+        <target>Elija el blog lengua</target>
       </trans-unit>
       <trans-unit id="58893b992357e" resname="victoire.blog.nav.articles.label">
         <source>victoire.blog.nav.articles.label</source>

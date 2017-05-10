@@ -16,6 +16,7 @@ use Victoire\Bundle\PageBundle\Entity\PageStatus;
 /**
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\ArticleRepository"))
  * @ORM\Table("vic_article")
+ * @ORM\HasLifecycleCallbacks()
  * @VIC\BusinessEntity({"Date", "Force", "Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList", "SliderNav", "Render"})
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
@@ -216,10 +217,6 @@ class Article
      */
     public function getPublishedAt()
     {
-        if ($this->status == PageStatus::PUBLISHED && $this->publishedAt === null) {
-            $this->setPublishedAt($this->getCreatedAt());
-        }
-
         return $this->publishedAt;
     }
 
@@ -374,10 +371,20 @@ class Article
      */
     public function setStatus($status)
     {
-        if ($status == PageStatus::PUBLISHED && $this->publishedAt === null) {
-            $this->setPublishedAt(new \DateTime());
-        }
         $this->status = $status;
+    }
+
+    /**
+     * Set publishedAt if article is publish.
+     *
+     * @ORM\PreUpdate()
+     * @ORM\PrePersist()
+     */
+    public function publish()
+    {
+        if ($this->status === PageStatus::PUBLISHED && $this->publishedAt === null) {
+            $this->publishedAt = new \DateTime();
+        }
     }
 
     /**
