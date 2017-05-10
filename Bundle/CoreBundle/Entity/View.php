@@ -8,7 +8,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
@@ -301,23 +300,6 @@ abstract class View
     public function hasChildren()
     {
         return count($this->children);
-    }
-
-    /**
-     * Get WebView children.
-     *
-     * @return string
-     */
-    public function getWebViewChildren()
-    {
-        $webViewChildren = [];
-        foreach ($this->children as $child) {
-            if (!$child instanceof BusinessTemplate) {
-                $webViewChildren[] = $child;
-            }
-        }
-
-        return $webViewChildren;
     }
 
     /**
