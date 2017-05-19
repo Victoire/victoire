@@ -65,6 +65,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
 
     /**
      * @var string
+     *
      * @deprecated
      * @ORM\Column(name="asynchronous", type="boolean", nullable=true)
      */
