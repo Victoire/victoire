@@ -182,10 +182,6 @@
         <source>hamburger_menu.backend.back_home</source>
         <target>Volver a la página web</target>
       </trans-unit>
-      <trans-unit id="58893b9960002" resname="victoire.widget.type.asynchronous.label">
-        <source>victoire.widget.type.asynchronous.label</source>
-        <target>¿ Carga asíncrona ?</target>
-      </trans-unit>
       <trans-unit id="58893b996003c" resname="victoire.login.forgot.label">
         <source>victoire.login.forgot.label</source>
         <target>Hé olvidado mi contraseña</target>
