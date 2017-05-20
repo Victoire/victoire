@@ -89,14 +89,14 @@ class BlogController extends BasePageController
                 $category = $category->getChildren();
                 $categoryIds[] = $category->getId();
             }
-            $articles = $articles->filter(function($article) use ($categoryIds) {
-                /** @var Article $article */
+            $articles = $articles->filter(function ($article) use ($categoryIds) {
+                /* @var Article $article */
                 return $article->getCategory() && in_array($article->getCategory()->getId(), $categoryIds, true);
             });
         }
 
         return [
-            'blog' => $blog,
+            'blog'     => $blog,
             'articles' => $articles,
         ];
     }

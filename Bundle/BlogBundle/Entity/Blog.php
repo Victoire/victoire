@@ -73,7 +73,7 @@ class Blog extends Page
      */
     public function getPublishedArticles()
     {
-        return $this->articles->filter(function($article) {
+        return $this->articles->filter(function ($article) {
             return $article->getPublishedAt() <= new \DateTime();
         });
     }
