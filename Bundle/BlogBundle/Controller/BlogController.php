@@ -10,7 +10,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
+use Victoire\Bundle\BlogBundle\Entity\Category;
 use Victoire\Bundle\BlogBundle\Form\BlogCategoryType;
 use Victoire\Bundle\BlogBundle\Form\BlogSettingsType;
 use Victoire\Bundle\BlogBundle\Form\BlogType;
@@ -77,8 +79,25 @@ class BlogController extends BasePageController
      */
     public function feedAction(Request $request, Blog $blog)
     {
+        $articles = $blog->getPublishedArticles();
+        if ($categoryId = $request->query->get('category')) {
+            $entityManager = $this->getDoctrine()->getManager();
+            /** @var Category $category */
+            $category = $entityManager->getRepository('VictoireBlogBundle:Category')->find($categoryId);
+            $categoryIds = [$categoryId];
+            while ($category->getChildren()) {
+                $category = $category->getChildren();
+                $categoryIds[] = $category->getId();
+            }
+            $articles = $articles->filter(function($article) use ($categoryIds) {
+                /** @var Article $article */
+                return $article->getCategory() && in_array($article->getCategory()->getId(), $categoryIds, true);
+            });
+        }
+
         return [
             'blog' => $blog,
+            'articles' => $articles,
         ];
     }
 
