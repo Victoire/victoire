@@ -69,6 +69,16 @@ class Blog extends Page
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getPublishedArticles()
+    {
+        return $this->articles->filter(function ($article) {
+            return $article->getPublishedAt() <= new \DateTime();
+        });
+    }
+
+    /**
      * @param $articles
      *
      * @return $this
