@@ -289,6 +289,7 @@ class WidgetController extends Controller
                     $this->get('doctrine.orm.entity_manager')->flush();
                     $params = [
                         'view'        => $view,
+                        'quantum'     => $widget->getQuantum(),
                         'success'     => true,
                         'html'        => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
                         'widgetId'    => $widget->getId(),
@@ -332,6 +333,7 @@ class WidgetController extends Controller
                             'forms'   => $forms,
                             'widget'  => $widget,
                             'widgets' => $widgets,
+                            'quantum' => $widget->getQuantum(),
                         ]
                     ),
                 ];
