@@ -337,9 +337,9 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     {
         $viewId = null;
 
-        $view = $this->getView();
+        $widgetMap = $this->getWidgetMap();
 
-        if ($view !== null) {
+        if ($widgetMap !== null && $view = $widgetMap->getView() !== null) {
             $viewId = $view->getId();
         }
 
@@ -441,16 +441,6 @@ class Widget extends BaseWidget implements VictoireQueryInterface
         }
     }
 
-    /**
-     * @deprecated
-     * Get view
-     *
-     * @return string
-     */
-    public function getView()
-    {
-        return $this->view;
-    }
 
     /**
      * @return [Criteria]

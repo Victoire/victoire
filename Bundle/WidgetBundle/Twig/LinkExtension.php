@@ -315,16 +315,6 @@ class LinkExtension extends \Twig_Extension
         return $this;
     }
 
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'victoire_link_extension';
-    }
-
     private function formatAttributes($attributes)
     {
         array_walk($attributes, function (&$item, $key) {

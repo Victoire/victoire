@@ -97,12 +97,6 @@ services:
         tags:
             - { name: twig.extension }
 
-    victoire_core.twig.globals_extension:
-        class: Victoire\Bundle\CoreBundle\Twig\Extension\GlobalsExtension
-        arguments:
-            - "@session"
-        tags:
-            - { name: twig.extension }
 
 #  ==================  Cache ================== #
 

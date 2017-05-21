@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Reader\BusinessEntityCacheReader;
@@ -55,20 +56,21 @@ class WidgetManager
     /**
      * construct.
      *
-     * @param WidgetHelper              $widgetHelper
-     * @param WidgetFormBuilder         $widgetFormBuilder
-     * @param WidgetContentResolver     $widgetContentResolver
-     * @param WidgetRenderer            $widgetRenderer
-     * @param EventDispatcherInterface  $eventDispatcher,
-     * @param EntityManager             $entityManager
-     * @param FormErrorHelper           $formErrorHelper
-     * @param RequestStack              $requestStack
-     * @param WidgetMapManager          $widgetMapManager
-     * @param WidgetMapBuilder          $widgetMapBuilder
-     * @param BusinessEntityCacheReader $cacheReader
-     * @param EngineInterface           $templating
-     * @param PageHelper                $pageHelper
-     * @param array                     $slots
+     * @param WidgetHelper                     $widgetHelper
+     * @param WidgetFormBuilder                $widgetFormBuilder
+     * @param WidgetContentResolver            $widgetContentResolver
+     * @param WidgetRenderer                   $widgetRenderer
+     * @param EventDispatcherInterface         $eventDispatcher
+     * @param EntityManager                    $entityManager
+     * @param FormErrorHelper                  $formErrorHelper
+     * @param RequestStack                     $requestStack
+     * @param WidgetMapManager                 $widgetMapManager
+     * @param WidgetMapBuilder                 $widgetMapBuilder
+     * @param BusinessEntityCacheReader        $cacheReader
+     * @param EngineInterface                  $templating
+     * @param PageHelper                       $pageHelper
+     * @param array                            $slots
+     * @param VirtualToBusinessPageTransformer $virtualToBpTransformer
      */
     public function __construct(
         WidgetHelper $widgetHelper,

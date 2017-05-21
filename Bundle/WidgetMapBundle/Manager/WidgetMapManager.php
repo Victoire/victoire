@@ -153,7 +153,7 @@ class WidgetMapManager
             //so we add a new widget map that indicates we delete this widget
             $replaceWidgetMap = new WidgetMap();
             $replaceWidgetMap->setAction(WidgetMap::ACTION_DELETE);
-            $replaceWidgetMap->setWidget($widget);
+            $replaceWidgetMap->addWidget($widget);
             $replaceWidgetMap->setSlot($slot);
             $replaceWidgetMap->setReplaced($widgetMap);
 
