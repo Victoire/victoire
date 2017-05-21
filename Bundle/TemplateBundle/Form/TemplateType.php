@@ -28,7 +28,6 @@ class TemplateType extends ViewType
         $builder->add('layout', ChoiceType::class, [
             'label'             => 'form.template.type.layout.label',
             'choices'           => array_flip($options['layouts']),
-            'choices_as_values' => true,
         ]);
 
         $builder->add('translations', TranslationsType::class, [

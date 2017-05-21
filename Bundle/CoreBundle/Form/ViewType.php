@@ -75,7 +75,9 @@ abstract class ViewType extends AbstractType
             if (!$form->has('template')) {
                 $form->add('template', null, [
                     'label'         => 'form.view.type.template.label',
-                    'property'      => 'name',
+                    'choice_label'      => function ($view) {
+                        return $view->getName();
+                    },
                     'required'      => !$view instanceof Template || $view instanceof BusinessTemplate,
                     'query_builder' => $getAllTemplateWithoutMe,
                 ]);

@@ -380,7 +380,7 @@
 {% if widget == 'single_text' %}
     {% if datepicker is defined %}
         <div data-provider="datepicker" class="vic-input-group vic-date" data-date="{{ value }}" data-link-field="{{ id }}" data-link-format="dd-mm-yyyy">
-            <input {% if vic_widget_form_control_class is not same as(false) %}class="{{ vic_widget_form_control_class }}" {% endif %}type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
+            <input {% if vic_widget_form_control_class is not same as(false) %}class="{{ vic_widget_form_control_class }}" {% endif %}type="text" {% if read_only is defined and read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
             <input type="hidden" value="{{ value }}" {{ block('widget_attributes') }}>
             <span class="vic-input-group-addon">{{ victoire_icon('calendar') }}</span>
         </div>
@@ -406,7 +406,7 @@
 {% if widget == 'single_text' %}
     {% if timepicker is defined %}
         <div data-provider="timepicker" class="vic-input-group vic-date" data-date="{{ value }}" data-link-field="{{ id }}" data-link-format="hh:ii">
-            <input class="v-form-group__input" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
+            <input class="v-form-group__input" type="text" {% if read_only is defined and read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}>
             <input type="hidden" value="{{ value }}" {{ block('widget_attributes') }}>
             <span class="vic-input-group-addon">{{ victoire_icon('time') }}</span>
         </div>
@@ -436,7 +436,7 @@
                     {% include 'VictoireUIBundle:SVG:calendar.html.twig' %}
                 </span>
 
-                <input class="v-form-group__input" type="text" {% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %} value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}">
+                <input class="v-form-group__input" type="text" {% if read_only is defined and read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %} value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}">
                 <input type="hidden" value="{% if value %}{{ value|date('d-m-Y H:i') }}{% endif %}" {{ block('widget_attributes') }}>
             </div>
         {% else %}

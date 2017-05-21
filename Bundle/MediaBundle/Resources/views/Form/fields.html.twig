@@ -69,19 +69,6 @@
                     {{ form_widget(form) }}
                 {% endif %}
 
-                {% if max_length %}
-                    <script>
-                        jQuery(document).ready(function(){
-                            $("#{{ id }}").charCount({
-                                allowed: {{ max_length }},
-                                counterText: 'Characters left: ',
-                                css: 'help-inline',
-                                cssExceeded: 'error'
-                            });
-                            $("#{{ id }}").attr('maxlength', '');
-                        });
-                    </script>
-                {% endif %}
                 {% if attr['title'] is defined %}
                     <script>
                         jQuery(document).ready(function(){
