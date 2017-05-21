@@ -92,7 +92,7 @@
       </trans-unit>
       <trans-unit id="58893b99f2242" resname="form.pageSeo.sitemapIndexed.label">
         <source>form.pageSeo.sitemapIndexed.label</source>
-        <target>URL indexed</target>
+        <target>Indexed URL</target>
       </trans-unit>
       <trans-unit id="58893b99f224c" resname="form.pageSeo.sitemapPriority.label">
         <source>form.pageSeo.sitemapPriority.label</source>
@@ -127,7 +127,7 @@
         <target><![CDATA[<span class="v-seo v-seo--success">SEO</span>]]></target>
       </trans-unit>
       <trans-unit id="58893b99f2297" resname="modal.form.pageSeo.settings.title">
-        <source>modal.form.pageSeo.settings.title&gt;</source>
+        <source>modal.form.pageSeo.settings.title</source>
         <target><![CDATA[SEO Settings - <strong>%pageName%</strong>]]></target>
       </trans-unit>
       <trans-unit id="58893b99f22a0" resname="modal.mandatory_fields.label">

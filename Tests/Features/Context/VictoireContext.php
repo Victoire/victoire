@@ -4,12 +4,15 @@ namespace Victoire\Tests\Features\Context;
 
 use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Behat\Hook\Scope\BeforeStepScope;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Element\Element;
 use Behat\Mink\Session;
 use Behat\Symfony2Extension\Context\KernelDictionary;
+use Behat\Testwork\Hook\Scope\BeforeSuiteScope;
 use Knp\FriendlyContexts\Context\RawMinkContext;
+use Symfony\Component\Finder\Finder;
 
 /**
  * This class gives some usefull methods for Victoire navigation.
@@ -20,6 +23,32 @@ class VictoireContext extends RawMinkContext
 {
     use KernelDictionary;
     protected $minkContext;
+
+    /**
+     * @BeforeSuite
+     *
+     * @param BeforeSuiteScope $scope
+     */
+    public static function additionalContexts(BeforeSuiteScope $scope)
+    {
+        $environment = $scope->getEnvironment();
+        $contextDir = __DIR__.'/../../../../../../Tests/Context/';
+
+        if (!is_dir($contextDir)) {
+            return;
+        }
+
+        $finder = new Finder();
+        $finder->files()->in($contextDir)->name('*Context.php');
+
+        foreach ($finder as $file) {
+            $path = $file->getRealPath();
+            include $path;
+            $declaredClases = get_declared_classes();
+            $newContext = end($declaredClases);
+            $environment->registerContextClass($newContext);
+        }
+    }
 
     /**
      * @BeforeScenario
@@ -33,11 +62,11 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * @BeforeScenario
+     * @AfterBackground
      *
-     * @param BeforeScenarioScope $scope
+     * @param BeforeStepScope $scope
      */
-    public function resetViewsReference(BeforeScenarioScope $scope)
+    public function resetViewsReference(BeforeStepScope $scope)
     {
         $viewsReferences = $this->getContainer()->get('victoire_core.view_helper')->buildViewsReferences();
         $this->getContainer()->get('victoire_view_reference.manager')->saveReferences($viewsReferences);
@@ -126,7 +155,7 @@ class VictoireContext extends RawMinkContext
      */
     public function iSelectFromTheSelectOfSlot($widget, $nth, $slot)
     {
-        $slot = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[@id="vic-slot-'.$slot.'"]');
+        $slot = $this->getSession()->getPage()->find('xpath', 'descendant-or-self::*[contains(@id, "vic-slot-'.$slot.'")]');
         $selects = $slot->findAll('css', 'select[role="menu"]');
         $selects[$nth - 1]->selectOption(str_replace('\\"', '"', $widget));
     }
@@ -269,7 +298,7 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * @Then /^I open the additionals menu drop$/
+     * @Then /^I open the additional menu drop$/
      */
     public function iOpenTheAdditionalsMenuDrop()
     {
@@ -291,7 +320,7 @@ class VictoireContext extends RawMinkContext
      */
     public function iFollowTheTab($name)
     {
-        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::a[contains(@class, "v-tabs-nav__anchor") and normalize-space(text()) = "%s"]', $name));
+        $element = $this->findOrRetry($this->getSession()->getPage(), 'xpath', sprintf('descendant-or-self::a[contains(@class, "v-tabs-nav__anchor") and contains(normalize-space(text()), "%s")]', $name));
 
         // @TODO When the new styleguide is completly integrated, remove.
         if (null === $element) {
@@ -509,6 +538,36 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
+     * @When /^I should see "(.+)" quantum$/
+     * @When /^I should see "(.+)" quantum creation button$/
+     */
+    public function iShouldSeeXQuantum($nb)
+    {
+        $session = $this->getSession();
+
+        $quantums = $this->findOrRetry(
+            $session->getPage(),
+            'xpath',
+            'descendant-or-self::div[contains(@id, "v-quantum-tab")]/descendant-or-self::a[contains(@class, "v-btn--quantum")]',
+            10000,
+            'findAll'
+        );
+
+        if (count($quantums) != $nb) {
+            $message = sprintf('%s quantum(s) found', count($quantums));
+            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+    }
+
+    /**
+     * @When /^I should see the success message for Widget edit$/
+     */
+    public function iShouldSeeTheSuccessMessageForWidgetEdit()
+    {
+        $this->minkContext->assertPageContainsText('Victoire!');
+    }
+
+    /**
      * @When I select :arg1 from the collapse menu
      */
     public function iSelectFromTheCollapseMenu($name)
@@ -548,16 +607,17 @@ class VictoireContext extends RawMinkContext
      * @param string  $selectorType xpath|css
      * @param string  $value
      * @param int     $timeout
+     * @param string  $method
      *
      * @return \Behat\Mink\Element\NodeElement|mixed|null|void
      */
-    protected function findOrRetry(Element $element, $selectorType, $value, $timeout = 10000)
+    protected function findOrRetry(Element $element, $selectorType, $value, $timeout = 10000, $method = 'find')
     {
         if ($timeout <= 0) {
             return;
         }
 
-        $item = $element->find($selectorType, $value);
+        $item = $element->$method($selectorType, $value);
 
         if ($item) {
             return $item;

@@ -33,7 +33,7 @@
 
     <div id="v-modal-tab-content-container">
         {% for index, form in forms %}
-            <div class="v-collapse" id="widget-{{ widgets[index].id }}-tab-pane" data-flag="v-collapse" data-group="tab-widget-quantum" {% if loop.first %}data-state="visible"{% endif %}>
+            <div class="v-collapse" id="widget-{{ widgets[index].id }}-tab-pane" data-flag="v-collapse" data-group="tab-widget-quantum" data-quantum="{{ quantum }}" {% if loop.first %}data-state="visible"{% endif %}>
                 {% include 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' %}
             </div>
         {% endfor %}

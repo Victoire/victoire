@@ -36,40 +36,30 @@ class VictoirePageExtension extends Extension implements PrependExtensionInterfa
     {
         // Build fos_elastica config for each widget
         $elasticaConfig = [
-            'indexes' => [
-                'pages' => [
-                    'types' => [
-                         'Pages' => [
-                            'serializer'  => [
-                                'groups' => ['search'],
-                            ],
-                            'mappings'    => [
-                                'translations' => [
-                                    'type'       => 'nested',
-                                    'properties' => [
-                                        'name' => null,
-                                    ],
-                                ],
-                            ],
-                            'persistence' => [
-                                'driver'   => 'orm',
-                                'model'    => 'Victoire\\Bundle\\PageBundle\\Entity\\BasePage',
-                                'provider' => [],
-                                'listener' => [],
-                                'finder'   => [],
+            'types' => [
+                'Pages' => [
+                    'serializer'  => [
+                        'groups' => ['search'],
+                    ],
+                    'mappings'    => [
+                        'translations' => [
+                            'type'       => 'nested',
+                            'properties' => [
+                                'name'   => null,
+                                'locale' => null,
                             ],
                         ],
+                    ],
+                    'persistence' => [
+                        'driver'   => 'orm',
+                        'model'    => 'Victoire\\Bundle\\PageBundle\\Entity\\BasePage',
+                        'provider' => [],
+                        'listener' => [],
+                        'finder'   => [],
                     ],
                 ],
             ],
         ];
-
-        foreach ($container->getExtensions() as $name => $extension) {
-            switch ($name) {
-                case 'fos_elastica':
-                    $container->prependExtensionConfig($name, $elasticaConfig);
-                    break;
-            }
-        }
+        $container->setParameter('victoire_search_pages_index', $elasticaConfig);
     }
 }

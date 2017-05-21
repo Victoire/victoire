@@ -3,7 +3,7 @@
 use Symfony\Component\HttpFoundation\Request;
 
 require_once __DIR__.'/../app/AppKernel.php';
-$kernel = new AppKernel('domain', true);
+$kernel = new AppKernel('domain', false);
 $kernel->loadClassCache();
 Request::enableHttpMethodParameterOverride();
 $request = Request::createFromGlobals();

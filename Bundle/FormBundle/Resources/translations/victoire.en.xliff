@@ -108,7 +108,7 @@
       </trans-unit>
       <trans-unit id="58893b9979f63" resname="form.link_type.target.modalLayouts.label">
         <source>form.link_type.target.modalLayouts.label</source>
-        <target>Modale style</target>
+        <target>Modal style</target>
       </trans-unit>
       <trans-unit id="58893b9979f7a" resname="form.link_type.target.modalLayouts.choices.modal">
         <source>form.link_type.target.modalLayouts.choices.modal</source>

@@ -12,32 +12,33 @@ class AppKernel extends Kernel
      */
     public function registerBundles()
     {
-        return [
-            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
-            new Symfony\Bundle\TwigBundle\TwigBundle(),
-            new Symfony\Bundle\MonologBundle\MonologBundle(),
-            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+        return array_merge(
+            [
+                new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+                new Symfony\Bundle\SecurityBundle\SecurityBundle(),
+                new Symfony\Bundle\TwigBundle\TwigBundle(),
+                new Symfony\Bundle\MonologBundle\MonologBundle(),
+                new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+                new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+                new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+                new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+                new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
-            new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
-            new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            new FOS\UserBundle\FOSUserBundle(),
-            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle(),
-            new Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle(),
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            new Liip\ImagineBundle\LiipImagineBundle(),
-            new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle(),
-            new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle(),
-            new Snc\RedisBundle\SncRedisBundle(),
-            new Troopers\AsseticInjectorBundle\TroopersAsseticInjectorBundle(),
-            new Troopers\AlertifyBundle\TroopersAlertifyBundle(),
+                new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
+                new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
+                new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+                new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+                new FOS\UserBundle\FOSUserBundle(),
+                new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+                new JMS\SerializerBundle\JMSSerializerBundle(),
+                new Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle(),
+                new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+                new Liip\ImagineBundle\LiipImagineBundle(),
+                new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle(),
+                new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle(),
+                new Snc\RedisBundle\SncRedisBundle(),
+                new Troopers\AsseticInjectorBundle\TroopersAsseticInjectorBundle(),
+                new Troopers\AlertifyBundle\TroopersAlertifyBundle(),
 
             //Victoire bundles
             new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
@@ -61,16 +62,16 @@ class AppKernel extends Kernel
             new Victoire\Bundle\ViewReferenceBundle\ViewReferenceBundle(),
             new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
             new Victoire\Bundle\WidgetMapBundle\VictoireWidgetMapBundle(),
-            new Victoire\Bundle\ORMBusinessEntityBundle\VictoireORMBusinessEntityBundle(),
-            new Victoire\Bundle\APIBusinessEntityBundle\VictoireAPIBusinessEntityBundle(),
-
-            //Victoire test bundles
+new Victoire\Bundle\ORMBusinessEntityBundle\VictoireORMBusinessEntityBundle(),
+            new Victoire\Bundle\APIBusinessEntityBundle\VictoireAPIBusinessEntityBundle(),            //Victoire minmaltest bundles
             new Victoire\Widget\ForceBundle\VictoireWidgetForceBundle(),
             new Victoire\Widget\LightSaberBundle\VictoireWidgetLightSaberBundle(),
             new Victoire\Widget\ButtonBundle\VictoireWidgetButtonBundle(),
             new Victoire\Widget\TextBundle\VictoireWidgetTextBundle(),
             new Acme\AppBundle\AcmeAppBundle(),
-        ];
+        ],
+            $this->getTestBundles()
+        );
     }
 
     /**
@@ -95,5 +96,33 @@ class AppKernel extends Kernel
     public function getLogDir()
     {
         return sys_get_temp_dir().'/Victoire/logs/'.$this->environment;
+    }
+
+    /**
+     * Include Tests Bundles defined in Bundles.php file.
+     *
+     * @throws ErrorException
+     *
+     * @return array
+     */
+    private function getTestBundles()
+    {
+        $bundlesFile = __DIR__.'/../../../../../../Tests/Bundles.php';
+
+        if (file_exists($bundlesFile)) {
+            include $bundlesFile;
+
+            if (!isset($victoireTestBundles)) {
+                throw new \ErrorException(sprintf('$victoireTestBundles is not defined in Bundles.php file'));
+            }
+
+            if (!is_array($victoireTestBundles)) {
+                throw new \ErrorException(sprintf('$victoireTestBundles defined in Bundles.php must be an array'));
+            }
+
+            return $victoireTestBundles;
+        }
+
+        return [];
     }
 }

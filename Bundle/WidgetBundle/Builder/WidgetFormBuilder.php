@@ -10,8 +10,9 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\WidgetBuildFormEvent;
 use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
-use Victoire\Bundle\WidgetBundle\Event\WidgetFormCreateEvent;
 use Victoire\Bundle\WidgetBundle\Event\WidgetFormEvents;
+use Victoire\Bundle\WidgetBundle\Event\WidgetFormPostCreateEvent;
+use Victoire\Bundle\WidgetBundle\Event\WidgetFormPreCreateEvent;
 use Victoire\Bundle\WidgetBundle\Form\WidgetOptionsContainer;
 
 class WidgetFormBuilder
@@ -136,7 +137,7 @@ class WidgetFormBuilder
     {
         $forms = [];
         foreach ($widgets as $key => $widget) {
-            $_quantum = null !== $quantum ? $quantum : $key;
+            $_quantum = null !== $quantum ? $quantum : $this->convertToString($key);
             $forms[$key] = $this->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap, $_quantum);
             $forms[$key]['quantum'] = $_quantum;
             if ($widget === $activeWidget) {
@@ -248,12 +249,13 @@ class WidgetFormBuilder
         $optionsContainer = new WidgetOptionsContainer([
             'businessEntityId'      => $businessEntityId,
             'mode'                  => $formMode,
+            'quantum'               => $quantum,
             'action'                => $formUrl,
             'method'                => 'POST',
             'dataSources'           => $this->container->get('victoire_criteria.chain.data_source_chain'),
         ]);
 
-        $event = new WidgetFormCreateEvent($optionsContainer, $widgetFormTypeClass);
+        $event = new WidgetFormPreCreateEvent($optionsContainer, $widgetFormTypeClass);
         $this->container->get('event_dispatcher')->dispatch(WidgetFormEvents::PRE_CREATE, $event);
         $this->container->get('event_dispatcher')->dispatch(WidgetFormEvents::PRE_CREATE.'_'.strtoupper($widgetName), $event);
 
@@ -261,14 +263,18 @@ class WidgetFormBuilder
         $mockForm = $formFactory->create($widgetFormTypeClass, $widget, $optionsContainer->getOptions());
         //Prefix base name with form mode to avoid to have unique form fields ids
 
-        $form = $formFactory->createNamed(
-            sprintf('%s_%s_%s_%s', strtolower($businessEntityId), $this->convertToString($quantum), $formMode, $mockForm->getName()),
+        $builder = $formFactory->createNamed(
+            sprintf('%s_%s_%s_%s', strtolower($businessEntityId), $quantum, $formMode, $mockForm->getName()),
             $widgetFormTypeClass,
             $widget,
             $optionsContainer->getOptions()
         );
 
-        return $form;
+        $event = new WidgetFormPostCreateEvent($builder);
+        $this->container->get('event_dispatcher')->dispatch(WidgetFormEvents::POST_CREATE, $event);
+        $this->container->get('event_dispatcher')->dispatch(WidgetFormEvents::POST_CREATE.'_'.strtoupper($widgetName), $event);
+
+        return $builder;
     }
 
     /**
@@ -280,8 +286,12 @@ class WidgetFormBuilder
      *
      * @return string
      */
-    private function convertToString($number, $letter = 'a', $i = 0)
+    public function convertToString($number, $letter = 'a', $i = 0)
     {
+        if (!is_numeric($number)) {
+            return $number;
+        }
+
         while ($i < $number) {
             $i++;
             $letter++;

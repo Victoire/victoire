@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  * Mercenary.
  *
  * @ORM\Entity
- * @ORM\Table("character_mercenary")
  */
 class Mercenary extends Character
 {

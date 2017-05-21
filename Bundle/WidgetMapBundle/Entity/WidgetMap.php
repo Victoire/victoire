@@ -325,7 +325,7 @@ class WidgetMap
     }
 
     /**
-     * @retun WidgetMap[]
+     * @return WidgetMap[]
      */
     public function getChildren()
     {

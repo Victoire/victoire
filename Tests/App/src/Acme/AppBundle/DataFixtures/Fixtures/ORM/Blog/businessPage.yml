@@ -1,6 +1,6 @@
 Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage:
     bep_article_i_m_your_father:
-        currentLocale: fr
+        currentLocale: en
         name: "I'm your father."
         author: @anakin
         template: @template_article
@@ -17,5 +17,5 @@ Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
     bep_article_i_m_your_father_en_name:
         name: "I'm your father."
         slug: "I-m-your-father"
-        locale: en
+        locale: fr
         translatable: @bep_article_i_m_your_father

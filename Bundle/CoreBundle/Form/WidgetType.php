@@ -218,6 +218,7 @@ class WidgetType extends AbstractType
             'slot',
             'businessEntityId',
             'dataSources',
+            'quantum',
         ]);
     }
 }

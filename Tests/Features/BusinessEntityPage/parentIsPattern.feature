@@ -10,32 +10,31 @@ Feature: Mercenary is not a BusinessEntity itself but extends Character which is
             | name       | midiChlorians | slug       |
             | Boba fet   | 1500          | boba-fet   |
 
-        Given the following BusinessTemplate:
+        And the following BusinessTemplate:
             | currentLocale |name                       | backendName  | slug                     |  businessEntity | parent  | template      |
-            | fr            |Fiche Personnage - {{item.name}} | Fiche Jedi   | fiche-personnage-{{item.slug}} |  Character        | home    | base |
-        Given the following WidgetMap:
+            | en            | Character profile - {{item.name}} | Character profile | character-profile-{{item.slug}} |  Character        | home    | base |
+        And the following WidgetMap:
             | view | action | slot |
-            | fiche-personnage-{{item.slug}} | create | main_content |
-        Given the following WidgetText:
+            | character-profile-{{item.slug}} | create | main_content |
+        And the following WidgetText:
             | widgetMap                | fields                       | mode           | businessEntity |
-            | fiche-personnage-{{item.slug}} | a:1:{s:7:"content";s:4:"name";} | businessEntity | Character |
-        Given I am on "/fr/victoire-dcms/business-template/show/4"
+            | character-profile-{{item.slug}} | a:1:{s:7:"content";s:4:"name";} | businessEntity | Character             |
+        And I am on "/en/victoire-dcms/business-template/show/4"
             Then I should see "Boba fet"
-        Given I am on "/fr/fiche-personnage-boba-fet"
+        And I am on "/en/character-profile-boba-fet"
             Then I should see "Boba fet"
-
         # TEST the virtual BEP is available in LinkExtension
-        Given I am on "/"
-            Then I switch to "layout" mode
-            And I should see "Nouveau contenu"
-            When I select "Bouton" from the "1" select of "main_content" slot
-            Then I should see "Créer"
-            When I select "Page" from "_a_static_widget_button[link][linkType]"
-            And I should see "Choisissez une page"
-            When I select "Fiche Personnage - Boba fet" from "_a_static_widget_button[link][viewReference]"
-            And I fill in "_a_static_widget_button[title]" with "Fiche de Boba fet"
-            And I submit the widget
-            Given I reload the page
-            Then I should see "Fiche de Boba fet"
-            When I follow "Fiche de Boba fet"
-            Then I should be on "/fr/fiche-personnage-boba-fet"
+        When I am on "/"
+        Then I switch to "layout" mode
+        And I should see "New content"
+        When I select "Button" from the "1" select of "main_content" slot
+        Then I should see "Widget (Button)"
+        When I select "Website page" from "_a_static_widget_button[link][linkType]"
+        And I should see "Choose a page"
+        When I select "Character profile - Boba fet" from "_a_static_widget_button[link][viewReference]"
+        And I fill in "_a_static_widget_button[title]" with "Boba fet profile"
+        And I submit the widget
+        When I reload the page
+        Then I should see "Boba fet profile"
+        When I follow "Boba fet profile"
+        Then I should be on "/en/character-profile-boba-fet"

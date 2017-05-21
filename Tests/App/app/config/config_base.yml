@@ -22,8 +22,8 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
-    default_locale:  "fr"
-    translator:      { fallback: "fr" }
+    default_locale:  "en"
+    translator:      { fallback: "en" }
     trusted_hosts:   ~
     trusted_proxies: ~
     session:
@@ -83,7 +83,7 @@ doctrine:
                 is_bundle: false
 
 stof_doctrine_extensions:
-    default_locale: fr
+    default_locale: en
     persist_default_translation: true
     orm:
         default:
@@ -154,11 +154,12 @@ services:
             - { name: twig.extension }
 
 victoire_i18n:
-    victoire_locale: fr
+    victoire_locale: en
     available_locales:
-        fr: fr
         en: en
+        fr: fr
     locale_pattern: parameter
+
 snc_redis:
     clients:
         victoire:
@@ -167,4 +168,9 @@ snc_redis:
             dsn: %redis-dns%
 
 parameters:
-    locale: fr
+    locale: en
+
+troopers_alertify:
+    contexts:
+        front:
+            engine: "notie"

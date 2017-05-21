@@ -106,6 +106,10 @@
         <source>acme.app.jedi.form.action.index</source>
         <target>Jedis list</target>
       </trans-unit>
+      <trans-unit id="58893bce99db6" resname="acme.app.jedi.index.noresult">
+        <source>acme.app.jedi.index.noresult</source>
+        <target>No result</target>
+      </trans-unit>
       <trans-unit id="58893bce97f27" resname="acme.app.jedi.form.button.create">
         <source>acme.app.jedi.form.button.create</source>
         <target>Create</target>
@@ -132,7 +136,7 @@
       </trans-unit>
       <trans-unit id="s1p2a358893bce97e2a" resname="hamburger_menu.spaceship">
         <source>hamburger_menu.spaceship</source>
-        <target><![CDATA[<i class="fa fa-space-shuttle"></i> Spaceship]]></target>
+        <target>Spaceship</target>
       </trans-unit>
       <trans-unit id="s1p2a358893bce97e42" resname="acme.app.spaceship.index.title">
         <source>acme.app.spaceship.index.title</source>
@@ -185,6 +189,10 @@
       <trans-unit id="s1p2a358893bce97f1e" resname="acme.app.spaceship.form.action.index">
         <source>acme.app.spaceship.form.action.index</source>
         <target>Spaceships list</target>
+      </trans-unit>
+      <trans-unit id="s1p2a358893bce99db6" resname="acme.app.spaceship.index.noresult">
+        <source>acme.app.spaceship.index.noresult</source>
+        <target>No result</target>
       </trans-unit>
       <trans-unit id="s1p2a358893bce97f27" resname="acme.app.spaceship.form.button.create">
         <source>acme.app.spaceship.form.button.create</source>

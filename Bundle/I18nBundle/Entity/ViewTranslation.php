@@ -19,6 +19,11 @@ class ViewTranslation
     use Translation;
 
     /**
+     * @Serializer\Groups({"search"})
+     */
+    protected $locale;
+
+    /**
      * @var string
      *
      * @Assert\NotBlank()
