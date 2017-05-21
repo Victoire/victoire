@@ -90,14 +90,14 @@ class WidgetController extends Controller
      * @param string  $type          The type of the widget we edit
      * @param int     $viewReference The view reference where attach the widget
      * @param string  $slot          The slot where attach the widget
-     * @param null    $quantum       The quantum number used to avoid same form name
+     * @param string  $quantum       The quantum letter used to avoid same form name
      *
      * @throws Exception
      *
      * @return JsonResponse
-     * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{quantum}", name="victoire_core_widget_new", defaults={"slot":null, "quantum":0}, options={"expose"=true})
+     * @Route("/victoire-dcms/widget/new/{type}/{viewReference}/{slot}/{quantum}", name="victoire_core_widget_new", defaults={"slot":null, "quantum":"a"}, options={"expose"=true})
      */
-    public function newAction(Request $request, $type, $viewReference, $slot = null, $quantum = 0)
+    public function newAction(Request $request, $type, $viewReference, $slot = null, $quantum = 'a')
     {
         try {
             $view = $this->getViewByReferenceId($viewReference);
@@ -142,8 +142,8 @@ class WidgetController extends Controller
      * @param string $businessEntityId The BusinessEntity::id (can be null if the submitted form is in static mode)
      *
      * @return JsonResponse
-     * @Route("/victoire-dcms/widget/create/static/{type}/{viewReference}/{slot}/{quantum}/{position}/{parentWidgetMap}", name="victoire_core_widget_create_static", defaults={"mode":"static", "slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json", "quantum":0})
-     * @Route("/victoire-dcms/widget/create/{mode}/{type}/{viewReference}/{slot}/{quantum}/{businessEntityId}/{position}/{parentWidgetMap}", name="victoire_core_widget_create", defaults={"slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json", "quantum":0})
+     * @Route("/victoire-dcms/widget/create/static/{type}/{viewReference}/{slot}/{quantum}/{position}/{parentWidgetMap}", name="victoire_core_widget_create_static", defaults={"mode":"static", "slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json", "quantum":"a"})
+     * @Route("/victoire-dcms/widget/create/{mode}/{type}/{viewReference}/{slot}/{quantum}/{businessEntityId}/{position}/{parentWidgetMap}", name="victoire_core_widget_create", defaults={"slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json", "quantum":"a"})
      * @Template()
      */
     public function createAction($mode, $type, $viewReference, $slot = null, $position = null, $parentWidgetMap = null, $businessEntityId = null, $quantum = null)
@@ -194,7 +194,7 @@ class WidgetController extends Controller
      *
      * @return JsonResponse
      *
-     * @Route("/victoire-dcms/widget/edit/{id}/{viewReference}/{mode}/{businessEntityId}", name="victoire_core_widget_edit", options={"expose"=true}, defaults={"quantum":0, "mode": "static"})
+     * @Route("/victoire-dcms/widget/edit/{id}/{viewReference}/{mode}/{businessEntityId}", name="victoire_core_widget_edit", options={"expose"=true}, defaults={"quantum":"a", "mode": "static"})
      * @Route("/victoire-dcms/widget/update/{id}/{viewReference}/{mode}/{quantum}/{businessEntityId}", name="victoire_core_widget_update", defaults={"businessEntityId": null, "mode": "static"})
      * @Template()
      */
@@ -289,6 +289,7 @@ class WidgetController extends Controller
                     $this->get('doctrine.orm.entity_manager')->flush();
                     $params = [
                         'view'        => $view,
+                        'quantum'     => $widget->getQuantum(),
                         'success'     => true,
                         'html'        => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
                         'widgetId'    => $widget->getId(),
@@ -332,6 +333,7 @@ class WidgetController extends Controller
                             'forms'   => $forms,
                             'widget'  => $widget,
                             'widgets' => $widgets,
+                            'quantum' => $widget->getQuantum(),
                         ]
                     ),
                 ];

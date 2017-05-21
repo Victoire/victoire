@@ -8,12 +8,12 @@ framework:
 victoire_i18n:
     victoire_locale: fr
     available_locales:
-        fr: fr
         en: en
+        fr: fr
     locale_pattern: domain
     locale_pattern_table:
-        fr.victoire.io: fr
         en.victoire.io: en
+        fr.victoire.io: fr
 
 parameters:
     router.request_context.base_url: ':8000/app_domain.php'

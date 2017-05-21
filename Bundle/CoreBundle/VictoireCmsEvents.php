@@ -20,6 +20,10 @@ final class VictoireCmsEvents
      */
     const WIDGET_POST_QUERY = 'victoire_core.widget.post_query';
     /**
+     * The WIDGET_POST_FLUSH event occurs when a widget has been created.
+     */
+    const WIDGET_POST_FLUSH = 'victoire_core.widget.post_flush';
+    /**
      * The WIDGET_RENDER event occurs when a widget is rendered.
      */
     const WIDGET_BUILD_FORM = 'victoire_core.widget.build_form';

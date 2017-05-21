@@ -145,10 +145,10 @@ victoire_core:
         defaultLayout: "Default layout"
     # Here you need to list all folders containing your BusinessEntities
     # Remove friendsofvictoire if you don't need it
-    base_paths:
         - "%kernel.root_dir%/../src"
-        - "%kernel.root_dir%/../vendor/victoire/victoire/Bundle/BlogBundle"
+        - "%kernel.root_dir%/../vendor/victoire"
         - "%kernel.root_dir%/../vendor/friendsofvictoire"
+        - "%kernel.root_dir%/../vendor/myorganization"
 
 #if you need i18n
 victoire_i18n:
@@ -306,8 +306,8 @@ php app/console victoire:ui:fetchAssets
 
 #### Dump JS Translation File
 
-Victoire uses [BazingaJsTranslationBundle](https://github.com/willdurand/BazingaJsTranslationBundle) to 
-make translations available in the JS based Frontend. 
+Victoire uses [BazingaJsTranslationBundle](https://github.com/willdurand/BazingaJsTranslationBundle) to
+make translations available in the JS based Frontend.
 
 To dump the needed file run:
 ```shell

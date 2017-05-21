@@ -42,6 +42,7 @@ services:
             - @victoire_widget.widget_form_builder
             - @victoire_widget.widget_content_resolver
             - @victoire_widget.widget_renderer
+            - @event_dispatcher
             - @doctrine.orm.entity_manager
             - @victoire_form.error_helper
             - @request

@@ -2,4 +2,4 @@ Victoire\Bundle\BlogBundle\Entity\ArticleTranslation:
     article_en:
         name: "I'm your father."
         slug: I-m-your-father
-        locale: en
+        locale: fr

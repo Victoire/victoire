@@ -76,23 +76,23 @@
       </trans-unit>
       <trans-unit id="58893b995ce71" resname="modal.button.delete.confirm.ok.label">
         <source>modal.button.delete.confirm.ok.label</source>
-        <target>YES, I want to delete it!</target>
+        <target>YES, I WANT TO DELETE IT!</target>
       </trans-unit>
       <trans-unit id="58893b995cebc" resname="modal.button.delete.confirm.cancel.label">
         <source>modal.button.delete.confirm.cancel.label</source>
-        <target>Cancel</target>
+        <target>CANCEL</target>
       </trans-unit>
       <trans-unit id="58893b995cf89" resname="modal.button.delete.title">
         <source>modal.button.delete.title</source>
-        <target>Delete</target>
+        <target>DELETE</target>
       </trans-unit>
       <trans-unit id="58893b995cfc0" resname="modal.button.update.title">
         <source>modal.button.update.title</source>
-        <target>Update</target>
+        <target>UPDATE</target>
       </trans-unit>
       <trans-unit id="58893b995cfe8" resname="modal.button.update-bulk.title">
         <source>modal.button.update-bulk.title</source>
-        <target>Update</target>
+        <target>UPDATE</target>
       </trans-unit>
       <trans-unit id="58893b995d057" resname="modal.mandatory_fields.label">
         <source>modal.mandatory_fields.label</source>
@@ -132,7 +132,7 @@
       </trans-unit>
       <trans-unit id="58893b995d42c" resname="victoire.widget.inherited.notice">
         <source>victoire.widget.inherited.notice</source>
-        <target><![CDATA[<strong>Warning! </strong>This content is owned by a parent template (<i>%templateName%</i>).<br/>If you want to edit the content ONLY on this page, keep on going, you're in the right place.<br/>However, if you want to edit this widget on the parent template, and affect it wherever it is used on the website, you have to click on this link :<a href="%templateEditLink%" data-modal="close" class="v-btn v-btn--warning" data-toggle="vic-modal">edit the original content</a>.]]></target>
+        <target><![CDATA[<strong>Warning! </strong>This content is owned by a parent template (<i>%templateName%</i>).<br/>If you want to edit the content ONLY on this page, keep on going, you're in the right place.<br/>However, if you want to edit this widget on the parent template, and affect it wherever it is used on the website, you have to click on this link : <a href="%templateEditLink%" data-modal="close" class="v-btn v-btn--warning" data-toggle="vic-modal">EDIT THE ORIGINAL CONTENT</a>]]></target>
       </trans-unit>
       <trans-unit id="58893b995d4c9" resname="navbar.mode.edit">
         <source>navbar.mode.edit</source>
@@ -224,7 +224,7 @@
       </trans-unit>
       <trans-unit id="58893b995da32" resname="victoire.widget.modal.title">
         <source>victoire.widget.modal.title</source>
-        <target>Widget %id% (%type%)</target>
+        <target>Widget %id%(%type%)</target>
       </trans-unit>
       <trans-unit id="36" resname="menu.additionals">
         <source>menu.additionals</source>

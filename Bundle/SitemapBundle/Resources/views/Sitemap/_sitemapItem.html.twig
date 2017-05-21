@@ -10,7 +10,6 @@
 
         {% set sitemapPriorityForm = attribute(forms, page.id) %}
 
-
             {{ form_start(sitemapPriorityForm) }}
             <div class="vic-sitemap-item">
                 <div class="vic-sitemap-item-column">
@@ -35,13 +34,12 @@
                 <a href="{{ path('victoire_core_page_delete', {'id': page.id}) }}" data-toggle="vic-confirm" class="vic-btn vic-btn-danger -square -framed" data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire') }}" data-modal="delete"><i class="fa fa-trash-o"></i></a>
             {% endif %}
 
-
     </div>
 
     {% if page.children|length %}
         <ul class="sublist">
             {% set level = level + 1 %}
-            {% for _page in page.webViewChildren %}
+            {% for _page in page.getWebViewChildren(true) %}
                 {% include 'VictoireSitemapBundle:Sitemap:_sitemapItem.html.twig' with {'page': _page, 'level': level} %}
             {% endfor %}
         </ul>

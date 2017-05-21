@@ -17,6 +17,9 @@
             margin-top: 80px;
         }
     </style>
+    {% stylesheets filter='less, cssrewrite' injector="alertify-notie" %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
 {% endblock head_style %}
 
 {% block head_script %}
@@ -28,3 +31,11 @@
     </script>
     {{ parent() }}
 {% endblock head_script %}
+
+{% block foot_script %}
+    {{ parent() }}
+    {% javascripts injector="alertify-notie" %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'messages'}) }}?locales={{ victoire_i18n_available_locales|join(',') }}"></script>
+{% endblock foot_script %}

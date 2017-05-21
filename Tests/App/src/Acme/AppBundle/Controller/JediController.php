@@ -248,4 +248,44 @@ class JediController extends BackendController
             ->add('submit', 'submit', ['label' => 'acme.app.jedi.form.button.delete'])
             ->getForm();
     }
+
+    /**
+     * Lists all Jedi entities for front display.
+     *
+     * @Route("/front/index", name="acme_app_jedi_front_index")
+     * @Method("GET")
+     * @Template()
+     */
+    public function indexFrontAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('AcmeAppBundle:Jedi')->findAll();
+
+        return [
+            'entities' => $entities,
+        ];
+    }
+
+    /**
+     * Finds and displays a Jedi entity for front display.
+     *
+     * @Route("/front/show/{id}", name="acme_app_jedi_front_show")
+     * @Method("GET")
+     * @Template()
+     */
+    public function showFrontAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('AcmeAppBundle:Jedi')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Jedi entity.');
+        }
+
+        return [
+            'entity' => $entity,
+        ];
+    }
 }
