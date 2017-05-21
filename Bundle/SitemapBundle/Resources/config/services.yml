@@ -5,7 +5,7 @@ parameters:
 services:
     #  ==================  FORMS ================== #
     victoire_sitemap.priority.pageseo_type:
-        class: %victoire_sitemap_priority_pageseo_type_class%
+        class: "%victoire_sitemap_priority_pageseo_type_class%"
         tags:
             - { name: form.type }
 
@@ -13,13 +13,13 @@ services:
     victoire_sitemap.sort.handler:
         class: Victoire\Bundle\SitemapBundle\Domain\Sort\SitemapSortHandler
         arguments:
-            - @doctrine.orm.entity_manager
+            - "@doctrine.orm.entity_manager"
     victoire_sitemap.export.handler:
         class: Victoire\Bundle\SitemapBundle\Domain\Export\SitemapExportHandler
         arguments:
-            - @doctrine.orm.entity_manager
-            - @victoire_page.page_helper
-            - @victoire_view_reference.repository
+            - "@doctrine.orm.entity_manager"
+            - "@victoire_page.page_helper"
+            - "@victoire_view_reference.repository"
 
     #  ==================  MENU ================== #
     victoire_sitemap.sitemap_menu_listener:
