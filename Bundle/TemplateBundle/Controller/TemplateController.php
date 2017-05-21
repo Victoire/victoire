@@ -99,13 +99,13 @@ class TemplateController extends Controller
      * @Route("/new", name="victoire_template_new")
      * @Configuration\Template()
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $template = new Template();
         $form = $this->container->get('form.factory')->create(TemplateType::class, $template); //@todo utiliser un service
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($request);
         if ($form->isValid()) {
             $em->persist($template);
             $em->flush();
@@ -175,12 +175,12 @@ class TemplateController extends Controller
      * @Configuration\Template()
      * @ParamConverter("template", class="VictoireTemplateBundle:Template")
      */
-    public function editAction(Template $template)
+    public function editAction(Request $request, Template $template)
     {
         $em = $this->getDoctrine()->getManager();
         $form = $this->container->get('form.factory')->create(TemplateType::class, $template);
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($request);
         if ($form->isValid()) {
             $em->persist($template);
             $em->flush();

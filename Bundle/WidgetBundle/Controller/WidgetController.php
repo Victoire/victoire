@@ -212,7 +212,6 @@ class WidgetController extends Controller
         try {
             $response = new JsonResponse(
                 $this->get('widget_manager')->editWidget(
-                    $this->get('request'),
                     $widget,
                     $view,
                     $quantum,
@@ -241,7 +240,7 @@ class WidgetController extends Controller
      * @Route("/victoire-dcms/widget/stylize/{id}/{viewReference}/{quantum}/", name="victoire_core_widget_stylize", defaults={"quantum":"a"}, options={"expose"=true})
      * @Template()
      */
-    public function stylizeAction(Request $request, Widget $widget, $viewReference, $quantum = null)
+    public function stylizeAction(Widget $widget, $viewReference, $quantum = null)
     {
         $view = $this->getViewByReferenceId($viewReference);
         $this->get('victoire_widget_map.builder')->build($view);

@@ -2,8 +2,8 @@
 
 namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -27,9 +27,9 @@ class MenuBuilder
     private $topMenuItems = null;
 
     /**
-     * @var ContainerInterface
+     * @var RequestStack
      */
-    private $container;
+    private $requestStack;
 
     /**
      * @var MenuItem|null
@@ -39,15 +39,13 @@ class MenuBuilder
     /**
      * Constructor.
      *
-     * @param TranslatorInterface $translator The translator
-     * @param ContainerInterface  $container  The container
-     *
-     * @TODO: this should only have a Request parameter
+     * @param TranslatorInterface $translator   The translator
+     * @param RequestStack        $requestStack The request stack
      */
-    public function __construct(TranslatorInterface $translator, ContainerInterface $container)
+    public function __construct(TranslatorInterface $translator, RequestStack $requestStack)
     {
         $this->translator = $translator;
-        $this->container = $container;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -130,11 +128,9 @@ class MenuBuilder
     public function getTopChildren()
     {
         if (is_null($this->topMenuItems)) {
-            /* @var $request Request */
-            $request = $this->container->get('request');
             $this->topMenuItems = [];
             foreach ($this->adaptors as $menuAdaptor) {
-                $menuAdaptor->adaptChildren($this, $this->topMenuItems, null, $request);
+                $menuAdaptor->adaptChildren($this, $this->topMenuItems, null, $this->getRequest());
             }
         }
 
@@ -153,13 +149,19 @@ class MenuBuilder
         if ($parent == null) {
             return $this->getTopChildren();
         }
-        /* @var $request Request */
-        $request = $this->container->get('request');
         $result = [];
         foreach ($this->adaptors as $menuAdaptor) {
-            $menuAdaptor->adaptChildren($this, $result, $parent, $request);
+            $menuAdaptor->adaptChildren($this, $result, $parent, $this->getRequest());
         }
 
         return $result;
+    }
+
+    /**
+     * @return Request
+     */
+    private function getRequest()
+    {
+        return $this->requestStack->getCurrentRequest();
     }
 }
