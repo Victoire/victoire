@@ -444,7 +444,6 @@ class Widget extends BaseWidget implements VictoireQueryInterface
         }
     }
 
-
     /**
      * @return [Criteria]
      */

@@ -95,7 +95,6 @@ class CmsExtension extends \Twig_Extension
         ];
     }
 
-
     /**
      * render unlink action for a widgetId.
      *
