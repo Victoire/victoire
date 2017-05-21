@@ -114,8 +114,8 @@ class Translator extends BaseTranslator
      */
     public function getCurrentLocale()
     {
-        if ($this->container->get('request_stack')->getCurrentRequest()) {
-            return $this->container->get('request')->getLocale();
+        if ($request = $this->container->get('request_stack')->getCurrentRequest()) {
+            return $request->getLocale();
         }
 
         return $this->container->getParameter('kernel.default_locale');

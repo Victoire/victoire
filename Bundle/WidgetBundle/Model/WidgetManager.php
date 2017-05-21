@@ -40,14 +40,17 @@ class WidgetManager
     protected $widgetRenderer;
     protected $eventDispatcher;
     protected $entityManager;
-    protected $formErrorHelper; // @victoire_form.error_helper
-    protected $request; // @request
+    protected $formErrorHelper;
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
     protected $widgetMapManager;
-    protected $cacheReader; // @victoire_business_entity.cache_reader
+    protected $cacheReader;
     protected $templating;
     protected $pageHelper;
-    protected $slots; // %victoire_core.slots%
-    protected $virtualToBpTransformer; // %victoire_core.slots%
+    protected $slots;
+    protected $virtualToBpTransformer;
 
     /**
      * construct.
@@ -59,7 +62,7 @@ class WidgetManager
      * @param EventDispatcherInterface  $eventDispatcher,
      * @param EntityManager             $entityManager
      * @param FormErrorHelper           $formErrorHelper
-     * @param Request                   $request
+     * @param RequestStack              $requestStack
      * @param WidgetMapManager          $widgetMapManager
      * @param WidgetMapBuilder          $widgetMapBuilder
      * @param BusinessEntityCacheReader $cacheReader
@@ -75,7 +78,7 @@ class WidgetManager
         EventDispatcherInterface $eventDispatcher,
         EntityManager $entityManager,
         FormErrorHelper $formErrorHelper,
-        Request $request,
+        RequestStack $requestStack,
         WidgetMapManager $widgetMapManager,
         WidgetMapBuilder $widgetMapBuilder,
         BusinessEntityCacheReader $cacheReader,
@@ -91,7 +94,7 @@ class WidgetManager
         $this->eventDispatcher = $eventDispatcher;
         $this->entityManager = $entityManager;
         $this->formErrorHelper = $formErrorHelper;
-        $this->request = $request;
+        $this->requestStack = $requestStack;
         $this->widgetMapManager = $widgetMapManager;
         $this->widgetMapBuilder = $widgetMapBuilder;
         $this->cacheReader = $cacheReader;
@@ -159,7 +162,7 @@ class WidgetManager
     {
         //services
         $formErrorHelper = $this->formErrorHelper;
-        $request = $this->request;
+        $request = $this->getRequest();
 
         if ($view instanceof VirtualBusinessPage) {
             $this->virtualToBpTransformer->transform($view);
@@ -224,17 +227,17 @@ class WidgetManager
     /**
      * Edit a widget.
      *
-     * @param Request $request
      * @param Widget  $widget
      * @param View    $currentView
      * @param string  $businessEntityId The entity name is used to know which form to submit
      *
      * @return template
      */
-    public function editWidget(Request $request, Widget $widget, View $currentView, $quantum = null, $businessEntityId = null, $widgetMode = Widget::MODE_STATIC)
+    public function editWidget(Widget $widget, View $currentView, $quantum = null, $businessEntityId = null, $widgetMode = Widget::MODE_STATIC)
     {
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
+        $request = $this->getRequest();
 
         //the id of the edited widget
         //a new widget might be created in the case of a legacy
@@ -469,5 +472,13 @@ class WidgetManager
         $this->entityManager->persist($entityCopy);
 
         return $entityCopy;
+    }
+
+    /**
+     * @return Request
+     */
+    private function getRequest()
+    {
+        return $this->requestStack->getCurrentRequest();
     }
 }
