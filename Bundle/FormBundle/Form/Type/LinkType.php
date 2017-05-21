@@ -111,7 +111,7 @@ class LinkType extends AbstractType
 
         $form->add(
             'linkType',
-            $linkTypeConfig->getType()->getName(),
+            get_class($linkTypeConfig->getType()->getInnerType()),
             array_replace(
                 $linkTypeOptions,
                 [

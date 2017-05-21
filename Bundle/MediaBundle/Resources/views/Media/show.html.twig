@@ -59,8 +59,7 @@
         <div class="tab-pane" id="properties">
 
             {% form_theme editform 'VictoireMediaBundle:Form:fields.html.twig' %}
-
-            <form class="form-horizontal properties" action="{{ path('VictoireMediaBundle_media_show', { 'mediaId' : media.id } ) }}" method="post" {{ form_enctype(editform) }}>
+            {{ form_start(editform, { 'action': path('VictoireMediaBundle_media_show', { 'mediaId' : media.id } ), 'attr': { 'class': 'form-horizontal properties' } }) }}
                 <div class="prop_wrp">
                     {{ form_widget(editform) }}
                     <div class="input_prop">
@@ -70,7 +69,7 @@
                        	</div>
                     </div>
                 </div>
-            </form>
+            {{ form_end(editform) }}
         </div>
     </div>
 

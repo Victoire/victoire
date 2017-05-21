@@ -24,7 +24,9 @@ class ChooseBlogType extends AbstractType
         $builder->add('blog', EntityType::class, [
                 'label'             => 'victoire.blog.choose.blog.label',
                 'class'             => 'Victoire\Bundle\BlogBundle\Entity\Blog',
-                'property'          => 'name',
+                'choice_label'      => function ($blog) {
+                    return $blog->getName();
+                },
                 'preferred_choices' => $options['blog'] ? [$options['blog']] : [],
                 'query_builder'     => function (EntityRepository $er) use ($options) {
                     return $er->joinTranslations($options['locale'])->getInstance();

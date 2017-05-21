@@ -104,7 +104,7 @@
       </trans-unit>
       <trans-unit id="3" resname="business_template.noEntities">
         <source>business_template.noEntities</source>
-        <target>th</target>
+        <target>This entity doesn't have any Business Template</target>
       </trans-unit>
     </body>
   </file>

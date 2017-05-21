@@ -38,6 +38,8 @@ class AppKernel extends Kernel
         $bundles = [
             ...
             //dependencies
+            new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
+            new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Troopers\AsseticInjectorBundle\TroopersAsseticInjectorBundle(),
             new Troopers\AlertifyBundle\TroopersAlertifyBundle(),
@@ -108,6 +110,8 @@ imports:
 
 assetic:
     use_controller: false
+    node: %node_path%
+    node_paths: %node_paths%
     bundles: ~
     filters:
         cssrewrite: ~
@@ -212,7 +216,13 @@ parameters:
     locale_pattern_table:
         io.victoire.dev: fr
         victoire.io: fr
+
+    node_path: /usr/local/bin/node
+    node_paths:
+        - /usr/local/lib/node_modules
+        - /usr/local/share/npm/lib/node_modules
 ```
+`Of course, Adjust to your needs`
 
 ### Add following routes
 
@@ -273,12 +283,14 @@ VALUES
     (12, 6, 'Service indisponible', 'erreur-503', 'fr'),
     (13, 7, 'Homepage', 'home', 'en'),
     (14, 7, 'Page d\'accueil', 'accueil', 'fr');
+
+INSERT INTO `vic_media_folders` (`id`, `name`) VALUES (1, '/');
 ```
 
 ### Generate view references
 
 ```sh
-php app/console victoire:viewReference:generate -e=dev
+php bin/console victoire:viewReference:generate -e=dev
 ```
 
 #### Do you prefer the fixtures way ?
@@ -300,7 +312,14 @@ Run the following command to fetch the Victoire assets:
 
 `CAUTION` you need to install bower first
 ```shell
-php app/console victoire:ui:fetchAssets
+php bin/console victoire:ui:fetchAssets
+```
+
+#### Dump js routes and translations
+
+```
+php bin/console fos:js-routing:dump -e=dev
+php bin/console bazinga:js-translation:dump -e=dev
 ```
 
 #### Dump with assetic
@@ -308,7 +327,7 @@ php app/console victoire:ui:fetchAssets
 Run the following command to dump assets with assetic library:
 
 ```shell
-php app/console assetic:dump
+php bin/console assetic:dump
 ```
 
 
@@ -331,13 +350,13 @@ So you can let Victoire regenerate CSS files on user demand.
 But you may want to set a crontab on your production environment to regenerate a batch of CSS files each minute.
 
 ```
-* * * * * php app/console victoire:widget-css:generate --limit=20 --env=prod
+* * * * * php bin/console victoire:widget-css:generate --limit=20 --env=prod
 ```
 
 If you want to manually force all CSS to be regenerated even if they are up to date, add `--force`.
 
 ```sh
-php app/console victoire:widget-css:generate --force
+php bin/console victoire:widget-css:generate --force
 ```
 
 [1]: https://blogs.msdn.microsoft.com/ieinternals/2011/05/14/stylesheet-limits-in-internet-explorer/

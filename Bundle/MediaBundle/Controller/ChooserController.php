@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\MediaBundle\Entity\Folder;
 use Victoire\Bundle\MediaBundle\Entity\Media;
+use Victoire\Bundle\MediaBundle\Form\File\FileType;
+use Victoire\Bundle\MediaBundle\Form\RemoteSlide\RemoteSlideType;
+use Victoire\Bundle\MediaBundle\Form\RemoteVideo\RemoteVideoType;
 use Victoire\Bundle\MediaBundle\Helper\MediaManager;
 
 /**
@@ -76,9 +79,9 @@ class ChooserController extends Controller
                 'type'            => $type,
                 'folder'          => $folder,
                 'folders'         => $folders,
-                'fileform'        => $this->createTypeFormView($mediaHandler, 'file'),
-                'videoform'       => $this->createTypeFormView($mediaHandler, 'video'),
-                'slideform'       => $this->createTypeFormView($mediaHandler, 'slide'),
+                'fileform'        => $this->createTypeFormView($mediaHandler, FileType::class),
+                'videoform'       => $this->createTypeFormView($mediaHandler, RemoteVideoType::class),
+                'slideform'       => $this->createTypeFormView($mediaHandler, RemoteSlideType::class),
         ];
     }
 

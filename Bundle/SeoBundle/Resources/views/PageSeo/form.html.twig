@@ -6,5 +6,5 @@
     {% include 'VictoireBusinessEntityBundle:BusinessProperty:list.html.twig' with { 'businessProperties':businessProperties } %}
 {% endif %}
 {{form_start(form)}}
-
+    {{ form_widget(form.translations) }}
 {{form_end(form)}}
