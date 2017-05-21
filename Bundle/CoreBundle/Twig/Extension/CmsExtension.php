@@ -95,15 +95,6 @@ class CmsExtension extends \Twig_Extension_Core
         ];
     }
 
-    /**
-     * get extension name.
-     *
-     * @return string The name
-     */
-    public function getName()
-    {
-        return 'cms';
-    }
 
     /**
      * render unlink action for a widgetId.

@@ -96,14 +96,6 @@ class IconExtension extends \Twig_Extension implements \Twig_Extension_InitRunti
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'victoire_icon';
-    }
-
-    /**
      * @return \Twig_TemplateInterface
      */
     protected function getIconTemplate()
