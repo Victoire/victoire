@@ -30,9 +30,4 @@ class SvgTwigExtension extends \Twig_Extension
     {
         return file_get_contents($this->kernelRootDir.'/../web'.$url);
     }
-
-    public function getName()
-    {
-        return 'victoire_media_svg_extension';
-    }
 }

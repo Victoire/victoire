@@ -14,13 +14,13 @@ Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
     template_spaceship:
         backendName: "Spaceship template"
         businessEntityId: spaceship
-        author: @anakin
-        template: @template_base
+        author: "@anakin"
+        template: "@template_base"
         status: published
         publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
-        parent: @home
+        parent: "@home"
         translations:
             - @template_spaceship_fr
             - @template_spaceship_en

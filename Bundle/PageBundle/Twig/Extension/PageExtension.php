@@ -69,16 +69,6 @@ class PageExtension extends \Twig_Extension
     }
 
     /**
-     * get extension name.
-     *
-     * @return string The name
-     */
-    public function getName()
-    {
-        return 'cms_page';
-    }
-
-    /**
      * Construct CSS link markup for the style of all the Widgets contained in the current View.
      *
      * @return string

@@ -20,7 +20,7 @@ class AccessMapCompilerPass implements CompilerPassInterface
         $serialized = serialize([$path]);
         $identifier = 'security.request_matcher.'.md5($serialized).sha1($serialized);
         $container
-            ->register($identifier, '%security.matcher.class%')
+            ->register($identifier, 'Symfony\Component\HttpFoundation\RequestMatcher')
             ->setPublic(false)
             ->setArguments([$path]);
 

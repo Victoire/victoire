@@ -22,7 +22,7 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
  *
  * service: victoire_core.twig.cms_extension
  */
-class CmsExtension extends \Twig_Extension_Core
+class CmsExtension extends \Twig_Extension
 {
     protected $widgetRenderer;
     protected $authorizationChecker;
@@ -97,15 +97,6 @@ class CmsExtension extends \Twig_Extension_Core
         ];
     }
 
-    /**
-     * get extension name.
-     *
-     * @return string The name
-     */
-    public function getName()
-    {
-        return 'cms';
-    }
 
     /**
      * render unlink action for a widgetId.

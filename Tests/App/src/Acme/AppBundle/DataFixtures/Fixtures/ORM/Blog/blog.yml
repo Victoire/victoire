@@ -1,9 +1,10 @@
 Victoire\Bundle\BlogBundle\Entity\Blog:
     blog-jedi-network:
         currentLocale: en
-        template: @template_base
-        author: @anakin
-        parent: @home
+        currentLocale: fr
+        template: "@template_base"
+        author: "@anakin"
+        parent: "@home"
         name: The Jedi Network
         slug: the-jedi-network
         homepage: false

@@ -1,7 +1,7 @@
 Victoire\Bundle\MediaBundle\Entity\Media:
     troopers:
         id: 1
-        folder: @root
+        folder: "@root"
         uuid: 55953304833d5
         name: troopers
         location: local
@@ -14,7 +14,7 @@ Victoire\Bundle\MediaBundle\Entity\Media:
         deleted: 0
     victoire:
         id: 2
-        folder: @root
+        folder: "@root"
         uuid: 55dc8d8a4c9d3
         name: victoire
         location: local
