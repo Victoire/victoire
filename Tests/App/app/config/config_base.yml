@@ -1,6 +1,6 @@
 imports:
-    - { resource: @VictoireCoreBundle/Resources/config/config.yml }
-    - { resource: @VictoireTwigBundle/Resources/config/config.yml }
+    - { resource: "@VictoireCoreBundle/Resources/config/config.yml" }
+    - { resource: "@VictoireTwigBundle/Resources/config/config.yml" }
 
 monolog:
     handlers:
@@ -52,7 +52,7 @@ assetic:
                 - "/usr/lib/node_modules"
                 - "%kernel.root_dir%/../../../node_modules"
                 - "/usr/local/lib/node_modules"
-            apply_to: "\.less$"
+            apply_to: \.less$
 
 # Doctrine Configuration
 doctrine:
@@ -113,7 +113,7 @@ security:
             pattern: ^/login*
             form_login:
                 provider:        fos_userbundle
-                csrf_provider:   form.csrf_provider
+                csrf_token_generator:   security.csrf.token_manager
                 failure_path: /login
                 check_path: /login_check
                 default_target_path: /

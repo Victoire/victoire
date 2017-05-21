@@ -177,7 +177,7 @@ security:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
-                csrf_provider: form.csrf_provider
+                csrf_token_generator: security.csrf.token_manager
                 failure_path: /login
                 check_path: /login_check
                 default_target_path: /

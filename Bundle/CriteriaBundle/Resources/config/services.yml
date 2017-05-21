@@ -5,7 +5,7 @@ services:
     victoire_criteria.criteria.request_data_source:
         class: Victoire\Bundle\CriteriaBundle\DataSource\RequestDataSource
         arguments:
-            - @request_stack
+            - "@request_stack"
             - %victoire_i18n.available_locales%
         tags:
             - { name: victoire_criteria, group: request, method: getLocale, alias: request_locale }
@@ -14,7 +14,7 @@ services:
     victoire_criteria.criteria.roles_data_source:
             class: Victoire\Bundle\CriteriaBundle\DataSource\RolesDataSource
             arguments:
-                - @security.token_storage
+                - "@security.token_storage"
                 - %security.role_hierarchy.roles%
             tags:
                 - { name: victoire_criteria, group: request, method: getRoles, alias: request_roles }
@@ -22,7 +22,7 @@ services:
     victoire_criteria.criteria.user_data_source:
             class: Victoire\Bundle\CriteriaBundle\DataSource\IsLoggedDataSource
             arguments:
-                - @security.authorization_checker
+                - "@security.authorization_checker"
             tags:
                 - { name: victoire_criteria, group: request, method: getLoggedStatus, alias: request_user }
 
@@ -30,6 +30,6 @@ services:
         class: Victoire\Bundle\CriteriaBundle\DataSource\DomainNameDataSource
         arguments:
             - [%victoire_core.domain_name%]
-            - @request_stack
+            - "@request_stack"
         tags:
             - { name: victoire_criteria, group: request, method: getCurrentDomainName, alias: request_domain_name }

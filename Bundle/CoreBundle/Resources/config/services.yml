@@ -10,8 +10,8 @@ services:
     victoire_core.widget_subscriber:
         class: Victoire\Bundle\CoreBundle\EventSubscriber\WidgetSubscriber
         arguments:
-            - @victoire_core.view_css_builder
-            - @victoire_widget_map.builder
+            - "@victoire_core.view_css_builder"
+            - "@victoire_widget_map.builder"
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
@@ -153,7 +153,7 @@ services:
         arguments:
             - "@security.authorization_checker"
             - "%kernel.debug%"
-            - @service_container
+            - "@service_container"
 
 #  ==================  View ================== #
 
@@ -168,16 +168,16 @@ services:
     victoire_core.view_css_builder:
         class: Victoire\Bundle\CoreBundle\Builder\ViewCssBuilder
         arguments:
-            - @service_container
-            - %victoire_twig.responsive%
-            - '%kernel.root_dir%'
+            - "@service_container"
+            - "%victoire_twig.responsive%"
+            - "%kernel.root_dir%"
 
     victoire_core.view_css_listener:
         class: Victoire\Bundle\CoreBundle\Listener\ViewCssListener
         arguments:
-            - @victoire_core.view_css_builder
-            - @doctrine.orm.entity_manager
-            - @victoire_widget_map.builder
+            - "@victoire_core.view_css_builder"
+            - "@doctrine.orm.entity_manager"
+            - "@victoire_widget_map.builder"
         tags:
             - { name: kernel.event_listener, event: victoire.on_render_page, method: onRenderPage }
 

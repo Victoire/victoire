@@ -1,6 +1,6 @@
 services:
     form.type.seo.page:
-        class: "Victoire\Bundle\SeoBundle\Form\PageSeoType"
+        class: "Victoire\\Bundle\\SeoBundle\\Form\\PageSeoType"
         tags:
             - { name: form.type }
     victoire_seo.helper.pageseo_helper:

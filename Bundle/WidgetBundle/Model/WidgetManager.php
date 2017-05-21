@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
@@ -34,7 +34,7 @@ class WidgetManager
     protected $widgetContentResolver;
     protected $entityManager;
     protected $formErrorHelper; // @victoire_form.error_helper
-    protected $request; // @request
+    protected $requestStack; // @request_stack
     protected $widgetMapManager;
     protected $businessEntityHelper;
     protected $templating;
@@ -51,7 +51,7 @@ class WidgetManager
      * @param WidgetRenderer        $widgetRenderer
      * @param EntityManager         $entityManager
      * @param FormErrorHelper       $formErrorHelper
-     * @param Request               $request
+     * @param RequestStack          $requestStack
      * @param WidgetMapManager      $widgetMapManager
      * @param WidgetMapBuilder      $widgetMapBuilder
      * @param EngineInterface       $templating
@@ -65,7 +65,7 @@ class WidgetManager
         WidgetRenderer $widgetRenderer,
         EntityManager $entityManager,
         FormErrorHelper $formErrorHelper,
-        Request $request,
+        RequestStack $requestStack,
         WidgetMapManager $widgetMapManager,
         WidgetMapBuilder $widgetMapBuilder,
         BusinessEntityHelper $businessEntityHelper,
@@ -80,7 +80,7 @@ class WidgetManager
         $this->widgetRenderer = $widgetRenderer;
         $this->entityManager = $entityManager;
         $this->formErrorHelper = $formErrorHelper;
-        $this->request = $request;
+        $this->requestStack = $requestStack;
         $this->widgetMapManager = $widgetMapManager;
         $this->widgetMapBuilder = $widgetMapBuilder;
         $this->businessEntityHelper = $businessEntityHelper;
@@ -148,7 +148,7 @@ class WidgetManager
     {
         //services
         $formErrorHelper = $this->formErrorHelper;
-        $request = $this->request;
+        $request = $this->requestStack->getCurrentRequest();
 
         if ($view instanceof VirtualBusinessPage) {
             $this->virtualToBpTransformer->transform($view);

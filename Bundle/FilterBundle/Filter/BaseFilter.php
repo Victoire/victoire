@@ -5,7 +5,7 @@ namespace Victoire\Bundle\FilterBundle\Filter;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class BaseFilter extends AbstractType implements BaseFilterInterface
@@ -17,10 +17,10 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
      * @param EntityManager $em
      * @param Request       $request
      */
-    public function __construct(EntityManager $em, Request $request)
+    public function __construct(EntityManager $em, RequestStack $requestStack)
     {
         $this->entityManager = $em;
-        $this->request = $request;
+        $this->requestStack = $requestStack;
     }
 
     abstract public function buildQuery(QueryBuilder $qb, array $parameters);
@@ -52,6 +52,6 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
      */
     public function getRequest()
     {
-        return $this->request;
+        return $this->requestStack->getCurrentRequest();
     }
 }

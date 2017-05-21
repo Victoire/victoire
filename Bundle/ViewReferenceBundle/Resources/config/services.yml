@@ -23,13 +23,13 @@ services:
     victoire_view_reference.helper:
         class: Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper
         arguments:
-            - @victoire_view_reference.builder
+            - "@victoire_view_reference.builder"
 
     victoire_view_reference.provider:
         class: Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider
         arguments:
-            - @victoire_business_page.business_page_helper
-            - @victoire_business_page.business_page_builder
+            - "@victoire_business_page.business_page_helper"
+            - "@victoire_business_page.business_page_builder"
 
     victoire_view_reference.event_subscriber:
         class: Victoire\Bundle\ViewReferenceBundle\EventSubscriber\ViewReferenceSubscriber
@@ -84,9 +84,9 @@ services:
     victoire_view_reference.cache_warmer:
         class: %victoire_view_reference.cache_warmer.class%
         arguments:
-            - @victoire_core.view_helper
-            - @victoire_view_reference.repository
-            - @victoire_view_reference.manager
+            - "@victoire_core.view_helper"
+            - "@victoire_view_reference.repository"
+            - "@victoire_view_reference.manager"
         tags:
         - { name: kernel.event_listener, event: kernel.request, method: warmUp }
 

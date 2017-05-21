@@ -20,7 +20,7 @@ use Victoire\Bundle\WidgetBundle\Resolver\WidgetResolver;
  *
  * service: victoire_core.twig.cms_extension
  */
-class CmsExtension extends \Twig_Extension_Core
+class CmsExtension extends \Twig_Extension
 {
     protected $widgetRenderer;
     protected $authorizationChecker;

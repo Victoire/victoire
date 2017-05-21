@@ -5,7 +5,7 @@ namespace Victoire\Bundle\BlogBundle\Filter;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface;
 use Victoire\Bundle\BlogBundle\Entity\Category;
 use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
@@ -22,9 +22,9 @@ class CategoryFilter extends BaseFilter
      * @param Request             $request
      * @param TranslatorInterface $translator
      */
-    public function __construct(EntityManager $entityManager, Request $request, TranslatorInterface $translator)
+    public function __construct(EntityManager $entityManager, RequestStack $requestStack, TranslatorInterface $translator)
     {
-        parent::__construct($entityManager, $request);
+        parent::__construct($entityManager, $requestStack);
         $this->translator = $translator;
     }
 
