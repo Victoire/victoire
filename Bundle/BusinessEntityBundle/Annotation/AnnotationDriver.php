@@ -72,7 +72,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         $includedFiles = [];
         foreach ($this->paths as $path) {
             if (!is_dir($path)) {
-                $this->logger->error(sprintf(
+                $this->logger->warning(sprintf(
                     'The given path "%s" seems to be incorrect. You need to edit victoire_core.base_paths configuration.',
                     $path
                 ));
