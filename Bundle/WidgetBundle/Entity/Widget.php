@@ -102,16 +102,6 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     protected $entity;
 
     /**
-     * @deprecated Remove Doctrine mapping and property
-     *
-     * @var string
-     *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="widgets", cascade={"persist"})
-     * @ORM\JoinColumn(name="view_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    protected $view;
-
-    /**
      * @var WidgetMap
      *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", inversedBy="widgets")

@@ -27,7 +27,6 @@ use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 use Victoire\Bundle\WidgetBundle\Resolver\WidgetContentResolver;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
-use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Victoire\Bundle\WidgetMapBundle\Manager\WidgetMapManager;
 
 /**
@@ -397,7 +396,7 @@ class WidgetManager
         $widgetId = $widget->getId();
         //we update the widget map of the view
         $this->widgetMapBuilder->build($view);
-        $widgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
+        $widgetMap = $widget->getWidgetMap();
         //the widget is removed only if the current view is the view of the widget
         if ($widgetMap->getView() == $view && $widgetMap->getAction() != WidgetMap::ACTION_DELETE) {
             //we remove the widget

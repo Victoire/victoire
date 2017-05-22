@@ -34,15 +34,6 @@ class BusinessTemplate extends Template implements VictoireQueryInterface
     protected $inheritors;
 
     /**
-     * @var bool
-     *
-     * @deprecated author restriction is handled by the "BUSINESS_ENTITY_OWNER" role since 1.7.7 and will be removed in the 1.8
-     *
-     * @ORM\Column(name="author_restricted", type="boolean")
-     */
-    protected $authorRestricted;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="backendName", type="string", length=255)
@@ -104,22 +95,6 @@ class BusinessTemplate extends Template implements VictoireQueryInterface
     public function getSeo()
     {
         return $this->seo;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAuthorRestricted()
-    {
-        return $this->authorRestricted;
-    }
-
-    /**
-     * @param bool $authorRestricted
-     */
-    public function setAuthorRestricted($authorRestricted)
-    {
-        $this->authorRestricted = $authorRestricted;
     }
 
     /**

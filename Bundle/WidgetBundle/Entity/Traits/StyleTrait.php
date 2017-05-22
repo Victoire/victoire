@@ -83,14 +83,6 @@ trait StyleTrait
     /**
      * @var string
      *
-     * @deprecated
-     * @ORM\Column(name="container_background", type="string", length=255, nullable=true)
-     */
-    protected $containerBackground;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="container_background_type", type="string", length=255, nullable=true)
      */
     protected $containerBackgroundType;
@@ -302,26 +294,6 @@ trait StyleTrait
     public function setTextAlign($textAlign)
     {
         $this->textAlign = $textAlign;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContainerBackground()
-    {
-        return $this->containerBackground;
-    }
-
-    /**
-     * @param string $containerBackground
-     *
-     * @return $this
-     */
-    public function setContainerBackground($containerBackground)
-    {
-        $this->containerBackground = $containerBackground;
 
         return $this;
     }

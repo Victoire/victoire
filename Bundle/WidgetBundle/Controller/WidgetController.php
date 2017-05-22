@@ -15,7 +15,6 @@ use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Exception\WidgetMapNotFoundException;
-use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 /**
  * Widget Controller.
@@ -246,7 +245,7 @@ class WidgetController extends Controller
         $this->get('victoire_widget_map.builder')->build($view);
 
         try {
-            $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
+            $widgetView = $widget->getWidgetMap()->getView();
         } catch (WidgetMapNotFoundException $e) {
             return new JsonResponse([
                 'success' => false,
@@ -440,12 +439,11 @@ class WidgetController extends Controller
      */
     protected function getJsonReponseFromException(Exception $ex)
     {
-        //services
-        $securityContext = $this->get('security.context');
+        $authorizationChecker = $this->get('security.authorization_checker');
         $logger = $this->get('logger');
 
         //can we see the debug
-        $isDebugAllowed = $securityContext->isGranted('ROLE_VICTOIRE_PAGE_DEBUG') ? true : $this->get('kernel')->isDebug();
+        $isDebugAllowed = $authorizationChecker->isGranted('ROLE_VICTOIRE_PAGE_DEBUG') ? true : $this->get('kernel')->isDebug();
 
         //whatever is the exception, we log it
         $logger->error($ex->getMessage());
