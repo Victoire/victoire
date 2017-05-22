@@ -15,7 +15,6 @@ use Victoire\Bundle\WidgetBundle\Cache\WidgetCache;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetMapBundle\Entity\Slot;
-use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 class WidgetRenderer
 {
@@ -118,8 +117,7 @@ class WidgetRenderer
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget));
 
-        $widgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
-
+        $widgetMap = $widget->getWidgetMap();
         $directive = '';
         if ($this->container->get('security.authorization_checker')->isGranted('ROLE_VICTOIRE')) {
             $directive = 'widget';

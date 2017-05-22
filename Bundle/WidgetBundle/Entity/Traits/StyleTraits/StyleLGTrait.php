@@ -45,14 +45,6 @@ trait StyleLGTrait
     /**
      * @var string
      *
-     * @deprecated
-     * @ORM\Column(name="container_background_lg", type="string", length=255, nullable=true)
-     */
-    protected $containerBackgroundLG;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="container_background_type_lg", type="string", length=255, nullable=true)
      */
     protected $containerBackgroundTypeLG;
@@ -196,26 +188,6 @@ trait StyleLGTrait
     public function setTextAlignLG($textAlignLG)
     {
         $this->textAlignLG = $textAlignLG;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContainerBackgroundLG()
-    {
-        return $this->containerBackgroundLG;
-    }
-
-    /**
-     * @param string $containerBackgroundLG
-     *
-     * @return $this
-     */
-    public function setContainerBackgroundLG($containerBackgroundLG)
-    {
-        $this->containerBackgroundLG = $containerBackgroundLG;
 
         return $this;
     }

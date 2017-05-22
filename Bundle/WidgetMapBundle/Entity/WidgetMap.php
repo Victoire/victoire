@@ -63,16 +63,6 @@ class WidgetMap
     protected $widgets;
 
     /**
-     * @deprecated Remove Doctrine mapping and property
-     *
-     * @var Widget
-     *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget")
-     * @ORM\JoinColumn(name="widget_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $widget;
-
-    /**
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", inversedBy="substitutes")
      * @ORM\JoinColumn(name="replaced_id", referencedColumnName="id")
      */
@@ -458,29 +448,5 @@ class WidgetMap
     public function setSubstitutes($substitutes)
     {
         $this->substitutes = $substitutes;
-    }
-
-    /**
-     * @deprecated
-     *
-     * @return Widget
-     */
-    public function getWidget()
-    {
-        return $this->widget;
-    }
-
-    /**
-     * @deprecated
-     *
-     * @param Widget $widget
-     *
-     * @return WidgetMap
-     */
-    public function setWidget(Widget $widget = null)
-    {
-        $this->widget = $widget;
-
-        return $this;
     }
 }

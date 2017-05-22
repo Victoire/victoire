@@ -34,39 +34,6 @@ class Article
     private $id;
 
     /**
-     * @deprecated
-     * Title is inherited from Page, just add the BusinessProperty annotation.
-     *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     */
-    private $name;
-
-    /**
-     * @deprecated
-     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
-     */
-    private $slug;
-
-    /**
-     * @deprecated
-     * Description is inherited from Page, just add the BusinessProperty annotation.
-     *
-     * @ORM\Column(name="description", type="text", nullable=true)
-     */
-    private $description;
-
-    /**
-     * @deprecated
-     *
-     * @var string
-     *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="CASCADE")
-     * @VIC\BusinessProperty("imageable")
-     */
-    private $image;
-
-    /**
      * @ORM\Column(name="status", type="string", nullable=false)
      */
     protected $status;

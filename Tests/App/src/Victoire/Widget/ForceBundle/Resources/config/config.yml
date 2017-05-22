@@ -1,7 +1,7 @@
 victoire_core:
     widgets:
         Force:
-            class: "Victoire\\Widget\\ForceBundle\\Entity\\WidgetForce"
+            class: Victoire\Widget\ForceBundle\Entity\WidgetForce
             name: Force
 
 jms_translation:

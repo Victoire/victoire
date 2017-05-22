@@ -45,14 +45,6 @@ trait StyleMDTrait
     /**
      * @var string
      *
-     * @deprecated
-     * @ORM\Column(name="container_background_md", type="string", length=255, nullable=true)
-     */
-    protected $containerBackgroundMD;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="container_background_type_md", type="string", length=255, nullable=true)
      */
     protected $containerBackgroundTypeMD;
@@ -196,26 +188,6 @@ trait StyleMDTrait
     public function setTextAlignMD($textAlignMD)
     {
         $this->textAlignMD = $textAlignMD;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContainerBackgroundMD()
-    {
-        return $this->containerBackgroundMD;
-    }
-
-    /**
-     * @param string $containerBackgroundMD
-     *
-     * @return $this
-     */
-    public function setContainerBackgroundMD($containerBackgroundMD)
-    {
-        $this->containerBackgroundMD = $containerBackgroundMD;
 
         return $this;
     }

@@ -7,7 +7,6 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
-use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Victoire\Bundle\WidgetMapBundle\Resolver\WidgetMapChildrenResolver;
 
 class WidgetMapManager
@@ -123,7 +122,7 @@ class WidgetMapManager
     {
         $this->builder->build($view);
 
-        $widgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
+        $widgetMap = $widget->getWidgetMap();
         $slot = $widgetMap->getSlot();
 
         $originalParent = $widgetMap->getParent();

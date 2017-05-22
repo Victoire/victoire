@@ -45,14 +45,6 @@ trait StyleXSTrait
     /**
      * @var string
      *
-     * @deprecated
-     * @ORM\Column(name="container_background_xs", type="string", length=255, nullable=true)
-     */
-    protected $containerBackgroundXS;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="container_background_type_xs", type="string", length=255, nullable=true)
      */
     protected $containerBackgroundTypeXS;

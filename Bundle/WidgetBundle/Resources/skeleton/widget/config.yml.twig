@@ -1,7 +1,7 @@
 victoire_core:
     widgets:
         {{ widget }}:
-            class: "Victoire\\Widget\\{{ widget }}Bundle\\Entity\\Widget{{ widget }}"
+            class: Victoire\Widget\{{ widget }}Bundle\Entity\Widget{{ widget }}
             name: {{ widget }}
 {% if parent %}            parent: {{parent}}{% endif %}
             cache: {% if cache %}true{% else %}false{% endif %}
