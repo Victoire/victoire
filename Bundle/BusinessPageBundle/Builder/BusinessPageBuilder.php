@@ -116,10 +116,10 @@ class BusinessPageBuilder
             if ($entity instanceof Article &&
                     !in_array($translation->getLocale(), $entity->getBlog()->getAvailableLocales())
                 ) {
-                    continue;
-                }
+                continue;
+            }
 
-                if ($isTranslatableEntity) {
+            if ($isTranslatableEntity) {
                 $entity->setCurrentLocale($translation->getLocale());
             }
             $page->setCurrentLocale($translation->getLocale());

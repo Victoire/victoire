@@ -29,7 +29,7 @@ Feature: Create a widget
         Then I follow the drop anchor "Jedi"
         And I should see "Select"
         And I select "side" from "jedi_a_entity_widget_text[fields][content]"
-        And I select "Anakin" from "jedi_a_entity_widget_text[entity_proxy][jedi]"
+        And I select "Anakin" from "jedi_a_entity_widget_text[entity_proxy][ressourceId]"
         And I submit the widget
         Then I should see "dark"
 

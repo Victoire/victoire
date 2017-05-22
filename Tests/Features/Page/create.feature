@@ -11,7 +11,7 @@ Scenario: I can create a new page
     Then I should see "New page"
     And I follow "New page"
     And I wait 2 seconds
-        And Ishould see "Name"
+    And Ishould see "Name"
     When I fill in "Name" with "tatooine"
     Then I submit the widget
     And I wait 3 second
