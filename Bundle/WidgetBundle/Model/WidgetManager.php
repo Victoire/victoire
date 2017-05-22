@@ -229,9 +229,9 @@ class WidgetManager
     /**
      * Edit a widget.
      *
-     * @param Widget  $widget
-     * @param View    $currentView
-     * @param string  $businessEntityId The entity name is used to know which form to submit
+     * @param Widget $widget
+     * @param View   $currentView
+     * @param string $businessEntityId The entity name is used to know which form to submit
      *
      * @return template
      */

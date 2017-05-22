@@ -19,7 +19,7 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
 
     /**
      * @param EntityManager $em
-     * @param RequestStack  $request
+     * @param RequestStack  $requestStack
      */
     public function __construct(EntityManager $em, RequestStack $requestStack)
     {
