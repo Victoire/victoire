@@ -46,7 +46,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue([
                         '%kernel.root_dir%/../src',
                         '%kernel.root_dir%/../vendor/victoire',
-                        '%kernel.root_dir%/../vendor/friendsofvictoire'
+                        '%kernel.root_dir%/../vendor/friendsofvictoire',
                     ])
                 ->end()
             ->end()
