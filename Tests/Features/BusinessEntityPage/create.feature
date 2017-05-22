@@ -28,7 +28,7 @@ Feature: Create business entity pages
         And I should see "The business template has been successfully created"
 
     Scenario: I can create a new API Business entity page pattern
-        When I open the additionals menu drop
+        When I open the additional menu drop
         Then I should see "Représentation métier"
         When I follow "Représentation métier"
         Then I should see "Users"
