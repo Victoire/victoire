@@ -50,19 +50,19 @@ class WidgetManager
     /**
      * construct.
      *
-     * @param WidgetHelper              $widgetHelper
-     * @param WidgetFormBuilder         $widgetFormBuilder
-     * @param WidgetContentResolver     $widgetContentResolver
-     * @param WidgetRenderer            $widgetRenderer
-     * @param EventDispatcherInterface  $eventDispatcher,
-     * @param EntityManager             $entityManager
-     * @param FormErrorHelper           $formErrorHelper
-     * @param Request                   $request
-     * @param WidgetMapManager          $widgetMapManager
-     * @param WidgetMapBuilder          $widgetMapBuilder
-     * @param EngineInterface           $templating
-     * @param PageHelper                $pageHelper
-     * @param array                     $slots
+     * @param WidgetHelper             $widgetHelper
+     * @param WidgetFormBuilder        $widgetFormBuilder
+     * @param WidgetContentResolver    $widgetContentResolver
+     * @param WidgetRenderer           $widgetRenderer
+     * @param EventDispatcherInterface $eventDispatcher,
+     * @param EntityManager            $entityManager
+     * @param FormErrorHelper          $formErrorHelper
+     * @param Request                  $request
+     * @param WidgetMapManager         $widgetMapManager
+     * @param WidgetMapBuilder         $widgetMapBuilder
+     * @param EngineInterface          $templating
+     * @param PageHelper               $pageHelper
+     * @param array                    $slots
      */
     public function __construct(
         WidgetHelper $widgetHelper,
