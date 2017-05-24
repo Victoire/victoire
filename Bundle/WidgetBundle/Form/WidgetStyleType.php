@@ -54,11 +54,6 @@ class WidgetStyleType extends AbstractType
                 'label'    => 'widget_layout.form.containerClass.label',
                 'required' => false,
             ])
-            ->add('containerBackground', null, [
-                'label'          => 'widget_layout.form.containerBackground.label',
-                'vic_help_block' => 'widget_layout.form.containerBackground.help_block',
-                'required'       => false,
-            ])
             ->add('vicActiveTab', HiddenType::class, [
                 'required' => false,
                 'mapped'   => false,

@@ -23,11 +23,12 @@ class JediType extends AbstractType
                     'label' => 'acme.app.jedi.form.midiChlorians.label',
                 ])
             ->add('side', ChoiceType::class, [
-                    'label'   => 'acme.app.jedi.form.side.label',
-                    'choices' => [
-                        'both'   => 'acme.app.jedi.form.side.choice.both',
-                        'dark'   => 'acme.app.jedi.form.side.choice.dark',
-                        'bright' => 'acme.app.jedi.form.side.choice.bright',
+                    'label'             => 'acme.app.jedi.form.side.label',
+                    'choices_as_values' => true,
+                    'choices'           => [
+                        'acme.app.jedi.form.side.choice.both' => 'both',
+                        'acme.app.jedi.form.side.choice.dark' => 'dark',
+                        'acme.app.jedi.form.side.choice.bright' => 'bright',
                     ],
                 ])
             ->add('slug', null, [

@@ -179,7 +179,9 @@ class ArticleType extends AbstractType
                 };
                 $form->add('template', null, [
                     'label'         => 'form.article.type.template.label',
-                    'property'      => 'backendName',
+                    'choice_label'      => function ($template) {
+                        return $template->getBackendName();
+                    },
                     'required'      => true,
                     'query_builder' => $articleTemplates,
                 ]);

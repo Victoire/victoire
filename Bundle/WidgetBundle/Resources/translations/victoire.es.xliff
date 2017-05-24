@@ -402,6 +402,14 @@
         <source>widget_layout.form.containerBackground.help_block</source>
         <target>Este campo está en desuso y se eliminará pronto. Gracias para no utilizarlo.</target>
       </trans-unit>
+      <trans-unit id="58893b9a19c01" resname="widget_layout.form.containerBackgroundType.choices.placeholder">
+        <source>widget_layout.form.containerBackgroundType.choices.placeholder</source>
+        <target>No</target>
+      </trans-unit>
+      <trans-unit id="58893b9a19c10" resname="widget_layout.form.textAlign.choices.placeholder">
+        <source>widget_layout.form.textAlign.choices.placeholder</source>
+        <target>Por defecto</target>
+      </trans-unit>
       <trans-unit id="103" resname="widget_layout.tab.tooltip.STATIC.label">
         <source>widget_layout.tab.tooltip.STATIC.label</source>
         <target>General</target>
