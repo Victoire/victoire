@@ -152,8 +152,8 @@ class WidgetFormBuilder
      *
      * @param $viewReference
      * @param ArrayCollection|Widget[] $widgets
-     * @param Widget $activeWidget
-     * @param null $quantum
+     * @param Widget                   $activeWidget
+     * @param null                     $quantum
      *
      * @return Form[]
      */
@@ -312,9 +312,9 @@ class WidgetFormBuilder
      * @param $viewReference
      * @param $quantum
      *
-     * @return \Symfony\Component\Form\FormInterface
-     *
      * @throws \Throwable
+     *
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function buildWidgetStyleForm(Widget $widget, $viewReference, $quantum)
     {

@@ -318,17 +318,16 @@ class WidgetManager
      * Edit widget style.
      *
      * @param Request $request
-     * @param Widget $widget
-     * @param View $view
-     * @param string $viewReference
-     * @param string $activeQuantum
+     * @param Widget  $widget
+     * @param View    $view
+     * @param string  $viewReference
+     * @param string  $activeQuantum
      *
      * @return JsonResponse
      */
     public function editWidgetStyle(Request $request, Widget $widget, View $view, $viewReference = null, $activeQuantum = null)
     {
         if ($request->getMethod() === 'POST') {
-
             $form = $this->widgetFormBuilder->buildWidgetStyleForm($widget, $viewReference, $activeQuantum);
             $form->handleRequest($request);
 

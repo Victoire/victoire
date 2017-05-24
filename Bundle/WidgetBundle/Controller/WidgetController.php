@@ -14,7 +14,6 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
-use Victoire\Bundle\WidgetBundle\Form\WidgetStyleType;
 use Victoire\Bundle\WidgetMapBundle\Exception\WidgetMapNotFoundException;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
