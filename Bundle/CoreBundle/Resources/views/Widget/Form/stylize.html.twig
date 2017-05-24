@@ -23,7 +23,7 @@
 {% endblock modal_body_sidebar %}
 
 {% block modal_body_content %}
-    {% if widget.id and widget.currentView != widget.view %}
+    {% if widget.id and widget.currentView != widget.widgetMap.view %}
         {% embed "VictoireUIBundle:Bricks:alert.html.twig" with { theme: "warning" } %}
             {% block body %}
                 {{ 'victoire.widget.inherited.notice'|trans({'%templateName%': widget.view.name, '%templateEditLink%': path('victoire_core_widget_edit', {'id': widget.id, 'viewReference': widget.view.reference.id })}, 'victoire')|raw }}
