@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
@@ -19,6 +20,7 @@ use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\FormBundle\Helper\FormErrorHelper;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\WidgetBundle\Builder\WidgetFormBuilder;
+use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 use Victoire\Bundle\WidgetBundle\Resolver\WidgetContentResolver;
@@ -134,7 +136,6 @@ class WidgetManager
                     'widgets'            => $widgets,
                     'widget'             => $widget,
                     'forms'              => $forms,
-                    'quantum'            => $quantum,
                 ]
             ),
         ];
@@ -221,7 +222,7 @@ class WidgetManager
     }
 
     /**
-     * edit a widget.
+     * Edit a widget.
      *
      * @param Request $request
      * @param Widget  $widget
@@ -311,6 +312,72 @@ class WidgetManager
         }
 
         return $response;
+    }
+
+    /**
+     * Edit widget style.
+     *
+     * @param Request $request
+     * @param Widget $widget
+     * @param View $view
+     * @param string $viewReference
+     * @param string $activeQuantum
+     *
+     * @return JsonResponse
+     */
+    public function editWidgetStyle(Request $request, Widget $widget, View $view, $viewReference = null, $activeQuantum = null)
+    {
+        if ($request->getMethod() === 'POST') {
+
+            $form = $this->widgetFormBuilder->buildWidgetStyleForm($widget, $viewReference, $activeQuantum);
+            $form->handleRequest($request);
+
+            if ($request->query->get('novalidate', false) === false && $form->isValid()) {
+                if ($form->has('deleteBackground') && $form->get('deleteBackground')->getData()) {
+                    // @todo: dynamic responsive key
+                    foreach (['', 'XS', 'SM', 'MD', 'LG'] as $key) {
+                        $widget->{'deleteBackground'.$key}();
+                    }
+                }
+                $this->entityManager->flush();
+                $params = [
+                    'view'        => $view,
+                    'success'     => true,
+                    'html'        => $this->widgetRenderer->render($widget, $view),
+                    'widgetId'    => $widget->getId(),
+                    'viewCssHash' => $view->getCssHash(),
+                ];
+            } else {
+                $template = ($request->query->get('novalidate', false) !== false) ? 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' : 'VictoireCoreBundle:Widget/Form:stylize.html.twig';
+                $params = [
+                    'success' => !$form->isSubmitted(),
+                    'html'    => $this->templating->render(
+                        $template,
+                        [
+                            'view'   => $view,
+                            'form'   => $form->createView(),
+                            'widget' => $widget,
+                        ]
+                    ),
+                ];
+            }
+        } else {
+            $widgets = $widget->getWidgetMap()->getWidgets();
+            $forms = $this->widgetFormBuilder->renderQuantumStyleForms($viewReference, $widgets, $widget);
+            $params = [
+                'html' => $this->templating->render(
+                    'VictoireCoreBundle:Widget/Form:stylize.html.twig',
+                    [
+                        'view'    => $view,
+                        'forms'   => $forms,
+                        'widget'  => $widget,
+                        'widgets' => $widgets,
+                    ]
+                ),
+            ];
+        }
+
+        return new JsonResponse($params);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\WidgetBundle\Builder;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\Form;
@@ -14,6 +15,7 @@ use Victoire\Bundle\WidgetBundle\Event\WidgetFormEvents;
 use Victoire\Bundle\WidgetBundle\Event\WidgetFormPostCreateEvent;
 use Victoire\Bundle\WidgetBundle\Event\WidgetFormPreCreateEvent;
 use Victoire\Bundle\WidgetBundle\Form\WidgetOptionsContainer;
+use Victoire\Bundle\WidgetBundle\Form\WidgetStyleType;
 
 class WidgetFormBuilder
 {
@@ -132,16 +134,37 @@ class WidgetFormBuilder
      *
      * @return Form[]
      */
-    public function renderNewQuantumForms($slot, View $view, $widgets, $activeWidget, $classes, $position = null, $parentWidgetMap = null, $quantum = null)
+    public function renderNewQuantumForms($slot, View $view, $widgets, Widget $activeWidget, $classes, $position = null, $parentWidgetMap = null, $quantum = null)
     {
         $forms = [];
         foreach ($widgets as $key => $widget) {
             $_quantum = null !== $quantum ? $quantum : $this->convertToString($key);
             $forms[$key] = $this->renderNewWidgetForms($slot, $view, $widget, $classes, $position, $parentWidgetMap, $_quantum);
             $forms[$key]['quantum'] = $_quantum;
-            if ($widget === $activeWidget) {
-                $forms[$key]['active'] = true;
-            }
+            $forms[$key]['active'] = $widget === $activeWidget ? true : false;
+        }
+
+        return $forms;
+    }
+
+    /**
+     * Generates style forms for each quantum.
+     *
+     * @param $viewReference
+     * @param ArrayCollection|Widget[] $widgets
+     * @param Widget $activeWidget
+     * @param null $quantum
+     *
+     * @return Form[]
+     */
+    public function renderQuantumStyleForms($viewReference, $widgets, Widget $activeWidget)
+    {
+        $forms = [];
+        foreach ($widgets as $key => $widget) {
+            $_quantum = $this->convertToString($key);
+            $forms[$key]['form'] = $this->buildWidgetStyleForm($widget, $viewReference, $_quantum)->createView();
+            $forms[$key]['quantum'] = $_quantum;
+            $forms[$key]['active'] = $widget === $activeWidget ? true : false;
         }
 
         return $forms;
@@ -278,6 +301,44 @@ class WidgetFormBuilder
         $event = new WidgetFormPostCreateEvent($builder);
         $this->container->get('event_dispatcher')->dispatch(WidgetFormEvents::POST_CREATE, $event);
         $this->container->get('event_dispatcher')->dispatch(WidgetFormEvents::POST_CREATE.'_'.strtoupper($widgetName), $event);
+
+        return $builder;
+    }
+
+    /**
+     * Create style form for given widget.
+     *
+     * @param Widget $widget
+     * @param $viewReference
+     * @param $quantum
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     *
+     * @throws \Throwable
+     */
+    public function buildWidgetStyleForm(Widget $widget, $viewReference, $quantum)
+    {
+        $formFactory = $this->container->get('form.factory');
+
+        $options = [
+            'method' => 'POST',
+            'action' => $this->container->get('router')->generate(
+                'victoire_core_widget_stylize',
+                [
+                    'id'            => $widget->getId(),
+                    'viewReference' => $viewReference,
+                    'quantum'       => $quantum,
+                ]
+            ),
+        ];
+
+        $mockForm = $formFactory->create(WidgetStyleType::class, $widget, $options);
+        $builder = $formFactory->createNamed(
+            sprintf('%s_%s', $quantum, $mockForm->getName()),
+            WidgetStyleType::class,
+            $widget,
+            $options
+        );
 
         return $builder;
     }
