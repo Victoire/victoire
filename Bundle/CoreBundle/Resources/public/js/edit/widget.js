@@ -54,17 +54,17 @@ $vic(document).on('click', '.v-modal--widget a[data-modal="update"], .v-modal--w
 
         var quantumLetter = $vic(this).data('quantum');
 
+        // matches widget stylize form
+        activeForm = $vic(this).find('form[name="' + quantumLetter + '_widget_style"]');
+
         // matches widget edit form with more than one mode available
-        var activeForm = $vic(this).find('[data-group="picker-' + quantumLetter + '"][data-state="visible"] [data-flag="v-collapse"][data-state="visible"] > form');
+        if (activeForm.length == 0) {
+            var activeForm = $vic(this).find('[data-group="picker-' + quantumLetter + '"][data-state="visible"] [data-flag="v-collapse"][data-state="visible"] > form');
+        }
 
         // matches widget edit form with only static mode available
         if (activeForm.length == 0) {
             activeForm = $vic(this).find('[data-group="picker-' + quantumLetter + '"][data-state="visible"] form');
-        }
-
-        // matches widget stylize form
-        if (activeForm.length == 0 && $vic(this).attr('data-state') == 'visible') {
-            activeForm = $vic(this).find('form[name="widget_style"]');
         }
 
         forms = $vic.merge(forms, [activeForm]);
