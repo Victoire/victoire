@@ -48,6 +48,7 @@ class AppKernel extends Kernel
             new Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
             //Victoire bundles
             new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
             new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
