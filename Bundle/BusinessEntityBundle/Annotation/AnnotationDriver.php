@@ -88,7 +88,6 @@ class AnnotationDriver extends DoctrineAnnotationDriver
             );
             foreach ($iterator as $file) {
                 $sourceFile = realpath($file[0]);
-                require_once $sourceFile;
                 $includedFiles[] = $sourceFile;
             }
         }
