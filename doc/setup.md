@@ -48,6 +48,7 @@ class AppKernel extends Kernel
             new Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
             //Victoire bundles
             new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
             new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
@@ -101,6 +102,7 @@ framework:
 ```yml
 imports:
     - { resource: @VictoireCoreBundle/Resources/config/config.yml }
+    - { resource: @VictoireTwigBundle/Resources/config/config.yml }
 
 assetic:
     use_controller: false
