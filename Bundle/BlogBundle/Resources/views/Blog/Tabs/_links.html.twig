@@ -8,7 +8,23 @@
             </li>
             <li>
                 <a href="{{ path('victoire_blog_rss', {'id': blog.id}) }}">RSS</a>
+                {{ _self.blog_rss_category(blog, blog.categories) }}
+                </ul>
             </li>
         </ul>
     </div>
 </div>
+
+{% macro blog_rss_category(blog, categories) %}
+    {% if categories|length %}
+        <ul>
+            {% for category in categories %}
+                <li>
+                    {% set categoryRssLink = path('victoire_blog_rss', {'id': blog.id, 'category': category.id}) %}
+                    <a href="{{ categoryRssLink }}">{{ category.title }}</a>
+                    {{ _self.blog_rss_category(blog, category.children) }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}

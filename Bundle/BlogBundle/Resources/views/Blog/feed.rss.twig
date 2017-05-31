@@ -4,19 +4,18 @@
         <title>{{ blog.name }}</title>
         <link>{{ url('victoire_core_page_show', {'url': blog.url}) }}</link>
         <description>{{ blog.seo|default({'description' : ''}).description }}</description>
-
         {% if blog.seo and blog.seo.ogImage %}
-        <image>
-            <url>{{ blog.seo.ogImage.url }}</url>
-            <link>{{ url('victoire_core_page_show', {'url': blog.url}) }}</link>
-        </image>
+            <image>
+                <url>{{ blog.seo.ogImage.url }}</url>
+                <link>{{ url('victoire_core_page_show', {'url': blog.url}) }}</link>
+            </image>
         {% endif %}
 
-        {% for article in blog.articles %}<item>
+        {% for article in articles %}<item>
             <title>{{ article.name }}</title>
             <link>{{ vic_business_link(article, null, constant('\\Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface::ABSOLUTE_URL')) }}</link>
             <description>{{ article.description }}</description>
-        </item>
+            </item>
         {% endfor %}
 
     </channel>
