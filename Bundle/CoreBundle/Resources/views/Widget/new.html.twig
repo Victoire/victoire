@@ -45,11 +45,5 @@
 
     {% block form_base_criterias %}{{ form_row(form.criterias) }}{% endblock %}
 
-    {% block form_base_asynchronous %}
-        <div class="v-form-group">
-            {{ form_widget(form.asynchronous) }}
-        </div>
-    {% endblock form_base_asynchronous %}
-
     {{ block('form_base_end') }}
 {% endblock %}
