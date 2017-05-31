@@ -32,7 +32,7 @@
             </trans-unit>
             <trans-unit id="58893b996ebee" resname="victoire_criteria.criteria.operator.help_block">
                 <source>victoire_criteria.criteria.operator.help_block</source>
-                <target>Valeurs prises en charge: equal, true, false, is_granted, is_not_granted</target>
+                <target>Valeurs prises en charge: equal, different, is_granted, is_not_granted</target>
             </trans-unit>
             <trans-unit id="58893b996ebff" resname="victoire_criteria.request_domain_name.criteria.label">
                 <source>victoire_criteria.request_domain_name.criteria.label</source>
