@@ -5,7 +5,6 @@ namespace Victoire\Bundle\SeoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\CoreBundle\Entity\View;
 
 /**
