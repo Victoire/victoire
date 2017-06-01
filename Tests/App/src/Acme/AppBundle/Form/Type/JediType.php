@@ -26,8 +26,8 @@ class JediType extends AbstractType
                     'label'             => 'acme.app.jedi.form.side.label',
                     'choices_as_values' => true,
                     'choices'           => [
-                        'acme.app.jedi.form.side.choice.both' => 'both',
-                        'acme.app.jedi.form.side.choice.dark' => 'dark',
+                        'acme.app.jedi.form.side.choice.both'   => 'both',
+                        'acme.app.jedi.form.side.choice.dark'   => 'dark',
                         'acme.app.jedi.form.side.choice.bright' => 'bright',
                     ],
                 ])
