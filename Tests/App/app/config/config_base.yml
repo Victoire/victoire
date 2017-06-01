@@ -25,7 +25,6 @@ framework:
     default_locale:  "en"
     translator:      { fallback: "en" }
     trusted_hosts:   ~
-    trusted_proxies: ~
     session:
         handler_id:  ~
         name: victoire

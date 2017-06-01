@@ -16,7 +16,7 @@ use Knp\FriendlyContexts\Context\RawMinkContext;
 /**
  * Feature context.
  */
-class FeatureContext extends RawMinkContext implements Context, SnippetAcceptingContext, KernelAwareContext
+class FeatureContext extends RawMinkContext implements Context, KernelAwareContext
 {
     use KernelDictionary;
 
