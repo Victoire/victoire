@@ -27,7 +27,7 @@ class UIController extends Controller
     public function confirmAction(Request $request)
     {
         return [
-            'id' => $request->get('id').'-'.uniqid().'-modal'
+            'id' => $request->get('id').'-'.uniqid().'-modal',
         ];
     }
 }
