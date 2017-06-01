@@ -26,19 +26,8 @@ class UIController extends Controller
      */
     public function confirmAction(Request $request)
     {
-        $confirmCallback = $request->get('confirm_callback');
-        if ($confirmCallback === '') {
-            $confirmCallback = null;
-        }
-
         return [
-            'title'                => $request->get('title'),
-            'body'                 => $request->get('body'),
-            'id'                   => $request->get('id').'-'.uniqid().'-modal',
-            'cancel_button_class'  => $request->get('cancel_button_class', 'v-btn--framed v-btn--transparent'),
-            'confirm_button_class' => $request->get('confirm_button_class', 'v-btn--danger'),
-            'type'                 => $request->get('type'),
-            'confirmCallback'      => $confirmCallback,
+            'id' => $request->get('id').'-'.uniqid().'-modal'
         ];
     }
 }
