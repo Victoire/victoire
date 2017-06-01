@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Twig\Extension;
 
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use Symfony\Component\Security\Core\SecurityContext;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
@@ -45,8 +44,6 @@ class CmsExtension extends \Twig_Extension
      * @param ViewReferenceRepository $viewReferenceRepository
      * @param \Twig_Environment       $twig
      * @param WidgetResolver          $widgetResolver
-     *
-     * @internal param SecurityContext $securityContext
      */
     public function __construct(
         WidgetRenderer $widgetRenderer,
@@ -296,7 +293,7 @@ class CmsExtension extends \Twig_Extension
     {
         $isGranted = false;
 
-        if ($this->securityContext->isGranted('ROLE_VICTOIRE_DEVELOPER')) {
+        if ($this->authorizationChecker->isGranted('ROLE_VICTOIRE_DEVELOPER')) {
             $isGranted = true;
         }
 

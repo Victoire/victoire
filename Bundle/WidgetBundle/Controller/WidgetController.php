@@ -230,16 +230,17 @@ class WidgetController extends Controller
     /**
      * Stylize a widget.
      *
-     * @param Widget $widget        The widget to stylize
-     * @param int    $viewReference The current view
-     * @param string $quantum       The current quantum
+     * @param Request $request
+     * @param Widget  $widget
+     * @param int     $viewReference
+     * @param string  $quantum
      *
      * @return JsonResponse
      *
      * @Route("/victoire-dcms/widget/stylize/{id}/{viewReference}/{quantum}/", name="victoire_core_widget_stylize", defaults={"quantum":"a"}, options={"expose"=true})
      * @Template()
      */
-    public function stylizeAction(Widget $widget, $viewReference, $quantum = null)
+    public function stylizeAction(Request $request, Widget $widget, $viewReference, $quantum = null)
     {
         $view = $this->getViewByReferenceId($viewReference);
         $this->get('victoire_widget_map.builder')->build($view);
@@ -263,7 +264,7 @@ class WidgetController extends Controller
 
         try {
             $response = $this->get('widget_manager')->editWidgetStyle(
-                $this->get('request'),
+                $request,
                 $widget,
                 $view,
                 $viewReference,
@@ -420,7 +421,7 @@ class WidgetController extends Controller
      * @return JsonResponse
      * @Route("/victoire-dcms/widget/get-available-positions/{viewReference}", name="victoire_core_widget_get_available_positions", options={"expose"=true})
      */
-    public function getAvailablePositionsAction(Request $request, $viewReference)
+    public function getAvailablePositionsAction($viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
 

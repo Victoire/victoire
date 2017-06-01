@@ -30,7 +30,6 @@ class WidgetStyleType extends AbstractType
         $this->kernel = $kernel;
         $this->fileLocator = $fileLocator;
 
-        //@todo make it dynamic from the global variable (same name) or twig bundle parameter
         $this->victoire_twig_responsive = ['', 'XS', 'SM', 'MD', 'LG'];
     }
 

@@ -4,18 +4,12 @@ namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * The MenuBuilder will build the top menu and the side menu of the admin interface.
  */
 class MenuBuilder
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
     /**
      * @var MenuAdaptorInterface[]
      */
@@ -39,12 +33,10 @@ class MenuBuilder
     /**
      * Constructor.
      *
-     * @param TranslatorInterface $translator   The translator
-     * @param RequestStack        $requestStack The request stack
+     * @param RequestStack $requestStack The request stack
      */
-    public function __construct(TranslatorInterface $translator, RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack)
     {
-        $this->translator = $translator;
         $this->requestStack = $requestStack;
     }
 
