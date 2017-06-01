@@ -76,8 +76,8 @@
         "sensio/generator-bundle": "~2.3|~3.0",
         "symfony/var-dumper": "~2.8|~3.1",
         "doctrine/doctrine-fixtures-bundle": "^2.2",
-        "victoire/text-widget": "~2.0",
-        "victoire/button-widget": "~2.0"
+        "victoire/text-widget": "~2.0.5",
+        "victoire/button-widget": "~2.0.4"
     },
     "autoload": {
         "psr-4": {
@@ -90,7 +90,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.3.x-dev"
+            "dev-feature/symfony3-compatibility": "2.3.x-dev"
         }
     }
 }
