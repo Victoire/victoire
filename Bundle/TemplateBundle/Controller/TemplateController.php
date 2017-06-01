@@ -60,7 +60,6 @@ class TemplateController extends Controller
         $template->setReference(new ViewReference($template->getId()));
         $event = new TemplateMenuContextualEvent($template);
 
-        //TODO : il serait bon de faire des constantes pour les noms d'évents
         $eventName = 'victoire_core.'.Template::TYPE.'_menu.contextual';
 
         $this->get('event_dispatcher')->dispatch($eventName, $event);
@@ -103,7 +102,7 @@ class TemplateController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $template = new Template();
-        $form = $this->container->get('form.factory')->create(TemplateType::class, $template); //@todo utiliser un service
+        $form = $this->container->get('form.factory')->create(TemplateType::class, $template);
 
         $form->handleRequest($request);
         if ($form->isValid()) {
