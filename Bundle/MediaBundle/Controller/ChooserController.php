@@ -80,7 +80,7 @@ class ChooserController extends Controller
                     'fileform'  => $this->createTypeFormView($mediaHandler, FileType::class),
                     'videoform' => $this->createTypeFormView($mediaHandler, RemoteVideoType::class),
                     'slideform' => $this->createTypeFormView($mediaHandler, RemoteSlideType::class),
-                ]
+                ],
         ];
     }
 
