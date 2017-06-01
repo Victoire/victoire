@@ -1,5 +1,5 @@
 {% extends 'VictoirePageBundle:Page:settings.html.twig' %}
-
+{% import _self as macros %}
 {% trans_default_domain "victoire" %}
 
 {% block modal_body_content %}
@@ -42,10 +42,10 @@
                         {{'victoire.blog.category.title.label'|trans}}
                     </h4>
                 </div>
-                <div class="blogCategories" data-prototype="{{ _self.widget_prototype(form.categories.vars.prototype)|e }}" role="blogCategory" data-init="true" data-blog-category="0" data-index="0">
+                <div class="blogCategories" data-prototype="{{ macros.widget_prototype(form.categories.vars.prototype)|e }}" role="blogCategory" data-init="true" data-blog-category="0" data-index="0">
                     <ul class="vic-blogCategoryWidget-itemList" role="blogCategory-container">
                         {% for category in form.categories %}
-                            {{ _self.widget_prototype(category, loop.index0) }}
+                            {{ macros.widget_prototype(category, loop.index0) }}
                         {% endfor %}
                     </ul>
                     <div class='vic-form-group vic-add_blogCategory_sibling-Container'>
@@ -87,8 +87,9 @@
 {% endblock modal_body_content %}
 
 {% macro widget_prototype(form, index) %}
+    {% import _self as macros %}
 <li class='vic-form-group vic-blogcategoryWidget-item-formGroup' role="blogCategory" data-index="{{ index is not null ? index : '__blogCategory_index__' }}" data-blog-category="__blogCategory_id__" data-init="false">
-        {{ _self.category_render_form(form) }}
+        {{ macros.category_render_form(form) }}
         <span class='add_blogCategory_link-container'>
             <span><a href="#" onclick="addBlogCategoryRow(this);return false;" class="vic-btn vic-blogCategoryWidget-btn vic-btn-default add_blogCategory_link"><i class="fa fa-plus"></i> {{'victoire.blog.category.add.sub.label'|trans}}</a></span>
         </span>
@@ -96,7 +97,7 @@
             {% if form.children is defined %}
                 {% for category in form.children %}
                     {% if category.title is defined %}
-                        {{ _self.widget_prototype(category, loop.index0) }}
+                        {{ macros.widget_prototype(category, loop.index0) }}
                     {% endif %}
                 {% endfor %}
             {% endif %}

@@ -1,3 +1,4 @@
+{% import _self as macros %}
 {% spaceless %}
 {% set globalStyle = {} %}
 {% set background = {} %}
@@ -25,7 +26,7 @@
 {% endif %}
 
 {% set globalStyle = (background|length) ? globalStyle|merge({'background': background}) : globalStyle %}
-{% set style = selector ~ '{' ~ _self.displayStyle(globalStyle) ~ '}' %}
+{% set style = selector ~ '{' ~ macros.displayStyle(globalStyle) ~ '}' %}
 
 {% if globalStyle|length %}
     {%- if mediaQuery is defined and mediaQuery -%}
@@ -43,9 +44,10 @@
 {% endspaceless %}
 
 {% macro displayStyle(styles) %}
+    {% import _self as macros %}
     {%- if styles is iterable -%}
         {%- for style in styles -%}
-            {{ _self.displayStyle(style) }}
+            {{ macros.displayStyle(style) }}
         {%- endfor -%}
     {%- else -%}
         {{ styles|trim != '' ? styles|trim|raw }}
