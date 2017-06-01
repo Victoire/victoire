@@ -1,4 +1,5 @@
 {% extends 'VictoireMediaBundle:Default:layout.html.twig' %}
+{% set cKEditorFuncNum = app.request.get('CKEditorFuncNum', null) %}
 
 {% block extrajavascript %}
     {{ parent() }}
@@ -35,7 +36,7 @@
 
 {% block subbreadcrumb %}
     {% for parent in folder.parents %}
-        <li><a href="{{ path('VictoireMediaBundle_image_chooser_show_folder', { 'folderId': parent.id, 'type': type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ parent.name |trans({}, 'victoire') }}</a></li>
+        <li><a href="{{ path('VictoireMediaBundle_image_chooser_show_folder', { 'folderId': parent.id, 'type': app.request.get('type', null), 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ parent.name |trans({}, 'victoire') }}</a></li>
     {% endfor %}
 	<li class="active">{{ folder.name |trans({}, 'victoire') }}</li>
 {% endblock %}
@@ -68,7 +69,7 @@
                 	<tbody>
         		        {% for child in folder.children %}
         		            <tr>
-        		            	<td><a href="{{ path('VictoireMediaBundle_chooser_show_folder', { 'folderId' :child.id, 'type' : type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ child.name |trans({}, 'victoire') }}</td>
+					<td><a href="{{ path('VictoireMediaBundle_chooser_show_folder', { 'folderId' :child.id, 'type' : app.request.get('type', null), 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ child.name |trans({}, 'victoire') }}</td>
         		            </tr>
         		        {% endfor %}
         			</tbody>

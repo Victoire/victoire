@@ -4,12 +4,15 @@
 
 {% block modal_container_id %}{{ id }}{% endblock %}
 {% block modal_container_classes %}{{ parent() }} v-modal--danger{% endblock %}
-{% block modal_header_title %}{{ title }}{% endblock %}
+{% block modal_header_title %}{{ app.request.get('title') }}{% endblock %}
+
+{% set cancel_button_class = app.request.get('cancel_button_class', 'v-btn--framed v-btn--transparent') %}
+{% set confirm_button_class = app.request.get('confirm_button_class', 'v-btn--danger') %}
 
 {% block modal_body_content %}
     {% spaceless %}
         <p class="v-text--center" style="margin-bottom: 30px;">
-            {{ body|raw }}
+            {{ app.request.get('body')|raw }}
         </p>
 
         <div class="v-flex-grid v-flex-grid--align-center v-flex-grid--justify-center">
@@ -59,8 +62,8 @@ $vic('#{{ id }} .{{ confirm_button_class }}').click(function(){
     {% else %}
         elem.click();
     {% endif %}
-    {% if confirmCallback == null %}
-        {{ confirmCallback|raw }};
+    {% if app.request.get('confirm_callback', null) != null %}
+        {{ app.request.get('confirm_callback')|raw }};
     {% endif %}
 });
 

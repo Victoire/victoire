@@ -56,7 +56,6 @@ class ChooserController extends Controller
     public function chooserShowFolderAction(Request $request, $folderId)
     {
         $type = $request->get('type');
-        $cKEditorFuncNum = $request->get('CKEditorFuncNum');
 
         $em = $this->getDoctrine()->getManager();
         /* @var MediaManager $mediaHandler */
@@ -73,15 +72,15 @@ class ChooserController extends Controller
         }
 
         return [
-                'cKEditorFuncNum' => $cKEditorFuncNum,
-                'mediamanager'    => $mediaHandler,
-                'handler'         => $handler,
-                'type'            => $type,
-                'folder'          => $folder,
-                'folders'         => $folders,
-                'fileform'        => $this->createTypeFormView($mediaHandler, FileType::class),
-                'videoform'       => $this->createTypeFormView($mediaHandler, RemoteVideoType::class),
-                'slideform'       => $this->createTypeFormView($mediaHandler, RemoteSlideType::class),
+                'mediamanager' => $mediaHandler,
+                'handler'      => $handler,
+                'folder'       => $folder,
+                'folders'      => $folders,
+                'forms'        => [
+                    'fileform'  => $this->createTypeFormView($mediaHandler, FileType::class),
+                    'videoform' => $this->createTypeFormView($mediaHandler, RemoteVideoType::class),
+                    'slideform' => $this->createTypeFormView($mediaHandler, RemoteSlideType::class),
+                ]
         ];
     }
 
