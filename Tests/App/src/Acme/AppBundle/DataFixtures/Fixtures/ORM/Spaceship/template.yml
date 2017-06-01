@@ -22,5 +22,5 @@ Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
         updatedAt: <dateTime('now')>
         parent: "@home"
         translations:
-            - @template_spaceship_fr
-            - @template_spaceship_en
+            - "@template_spaceship_fr"
+            - "@template_spaceship_en"
