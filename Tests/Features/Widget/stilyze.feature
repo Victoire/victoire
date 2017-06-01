@@ -69,11 +69,12 @@ Feature: Stylize a widget
         When I switch to "style" mode
         And I edit the "Force" widget
         Then I should see "Edit widget style"
-        When I fill in "a_widget_style[containerBackgroundColor]" with "rgb(255, 0, 0)"
+        When I select "Use a color" from "Background"
+        And I fill in "a_widget_style[containerBackgroundColor]" with "rgb(255, 0, 0)"
         And I follow the link containing "UPDATE"
         And I wait 2 seconds
         And I reload the page
-        Then I should see the css property "background-color" of "widget-1" with "rgb(255, 0, 0)"
+        And I should see the css property "background-color" of "widget-1" with "rgb(255, 0, 0)"
         When I am on the homepage
         Then I should see the css property "background-color" of "widget-1" with "rgb(255, 0, 0)"
         When I am on "/en/victoire-dcms/template/show/1"
