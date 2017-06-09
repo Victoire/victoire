@@ -36,7 +36,7 @@ You can follow the relative questions on [StackOverflow](http://stackoverflow.co
 
 You can see the list of our lovely [contributors](https://github.com/Victoire/Victoire/contributors).
 
-##Install Victoire
+## Install Victoire
 
 To do so, follow the [setup guide](http://github.com/Victoire/victoire/blob/2.2/doc/setup.md).
 
