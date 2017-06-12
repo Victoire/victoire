@@ -85,10 +85,5 @@
             "Victoire\\Tests\\Functional\\": "Tests/Functional",
             "Victoire\\Widget\\": "Tests/App/src/Victoire/Widget"
         }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-feature/symfony3-compatibility": "2.3.x-dev"
-        }
     }
 }
