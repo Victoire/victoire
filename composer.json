@@ -75,9 +75,7 @@
         "phpunit/phpunit": "~5.7",
         "sensio/generator-bundle": "~2.3|~3.0",
         "symfony/var-dumper": "~2.8|~3.1",
-        "doctrine/doctrine-fixtures-bundle": "^2.2",
-        "victoire/text-widget": "~2.0.5",
-        "victoire/button-widget": "~2.0.4"
+        "doctrine/doctrine-fixtures-bundle": "^2.2"
     },
     "autoload": {
         "psr-4": {
