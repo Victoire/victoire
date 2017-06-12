@@ -63,10 +63,9 @@ class AppKernel extends Kernel
                 new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
                 new Victoire\Bundle\WidgetMapBundle\VictoireWidgetMapBundle(),
 
-                //Victoire minmal test bundles
+                //Victoire minimal test bundles
                 new Victoire\Widget\ForceBundle\VictoireWidgetForceBundle(),
                 new Victoire\Widget\LightSaberBundle\VictoireWidgetLightSaberBundle(),
-                new Victoire\Widget\ButtonBundle\VictoireWidgetButtonBundle(),
                 new Victoire\Widget\TextBundle\VictoireWidgetTextBundle(),
                 new Acme\AppBundle\AcmeAppBundle(),
             ],
