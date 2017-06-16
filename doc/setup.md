@@ -9,17 +9,16 @@ Follow the instructions on [victoire demo Readme](https://github.com/Victoire/de
 ## 2. From scratch
 
 ```sh
-symfony new . 2.8
+symfony new myProject 3.2
 ```
+`there is still some issues with symfony 3.3`
 
 ## Victoire and its dependencies
 
 ### Composer
+
 ```
-composer require victoire/victoire \
-    friendsofsymfony/user-bundle:~2.0@dev \
-    doctrine/orm \
-    --update-with-dependencies
+composer require victoire/victoire twig/twig:~2.0
 ```
 
 ### AppKernel
@@ -51,7 +50,6 @@ class AppKernel extends Kernel
             new Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-            new A2lix\TranslationFormBundle\A2lixTranslationFormBundle(),
             //Victoire bundles
             new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
             new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
@@ -105,8 +103,8 @@ framework:
 `app/config/config.yml`
 ```yml
 imports:
-    - { resource: @VictoireCoreBundle/Resources/config/config.yml }
-    - { resource: @VictoireTwigBundle/Resources/config/config.yml }
+    - { resource: "@VictoireCoreBundle/Resources/config/config.yml" }
+    - { resource: "@VictoireTwigBundle/Resources/config/config.yml" }
 
 assetic:
     use_controller: false
@@ -146,12 +144,6 @@ victoire_core:
     business_entity_debug: true
     layouts:
         defaultLayout: "Default layout"
-    # Here you need to list all folders containing your BusinessEntities and you Widgets
-    base_paths:
-        - "%kernel.root_dir%/../src"
-        - "%kernel.root_dir%/../vendor/victoire"
-        - "%kernel.root_dir%/../vendor/friendsofvictoire"
-        - "%kernel.root_dir%/../vendor/myorganization"
         
 #if you need i18n
 victoire_i18n:
@@ -247,50 +239,63 @@ VictoireCoreBundle:
     type: victoire_i18n
 ```
 
+As it never hurts, let's finish the configuration steps by clearing the cache:
+
+```
+bin/console -e=dev cache:clear
+```
+
 Then you're done with the Victoire steps but your database is empty. Just run these commands to get seeds:
 
 Start by creating your admin user:
 ```sh
-app/console -e=dev fos:user:create admin anakin@victoire.io myAwesomePassword
-app/console -e=dev fos:user:promote admin ROLE_VICTOIRE_DEVELOPER
+bin/console -e=dev doctrine:database:create
+bin/console -e=dev fos:user:create admin anakin@victoire.io myAwesomePassword
+bin/console -e=dev fos:user:promote admin ROLE_VICTOIRE_DEVELOPER
 ```
 
 Then run these sql queries to populates the initial views (error pages, one base template and the homepage):
 ```sql
-INSERT INTO `vic_view` (`id`, `parent_id`, `template_id`, `author_id`, `seo_id`, `bodyId`, `bodyClass`, `position`, `lft`, `lvl`, `rgt`, `root`, `undeletable`, `cssHash`, `widget_map`, `cssUpToDate`, `roles`, `created_at`, `updated_at`, `type`, `author_restricted`, `backendName`, `query`, `orderBy`, `business_entity_id`, `entityProxy_id`, `status`, `publishedAt`, `homepage`, `layout`, `code`)
+INSERT INTO `vic_view` (`id`, `parent_id`, `template_id`, `author_id`, `seo_id`, `bodyId`, `bodyClass`, `position`, `lft`, `lvl`, `rgt`, `root`, `undeletable`, `cssHash`, `cssUpToDate`, `roles`, `created_at`, `updated_at`, `type`, `backendName`, `query`, `orderBy`, `business_entity_id`, `entityProxy_id`, `status`, `publishedAt`, `homepage`, `layout`, `code`)
 VALUES
-    (1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 2, 7, 1, NULL, 'a:0:{}', 1, NULL, '2017-01-01 00:00:00', '2017-01-01 00:00:00', 'template', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'defaultLayout', NULL),
-    (2, NULL, 1, NULL, NULL, NULL, NULL, 0, 1, 0, 2, 1, 1, NULL, 'a:0:{}', 1, NULL, '2017-01-01 00:00:00', '2017-01-01 00:00:00', 'errorpage', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 400),
-    (3, NULL, 1, NULL, NULL, NULL, NULL, 0, 1, 0, 2, 2, 1, NULL, 'a:0:{}', 1, NULL, '2017-01-01 00:00:00', '2017-01-01 00:00:00', 'errorpage', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 403),
-    (4, NULL, 1, NULL, NULL, NULL, NULL, 0, 1, 0, 2, 3, 1, NULL, 'a:0:{}', 1, NULL, '2017-01-01 00:00:00', '2017-01-01 00:00:00', 'errorpage', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 404),
-    (5, NULL, 1, NULL, NULL, NULL, NULL, 0, 1, 0, 2, 4, 1, NULL, 'a:0:{}', 1, NULL, '2017-01-01 00:00:00', '2017-01-01 00:00:00', 'errorpage', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 500),
-    (6, NULL, 1, NULL, NULL, NULL, NULL, 0, 1, 0, 2, 5, 1, NULL, 'a:0:{}', 1, NULL, '2017-01-01 00:00:00', '2017-01-01 00:00:00', 'errorpage', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 503),
-    (7, NULL, 1, NULL, NULL, NULL, NULL, 0, 1, 0, 76, 6, 1, NULL, 'a:0:{}', 1, NULL, '2017-01-01 00:00:00', '2017-01-01 00:00:00', 'page', NULL, NULL, NULL, NULL, NULL, NULL, 'published', '2017-01-01 00:00:00', 1, NULL, NULL);
+	(1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 2, 7, 1, NULL, 1, NULL, '2017-01-01 00:00:00', '2017-01-01 00:00:00', 'template', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'defaultLayout', NULL),
+	(2, NULL, 1, NULL, NULL, NULL, NULL, 0, 1, 0, 2, 1, 1, NULL, 1, NULL, '2017-01-01 00:00:00', '2017-01-01 00:00:00', 'errorpage', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 400),
+	(3, NULL, 1, NULL, NULL, NULL, NULL, 0, 1, 0, 2, 2, 1, NULL, 1, NULL, '2017-01-01 00:00:00', '2017-01-01 00:00:00', 'errorpage', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 403),
+	(4, NULL, 1, NULL, NULL, NULL, NULL, 0, 1, 0, 2, 3, 1, NULL, 1, NULL, '2017-01-01 00:00:00', '2017-01-01 00:00:00', 'errorpage', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 404),
+	(5, NULL, 1, NULL, NULL, NULL, NULL, 0, 1, 0, 2, 4, 1, NULL, 1, NULL, '2017-01-01 00:00:00', '2017-01-01 00:00:00', 'errorpage', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 500),
+	(6, NULL, 1, NULL, NULL, NULL, NULL, 0, 1, 0, 2, 5, 1, NULL, 1, NULL, '2017-01-01 00:00:00', '2017-01-01 00:00:00', 'errorpage', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 503),
+	(7, NULL, 1, NULL, NULL, NULL, NULL, 0, 1, 0, 80, 6, 1, '9895a77faa19f0078ff4e2c5808e1bc4321d5b2f', 1, NULL, '2017-01-01 00:00:00', '2017-05-21 11:15:04', 'page', NULL, NULL, NULL, NULL, NULL, 'published', '2017-01-01 00:00:00', 1, NULL, NULL),
+	(8, 7, 1, 1, NULL, NULL, NULL, 2, 76, 1, 77, 6, 0, NULL, 0, NULL, '2017-05-21 20:30:44', '2017-05-21 20:30:44', 'blog', NULL, NULL, NULL, NULL, NULL, 'published', NULL, NULL, NULL, NULL),
+	(9, 7, 1, 1, NULL, NULL, NULL, 3, 78, 1, 79, 6, 0, '886e010d9b4f9cd648efb6a6cf838d1d02ee943e', 1, NULL, '2017-05-21 20:33:22', '2017-05-21 21:12:06', 'blog', NULL, NULL, NULL, NULL, NULL, 'published', NULL, NULL, NULL, NULL);
 
 INSERT INTO `vic_view_translations` (`id`, `translatable_id`, `name`, `slug`, `locale`)
 VALUES
-    (1, 1, 'Base Template', 'base-template', 'en'),
-    (2, 1, 'Template de base', 'template-de-base', 'fr'),
-    (3, 2, 'Page not found', 'error-400', 'en'),
-    (4, 2, 'Page introuvable', 'erreur-400', 'fr'),
-    (5, 3, 'Forbidden', 'error-403', 'en'),
-    (6, 3, 'Interdit', 'erreur-403', 'fr'),
-    (7, 4, 'Page not Found', 'error-404', 'en'),
-    (8, 4, 'Page introuvable', 'erreur-404', 'fr'),
-    (9, 5, 'Internal Error', 'error-500', 'en'),
-    (10, 5, 'Erreur interne', 'erreur-500', 'fr'),
-    (11, 6, 'Service unavailable', 'error-503', 'en'),
-    (12, 6, 'Service indisponible', 'erreur-503', 'fr'),
-    (13, 7, 'Homepage', 'home', 'en'),
-    (14, 7, 'Page d\'accueil', 'accueil', 'fr');
+	(1, 1, 'Base Template', 'base-template', 'en'),
+	(2, 1, 'Template de base', 'template-de-base', 'fr'),
+	(3, 2, 'Page not found', 'error-400', 'en'),
+	(4, 2, 'Page introuvable', 'erreur-400', 'fr'),
+	(5, 3, 'Forbidden', 'error-403', 'en'),
+	(6, 3, 'Interdit', 'erreur-403', 'fr'),
+	(7, 4, 'Page not Found', 'error-404', 'en'),
+	(8, 4, 'Page introuvable', 'erreur-404', 'fr'),
+	(9, 5, 'Internal Error', 'error-500', 'en'),
+	(10, 5, 'Erreur interne', 'erreur-500', 'fr'),
+	(11, 6, 'Service unavailable', 'error-503', 'en'),
+	(12, 6, 'Service indisponible', 'erreur-503', 'fr'),
+	(13, 7, 'Homepage', 'home', 'en'),
+	(14, 7, 'Page d\'accueil', 'accueil', 'fr'),
+	(15, 9, 'My blog', 'my-blog', 'en'),
+	(16, 9, 'Mon blog', 'mon-blog', 'fr');
 
-INSERT INTO `vic_media_folders` (`id`, `name`) VALUES (1, '/');
+INSERT INTO `vic_media_folders` (`id`, `parent_id`, `name`, `created_at`, `updated_at`, `rel`, `internal_name`, `deleted`)
+VALUES
+	(1, NULL, '/', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, 0);
 ```
 
 ### Generate view references
 
 ```sh
-php bin/console victoire:viewReference:generate -e=dev
+bin/console victoire:viewReference:generate -e=dev
 ```
 
 #### Do you prefer the fixtures way ?
@@ -302,7 +307,7 @@ There are some fixtures in `vendor/victoire/victoire/Tests/App/src/Acme/AppBundl
     composer require victoire/text-widget victoire/button-widget victoire/image-widget victoire/render-widget victoire/breadcrumb-widget ...
 ```
 
-Get the whole Victoire Widget list [**here**](http://packagist.org/search/?tags=victoire)
+Find others widget [**here**](http://packagist.org/search/?tags=victoire)
 
 ### Prepare Victoire assets
 
@@ -312,7 +317,7 @@ Run the following command to fetch the Victoire assets:
 
 `CAUTION` you need to install bower first
 ```shell
-php bin/console victoire:ui:fetchAssets
+bin/console victoire:ui:fetchAssets
 ```
 
 #### Dump js routes and translations
@@ -327,11 +332,12 @@ php bin/console bazinga:js-translation:dump -e=dev
 Run the following command to dump assets with assetic library:
 
 ```shell
-php bin/console assetic:dump
+bin/console assetic:dump
 ```
 
-
 **And it's done, just go to /login to enter in the edit mode.**
+
+If after the login, you still have the default Symfony page, you probably need to remove the default route in `app/config/routing.yml` or be sure there isn't any conflictual route.
 
 ## 3. Production
 
@@ -350,13 +356,13 @@ So you can let Victoire regenerate CSS files on user demand.
 But you may want to set a crontab on your production environment to regenerate a batch of CSS files each minute.
 
 ```
-* * * * * php bin/console victoire:widget-css:generate --limit=20 --env=prod
+* * * * * bin/console victoire:widget-css:generate --limit=20 --env=prod
 ```
 
 If you want to manually force all CSS to be regenerated even if they are up to date, add `--force`.
 
 ```sh
-php bin/console victoire:widget-css:generate --force
+bin/console victoire:widget-css:generate --force
 ```
 
 [1]: https://blogs.msdn.microsoft.com/ieinternals/2011/05/14/stylesheet-limits-in-internet-explorer/
