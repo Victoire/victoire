@@ -1,12 +1,4 @@
-#How to install Victoire DCMS?
-
-You actually have two ways to install it:
-
-## 1. From the Victoire Demo
-
-Follow the instructions on [victoire demo Readme](https://github.com/Victoire/demo/blob/master/README.md)
-
-## 2. From scratch
+# Setup
 
 ```sh
 symfony new myProject 3.2
