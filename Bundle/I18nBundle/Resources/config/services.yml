@@ -26,11 +26,3 @@ services:
             - '@victoire_i18n.locale_resolver'
         tags:
             - { name: routing.loader }
-
-    victoire_i18n.kernelrequest.listener:
-        class: Victoire\Bundle\I18nBundle\Listener\KernelRequestListener
-        arguments:
-            - '@twig'
-            - '%victoire_i18n.available_locales%'
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
