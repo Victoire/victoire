@@ -28,5 +28,8 @@ class VictoireTwigExtension extends Extension
         $container->setParameter(
             'victoire_twig.responsive', $config['responsive']
         );
+
+        $twigConfig['globals']['victoire_twig_responsive'] = $container->getParameter('victoire_twig.responsive');
+        $container->prependExtensionConfig('twig', $twigConfig);
     }
 }
