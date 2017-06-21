@@ -27,7 +27,6 @@ class VictoireI18nExtension extends Extension implements PrependExtensionInterfa
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-
         $container->setParameter(
             'victoire_i18n.available_locales', $config['available_locales']
         );
