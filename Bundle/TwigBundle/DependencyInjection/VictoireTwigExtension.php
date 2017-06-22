@@ -28,8 +28,20 @@ class VictoireTwigExtension extends Extension
         $container->setParameter(
             'victoire_twig.responsive', $config['responsive']
         );
-
-        $twigConfig['globals']['victoire_twig_responsive'] = $container->getParameter('victoire_twig.responsive');
-        $container->prependExtensionConfig('twig', $twigConfig);
     }
+
+    public function prepend(ContainerBuilder $container)
+    {
+        $config = $container->getExtensionConfig($this->getAlias());
+        $config = $container->getParameterBag()->resolveValue($config);
+
+        $config = $this->processConfiguration(new Configuration(), $config);
+
+        if (isset($config['available_locales'])) {
+            $container->prependExtensionConfig('a2lix_translation_form', [
+                'locales'    => $config['available_locales'],
+            ]);
+        }
+    }
+
 }
