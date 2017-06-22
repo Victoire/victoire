@@ -54,6 +54,8 @@ class PageHelper
     protected $businessPageHelper;
     protected $viewReferenceRepository;
     protected $widgetDataWarmer;
+    protected $availableLocales;
+    protected $twigResponsive;
 
     /**
      * @param BusinessEntityHelper     $businessEntityHelper
@@ -87,7 +89,9 @@ class PageHelper
         BusinessPageBuilder $businessPageBuilder,
         BusinessPageHelper $businessPageHelper,
         WidgetDataWarmer $widgetDataWarmer,
-        ViewReferenceRepository $viewReferenceRepository
+        ViewReferenceRepository $viewReferenceRepository,
+        $availableLocales,
+        $twigResponsive
     ) {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->entityManager = $entityManager;
@@ -104,6 +108,8 @@ class PageHelper
         $this->businessPageHelper = $businessPageHelper;
         $this->widgetDataWarmer = $widgetDataWarmer;
         $this->viewReferenceRepository = $viewReferenceRepository;
+        $this->availableLocales = $availableLocales;
+        $this->twigResponsive = $twigResponsive;
     }
 
     /**
@@ -226,6 +232,8 @@ class PageHelper
         //Create the response
         $response = $this->container->get('templating')->renderResponse('VictoireCoreBundle:Layout:'.$layout.'.html.twig', [
             'view' => $view,
+            'victoire_i18n_available_locales' => $this->availableLocales,
+            'victoire_twig_responsive' => $this->twigResponsive,
         ]);
 
         return $response;
