@@ -32,3 +32,4 @@ services:
             - "%victoire_i18n.available_locales%"
         tags:
             - { name: twig.extension }
+        public: false
