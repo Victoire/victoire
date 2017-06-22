@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\I18nBundle\Extension;
 
 class AvailableLocalesExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
@@ -12,8 +13,8 @@ class AvailableLocalesExtension extends \Twig_Extension implements \Twig_Extensi
 
     public function getGlobals()
     {
-        return array(
+        return [
             'victoire_i18n_available_locales' => $this->availableLocales,
-        );
+        ];
     }
 }

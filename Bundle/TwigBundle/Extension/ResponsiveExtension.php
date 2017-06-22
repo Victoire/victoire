@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\TwigBundle\Extension;
 
 class ResponsiveExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
@@ -12,8 +13,8 @@ class ResponsiveExtension extends \Twig_Extension implements \Twig_Extension_Glo
 
     public function getGlobals()
     {
-        return array(
+        return [
             'victoire_twig_responsive' => $this->responsive,
-        );
+        ];
     }
 }

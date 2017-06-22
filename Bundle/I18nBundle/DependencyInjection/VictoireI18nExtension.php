@@ -42,8 +42,6 @@ class VictoireI18nExtension extends Extension implements PrependExtensionInterfa
         $container->setParameter(
             'victoire_i18n.locale_pattern', $config['locale_pattern']
         );
-
-
     }
 
     public function prepend(ContainerBuilder $container)
