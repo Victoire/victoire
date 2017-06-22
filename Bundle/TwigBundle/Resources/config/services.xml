@@ -20,9 +20,5 @@
             <argument>%victoire_i18n.available_locales%</argument>
             <argument>%victoire_i18n.victoire_locale%</argument>
         </service>
-        <service id="victoire_twig.responsive_extension" class="Victoire\Bundle\TwigBundle\Extension\ResponsiveExtension" public="false">
-            <argument>%victoire_twig.responsive%</argument>
-            <tag name="twig.extension" />
-        </service>
     </services>
 </container>
