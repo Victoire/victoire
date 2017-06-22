@@ -231,9 +231,9 @@ class PageHelper
 
         //Create the response
         $response = $this->container->get('templating')->renderResponse('VictoireCoreBundle:Layout:'.$layout.'.html.twig', [
-            'view' => $view,
+            'view'                            => $view,
             'victoire_i18n_available_locales' => $this->availableLocales,
-            'victoire_twig_responsive' => $this->twigResponsive,
+            'victoire_twig_responsive'        => $this->twigResponsive,
         ]);
 
         return $response;
