@@ -33,6 +33,8 @@ services:
             - "@victoire_business_page.business_page_helper"
             - "@victoire_widget_map.widget_data_warmer"
             - "@victoire_view_reference.repository"
+            - "%victoire_i18n.available_locales%"
+            - "%victoire_twig.responsive%"
 
     ####################################################################################################################
     # Security voter

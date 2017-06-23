@@ -30,10 +30,6 @@ class VictoireI18nExtension extends Extension implements PrependExtensionInterfa
         $container->setParameter(
             'victoire_i18n.available_locales', $config['available_locales']
         );
-
-        $twigConfig['globals']['victoire_i18n_available_locales'] = $container->getParameter('victoire_i18n.available_locales');
-        $container->prependExtensionConfig('twig', $twigConfig);
-
         $container->setParameter(
             'victoire_i18n.locale_pattern_table', $config['locale_pattern_table']
         );

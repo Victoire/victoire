@@ -51,6 +51,7 @@ class WidgetManager
     protected $pageHelper;
     protected $slots;
     protected $virtualToBpTransformer;
+    protected $twigResponsive;
 
     /**
      * construct.
@@ -86,7 +87,8 @@ class WidgetManager
         EngineInterface $templating,
         PageHelper $pageHelper,
         $slots,
-        VirtualToBusinessPageTransformer $virtualToBpTransformer
+        VirtualToBusinessPageTransformer $virtualToBpTransformer,
+        array $twigResponsive
     ) {
         $this->widgetFormBuilder = $widgetFormBuilder;
         $this->widgetHelper = $widgetHelper;
@@ -103,6 +105,7 @@ class WidgetManager
         $this->pageHelper = $pageHelper;
         $this->slots = $slots;
         $this->virtualToBpTransformer = $virtualToBpTransformer;
+        $this->twigResponsive = $twigResponsive;
     }
 
     /**
@@ -357,9 +360,10 @@ class WidgetManager
                     'html'    => $this->templating->render(
                         $template,
                         [
-                            'view'   => $view,
-                            'form'   => $form->createView(),
-                            'widget' => $widget,
+                            'view'                     => $view,
+                            'form'                     => $form->createView(),
+                            'widget'                   => $widget,
+                            'victoire_twig_responsive' => $this->twigResponsive,
                         ]
                     ),
                 ];
@@ -371,10 +375,11 @@ class WidgetManager
                 'html' => $this->templating->render(
                     'VictoireCoreBundle:Widget/Form:stylize.html.twig',
                     [
-                        'view'    => $view,
-                        'forms'   => $forms,
-                        'widget'  => $widget,
-                        'widgets' => $widgets,
+                        'view'                     => $view,
+                        'forms'                    => $forms,
+                        'widget'                   => $widget,
+                        'widgets'                  => $widgets,
+                        'victoire_twig_responsive' => $this->twigResponsive,
                     ]
                 ),
             ];

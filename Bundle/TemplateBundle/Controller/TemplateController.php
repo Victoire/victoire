@@ -69,9 +69,11 @@ class TemplateController extends Controller
         $layout = $template->getLayout().'.html.twig';
 
         $parameters = [
-            'view'   => $template,
-            'id'     => $template->getId(),
-            'locale' => $template->getCurrentLocale(),
+            'view'                            => $template,
+            'id'                              => $template->getId(),
+            'locale'                          => $template->getCurrentLocale(),
+            'victoire_i18n_available_locales' => $this->getParameter('victoire_i18n.available_locales'),
+            'victoire_twig_responsive'        => $this->getParameter('victoire_twig.responsive'),
         ];
 
         $this->get('victoire_widget_map.builder')->build($template);
