@@ -360,10 +360,10 @@ class WidgetManager
                     'html'    => $this->templating->render(
                         $template,
                         [
-                            'view'   => $view,
-                            'form'   => $form->createView(),
-                            'widget' => $widget,
-                            'victoire_twig_responsive' => $this->twigResponsive
+                            'view'                     => $view,
+                            'form'                     => $form->createView(),
+                            'widget'                   => $widget,
+                            'victoire_twig_responsive' => $this->twigResponsive,
                         ]
                     ),
                 ];
@@ -375,15 +375,16 @@ class WidgetManager
                 'html' => $this->templating->render(
                     'VictoireCoreBundle:Widget/Form:stylize.html.twig',
                     [
-                        'view'    => $view,
-                        'forms'   => $forms,
-                        'widget'  => $widget,
-                        'widgets' => $widgets,
-                        'victoire_twig_responsive' => $this->twigResponsive
+                        'view'                     => $view,
+                        'forms'                    => $forms,
+                        'widget'                   => $widget,
+                        'widgets'                  => $widgets,
+                        'victoire_twig_responsive' => $this->twigResponsive,
                     ]
                 ),
             ];
         }
+
         return new JsonResponse($params);
     }
 
