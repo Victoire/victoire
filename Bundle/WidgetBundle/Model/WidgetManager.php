@@ -51,6 +51,7 @@ class WidgetManager
     protected $pageHelper;
     protected $slots;
     protected $virtualToBpTransformer;
+    protected $twigResponsive;
 
     /**
      * construct.
@@ -86,7 +87,8 @@ class WidgetManager
         EngineInterface $templating,
         PageHelper $pageHelper,
         $slots,
-        VirtualToBusinessPageTransformer $virtualToBpTransformer
+        VirtualToBusinessPageTransformer $virtualToBpTransformer,
+        array $twigResponsive
     ) {
         $this->widgetFormBuilder = $widgetFormBuilder;
         $this->widgetHelper = $widgetHelper;
@@ -103,6 +105,7 @@ class WidgetManager
         $this->pageHelper = $pageHelper;
         $this->slots = $slots;
         $this->virtualToBpTransformer = $virtualToBpTransformer;
+        $this->twigResponsive = $twigResponsive;
     }
 
     /**
@@ -360,6 +363,7 @@ class WidgetManager
                             'view'   => $view,
                             'form'   => $form->createView(),
                             'widget' => $widget,
+                            'victoire_twig_responsive' => $this->twigResponsive
                         ]
                     ),
                 ];
@@ -375,11 +379,11 @@ class WidgetManager
                         'forms'   => $forms,
                         'widget'  => $widget,
                         'widgets' => $widgets,
+                        'victoire_twig_responsive' => $this->twigResponsive
                     ]
                 ),
             ];
         }
-
         return new JsonResponse($params);
     }
 
