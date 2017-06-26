@@ -1,7 +1,14 @@
 # Setup
 
+
+> If you have any question or doubt during the setup process, compare with this: https://github.com/Victoire/tutorial/tree/0744813baba719453e0673611c53d1d511133e65
+> If you still have a question, feel free to contact us:
+
+[![Twitter Follow](https://img.shields.io/twitter/follow/victoirecms.svg?style=social&label=Victoirecms)](https://twitter.com/troopersagency) [![Gitter](https://badges.gitter.im/Victoire/victoire.svg)](https://gitter.im/Victoire/victoire?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 ```sh
-symfony new myProject 3.2
+symfony new tutorial 3.2
+cd tutorial
 ```
 `there is still some issues with symfony 3.3`
 
@@ -75,7 +82,7 @@ class AppKernel extends Kernel
 
 just start it with docker:
 ```sh
-docker run -d -p 6385:6379 --name myAwesomeRedis redis:latest
+docker run -d -p 6379:6379 --name myAwesomeRedis redis:latest
 ```
 
 ### Config
@@ -194,12 +201,11 @@ services:
 ```
 parameters:
     ...
-    fos_js_base_url: https://victoire.io
+    fos_js_base_url: http://tutorial.victoire.dev #adjust to your need (of course)
     victoire_redis_path: redis://127.0.0.1:6379
     #if locale_pattern is domain
     locale_pattern_table:
-        io.victoire.dev: fr
-        victoire.io: fr
+        tutorial.victoire.dev: en
 
     node_path: /usr/local/bin/node
     node_paths:
@@ -237,11 +243,14 @@ As it never hurts, let's finish the configuration steps by clearing the cache:
 bin/console -e=dev cache:clear
 ```
 
+If you get this error: `Connection refused [tcp://127.0.0.1:6379]`, you probably choosed another port than the default one.
+
 Then you're done with the Victoire steps but your database is empty. Just run these commands to get seeds:
 
 Start by creating your admin user:
 ```sh
 bin/console -e=dev doctrine:database:create
+bin/console -e=dev doctrine:schema:create
 bin/console -e=dev fos:user:create admin anakin@victoire.io myAwesomePassword
 bin/console -e=dev fos:user:promote admin ROLE_VICTOIRE_DEVELOPER
 ```
@@ -296,8 +305,38 @@ There are some fixtures in `vendor/victoire/victoire/Tests/App/src/Acme/AppBundl
 ### Add the wanted widgets:
 
 ```sh
-    composer require victoire/text-widget victoire/button-widget victoire/image-widget victoire/render-widget victoire/breadcrumb-widget ...
+    composer require victoire/text-widget victoire/button-widget victoire/image-widget ...
 ```
+
+Don't forget to enable these widget in the AppKernel. To keep the previous example:
+
+```php
+class AppKernel extends Kernel
+{
+    public function registerBundles()
+    {
+        $bundles = array(
+            ...
+            new Victoire\Widget\TextBundle\VictoireWidgetTextBundle(),
+            new Victoire\Widget\ButtonBundle\VictoireWidgetButtonBundle(),
+            new Victoire\Widget\ImageBundle\VictoireWidgetImageBundle(),
+        );
+
+        return $bundles;
+    }
+}
+```
+And update your schema:
+```
+bin/console -e=dev doctrine:schema:update --force
+```
+
+If you have the following warning:
+```
+The given path "../vendor/friendsofvictoire" seems to be incorrect. You need to edit victoire_core.base_paths configuration.
+Updating database schema...
+```
+Don't worry: it will disapear as soon as you will install some non-official widgets (hosted in the `friendsofvictoire` organization.
 
 Find others widget [**here**](http://packagist.org/search/?tags=victoire)
 
@@ -327,7 +366,9 @@ Run the following command to dump assets with assetic library:
 bin/console assetic:dump
 ```
 
-**And it's done, just go to /login to enter in the edit mode.**
+**And it's done**, you should have a white screen with the Homepage title.
+You just need to go to **/login** to enter in the edit mode. Do you remember the credentials used in the command line ?
+That was `admin` and `myAwesomePassword`.
 
 If after the login, you still have the default Symfony page, you probably need to remove the default route in `app/config/routing.yml` or be sure there isn't any conflictual route.
 
