@@ -70,6 +70,8 @@ class AppKernel extends Kernel
             new Victoire\Bundle\ViewReferenceBundle\ViewReferenceBundle(),
             new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
             new Victoire\Bundle\WidgetMapBundle\VictoireWidgetMapBundle(),
+
+            //BlogBundle should be set just before your AppBundle
             new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
             ...
         ];

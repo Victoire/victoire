@@ -61,12 +61,14 @@ class AppKernel extends Kernel
                 new Victoire\Bundle\ViewReferenceBundle\ViewReferenceBundle(),
                 new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
                 new Victoire\Bundle\WidgetMapBundle\VictoireWidgetMapBundle(),
-                new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
 
                 //Victoire minimal test bundles
                 new Victoire\Widget\ForceBundle\VictoireWidgetForceBundle(),
                 new Victoire\Widget\LightSaberBundle\VictoireWidgetLightSaberBundle(),
                 new Victoire\Widget\TextBundle\VictoireWidgetTextBundle(),
+
+                new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
+
                 new Acme\AppBundle\AcmeAppBundle(),
             ],
             $this->getTestBundles()
