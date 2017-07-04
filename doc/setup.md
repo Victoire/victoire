@@ -51,7 +51,6 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             //Victoire bundles
             new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
-            new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
             new Victoire\Bundle\BusinessEntityBundle\VictoireBusinessEntityBundle(),
             new Victoire\Bundle\BusinessPageBundle\VictoireBusinessPageBundle(),
             new Victoire\Bundle\CoreBundle\VictoireCoreBundle(),
@@ -71,6 +70,7 @@ class AppKernel extends Kernel
             new Victoire\Bundle\ViewReferenceBundle\ViewReferenceBundle(),
             new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
             new Victoire\Bundle\WidgetMapBundle\VictoireWidgetMapBundle(),
+            new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
             ...
         ];
     }
