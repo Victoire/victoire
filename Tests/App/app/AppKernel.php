@@ -44,7 +44,6 @@ class AppKernel extends Kernel
                 new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
                 new Victoire\Bundle\CoreBundle\VictoireCoreBundle(),
                 new Victoire\Bundle\CriteriaBundle\VictoireCriteriaBundle(),
-                new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
                 new Victoire\Bundle\BusinessEntityBundle\VictoireBusinessEntityBundle(),
                 new Victoire\Bundle\BusinessPageBundle\VictoireBusinessPageBundle(),
                 new Victoire\Bundle\FilterBundle\VictoireFilterBundle(),
@@ -67,7 +66,9 @@ class AppKernel extends Kernel
                 new Victoire\Widget\ForceBundle\VictoireWidgetForceBundle(),
                 new Victoire\Widget\LightSaberBundle\VictoireWidgetLightSaberBundle(),
                 new Victoire\Widget\TextBundle\VictoireWidgetTextBundle(),
+
                 new Acme\AppBundle\AcmeAppBundle(),
+                new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
             ],
             $this->getTestBundles()
         );
