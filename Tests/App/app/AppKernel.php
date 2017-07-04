@@ -67,9 +67,8 @@ class AppKernel extends Kernel
                 new Victoire\Widget\LightSaberBundle\VictoireWidgetLightSaberBundle(),
                 new Victoire\Widget\TextBundle\VictoireWidgetTextBundle(),
 
-                new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
-
                 new Acme\AppBundle\AcmeAppBundle(),
+                new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
             ],
             $this->getTestBundles()
         );
