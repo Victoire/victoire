@@ -6,6 +6,7 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
+use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
  * DateFilter form type.
@@ -28,16 +29,28 @@ class DateFilter extends BaseFilter
         $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
 
         if (isset($parameters['year'])) {
-            $qb->andWhere('YEAR(main_item.publishedAt) = :year')
-                ->setParameter('year', $parameters['year']);
+            $qb->andWhere('main_item.status = :article_status_scheduled AND YEAR(main_item.publishedAt) = :year')
+                ->orWhere('main_item.status = :article_status_published AND main_item.publishedAt is null AND YEAR(main_item.createdAt) = :year')
+                ->orWhere('main_item.status = :article_status_published AND YEAR(main_item.publishedAt) = :year')
+                ->setParameter('year', $parameters['year'])
+                ->setParameter('article_status_published', PageStatus::PUBLISHED)
+                ->setParameter('article_status_scheduled', PageStatus::SCHEDULED);
         }
         if (isset($parameters['month'])) {
-            $qb->andWhere('MONTH(main_item.publishedAt) = :month')
-                ->setParameter('month', $parameters['month']);
+            $qb->andWhere('main_item.status = :article_status_scheduled AND MONTH(main_item.publishedAt) = :month')
+                ->orWhere('main_item.status = :article_status_published AND main_item.publishedAt is null AND MONTH(main_item.createdAt) = :month')
+                ->orWhere('main_item.status = :article_status_published AND MONTH(main_item.publishedAt) = :month')
+                ->setParameter('month', $parameters['month'])
+                ->setParameter('article_status_published', PageStatus::PUBLISHED)
+                ->setParameter('article_status_scheduled', PageStatus::SCHEDULED);
         }
         if (isset($parameters['day'])) {
-            $qb->andWhere('DAY(main_item.publishedAt) = :day')
-                ->setParameter('day', $parameters['day']);
+            $qb->andWhere('main_item.status = :article_status_scheduled AND DAY(main_item.publishedAt) = :day')
+                ->orWhere('main_item.status = :article_status_published AND main_item.publishedAt is null AND DAY(main_item.createdAt) = :day')
+                ->orWhere('main_item.status = :article_status_published AND DAY(main_item.publishedAt) = :day')
+                ->setParameter('day', $parameters['day'])
+                ->setParameter('article_status_published', PageStatus::PUBLISHED)
+                ->setParameter('article_status_scheduled', PageStatus::SCHEDULED);
         }
 
         return $qb;
@@ -75,6 +88,8 @@ class DateFilter extends BaseFilter
             }
         }
 
+        ksort($years);
+
         $data = ['year' => null, 'month' => null, 'day' => null];
         if ($this->getRequest()->query->has('filter') && array_key_exists('date_filter', $this->getRequest()->query->get('filter'))) {
             $_request = $this->getRequest()->query->get('filter')['date_filter'];
@@ -102,7 +117,7 @@ class DateFilter extends BaseFilter
                         'label'       => false,
                         'choices'     => $years,
                         'required'    => false,
-                        'expanded'    => true,
+                        'expanded'    => false,
                         'multiple'    => false,
                         'empty_value' => false,
                         'data'        => $data['year'],
