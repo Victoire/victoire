@@ -31,10 +31,10 @@ class ArticleRepository extends EntityRepository
         if ($excludeUnpublished) {
             $this->qb
                 ->andWhere('article.status = :status')
-                ->orWhere('article.status = :scheduled_status AND article.publishedAt > :publicationDate')
+                ->orWhere('article.status = :scheduled_status AND article.publishedAt <= :now')
                 ->setParameter('status', PageStatus::PUBLISHED)
                 ->setParameter('scheduled_status', PageStatus::SCHEDULED)
-                ->setParameter('publicationDate', new \DateTime());
+                ->setParameter('now', new \DateTime());
         }
 
         if (null != $blog) {
