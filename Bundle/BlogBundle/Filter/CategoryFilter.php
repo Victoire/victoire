@@ -7,7 +7,7 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\TranslatorInterface;
-use Victoire\Bundle\BlogBundle\Entity\Category;
+use Victoire\Bundle\BlogBundle\Entity\BlogCategory;
 use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
 
 /**
@@ -48,7 +48,7 @@ class CategoryFilter extends BaseFilter
             if ($parameter === '') {
                 unset($parameters['category'][$index]);
             } else {
-                $parentCategory = $this->getEntityManager()->getRepository('VictoireBlogBundle:Category')->findOneById($parameter);
+                $parentCategory = $this->getEntityManager()->getRepository('BlogCategory.php')->findOneById($parameter);
                 $childrenArray = array_merge($childrenArray, $this->getCategoryChildrens($parentCategory, []));
             }
         }
@@ -75,7 +75,7 @@ class CategoryFilter extends BaseFilter
         return $qb;
     }
 
-    public function getCategoryChildrens(Category $category, $childrenArray)
+    public function getCategoryChildrens(BlogCategory $category, $childrenArray)
     {
         $childrenArray[] = $category->getId();
         $childrens = $category->getChildren();
@@ -99,7 +99,7 @@ class CategoryFilter extends BaseFilter
     {
 
         //getAll categories
-        $categoryQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Category')->getAll();
+        $categoryQb = $this->getEntityManager()->getRepository('BlogCategory.php')->getAll();
         //getAll published articles
         $articleQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Article')->getAll(true);
 
@@ -156,7 +156,7 @@ class CategoryFilter extends BaseFilter
      */
     public function getFilters($filters)
     {
-        return $this->getEntityManager()->getRepository('VictoireBlogBundle:Category')->findById($filters['category']);
+        return $this->getEntityManager()->getRepository('BlogCategory.php')->findById($filters['category']);
     }
 
     /**

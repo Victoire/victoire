@@ -75,7 +75,7 @@ class Article
     /**
      * Categories of the article.
      *
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity="BlogCategory", inversedBy="articles")
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @VIC\BusinessProperty({"textable", "seoable"})
      */
@@ -201,11 +201,11 @@ class Article
     /**
      * Set category.
      *
-     * @param Category $category
+     * @param BlogCategory $category
      *
      * @return Article
      */
-    public function setCategory(Category $category)
+    public function setCategory(BlogCategory $category)
     {
         $this->category = $category;
     }
