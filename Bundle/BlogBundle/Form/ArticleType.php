@@ -146,7 +146,7 @@ class ArticleType extends AbstractType
      */
     protected function manageCategories($blogId, $form)
     {
-        $categoryRepo = $this->entityManager->getRepository('Victoire\Bundle\BlogBundle\Entity\Category');
+        $categoryRepo = $this->entityManager->getRepository('BlogCategory.php');
 
         if ($blogId) {
             $queryBuilder = $categoryRepo->getOrderedCategories($blogId)->getInstance();
@@ -159,7 +159,7 @@ class ArticleType extends AbstractType
         $form->add('category', HierarchyTreeType::class, [
             'required'      => false,
             'label'         => 'form.article.category.label',
-            'class'         => 'Victoire\\Bundle\\BlogBundle\\Entity\\Category',
+            'class'         => 'Victoire\\Bundle\\BlogBundle\\Entity\\BlogCategory',
             'query_builder' => $queryBuilder,
             'placeholder'   => 'form.article.category.placeholder',
         ]);
