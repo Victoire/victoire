@@ -4,6 +4,7 @@ namespace Victoire\Bundle\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\CoreBundle\Annotations as Vic;
 
 /**
@@ -11,10 +12,13 @@ use Victoire\Bundle\CoreBundle\Annotations as Vic;
  *
  * @ORM\Table("vic_category")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\CategoryRepository")
+ * @Vic\BusinessEntity("listing")
  * @Gedmo\Tree(type="nested")
  */
-class Category
+class BlogCategory
 {
+    use BusinessEntityTrait;
+
     /**
      * @var int
      *
@@ -28,6 +32,7 @@ class Category
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Vic\BusinessProperty("textable")
      */
     protected $title;
 
@@ -79,13 +84,13 @@ class Category
 
     /**
      * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="BlogCategory", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="cascade")
      */
     protected $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="BlogCategory", mappedBy="parent", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     protected $children;
@@ -126,7 +131,7 @@ class Category
      *
      * @param string $title
      *
-     * @return Category
+     * @return BlogCategory
      */
     public function setTitle($title)
     {
@@ -150,7 +155,7 @@ class Category
      *
      * @param string $slug
      *
-     * @return Category
+     * @return BlogCategory
      */
     public function setSlug($slug)
     {
@@ -353,7 +358,7 @@ class Category
      *
      * @param array $children
      *
-     * @return \Victoire\Bundle\BlogBundle\Entity\Category
+     * @return \Victoire\Bundle\BlogBundle\Entity\BlogCategory
      */
     public function setChildren($children)
     {
