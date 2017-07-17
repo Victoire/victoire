@@ -60,8 +60,10 @@ class BusinessEntityCacheReader
             /* @var BusinessEntity[] $businessEntities */
             $businessEntities = $widgetMetadatas[$widgetName]['businessEntities'];
 
-            foreach ($businessEntities as $businessEntity) {
-                $businessEntity->setDisableForReceiverProperties($widgetMetadatas[$widgetName]['receiverProperties']);
+            if (array_key_exists('receiverProperties', $widgetMetadatas[$widgetName])) {
+                foreach ($businessEntities as $businessEntity) {
+                    $businessEntity->setDisableForReceiverProperties($widgetMetadatas[$widgetName]['receiverProperties']);
+                }
             }
 
             return $businessEntities;
