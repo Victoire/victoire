@@ -12,7 +12,7 @@ use Victoire\Bundle\CoreBundle\Annotations as Vic;
  *
  * @ORM\Table("vic_category")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\CategoryRepository")
- * @Vic\BusinessEntity("listing")
+ * @Vic\BusinessEntity({"Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList", "SliderNav", "Render", "Tab"})
  * @Gedmo\Tree(type="nested")
  */
 class BlogCategory
