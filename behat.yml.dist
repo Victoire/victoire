@@ -13,13 +13,13 @@ default:
                  - Tests/Features/Widget
                  - Tests/Features/WidgetMap
              contexts:
+                 - Knp\FriendlyContexts\Context\EntityContext
+                 - Knp\FriendlyContexts\Context\AliceContext
+                 - Victoire\Tests\Features\Context\VictoireContext
+                 - Victoire\Tests\Features\Context\CoverageContext		
                  - Victoire\Tests\Features\Context\FeatureContext
                  - Victoire\Tests\Features\Context\JavascriptContext
-                 - Victoire\Tests\Features\Context\VictoireContext
-                 - Victoire\Tests\Features\Context\CoverageContext
-                 - Knp\FriendlyContexts\Context\MinkContext
-                 - Knp\FriendlyContexts\Context\AliceContext
-                 - Knp\FriendlyContexts\Context\EntityContext
+                 - Victoire\Tests\Features\Context\MinkContext
                  - Knp\FriendlyContexts\Context\TableContext
 
     extensions:
@@ -34,13 +34,13 @@ default:
              screenshot: true
          Behat\MinkExtension\ServiceContainer\MinkExtension:
              base_url:           'http://anakin@victoire.io:test@fr.victoire.io:8000/app_ci.php'
-             selenium2:          ~
-             goutte:             ~
+             selenium2: ~
+             goutte: ~
              symfony2: ~
              default_session:    symfony2
              javascript_session: selenium2
              browser_name: firefox
-             files_path:         Tests/Features/
+             files_path: Tests/Features/
          Knp\FriendlyContexts\Extension:
              entities:
                  namespaces:
@@ -49,29 +49,38 @@ default:
              smartTag: smartStep
              alice:
                  fixtures:
-                     Media:             Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/Media/folder.yml
-                     MediaFile:         Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/Media/media.yml
-                     User:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml
-                     Template:          Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml
-                     Page:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml
-                     ErrorPage:         Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml
-                     Blog:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/blog.yml
-                     BlogTemplate:      Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/template.yml
-                     ArticleI18n:       Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article_i18n.yml
-                     Article:           Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article.yml
-                     BlogBP:            Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/businessPage.yml
-                     Character:         Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/character.yml
-                     Mercenary:         Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/mercenary.yml
-                     Jedi:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/jedi.yml
-                     CharacterTemplates: Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/template.yml
+                     Media:                 Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/Media/folder.yml
+                     MediaFile:             Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/Media/media.yml
+                     User:                  Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/User/user.yml
+                     Template:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/template.yml
+                     Page:                  Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/page.yml
+                     ErrorPage:             Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Seeds/ORM/View/errorPage.yml
+                     Blog:                  Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/blog.yml
+                     BlogTemplate:          Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/template.yml
+                     ArticleI18n:           Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article_i18n.yml
+                     Article:               Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article.yml
+                     BlogBP:                Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/businessPage.yml
+                     Character:             Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/character.yml
+                     Mercenary:             Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/mercenary.yml
+                     Jedi:                  Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/jedi.yml
+                     CharacterTemplates:    Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/template.yml
+                     SpaceshipTemplates:    Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Spaceship/template.yml
+                     Blogi18n:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/blog.yml
+                     BlogsWithLocalesi18n:  Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/blogsWithLocales.yml
+                     BlogWithLocalesi18n:   Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/blogWithLocales.yml
+                     LocaleWithBlogsi18n:   Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/localeWithBlogs.yml
                  dependencies:
-                     Template:           [User]
-                     ErrorPage:          [Template, User]
-                     Page:               [Template, User]
-                     Blog:               [Template, BlogTemplate, User]
-                     Article:            [ArticleI18n, Template, Blog, BlogTemplate, BlogBP, User]
-                     CharacterTemplates: [Template, User]
-                     MediaFile:          [Media]
+                     Template:             [User]
+                     ErrorPage:            [Template, User]
+                     Page:                 [Template, User]
+                     Blog:                 [Template, BlogTemplate, User]
+                     Article:              [ArticleI18n, Template, Blog, BlogTemplate, BlogBP, User]
+                     CharacterTemplates:   [Template, User]
+                     MediaFile:            [Media]
+                     Blogi18n:             [Template, User]
+                     BlogsWithLocalesi18n: [Template, User]
+                     BlogWithLocalesi18n:  [Template, User]
+                     LocalesWithBlogi18n:  [Template, User]
              symfony_kernel:
                  bootstrap: Tests/Functionnal/app/autoload.php
                  path: Tests/Functionnal/app/AppKernel.php

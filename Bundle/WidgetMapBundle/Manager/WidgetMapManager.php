@@ -8,16 +8,29 @@ use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
+use Victoire\Bundle\WidgetMapBundle\Resolver\WidgetMapChildrenResolver;
 
 class WidgetMapManager
 {
     private $em;
     private $builder;
+    private $resolver;
 
-    public function __construct(EntityManager $em, WidgetMapBuilder $builder)
-    {
+    /**
+     * WidgetMapManager constructor.
+     *
+     * @param EntityManager             $em
+     * @param WidgetMapBuilder          $builder
+     * @param WidgetMapChildrenResolver $resolver
+     */
+    public function __construct(
+        EntityManager $em,
+        WidgetMapBuilder $builder,
+        WidgetMapChildrenResolver $resolver
+    ) {
         $this->em = $em;
         $this->builder = $builder;
+        $this->resolver = $resolver;
     }
 
     /**
@@ -63,8 +76,6 @@ class WidgetMapManager
      *
      * @param View  $view
      * @param array $sortedWidget
-     *
-     * @return void
      */
     public function move(View $view, $sortedWidget)
     {
@@ -78,7 +89,7 @@ class WidgetMapManager
         $originalParent = $widgetMap->getParent();
         $originalPosition = $widgetMap->getPosition();
 
-        $children = $widgetMap->getChildren($view);
+        $children = $this->resolver->getChildren($widgetMap, $view);
         $beforeChild = !empty($children[WidgetMap::POSITION_BEFORE]) ? $children[WidgetMap::POSITION_BEFORE] : null;
         $afterChild = !empty($children[WidgetMap::POSITION_AFTER]) ? $children[WidgetMap::POSITION_AFTER] : null;
 
@@ -120,15 +131,15 @@ class WidgetMapManager
         $originalParent = $widgetMap->getParent();
         $originalPosition = $widgetMap->getPosition();
 
-        $children = $widgetMap->getChildren($view);
+        $children = $this->resolver->getChildren($widgetMap, $view);
         $beforeChild = !empty($children[WidgetMap::POSITION_BEFORE]) ? $children[WidgetMap::POSITION_BEFORE] : null;
         $afterChild = !empty($children[WidgetMap::POSITION_AFTER]) ? $children[WidgetMap::POSITION_AFTER] : null;
 
         //we remove the widget from the current view
         if ($widgetMap->getView() === $view) {
             // If the widgetMap has substitutes, delete them or transform them in create mode
-            if (count($widgetMap->getSubstitutes()) > 0) {
-                foreach ($widgetMap->getSubstitutes() as $substitute) {
+            if (count($widgetMap->getAllSubstitutes()) > 0) {
+                foreach ($widgetMap->getAllSubstitutes() as $substitute) {
                     if ($substitute->getAction() === WidgetMap::ACTION_OVERWRITE) {
                         $substitute->setAction(WidgetMap::ACTION_CREATE);
                         $substitute->setReplaced(null);
@@ -275,8 +286,8 @@ class WidgetMapManager
      */
     protected function getChildrenByView(WidgetMap $widgetMap)
     {
-        $beforeChilds = $widgetMap->getChilds(WidgetMap::POSITION_BEFORE);
-        $afterChilds = $widgetMap->getChilds(WidgetMap::POSITION_AFTER);
+        $beforeChilds = $widgetMap->getContextualChildren(WidgetMap::POSITION_BEFORE);
+        $afterChilds = $widgetMap->getContextualChildren(WidgetMap::POSITION_AFTER);
 
         $childrenByView['views'] = [];
         $childrenByView['before'] = [];

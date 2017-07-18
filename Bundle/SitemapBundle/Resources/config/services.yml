@@ -9,6 +9,18 @@ services:
         tags:
             - { name: form.type }
 
+    #  ==================  HANDLERS ================== #
+    victoire_sitemap.sort.handler:
+        class: Victoire\Bundle\SitemapBundle\Domain\Sort\SitemapSortHandler
+        arguments:
+            - @doctrine.orm.entity_manager
+    victoire_sitemap.export.handler:
+        class: Victoire\Bundle\SitemapBundle\Domain\Export\SitemapExportHandler
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @victoire_page.page_helper
+            - @victoire_view_reference.repository
+
     #  ==================  MENU ================== #
     victoire_sitemap.sitemap_menu_listener:
         class: Victoire\Bundle\SitemapBundle\Listener\SiteMapMenuListener

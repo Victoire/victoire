@@ -1,0 +1,17 @@
+{% extends 'VictoireCoreBundle:Layout:backendLayout.html.twig' %}
+{% form_theme form 'VictoireFormBundle:Form:localeTabs.html.twig' %}
+{% block meta %}
+    <title>{{ 'acme.app.spaceship.new.title'|trans({}, 'victoire') }}</title>
+{% endblock meta %}
+
+{% block header_title %}
+    {{ 'acme.app.spaceship.new.title'|trans({}, 'victoire') }}
+{% endblock header_title %}
+{% block content %}
+
+    {{ form(form) }}
+
+    <a class="btn" href="{{ path('acme_app_spaceship_index') }}">
+        <span class="fa fa-list fa-2x"></span>
+    </a>
+{% endblock %}

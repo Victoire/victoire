@@ -40,21 +40,6 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * Order categories by tree hierarchy.
-     *
-     * @return $this
-     */
-    public function orderByHierarchy()
-    {
-        $this->qb
-            ->addOrderBy('c_category.root')
-            ->addOrderBy('c_category.lft')
-            ->addOrderBy('c_category.lvl');
-
-        return $this;
-    }
-
-    /**
      * @param $articles
      *
      * @return $this

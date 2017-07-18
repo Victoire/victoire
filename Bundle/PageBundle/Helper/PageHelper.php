@@ -173,7 +173,6 @@ class PageHelper
                 return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl($link->getParameters()));
             }
 
-
             return $this->renderPage($page, $layout);
         } else {
             throw new NotFoundHttpException(sprintf('Page not found (url: "%s", locale: "%s")', $url, $locale));
@@ -198,7 +197,7 @@ class PageHelper
         $this->eventDispatcher->dispatch('victoire.on_render_page', $pageRenderEvent);
 
         //Build WidgetMap
-        $this->widgetMapBuilder->build($view, $this->entityManager, true);
+        $this->widgetMapBuilder->build($view, true);
 
         //Populate widgets with their data
         $this->widgetDataWarmer->warm($this->entityManager, $view);
@@ -254,7 +253,7 @@ class PageHelper
      * @param BusinessPageReference $viewReference
      *
      * @return BusinessPage
-     *                      read the cache to find entity according tu given url.
+     *                      read the cache to find entity according tu given url
      * @return object|null
      */
     protected function findEntityByReference(ViewReference $viewReference)
@@ -277,13 +276,13 @@ class PageHelper
             if ($viewReference->getViewId()) { //BusinessPage
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                     ->findOneBy([
-                        'id'     => $viewReference->getViewId(),
+                        'id' => $viewReference->getViewId(),
                     ]);
                 $page->setCurrentLocale($viewReference->getLocale());
             } else { //VirtualBusinessPage
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                     ->findOneBy([
-                        'id'     => $viewReference->getTemplateId(),
+                        'id' => $viewReference->getTemplateId(),
                     ]);
                 if ($entity = $this->findEntityByReference($viewReference)) {
                     if ($page instanceof BusinessTemplate) {
@@ -300,7 +299,7 @@ class PageHelper
         } elseif ($viewReference instanceof ViewReference) {
             $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
                 ->findOneBy([
-                    'id'     => $viewReference->getViewId(),
+                    'id' => $viewReference->getViewId(),
                 ]);
             $page->setCurrentLocale($viewReference->getLocale());
         } else {
@@ -466,5 +465,26 @@ class PageHelper
         if ($roles) {
             return array_unique(explode(',', $roles));
         }
+    }
+
+    /**
+     * Set Page position.
+     *
+     * @param BasePage $page
+     *
+     * @return BasePage $page
+     */
+    public function setPosition(BasePage $page)
+    {
+        if ($page->getParent()) {
+            $pageNb = count($page->getParent()->getChildren());
+        } else {
+            $pageNb = count($this->entityManager->getRepository('VictoirePageBundle:BasePage')->findByParent(null));
+        }
+
+        // + 1 because position start at 1, not 0
+        $page->setPosition($pageNb + 1);
+
+        return $page;
     }
 }

@@ -1,232 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fr" datatype="plaintext" original="not.available">
-    <header>
-      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
-      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
-    </header>
     <body>
-      <trans-unit id="79fd52cd95aad0a35b167f6a03b414b7b4f8eb7c" resname="entity_proxy.form.empty_value">
+      <trans-unit id="58893b996291c" resname="entity_proxy.form.empty_value">
         <source>entity_proxy.form.empty_value</source>
         <target>Veuillez sélectionner une entité</target>
       </trans-unit>
-      <trans-unit id="aad0a35b79fd52cd95a03b414b7b4f8eb7c167f6" resname="entity_proxy.form.label">
+      <trans-unit id="58893b99629ea" resname="entity_proxy.form.label">
         <source>entity_proxy.form.label</source>
         <target>Objet</target>
       </trans-unit>
-      <trans-unit id="5ec78416cc19bcd441bf69345e854bf535488535" resname="error_occured">
+      <trans-unit id="58893b9962a6e" resname="error_occured">
         <source>error_occured</source>
         <target>Une erreur est apparue</target>
       </trans-unit>
-      <trans-unit id="5388360d9636ad4b61bf60291deb7d679b6ff2c3" resname="form.widget.tab.entity_instance.label">
+      <trans-unit id="58893b9962aaf" resname="form.widget.tab.entity_instance.label">
         <source>form.widget.tab.entity_instance.label</source>
         <target>Objet courant</target>
       </trans-unit>
-      <trans-unit id="b7c8b58d12f169a6040d907e356a133de28b5eee" resname="form.widget.tab.picker.label">
+      <trans-unit id="58893b9962c82" resname="form.widget.tab.picker.label">
         <source>form.widget.tab.picker.label</source>
         <target>Sélection</target>
       </trans-unit>
-      <trans-unit id="1c35acaf15f741a76567a68a91bbfc4d280a3249" resname="form.widget.tab.query.label">
+      <trans-unit id="58893b9962d82" resname="form.widget.tab.query.label">
         <source>form.widget.tab.query.label</source>
         <target>Requête</target>
       </trans-unit>
-      <trans-unit id="c4dc18d2f6573e619afaa0cc9696ab1e7fdf29e5" resname="menu.leftnavbar.404.label">
+      <trans-unit id="58893b9962e26" resname="menu.leftnavbar.404.label">
         <source>menu.leftnavbar.404.label</source>
         <target>Page 404</target>
       </trans-unit>
-      <trans-unit id="420f842be6f0ed4e505a77069b39b2a9e5951c3a" resname="menu.leftnavbar.network.label">
+      <trans-unit id="58893b9962ea6" resname="menu.leftnavbar.network.label">
         <source>menu.leftnavbar.network.label</source>
         <target>Réseau</target>
       </trans-unit>
-      <trans-unit id="1468cdaa5a094e7fc462d045d829d884051439d3" resname="menu.page">
+      <trans-unit id="58893b9963321" resname="menu.page">
         <source>menu.page</source>
         <target>Page</target>
       </trans-unit>
-      <trans-unit id="7269b57341e3d2887e9ff29432859d64756ff595" resname="menu.parent">
+      <trans-unit id="58893b99633c9" resname="menu.parent">
         <source>menu.parent</source>
         <target>Modèle parent</target>
       </trans-unit>
-      <trans-unit id="b56be300a76acfd99efb0bb2d8010cd61ac1d8f4" resname="menu.preview">
+      <trans-unit id="58893b9963436" resname="menu.preview">
         <source>menu.preview</source>
         <target>Prévisualisation</target>
       </trans-unit>
-      <trans-unit id="0d78177827ece7fd6e7cf7426c5be1299b611988" resname="modal.button.create.title">
+      <trans-unit id="58893b99634fb" resname="modal.button.create.title">
         <source>modal.button.create.title</source>
         <target>Créer</target>
       </trans-unit>
-      <trans-unit id="1" resname="modal.button.cancel.title">
+      <trans-unit id="58893b9963661" resname="modal.button.cancel.title">
         <source>modal.button.cancel.title</source>
         <target>Annuler</target>
       </trans-unit>
-      <trans-unit id="07b2988c1c5daf0bdf6be270bede6fc8424cd688" resname="modal.button.delete.confirm.body">
+      <trans-unit id="58893b996369d" resname="modal.button.delete.confirm.body">
         <source>modal.button.delete.confirm.body</source>
         <target><![CDATA[Cette action va définitivement supprimer ce contenu. Cette action est irréversible.<br/><strong> Êtes-vous sûr ?</strong>]]></target>
       </trans-unit>
-      <trans-unit id="131320710e98bb9e085c0b3eecb26ebcdd8dc5a8" resname="modal.button.delete.confirm.title">
+      <trans-unit id="58893b99636e6" resname="modal.button.delete.confirm.title">
         <source>modal.button.delete.confirm.title</source>
         <target>C'est votre dernier mot ?</target>
       </trans-unit>
-      <trans-unit id="0bdf6be270bede6fc8424cd68807b2988c1c5daf" resname="modal.button.unlink.confirm.body">
+      <trans-unit id="58893b9963728" resname="modal.button.unlink.confirm.body">
         <source>modal.button.unlink.confirm.body</source>
         <target><![CDATA[Cette action va définitivement supprimer ce contenu. Cette action est irréversible.<br/><strong> Êtes-vous sûr ?</strong>]]></target>
       </trans-unit>
-      <trans-unit id="bcdd8dc5a8131320710e98bb9e085c0b3eecb26e" resname="modal.button.unlink.confirm.title">
+      <trans-unit id="58893b996374a" resname="modal.button.unlink.confirm.title">
         <source>modal.button.unlink.confirm.title</source>
         <target>C'est votre dernier mot ?</target>
       </trans-unit>
-      <trans-unit id="2" resname="modal.button.delete.confirm.ok.label">
+      <trans-unit id="58893b99637d6" resname="modal.button.delete.confirm.ok.label">
         <source>modal.button.delete.confirm.ok.label</source>
         <target>J'ai bien compris, je confirme la suppression</target>
       </trans-unit>
-      <trans-unit id="3" resname="modal.button.delete.confirm.cancel.label">
+      <trans-unit id="58893b9963817" resname="modal.button.delete.confirm.cancel.label">
         <source>modal.button.delete.confirm.cancel.label</source>
         <target>Annuler</target>
       </trans-unit>
-      <trans-unit id="71923cd8ca737329416b829fdb8663e532457a2c" resname="modal.button.delete.title">
+      <trans-unit id="58893b9963c02" resname="modal.button.delete.title">
         <source>modal.button.delete.title</source>
         <target>Supprimer</target>
       </trans-unit>
-      <trans-unit id="4" resname="modal.button.update.title">
+      <trans-unit id="58893b9963c67" resname="modal.button.update.title">
         <source>modal.button.update.title</source>
         <target>Mettre à jour</target>
       </trans-unit>
-      <trans-unit resname="modal.button.update-bulk.title">
+      <trans-unit id="58893b9963c9b" resname="modal.button.update-bulk.title">
         <source>modal.button.update-bulk.title</source>
         <target>Mettre à jour</target>
       </trans-unit>
-      <trans-unit id="9a84dc1132d73a2f0abce302a49337045c823482" resname="modal.mandatory_fields.label">
+      <trans-unit id="58893b9963cce" resname="modal.mandatory_fields.label">
         <source>modal.mandatory_fields.label</source>
         <target>Champs obligatoires</target>
       </trans-unit>
-      <trans-unit id="f39fc96feb4ef136347994d198e544cea70ebf40" resname="victoire.menu.publication.scheduled.tooltip">
+      <trans-unit id="58893b9963d60" resname="victoire.menu.publication.scheduled.tooltip">
         <source>victoire.menu.publication.scheduled.tooltip</source>
         <target>Cette page sera publiée à partir du %publication_date%.</target>
       </trans-unit>
-      <trans-unit id="ceb669459413ff95ae62ceaad270428e24379ba9" resname="victoire_core.edit_mode_switch">
+      <trans-unit id="58893b9963e43" resname="victoire_core.edit_mode_switch">
         <source>victoire_core.edit_mode_switch</source>
         <target>Mode édition</target>
       </trans-unit>
-      <trans-unit id="18fd04000e8580063916cb16b059fcf9f900e398" resname="widget.dropdown.action.label">
+      <trans-unit id="58893b9963ef1" resname="widget.dropdown.action.label">
         <source>widget.dropdown.action.label</source>
         <target>Nouveau contenu</target>
       </trans-unit>
-      <trans-unit id="e73f4ed23832568330c963f0e40ac22daa9ab2c9" resname="widget.form.entity.fields.label">
+      <trans-unit id="58893b9963fe2" resname="widget.form.entity.fields.label">
         <source>widget.form.entity.fields.label</source>
         <target>Champs</target>
       </trans-unit>
-      <trans-unit id="baa2a4733047849f29b3c0f2093e33f58fcfc8ea" resname="victoire.theme.default.label">
+      <trans-unit id="58893b996400b" resname="victoire.theme.default.label">
         <source>victoire.theme.default.label</source>
         <target>Défaut</target>
       </trans-unit>
-      <trans-unit id="f20da08ae6b8cbd8d13f9076c53583b0238842b9" resname="widget.form.theme.label">
+      <trans-unit id="58893b9964042" resname="widget.form.theme.label">
         <source>widget.form.theme.label</source>
         <target>Thème</target>
       </trans-unit>
-      <trans-unit id="5" resname="victoire.widget.inherited.notice">
+      <trans-unit id="58893b9964059" resname="victoire.widget.inherited.notice">
         <source>victoire.widget.inherited.notice</source>
         <target><![CDATA[<strong>Attention ! </strong>Ce contenu appartient à un modèle parent (<i>%templateName%</i>).<br/>Si vous voulez uniquement modifier le contenu sur cette page, continuez, vous êtes au bon endroit.<br/>Si toutefois vous voulez que cette modification soit répercutée sur toutes les pages utilisant le modèle <i>%templateName%</i>, cliquez sur ce lien : <a href="%templateEditLink%" data-modal="close" data-toggle="vic-modal">modifier le contenu original</a>.]]></target>
       </trans-unit>
-      <trans-unit id="9" resname="navbar.mode.edit">
+      <trans-unit id="58893b9964135" resname="navbar.mode.edit">
         <source>navbar.mode.edit</source>
         <target>Édition</target>
       </trans-unit>
-      <trans-unit id="10" resname="navbar.mode.layout">
+      <trans-unit id="58893b9964157" resname="navbar.mode.layout">
         <source>navbar.mode.layout</source>
         <target>Création</target>
       </trans-unit>
-      <trans-unit id="11" resname="navbar.mode.readonly">
+      <trans-unit id="58893b99641c4" resname="navbar.mode.readonly">
         <source>navbar.mode.readonly</source>
         <target>Aperçu</target>
       </trans-unit>
-      <trans-unit id="12" resname="navbar.mode.style">
+      <trans-unit id="58893b9964218" resname="navbar.mode.style">
         <source>navbar.mode.style</source>
         <target>Style</target>
       </trans-unit>
-      <trans-unit id="13" resname="victoire.login.mail.label">
+      <trans-unit id="58893b996425b" resname="victoire.login.mail.label">
         <source>victoire.login.mail.label</source>
         <target>Adresse email</target>
       </trans-unit>
-      <trans-unit id="14" resname="victoire.login.password.label">
+      <trans-unit id="58893b9964277" resname="victoire.login.password.label">
         <source>victoire.login.password.label</source>
         <target>Mot de passe</target>
       </trans-unit>
-      <trans-unit id="16" resname="victoire.login.submit.label">
+      <trans-unit id="58893b99642cd" resname="victoire.login.submit.label">
         <source>victoire.login.submit.label</source>
         <target>Embarquer</target>
       </trans-unit>
-      <trans-unit id="17" resname="victoire.reset.request.title">
+      <trans-unit id="58893b996461d" resname="victoire.reset.request.title">
         <source>victoire.reset.request.title</source>
         <target>Réinitialiser le mot de passe</target>
       </trans-unit>
-      <trans-unit id="18" resname="victoire.reset.request.submit.label">
+      <trans-unit id="58893b9964666" resname="victoire.reset.request.submit.label">
         <source>victoire.reset.request.submit.label</source>
         <target>Continuer</target>
       </trans-unit>
-      <trans-unit id="19" resname="victoire.login.link.label">
+      <trans-unit id="58893b99646c4" resname="victoire.login.link.label">
         <source>victoire.login.link.label</source>
         <target>Se connecter</target>
       </trans-unit>
-      <trans-unit id="20" resname="victoire.login.meta.title">
+      <trans-unit id="58893b996470a" resname="victoire.login.meta.title">
         <source>victoire.login.meta.title</source>
         <target>Embarquement imminent</target>
       </trans-unit>
-      <trans-unit id="21" resname="victoire.widget.stylize.container.heading">
+      <trans-unit id="58893b9964741" resname="victoire.widget.stylize.container.heading">
         <source>victoire.widget.stylize.container.heading</source>
         <target>Général</target>
       </trans-unit>
-      <trans-unit id="22" resname="victoire.widget.stylize.layout.heading">
+      <trans-unit id="58893b996483a" resname="victoire.widget.stylize.layout.heading">
         <source>victoire.widget.stylize.layout.heading</source>
         <target>Spécifique</target>
       </trans-unit>
-      <trans-unit id="23" resname="victoire.widget.stylize.global.heading">
+      <trans-unit id="58893b99648c4" resname="victoire.widget.stylize.global.heading">
         <source>victoire.widget.stylize.global.heading</source>
         <target>Avancé</target>
       </trans-unit>
-      <trans-unit id="24" resname="hamburger_menu.backend.back_home">
+      <trans-unit id="58893b99649e4" resname="hamburger_menu.backend.back_home">
         <source>hamburger_menu.backend.back_home</source>
         <target>Retour sur le site</target>
       </trans-unit>
-      <trans-unit id="25" resname="victoire.widget.type.asynchronous.label">
+      <trans-unit id="58893b9966833" resname="victoire.widget.type.asynchronous.label">
         <source>victoire.widget.type.asynchronous.label</source>
         <target>Chargement asynchrone ?</target>
       </trans-unit>
-      <trans-unit id="26" resname="victoire.login.forgot.label">
+      <trans-unit id="58893b996688c" resname="victoire.login.forgot.label">
         <source>victoire.login.forgot.label</source>
         <target>J'ai oublié mon mot de passe</target>
       </trans-unit>
-      <trans-unit id="27" resname="vicmenu.logout.label">
+      <trans-unit id="58893b99668d5" resname="vicmenu.logout.label">
         <source>vicmenu.logout.label</source>
         <target>Se déconnecter</target>
       </trans-unit>
-      <trans-unit id="28" resname="form.link_type.route_parameters.placeholder">
+      <trans-unit id="58893b9966939" resname="form.link_type.route_parameters.placeholder">
         <source>form.link_type.route_parameters.placeholder</source>
         <target>["id":"{{item.id}}", "name": "Yoda"]</target>
       </trans-unit>
-      <trans-unit id="29" resname="form.link_type.route.placeholder">
+      <trans-unit id="58893b99669a0" resname="form.link_type.route.placeholder">
         <source>form.link_type.route.placeholder</source>
         <target>Nom de la route</target>
       </trans-unit>
-      <trans-unit id="30" resname="form.widget.tab.entity.disable.label">
+      <trans-unit id="58893b9966a5d" resname="form.widget.tab.entity.disable.label">
         <source>form.widget.tab.entity.disable.label</source>
         <target>Il manque au moins un businessParameter pour que cette BusinessEntity soit utilisable avec ce Widget</target>
       </trans-unit>
-      <trans-unit id="31" resname="form.widget.tab.manual.label">
+      <trans-unit id="58893b9966b28" resname="form.widget.tab.manual.label">
         <source>form.widget.tab.manual.label</source>
         <target>Manuel</target>
       </trans-unit>
-      <trans-unit id="32" resname="victoire.success.message">
+      <trans-unit id="58893b9966b97" resname="victoire.success.message">
         <source>victoire.success.message</source>
         <target>Victoire !</target>
       </trans-unit>
-      <trans-unit id="33" resname="widget_modal.quantum.tab.default">
+      <trans-unit id="58893b9966bea" resname="widget_modal.quantum.tab.default">
         <source>widget_modal.quantum.tab.default</source>
         <target>Défault</target>
       </trans-unit>
-      <trans-unit id="34" resname="victoire.widget.type.criterias.label">
+      <trans-unit id="58893b9966c2d" resname="victoire.widget.type.criterias.label">
         <source>victoire.widget.type.criterias.label</source>
         <target>Critères</target>
       </trans-unit>
-      <trans-unit id="35" resname="victoire.widget.modal.title">
+      <trans-unit id="58893b9966c5a" resname="victoire.widget.modal.title">
         <source>victoire.widget.modal.title</source>
         <target>Widget %id% (%type%)</target>
       </trans-unit>

@@ -1,288 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fr" datatype="plaintext" original="not.available">
-    <header>
-      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
-      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
-    </header>
     <body>
-      <trans-unit id="67c0389fd251acfac612655ca5e660f7ad153bcb" resname="menu.media">
+      <trans-unit id="58893b99e4b1a" resname="menu.media">
         <source>menu.media</source>
         <target><![CDATA[<i class="vic-menuImg vic-menuImg-img"></i> Bibliothèque média]]></target>
       </trans-unit>
-      <trans-unit id="1" resname="nothing">
+      <trans-unit id="58893b99e4b3b" resname="nothing">
         <source>nothing</source>
         <target>Vide</target>
       </trans-unit>
-      <trans-unit id="2" resname="title">
+      <trans-unit id="58893b99e4b50" resname="title">
         <source>title</source>
         <target>Titre</target>
       </trans-unit>
-      <trans-unit id="3" resname="dailymotion">
+      <trans-unit id="58893b99e4b63" resname="dailymotion">
         <source>dailymotion</source>
         <target>Dailymotion</target>
       </trans-unit>
-      <trans-unit id="4" resname="cancel">
+      <trans-unit id="58893b99e4b70" resname="cancel">
         <source>cancel</source>
         <target>Annuler</target>
       </trans-unit>
-      <trans-unit id="5" resname="delete">
+      <trans-unit id="58893b99e4b7b" resname="delete">
         <source>delete</source>
         <target>Supprimer</target>
       </trans-unit>
-      <trans-unit id="6" resname="save">
+      <trans-unit id="58893b99e4b89" resname="save">
         <source>save</source>
         <target>Enregistrer</target>
       </trans-unit>
-      <trans-unit id="7" resname="image">
+      <trans-unit id="58893b99e4bb5" resname="image">
         <source>image</source>
         <target>Image</target>
       </trans-unit>
-      <trans-unit id="8" resname="media">
+      <trans-unit id="58893b99e4bc0" resname="media">
         <source>media</source>
         <target>Média</target>
       </trans-unit>
-      <trans-unit id="9" resname="media.aviary.nothing">
+      <trans-unit id="58893b99e4bcb" resname="media.aviary.nothing">
         <source>media.aviary.nothing</source>
         <target>Il n'y a rien ici</target>
       </trans-unit>
-      <trans-unit id="10" resname="media.aviary.title">
+      <trans-unit id="58893b99e4bd5" resname="media.aviary.title">
         <source>media.aviary.title</source>
         <target>Aviary</target>
       </trans-unit>
-      <trans-unit id="11" resname="media.bulkupload.bulkupload">
+      <trans-unit id="58893b99e4beb" resname="media.bulkupload.bulkupload">
         <source>media.bulkupload.bulkupload</source>
         <target>Import multiple</target>
       </trans-unit>
-      <trans-unit id="12" resname="media.bulkupload.upload">
+      <trans-unit id="58893b99e4bf5" resname="media.bulkupload.upload">
         <source>media.bulkupload.upload</source>
         <target>Import</target>
       </trans-unit>
-      <trans-unit id="13" resname="media.file.add">
+      <trans-unit id="58893b99e4bff" resname="media.file.add">
         <source>media.file.add</source>
         <target>Ajouter un fichier</target>
       </trans-unit>
-      <trans-unit id="14" resname="media.file.modal.save">
+      <trans-unit id="58893b99e4c09" resname="media.file.modal.save">
         <source>media.file.modal.save</source>
         <target>Ajouter</target>
       </trans-unit>
-      <trans-unit id="15" resname="media.file.modal.title">
+      <trans-unit id="58893b99e4c13" resname="media.file.modal.title">
         <source>media.file.modal.title</source>
         <target>Ajouter un fichier</target>
       </trans-unit>
-      <trans-unit id="16" resname="media.folder.addsub.action">
+      <trans-unit id="58893b99e4c1d" resname="media.folder.addsub.action">
         <source>media.folder.addsub.action</source>
         <target>Ajouter un sous-dossier</target>
       </trans-unit>
-      <trans-unit id="17" resname="media.folder.addsub.modal.save">
+      <trans-unit id="58893b99e4c26" resname="media.folder.addsub.modal.save">
         <source>media.folder.addsub.modal.save</source>
         <target>Ajouter</target>
       </trans-unit>
-      <trans-unit id="18" resname="media.folder.addsub.modal.title">
+      <trans-unit id="58893b99e4c30" resname="media.folder.addsub.modal.title">
         <source>media.folder.addsub.modal.title</source>
         <target>Ajouter un sous-dossier</target>
       </trans-unit>
-      <trans-unit id="19" resname="media.folder.contenttab.title">
+      <trans-unit id="58893b99e4c3a" resname="media.folder.contenttab.title">
         <source>media.folder.contenttab.title</source>
         <target>Contenu</target>
       </trans-unit>
-      <trans-unit id="20" resname="media.folder.delete.action">
+      <trans-unit id="58893b99e4c44" resname="media.folder.delete.action">
         <source>media.folder.delete.action</source>
         <target>Supprimer ce dossier</target>
       </trans-unit>
-      <trans-unit id="21" resname="media.folder.delete.modal.text">
+      <trans-unit id="58893b99e4c4e" resname="media.folder.delete.modal.text">
         <source>media.folder.delete.modal.text</source>
         <target>Etes-vous certain de vouloir supprimer "%folder%" ?</target>
       </trans-unit>
-      <trans-unit id="22" resname="media.folder.delete.modal.title">
+      <trans-unit id="58893b99e4c57" resname="media.folder.delete.modal.title">
         <source>media.folder.delete.modal.title</source>
         <target>Supprimer le dossier</target>
       </trans-unit>
-      <trans-unit id="23" resname="media.folder.propertiestab.title">
+      <trans-unit id="58893b99e4c61" resname="media.folder.propertiestab.title">
         <source>media.folder.propertiestab.title</source>
         <target>Propriétés</target>
       </trans-unit>
-      <trans-unit id="24" resname="media.folder.save">
+      <trans-unit id="58893b99e4c6b" resname="media.folder.save">
         <source>media.folder.save</source>
         <target>Sauvegarder</target>
       </trans-unit>
-      <trans-unit id="25" resname="media.folder.sub.no">
+      <trans-unit id="58893b99e4c76" resname="media.folder.sub.no">
         <source>media.folder.sub.no</source>
         <target>Aucun sous-dossier</target>
       </trans-unit>
-      <trans-unit id="26" resname="media.media.addto">
+      <trans-unit id="58893b99e4c80" resname="media.media.addto">
         <source>media.media.addto</source>
         <target>Ajouter le média dans "%folder%</target>
       </trans-unit>
-      <trans-unit id="27" resname="media.media.bulkupload.addto">
+      <trans-unit id="58893b99e4c8a" resname="media.media.bulkupload.addto">
         <source>media.media.bulkupload.addto</source>
         <target>Importer des fichiers au dossier "%folder%"</target>
       </trans-unit>
-      <trans-unit id="28" resname="media.media.contenttab.title">
+      <trans-unit id="58893b99e4c94" resname="media.media.contenttab.title">
         <source>media.media.contenttab.title</source>
         <target>Contenu</target>
       </trans-unit>
-      <trans-unit id="29" resname="media.media.deletesure">
+      <trans-unit id="58893b99e4c9e" resname="media.media.deletesure">
         <source>media.media.deletesure</source>
         <target>Etes-vous certain de vouloir supprimer cet élément ?</target>
       </trans-unit>
-      <trans-unit id="30" resname="media.media.download.action">
+      <trans-unit id="58893b99e4ca8" resname="media.media.download.action">
         <source>media.media.download.action</source>
         <target>Télécharger</target>
       </trans-unit>
-      <trans-unit id="31" resname="media.media.edit.action">
+      <trans-unit id="58893b99e4cb2" resname="media.media.edit.action">
         <source>media.media.edit.action</source>
         <target>Modifier</target>
       </trans-unit>
-      <trans-unit id="32" resname="media.media.mediainfo.contenttype">
+      <trans-unit id="58893b99e4cbb" resname="media.media.mediainfo.contenttype">
         <source>media.media.mediainfo.contenttype</source>
         <target>Type de contenu</target>
       </trans-unit>
-      <trans-unit id="33" resname="media.media.mediainfo.createdat">
+      <trans-unit id="58893b99e4cc5" resname="media.media.mediainfo.createdat">
         <source>media.media.mediainfo.createdat</source>
         <target>Ajouté</target>
       </trans-unit>
-      <trans-unit id="34" resname="media.media.mediainfo.downloadlink">
+      <trans-unit id="58893b99e4cce" resname="media.media.mediainfo.downloadlink">
         <source>media.media.mediainfo.downloadlink</source>
         <target>Lien de téléchargement</target>
       </trans-unit>
-      <trans-unit id="35" resname="media.media.mediainfo.name">
+      <trans-unit id="58893b99e4cd8" resname="media.media.mediainfo.name">
         <source>media.media.mediainfo.name</source>
         <target>Nom</target>
       </trans-unit>
-      <trans-unit id="36" resname="media.media.mediainfo.updatedat">
+      <trans-unit id="58893b99e4ce1" resname="media.media.mediainfo.updatedat">
         <source>media.media.mediainfo.updatedat</source>
         <target>Mis à jour</target>
       </trans-unit>
-      <trans-unit id="37" resname="media.media.new">
+      <trans-unit id="58893b99e4ceb" resname="media.media.new">
         <source>media.media.new</source>
         <target>Ajouter le média dans "%folder%</target>
       </trans-unit>
-      <trans-unit id="38" resname="media.media.no">
+      <trans-unit id="58893b99e4cf5" resname="media.media.no">
         <source>media.media.no</source>
         <target>Pas encore de fichier dans ce dossier.</target>
       </trans-unit>
-      <trans-unit id="39" resname="media.media.propertiestab.title">
+      <trans-unit id="58893b99e4cfe" resname="media.media.propertiestab.title">
         <source>media.media.propertiestab.title</source>
         <target>Propriétés</target>
       </trans-unit>
-      <trans-unit id="40" resname="media.media.title">
+      <trans-unit id="58893b99e4d08" resname="media.media.title">
         <source>media.media.title</source>
         <target>Média</target>
       </trans-unit>
-      <trans-unit id="41" resname="media.slide.add">
+      <trans-unit id="58893b99e4d11" resname="media.slide.add">
         <source>media.slide.add</source>
         <target>Ajouter un diaporama</target>
       </trans-unit>
-      <trans-unit id="42" resname="media.slide.modal.save">
+      <trans-unit id="58893b99e4d1a" resname="media.slide.modal.save">
         <source>media.slide.modal.save</source>
         <target>Ajouter</target>
       </trans-unit>
-      <trans-unit id="43" resname="media.slide.modal.title">
+      <trans-unit id="58893b99e4d24" resname="media.slide.modal.title">
         <source>media.slide.modal.title</source>
         <target>Ajouter un diaporama</target>
       </trans-unit>
-      <trans-unit id="44" resname="media.video.add">
+      <trans-unit id="58893b99e4d2d" resname="media.video.add">
         <source>media.video.add</source>
         <target>Ajouter une vidéo</target>
       </trans-unit>
-      <trans-unit id="45" resname="media.video.modal.save">
+      <trans-unit id="58893b99e4d37" resname="media.video.modal.save">
         <source>media.video.modal.save</source>
         <target>Ajouter</target>
       </trans-unit>
-      <trans-unit id="46" resname="media.video.modal.title">
+      <trans-unit id="58893b99e4d40" resname="media.video.modal.title">
         <source>media.video.modal.title</source>
         <target>Ajouter une vidéo</target>
       </trans-unit>
-      <trans-unit id="47" resname="media.widget.choose">
+      <trans-unit id="58893b99e4d4a" resname="media.widget.choose">
         <source>media.widget.choose</source>
         <target>Choisir</target>
       </trans-unit>
-      <trans-unit id="48" resname="media.widget.delete">
+      <trans-unit id="58893b99e4d53" resname="media.widget.delete">
         <source>media.widget.delete</source>
         <target>Supprimer</target>
       </trans-unit>
-      <trans-unit id="49" resname="media.video.add">
+      <trans-unit id="58893b99e4d5c" resname="media.video.add">
         <source>media.video.add</source>
         <target>Ajouter une vidéo</target>
       </trans-unit>
-      <trans-unit id="50" resname="media.slide.add">
+      <trans-unit id="58893b99e4d66" resname="media.slide.add">
         <source>media.slide.add</source>
         <target>Ajouter un diaporama</target>
       </trans-unit>
-      <trans-unit id="51" resname="Name">
+      <trans-unit id="58893b99e4d6f" resname="Name">
         <source>Name</source>
         <target>Nom </target>
       </trans-unit>
-      <trans-unit id="52" resname="Rel">
+      <trans-unit id="58893b99e4d78" resname="Rel">
         <source>Rel</source>
         <target>Type de média</target>
       </trans-unit>
-      <trans-unit id="53" resname="Parent">
+      <trans-unit id="58893b99e4d82" resname="Parent">
         <source>Parent</source>
         <target>Dossier parent</target>
       </trans-unit>
-      <trans-unit id="54" resname="Code">
+      <trans-unit id="58893b99e4db8" resname="Code">
         <source>Code</source>
         <target>URL</target>
       </trans-unit>
-      <trans-unit id="55" resname="Files">
+      <trans-unit id="58893b99e4dc1" resname="Files">
         <source>Files</source>
         <target>Dossiers</target>
       </trans-unit>
-      <trans-unit id="56" resname="Create">
+      <trans-unit id="58893b99e4dcb" resname="Create">
         <source>Create</source>
         <target>Import</target>
       </trans-unit>
-      <trans-unit id="57" resname="Show Media">
+      <trans-unit id="58893b99e4dd4" resname="Show Media">
         <source>Show Media</source>
         <target>Visualiser le média</target>
       </trans-unit>
-      <trans-unit id="58" resname="File">
+      <trans-unit id="58893b99e4ddd" resname="File">
         <source>File</source>
         <target>Dossier</target>
       </trans-unit>
-      <trans-unit id="59" resname="Bulk upload">
+      <trans-unit id="58893b99e4de6" resname="Bulk upload">
         <source>Bulk upload</source>
         <target>Import multiple</target>
       </trans-unit>
-      <trans-unit id="60" resname="slideshare">
+      <trans-unit id="58893b99e4def" resname="slideshare">
         <source>slideshare</source>
         <target>Slideshare</target>
       </trans-unit>
-      <trans-unit id="61" resname="slideshow">
+      <trans-unit id="58893b99e4df8" resname="slideshow">
         <source>slideshow</source>
         <target>Slideshow</target>
       </trans-unit>
-      <trans-unit id="62" resname="video">
+      <trans-unit id="58893b99e4e02" resname="video">
         <source>video</source>
         <target>Video</target>
       </trans-unit>
-      <trans-unit id="63" resname="vimeo">
+      <trans-unit id="58893b99e4e0b" resname="vimeo">
         <source>vimeo</source>
         <target>Vimeo</target>
       </trans-unit>
-      <trans-unit id="64" resname="youtube">
+      <trans-unit id="58893b99e4e14" resname="youtube">
         <source>youtube</source>
         <target>Youtube</target>
       </trans-unit>
-      <trans-unit id="65" resname="form.save">
+      <trans-unit id="58893b99e4e1e" resname="form.save">
         <source>form.save</source>
         <target>Sauvegarder</target>
       </trans-unit>
-      <trans-unit id="69" resname="form.delete">
+      <trans-unit id="58893b99e4e27" resname="form.delete">
         <source>form.delete</source>
         <target>Supprimer</target>
       </trans-unit>
-      <trans-unit id="66" resname="form.cancel">
+      <trans-unit id="58893b99e4e30" resname="form.cancel">
         <source>form.cancel</source>
         <target>Annuler</target>
       </trans-unit>
-      <trans-unit id="67" resname="media.select.helper">
+      <trans-unit id="58893b99e4e3e" resname="media.select.helper">
         <source>media.select.helper</source>
         <target>Cliquer pour sélectionner</target>
       </trans-unit>
-      <trans-unit id="68" resname="media.edit.helper">
+      <trans-unit id="58893b99e4e5c" resname="media.edit.helper">
         <source>media.edit.helper</source>
         <target>Cliquer pour éditer</target>
       </trans-unit>

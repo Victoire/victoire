@@ -1,0 +1,45 @@
+{% extends 'VictoireCoreBundle:Layout:backendLayout.html.twig' %}
+
+{% block meta %}
+    <title>{{ 'acme.app.spaceship.index.title'|trans({}, 'victoire') }}</title>
+{% endblock meta %}
+
+{% block header_title %}
+    {{ 'acme.app.spaceship.index.title'|trans({}, 'victoire') }}
+{% endblock header_title %}
+{% block content %}
+
+    {% if entities|length %}
+        <table class="vic-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>{{ 'acme.app.spaceship.index.th.Name'|trans({}, 'victoire') }}</th>
+                <th>{{ 'acme.app.spaceship.index.th.Actions'|trans({} , 'victoire') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.id }}</td>
+                    <td>{{ entity.name }}</td>
+                    <td>
+                        <a class="vic-btn vic-btn-xs vic-btn-default" href="{{ path('acme_app_spaceship_edit', { 'id': entity.id }) }}">
+                            <span class="fa fa-cog"></span> <span>{{ 'acme.app.spaceship.form.action.edit'|trans({}, 'victoire') }}</span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else%}
+        <div class="vic-alert vic-alert-info" role="alert">
+            {{ 'acme.app.spaceship.index.noresult'|trans({}, 'victoire') }}
+        </div>
+    {% endif %}
+
+    <a href="{{ path('acme_app_spaceship_new') }}">
+        <span class="fa fa-plus fa-2x"></span> {{ 'acme.app.spaceship.form.action.new'|trans({}, 'victoire') }}
+    </a>
+
+{% endblock content %}

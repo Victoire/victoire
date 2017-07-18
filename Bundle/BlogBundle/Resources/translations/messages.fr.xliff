@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file date="2013-11-28T17:11:45Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
-    <header>
-      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
-      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
-    </header>
     <body>
-      <trans-unit id="1" resname="blog.category_filter.label">
+      <trans-unit id="58893b991fe2a" resname="blog.category_filter.label">
         <source>blog.category_filter.label</source>
         <target>Catégories</target>
       </trans-unit>
-      <trans-unit id="2" resname="blog.tag_filter.label">
+      <trans-unit id="58893b991fe55" resname="blog.tag_filter.label">
         <source>blog.tag_filter.label</source>
         <target>Étiquettes</target>
       </trans-unit>
-      <trans-unit id="2" resname="blog.tag_filter.empty_value">
+      <trans-unit id="58893b991fe70" resname="blog.tag_filter.empty_value">
         <source>blog.tag_filter.empty_value</source>
         <target>Aucun filtre</target>
       </trans-unit>
-      <trans-unit id="3" resname="blog.date_filter.label">
+      <trans-unit id="58893b991fe88" resname="blog.date_filter.label">
         <source>blog.date_filter.label</source>
         <target>Date</target>
       </trans-unit>
-      <trans-unit id="4" resname="blog.category_filter.empty_value.label">
+      <trans-unit id="58893b991fea0" resname="blog.category_filter.empty_value.label">
         <source>blog.category_filter.empty_value.label</source>
         <target>Tous</target>
       </trans-unit>

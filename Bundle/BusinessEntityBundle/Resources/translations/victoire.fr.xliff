@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fr" datatype="plaintext" original="not.available">
-    <header>
-      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
-      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
-    </header>
     <body>
-      <trans-unit id="ae09b10bb421ce0836f15dd43ee191805ab8e3da" resname="modal.form.businessEntity.settings.businessProperties">
+      <trans-unit id="58893b992ac24" resname="modal.form.businessEntity.settings.businessProperties">
         <source>modal.form.businessEntity.settings.businessProperties</source>
         <target>Propriété de l'entité :</target>
       </trans-unit>
-      <trans-unit id="ae09b10bb421ce0836f15dd43ee191805ab8e3db" resname="businessEntity.form.visibleOnFront.label">
+      <trans-unit id="58893b992ac4e" resname="businessEntity.form.visibleOnFront.label">
         <source>businessEntity.form.visibleOnFront.label</source>
         <target>Visible sur le site ?</target>
       </trans-unit>
-      <trans-unit id="ae09b10bb421ce0836f15dd43ee191805ab8e3dc" resname="businessEntity.form.visibleOnFront.yes">
+      <trans-unit id="58893b992ac7b" resname="businessEntity.form.visibleOnFront.yes">
         <source>businessEntity.form.visibleOnFront.yes</source>
         <target>Oui</target>
       </trans-unit>
-      <trans-unit id="ae09b10bb421ce0836f15dd43ee191805ab8e3dd" resname="businessEntity.form.visibleOnFront.no">
+      <trans-unit id="58893b992acb3" resname="businessEntity.form.visibleOnFront.no">
         <source>businessEntity.form.visibleOnFront.no</source>
         <target>Non</target>
       </trans-unit>

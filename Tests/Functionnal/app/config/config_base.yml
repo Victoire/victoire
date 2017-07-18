@@ -95,6 +95,9 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Victoire\Bundle\UserBundle\Entity\User
+    from_email:
+        address: noreply@victoire.io
+        sender_name: Victoire
 
 security:
     encoders:
@@ -133,7 +136,6 @@ victoire_core:
     slots: ~
     base_paths: #(optional) required for a non standard installation
         - "%kernel.root_dir%/../../../Bundle/BlogBundle"
-        - "%kernel.root_dir%/../../../vendor/friendsofvictoire"
         - "%kernel.root_dir%/../src"
     business_entity_debug: false
 

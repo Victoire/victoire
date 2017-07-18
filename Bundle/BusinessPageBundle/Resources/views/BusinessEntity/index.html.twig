@@ -8,7 +8,7 @@
 <div class="vic-container">
     <ul class="vic-nav vic-nav-tabs vic-modal-nav-tabs">
         {% for businessEntity in businessEntities %}
-        <li class="{% if not loop.last %} vic-seperate{% endif %}{% if loop.first %} vic-active{% endif %}">
+        <li class="{% if not loop.last %} vic-separate{% endif %}{% if loop.first %} vic-active{% endif %}">
             {% spaceless %}
             <a href="#picker-{{ businessEntity.getName }}" data-toggle="vic-tab">
                 {{ businessEntity.getName }}

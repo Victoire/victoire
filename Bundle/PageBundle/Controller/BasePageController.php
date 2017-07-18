@@ -2,24 +2,33 @@
 
 namespace Victoire\Bundle\PageBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 
 /**
- * The base page controller is used to interact with all kind of pages.
+ * The BasePage controller is used to interact with all kind of pages.
  **/
 class BasePageController extends Controller
 {
     use VictoireAlertifyControllerTrait;
 
+    /**
+     * Find Page from url and render it.
+     * Route for this action is defined in RouteLoader.
+     *
+     * @param Request $request
+     * @param string  $url
+     *
+     * @return mixed
+     */
     public function showAction(Request $request, $url = '')
     {
         $response = $this->get('victoire_page.page_helper')->renderPageByUrl(
@@ -28,10 +37,19 @@ class BasePageController extends Controller
             $request->isXmlHttpRequest() ? $request->query->get('modalLayout', null) : null
         );
 
-        //throw an exception is the page is not valid
         return $response;
     }
 
+    /**
+     * Find url for a View id and optionally an Entity id and redirect to showAction.
+     * Route for this action is defined in RouteLoader.
+     *
+     * @param Request $request
+     * @param $viewId
+     * @param null $entityId
+     *
+     * @return RedirectResponse
+     */
     public function showByIdAction(Request $request, $viewId, $entityId = null)
     {
         $parameters = [
@@ -50,6 +68,16 @@ class BasePageController extends Controller
         ));
     }
 
+    /**
+     * Find BusinessPage url for an Entity id and type and redirect to showAction.
+     * Route for this action is defined in RouteLoader.
+     *
+     * @param Request $request
+     * @param $entityId
+     * @param $type
+     *
+     * @return RedirectResponse
+     */
     public function showBusinessPageByIdAction(Request $request, $entityId, $type)
     {
         $businessEntityHelper = $this->get('victoire_core.helper.queriable_business_entity_helper');
@@ -66,11 +94,6 @@ class BasePageController extends Controller
             'entityId' => $entityId,
             'locale'   => $request->getLocale(),
         ]);
-        $this->get('victoire_widget_map.builder')->build($page);
-        $this->get('victoire_widget_map.widget_data_warmer')->warm(
-            $this->get('doctrine.orm.entity_manager'),
-            $page
-        );
 
         return $this->redirect(
             $this->generateUrl(
@@ -83,16 +106,16 @@ class BasePageController extends Controller
     }
 
     /**
-     * New page.
+     * Display a form to create a new Blog or Page.
+     * Route is defined in inherited controllers.
      *
-     * @param bool $isHomepage
+     * @param Request $request
+     * @param bool    $isHomepage
      *
-     * @return []
+     * @return array
      */
     protected function newAction(Request $request, $isHomepage = false)
     {
-        /** @var EntityManager $entityManager */
-        $entityManager = $this->get('doctrine.orm.entity_manager');
         $page = $this->getNewPage();
         if ($page instanceof Page) {
             $page->setHomepage($isHomepage ? $isHomepage : 0);
@@ -100,16 +123,33 @@ class BasePageController extends Controller
 
         $form = $this->get('form.factory')->create($this->getNewPageType(), $page);
 
-        $form->handleRequest($this->get('request'));
-        if ($form->isValid()) {
-            if ($page->getParent()) {
-                $pageNb = count($page->getParent()->getChildren());
-            } else {
-                $pageNb = count($entityManager->getRepository('VictoirePageBundle:BasePage')->findByParent(null));
-            }
-            // + 1 because position start at 1, not 0
-            $page->setPosition($pageNb + 1);
+        return [
+            'success' => true,
+            'html'    => $this->get('templating')->render(
+                $this->getBaseTemplatePath().':new.html.twig',
+                ['form' => $form->createView()]
+            ),
+        ];
+    }
 
+    /**
+     * Create a new Blog or Page.
+     * Route is defined in inherited controllers.
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    protected function newPostAction(Request $request)
+    {
+        $entityManager = $this->get('doctrine.orm.entity_manager');
+        $page = $this->getNewPage();
+
+        $form = $this->get('form.factory')->create($this->getNewPageType(), $page);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $page = $this->get('victoire_page.page_helper')->setPosition($page);
             $page->setAuthor($this->getUser());
             $entityManager->persist($page);
             $entityManager->flush();
@@ -117,42 +157,28 @@ class BasePageController extends Controller
             // If the $page is a BusinessEntity (eg. an Article), compute it's url
             if (null !== $this->get('victoire_core.helper.business_entity_helper')->findByEntityInstance($page)) {
                 $page = $this
-                        ->get('victoire_business_page.business_page_builder')
-                        ->generateEntityPageFromTemplate($page->getTemplate(), $page, $entityManager);
+                    ->get('victoire_business_page.business_page_builder')
+                    ->generateEntityPageFromTemplate($page->getTemplate(), $page, $entityManager);
             }
 
             $this->congrat($this->get('translator')->trans('victoire_page.create.success', [], 'victoire'));
-            $viewReference = $this->get('victoire_view_reference.repository')->getOneReferenceByParameters([
-                'viewId' => $page->getId(),
-                'locale' => $request->getLocale(),
-            ]);
 
-            return [
-                'success'  => true,
-                'url'      => $this->generateUrl(
-                    'victoire_core_page_show',
-                    [
-                        '_locale' => $request->getLocale(),
-                        'url'     => $viewReference->getUrl(),
-                    ]
-                ),
-            ];
-        } else {
-            $formErrorHelper = $this->get('victoire_form.error_helper');
-
-            return [
-                'success' => !$form->isSubmitted(),
-                'message' => $formErrorHelper->getRecursiveReadableErrors($form),
-                'html'    => $this->get('templating')->render(
-                    $this->getBaseTemplatePath().':new.html.twig',
-                    ['form' => $form->createView()]
-                ),
-            ];
+            return $this->getViewReferenceRedirect($request, $page);
         }
+
+        return [
+            'success' => false,
+            'message' => $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form),
+            'html'    => $this->get('templating')->render(
+                $this->getBaseTemplatePath().':new.html.twig',
+                ['form' => $form->createView()]
+            ),
+        ];
     }
 
     /**
-     * Page settings.
+     * Display a form to edit Page settings.
+     * Route is defined in inherited controllers.
      *
      * @param Request  $request
      * @param BasePage $page
@@ -161,102 +187,163 @@ class BasePageController extends Controller
      */
     protected function settingsAction(Request $request, BasePage $page)
     {
+        $form = $this->createSettingsForm($page);
+
+        return  [
+            'success' => true,
+            'html'    => $this->get('templating')->render(
+                $this->getBaseTemplatePath().':settings.html.twig',
+                [
+                    'page'               => $page,
+                    'form'               => $form->createView(),
+                    'businessProperties' => $this->getBusinessProperties($page),
+                ]
+            ),
+        ];
+    }
+
+    /**
+     * Save Page settings.
+     * Route is defined in inherited controllers.
+     *
+     * @param Request  $request
+     * @param BasePage $page
+     *
+     * @return array
+     */
+    protected function settingsPostAction(Request $request, BasePage $page)
+    {
         $entityManager = $this->getDoctrine()->getManager();
-        $form = $this->createForm($this->getPageSettingsType(), $page);
-        $businessProperties = [];
-
-        //if the page is a business entity page pattern
-        if ($page instanceof BusinessTemplate) {
-            //we can use the business entity properties on the seo
-            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($page->getBusinessEntityId());
-            $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
-        }
-
-        //if the page is a business entity page
-        if ($page instanceof BusinessPage) {
-            $form = $this->createForm($this->getBusinessPageType(), $page);
-        }
+        $form = $this->createSettingsForm($page);
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $entityManager->persist($page);
             $entityManager->flush();
-            /** @var ViewReference $viewReference */
-            $viewReference = $this->get('victoire_view_reference.repository')
-                ->getOneReferenceByParameters(['viewId' => $page->getId(), 'locale' => $request->getLocale()]);
-
-            $page->setReference($viewReference);
 
             $this->congrat($this->get('translator')->trans('victoire_page.update.success', [], 'victoire'));
 
-            return [
-                'success' => true,
-                'url'     => $this->generateUrl(
-                    'victoire_core_page_show', [
-                        '_locale' => $request->getLocale(),
-                        'url'     => $viewReference->getUrl(),
-                    ]
-                ),
-            ];
+            return $this->getViewReferenceRedirect($request, $page);
         }
-        //we display the form
-        $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
 
         return  [
-            'success' => empty($errors),
+            'success' => false,
+            'message' => $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form),
             'html'    => $this->get('templating')->render(
                 $this->getBaseTemplatePath().':settings.html.twig',
                 [
                     'page'               => $page,
                     'form'               => $form->createView(),
-                    'businessProperties' => $businessProperties,
+                    'businessProperties' => $this->getBusinessProperties($page),
                 ]
             ),
-            'message' => $errors,
         ];
     }
 
     /**
-     * @param Page $page The page to delete
+     * Delete a Page.
+     * Route is defined in inherited controllers.
      *
-     * @return Response
+     * @param BasePage $page
+     *
+     * @return array
      */
-    public function deleteAction(BasePage $page)
+    protected function deleteAction(BasePage $page)
     {
-        $response = null;
-
         try {
-            //it should not be allowed to try to delete an undeletable page
+            //Throw Exception if Page is undeletable
             if ($page->isUndeletable()) {
                 $message = $this->get('translator')->trans('page.undeletable', [], 'victoire');
                 throw new \Exception($message);
             }
 
-            //the entity manager
             $entityManager = $this->get('doctrine.orm.entity_manager');
-
-            //remove the page
             $entityManager->remove($page);
-
-            //flush the modifications
             $entityManager->flush();
 
-            //redirect to the homepage
-
-            $homepageUrl = $this->generateUrl('victoire_core_homepage_show');
-
-            $response = [
+            return [
                 'success' => true,
-                'url'     => $homepageUrl,
+                'url'     => $this->generateUrl('victoire_core_homepage_show'),
             ];
         } catch (\Exception $ex) {
-            $response = [
+            return [
                 'success' => false,
                 'message' => $ex->getMessage(),
             ];
         }
+    }
 
-        return $response;
+    /**
+     * Return an array for JsonResponse redirecting to a ViewReference.
+     *
+     * @param Request  $request
+     * @param BasePage $page
+     *
+     * @return array
+     */
+    protected function getViewReferenceRedirect(Request $request, BasePage $page)
+    {
+        $parameters = [
+            'viewId' => $page->getId(),
+        ];
+
+        if (!($page instanceof Blog)) {
+            $parameters['locale'] = $request->getLocale();
+        }
+
+        $viewReference = $this->get('victoire_view_reference.repository')
+            ->getOneReferenceByParameters($parameters);
+
+        $page->setReference($viewReference);
+
+        return [
+            'success'  => true,
+            'url'      => $this->generateUrl(
+                'victoire_core_page_show',
+                [
+                    '_locale' => $request->getLocale(),
+                    'url'     => $viewReference->getUrl(),
+                ]
+            ),
+        ];
+    }
+
+    /**
+     * Create Settings form according to Page type.
+     *
+     * @param BasePage $page
+     *
+     * @return Form
+     */
+    protected function createSettingsForm(BasePage $page)
+    {
+        $form = $this->createForm($this->getPageSettingsType(), $page);
+
+        if ($page instanceof BusinessPage) {
+            $form = $this->createForm($this->getBusinessPageType(), $page);
+        }
+
+        return $form;
+    }
+
+    /**
+     * Return BusinessEntity seaoable properties if Page is a BusinessTemplate.
+     *
+     * @param BasePage $page
+     *
+     * @return array
+     */
+    protected function getBusinessProperties(BasePage $page)
+    {
+        $businessProperties = [];
+
+        if ($page instanceof BusinessTemplate) {
+            //we can use the business entity properties on the seo
+            $businessEntity = $this->get('victoire_core.helper.business_entity_helper')->findById($page->getBusinessEntityId());
+            $businessProperties = $businessEntity->getBusinessPropertiesByType('seoable');
+        }
+
+        return $businessProperties;
     }
 }

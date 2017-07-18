@@ -23,7 +23,7 @@ Background:
         When I follow "Blog"
         And I wait 2 seconds
 	    Then I should see "Gestion des blogs"
-        And I should see "The Jedi network"
+        And I should see "The Jedi Network"
         And I follow "Paramètres"
         And I should see "Supprimer"
         Given I follow "Supprimer"

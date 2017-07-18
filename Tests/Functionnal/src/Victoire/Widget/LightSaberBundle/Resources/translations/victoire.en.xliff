@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file date="2013-11-27T18:15:06Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
-    <header>
-      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
-      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
-    </header>
     <body>
-      <trans-unit id="1" resname="widget.lightsaber.new.action.label">
+      <trans-unit id="58893bce9d610" resname="widget.lightsaber.new.action.label">
         <source>widget.lightsaber.new.action.label</source>
         <target state="new">LightSaber</target>
       </trans-unit>
-      <trans-unit id="2" resname="modal.form.widget.type.lightsaber.label">
+      <trans-unit id="58893bce9d621" resname="modal.form.widget.type.lightsaber.label">
         <source>modal.form.widget.type.lightsaber.label</source>
         <target state="new">LightSaber</target>
       </trans-unit>
-      <trans-unit id="3" resname="widget_lightsaber.form.length.label">
+      <trans-unit id="58893bce9d62c" resname="widget_lightsaber.form.length.label">
         <source>widget_lightsaber.form.length.label</source>
         <target state="new">length</target>
       </trans-unit>
-      <trans-unit id="4" resname="widget_lightsaber.form.crystal.label">
+      <trans-unit id="58893bce9d636" resname="widget_lightsaber.form.crystal.label">
         <source>widget_lightsaber.form.crystal.label</source>
         <target state="new">crystal</target>
       </trans-unit>
-      <trans-unit id="5" resname="widget_lightsaber.form.color.label">
+      <trans-unit id="58893bce9d640" resname="widget_lightsaber.form.color.label">
         <source>widget_lightsaber.form.color.label</source>
         <target state="new">color</target>
       </trans-unit>

@@ -1,6 +1,0 @@
-php Tests/Functionnal/bin/console ca:cl -e test
-php Tests/Functionnal/bin/console do:sc:up --force -e test
-php Tests/Functionnal/bin/console ca:cl -e test
-php Tests/Functionnal/bin/console v:g:v -e test
-mysql -u travis -e "DROP TABLE IF EXISTS `demo_character`; CREATE TABLE `demo_character` (`id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(55) COLLATE utf8_unicode_ci NOT NULL, `midi_chlorians` int(11) NOT NULL, `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL, `createdAt` datetime NOT NULL, `updatedAt` datetime NOT NULL, `visible_on_front` tinyint(1) NOT NULL, `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL, `side` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci; LOCK TABLES `demo_character` WRITE; INSERT INTO `demo_character` (`id`, `name`, `midi_chlorians`, `slug`, `createdAt`, `updatedAt`, `visible_on_front`, `type`, `side`) VALUES (1,'yoda',10,'yoda','2015-02-02 00:00:00','2015-02-02 00:00:00',1,'jedi','dark'); UNLOCK TABLES;"
-grep 'id="ref_8_1"' /var/folders/50/87tgrjqd6tqcqpf7brjf3fb00000gn/T/Victoire/cache/victoire/viewsReferences.xml > /dev/null

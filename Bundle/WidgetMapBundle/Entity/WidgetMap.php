@@ -46,6 +46,16 @@ class WidgetMap
     protected $view;
 
     /**
+     * A WidgetMap has a View but also a contextualView (not persisted).
+     * This contextualView is set when WidgetMap is build.
+     * When getChilds and getSubstitutes are called, we use this contextualView to retrieve
+     * concerned WidgetMaps in order to avoid useless Doctrine queries.
+     *
+     * @var View
+     */
+    protected $contextualView;
+
+    /**
      * @var [Widget]
      *
      * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", mappedBy="widgetMap", orphanRemoval=true, cascade={"persist", "remove"})
@@ -111,6 +121,7 @@ class WidgetMap
     {
         $this->children = new ArrayCollection();
         $this->substitutes = new ArrayCollection();
+        $this->widgets = new ArrayCollection();
     }
 
     /**
@@ -184,7 +195,9 @@ class WidgetMap
      */
     public function addWidget(Widget $widget)
     {
-        $this->widgets[] = $widget;
+        if (!$this->widgets->contains($widget)) {
+            $this->widgets->add($widget);
+        }
 
         return $this;
     }
@@ -218,7 +231,31 @@ class WidgetMap
     }
 
     /**
-     * @return mixed
+     * Get the current View context.
+     *
+     * @return View
+     */
+    public function getContextualView()
+    {
+        return $this->contextualView;
+    }
+
+    /**
+     * Store the current View context.
+     *
+     * @param View $contextualView
+     *
+     * @return $this
+     */
+    public function setContextualView(View $contextualView)
+    {
+        $this->contextualView = $contextualView;
+
+        return $this;
+    }
+
+    /**
+     * @return WidgetMap
      */
     public function getReplaced()
     {
@@ -226,7 +263,7 @@ class WidgetMap
     }
 
     /**
-     * @param mixed $replaced
+     * @param WidgetMap $replaced
      */
     public function setReplaced($replaced)
     {
@@ -253,85 +290,6 @@ class WidgetMap
     }
 
     /**
-     * @return mixed
-     */
-    public function getChildren(View $view = null)
-    {
-        $positions = [self::POSITION_BEFORE, self::POSITION_AFTER];
-        $children = [];
-        $widgetMap = $this;
-        foreach ($positions as $position) {
-            $children[$position] = null;
-            if (($childs = $widgetMap->getChilds($position)) && !empty($childs)) {
-                foreach ($childs as $_child) {
-                    // found child must belongs to the given view or one of it's templates
-                    if ($view) {
-                        // if child has a view
-                        // and child view is same as given view or the child view is a template of given view
-                        if ($_child->getView() && ($view === $_child->getView() || $_child->getView()->isTemplateOf($view))
-                        ) {
-                            // if child is a substitute in view
-                            if ($substitute = $_child->getSubstituteForView($view)) {
-                                // if i'm not the parent of the substitute or i does not have the same position, child is not valid
-                                if ($substitute->getParent() !== $this || $substitute->getPosition() !== $position) {
-                                    $_child = null;
-                                }
-                            }
-                            $children[$position] = $_child;
-                        }
-                    } else {
-                        $children[$position] = $_child;
-                    }
-                }
-            }
-            // If I am replaced and my replacement has children for the position
-            if (!$children[$position]
-                && ($replaced = $this->getReplaced())
-                && !empty($this->getReplaced()->getChilds($position))) {
-                foreach ($this->getReplaced()->getChilds($position) as $_child) {
-                    if ($view) {
-                        // if child view is same as given view or the child view is a template of given view
-                        if ($_child->getView() && ($view === $_child->getView() || $_child->getView()->isTemplateOf($view))) {
-
-                            // if child is a substitute in view
-                            if ($substitute = $_child->getSubstituteForView($view)) {
-                                // if i'm not the parent of the substitute or i does not have the same position, child is not valid
-                                if ($substitute->getParent() != $this || $substitute->getPosition() != $position) {
-                                    $_child = null;
-                                }
-                            }
-                            $children[$position] = $_child;
-                        }
-                    } else {
-                        $children[$position] = $_child;
-                    }
-                }
-            }
-        }
-
-        return $children;
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getChildrenRaw()
-    {
-        return $this->children;
-    }
-
-    public function hasChild($position, View $view = null)
-    {
-        foreach ($this->getChildren($view) as $child) {
-            if ($child && $child->getPosition() === $position) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * @return WidgetMap|null
      */
     public function getChild($position)
@@ -347,36 +305,39 @@ class WidgetMap
     }
 
     /**
-     * @return [WidgetMap]
+     * Return all children from contextual View (already loaded WidgetMaps)
+     * for a given position.
+     *
+     * @return WidgetMap[]
      */
-    public function getChilds($position)
+    public function getContextualChildren($position)
     {
-        $childs = [];
-        foreach ($this->children as $_child) {
-            if ($_child && $_child->getPosition() == $position) {
-                $childs[] = $_child;
+        $widgetMapChildren = [];
+        $viewWidgetMaps = $this->getContextualView()->getWidgetMapsForViewAndTemplates();
+
+        foreach ($viewWidgetMaps as $viewWidgetMap) {
+            if ($viewWidgetMap->getParent() == $this && $viewWidgetMap->getPosition() == $position) {
+                $widgetMapChildren[] = $viewWidgetMap;
             }
         }
 
-        return $childs;
+        return $widgetMapChildren;
     }
 
     /**
-     * @param mixed $children
+     * @retun WidgetMap[]
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param WidgetMap[] $children
      */
     public function setChildren($children)
     {
         $this->children = $children;
-    }
-
-    /**
-     * @return void
-     */
-    public function removeChildren()
-    {
-        foreach ($this->children as $child) {
-            $this->removeChild($child);
-        }
     }
 
     /**
@@ -434,23 +395,53 @@ class WidgetMap
     }
 
     /**
-     * @return ArrayCollection
+     * Return all substitutes from contextual View (already loaded WidgetMaps)
+     * Ideally must return only one WidgetMap per View.
+     *
+     * @return WidgetMap[]
      */
-    public function getSubstitutes()
+    public function getContextualSubstitutes()
     {
-        return $this->substitutes;
+        $substitutesWidgetMaps = [];
+        $viewWidgetMaps = $this->getContextualView()->getWidgetMapsForViewAndTemplates();
+
+        foreach ($viewWidgetMaps as $viewWidgetMap) {
+            if ($viewWidgetMap->getReplaced() == $this) {
+                $substitutesWidgetMaps[] = $viewWidgetMap;
+            }
+        }
+
+        return $substitutesWidgetMaps;
     }
 
     /**
-     * @return mixed
+     * Return substitute if used in View or in one of its inherited Template.
+     *
+     * @return WidgetMap|null
      */
     public function getSubstituteForView(View $view)
     {
-        foreach ($this->substitutes as $substitute) {
+        foreach ($this->getContextualSubstitutes() as $substitute) {
             if ($substitute->getView() === $view) {
                 return $substitute;
             }
+
+            while ($template = $view->getTemplate()) {
+                if ($substitute->getView() === $template) {
+                    return $substitute;
+                }
+            }
         }
+    }
+
+    /**
+     * Return all Substitutes (not based on contextual View).
+     *
+     * @return ArrayCollection
+     */
+    public function getAllSubstitutes()
+    {
+        return $this->substitutes;
     }
 
     /**

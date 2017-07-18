@@ -98,7 +98,7 @@ $vic(document).on('click', 'a#widget-new-tab', function(event) {
     loading(true);
     var url = Routing.generate('victoire_core_widget_new', {
         type: $vic(this).data('type'),
-        viewReference: viewReferenceId,
+        viewReference: $vic(this).data('viewreference'),
         slot: $vic(this).data('slot'),
         position: $vic(this).data('position'),
         parentWidgetMap: $vic(this).data('parentwidgetmap'),

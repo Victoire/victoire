@@ -25,10 +25,10 @@ For a global scope, you'll have been asked to create `en`glish and `fr`ench tran
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file date="2013-11-27T18:15:06Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
     <body>
-      <trans-unit resname="victoire.VictoireWidgetButtonBundle.theme.RoundedCorner.label">
+      <trans-unit id="1" resname="victoire.VictoireWidgetButtonBundle.theme.RoundedCorner.label">
         <source>victoire.VictoireWidgetButtonBundle.theme.RoundedCorner.label</source>
         <target>Rounded Corners</target>
       </trans-unit>

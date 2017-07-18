@@ -36,4 +36,4 @@ Feature: Manage sitemap
     And I press "J'ai bien compris, je confirme la suppression"
     And I wait 2 seconds
     Given I am on "/fr/anakin-skywalker/luke-skywalker"
-    Then I should see "404 not found"
+    Then I should see "404 Not Found"

@@ -33,7 +33,7 @@ Feature: Manage jedis
         When I fill in "Nom" with "Anakin"
         And I fill in "MediChloriens" with "27700"
         And I fill in "Identifiant" with "anakin"
-        And I select "obscur" from "Coté de la force"
+        And I select "obscur" from "Côté de la force"
         And I press "Créer"
         Then I should be on "/victoire-dcms/backend/jedi/"
         Then I should see "Liste des Jedis"
@@ -75,7 +75,7 @@ Feature: Manage jedis
         When I fill in "Côté de la force" with "Nouveau"
         And I submit the widget
         And I wait 5 seconds
-        Then I should see "Le Côté Nouveau de la force"
+        Then I should see "Le côté Nouveau de la force"
         Given I select the option "Paramètres de la page" in the dropdown "Page"
         And I should see "Mettre à jour"
         When I fill in "page_settings_translations_fr_slug" with "Dark Vador"

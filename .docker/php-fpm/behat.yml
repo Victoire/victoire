@@ -15,8 +15,8 @@ default:
              contexts:
                  - Victoire\Tests\Features\Context\FeatureContext
                  - Victoire\Tests\Features\Context\JavascriptContext
+                 - Victoire\Tests\Features\Context\MinkContext
                  - Victoire\Tests\Features\Context\VictoireContext
-                 - Knp\FriendlyContexts\Context\MinkContext
                  - Knp\FriendlyContexts\Context\AliceContext
                  - Knp\FriendlyContexts\Context\EntityContext
                  - Knp\FriendlyContexts\Context\TableContext

@@ -116,7 +116,7 @@ class WidgetSubscriber implements EventSubscriber
         $view->changeCssHash();
 
         //Update css file
-        $this->widgetMapBuilder->build($view, $this->em, true);
+        $this->widgetMapBuilder->build($view, true);
         $widgets = $this->widgetRepo->findAllWidgetsForView($view);
 
         //Generate CSS file and set View's CSS as up to date

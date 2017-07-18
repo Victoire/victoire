@@ -1,0 +1,23 @@
+Acme\AppBundle\Entity\SpaceShip:
+    spaceship_destroyer:
+        translations:
+            - @destroyer_fr
+            - @destroyer_en
+    spaceship_falcon:
+        translations:
+            - @falcon_fr
+            - @falcon_en
+
+AcmAcme\AppBundle\Entity\SpaceShipTranslation:
+       destroyer_fr:
+           name: "Destructeur d'étoile impériale"
+           slug: "destructeur-d-etoile-imperiale"
+       destroyer_en:
+           name: "Imperial Star Destroyer"
+           slug: "imperial-star-destroyer"
+       falcon_fr:
+           name: "Faucon Millenium"
+           slug: "faucon-millenium"
+       falcon_en:
+           name: "Millennium Falcon"
+           slug: "millennium-falcon"
