@@ -99,7 +99,6 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         return $classes;
     }
 
-
     /**
      *  get_declared_classes doesn't list anymore all classes since issue #23014 of Symfony
      *  I suggest using tokenizer. Faster than including or requiring all the files
@@ -113,7 +112,6 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         $namespace = $class = '';
         $getting_namespace = $getting_class = false;
         foreach (token_get_all($contents) as $token) {
-
             if (is_array($token) && $token[0] == T_NAMESPACE) {
                 $getting_namespace = true;
             }
@@ -123,7 +121,6 @@ class AnnotationDriver extends DoctrineAnnotationDriver
             }
 
             if ($getting_namespace === true) {
-
                 if (is_array($token) && in_array($token[0], [T_STRING, T_NS_SEPARATOR])) {
                     $namespace .= $token[1];
                 } elseif ($token === ';') {
@@ -132,13 +129,13 @@ class AnnotationDriver extends DoctrineAnnotationDriver
             }
 
             if ($getting_class === true) {
-
                 if (is_array($token) && $token[0] == T_STRING) {
                     $class = $token[1];
                     break;
                 }
             }
         }
+
         return $namespace ? $namespace.'\\'.$class : $class;
     }
 
