@@ -60,7 +60,7 @@ class CategoryFilter extends BaseFilter
             if ($parameter === '') {
                 unset($parameters['category'][$index]);
             } else {
-                $parentCategory = $this->getEntityManager()->getRepository('BlogCategory.php')->findOneById($parameter);
+                $parentCategory = $this->getEntityManager()->getRepository('VictoireBlogBundle:BlogCategory')->findOneById($parameter);
                 $childrenArray = array_merge($childrenArray, $this->getCategoryChildrens($parentCategory, []));
             }
         }
@@ -173,7 +173,7 @@ class CategoryFilter extends BaseFilter
      */
     public function getFilters($filters)
     {
-        return $this->getEntityManager()->getRepository('BlogCategory.php')->findById($filters['category']);
+        return $this->getEntityManager()->getRepository('VictoireBlogBundle:BlogCategory')->findById($filters['category']);
     }
 
     /**
