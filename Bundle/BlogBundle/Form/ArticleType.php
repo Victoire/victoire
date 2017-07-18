@@ -146,7 +146,7 @@ class ArticleType extends AbstractType
      */
     protected function manageCategories($blogId, $form)
     {
-        $categoryRepo = $this->entityManager->getRepository('BlogCategory.php');
+        $categoryRepo = $this->entityManager->getRepository('VictoireBlogBundle:BlogCategory');
 
         if ($blogId) {
             $queryBuilder = $categoryRepo->getOrderedCategories($blogId)->getInstance();
