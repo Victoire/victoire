@@ -99,7 +99,7 @@ class CategoryFilter extends BaseFilter
     {
 
         //getAll categories
-        $categoryQb = $this->getEntityManager()->getRepository('BlogCategory.php')->getAll();
+        $categoryQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:BlogCategory')->getAll();
         //getAll published articles
         $articleQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Article')->getAll(true);
 
