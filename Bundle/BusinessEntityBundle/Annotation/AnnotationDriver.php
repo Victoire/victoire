@@ -93,7 +93,10 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         }
 
         foreach ($includedFiles as $fileName) {
-            $classes[] = $this->getClassNameFromFile($fileName);
+            $class = $this->getClassNameFromFile($fileName);
+            if (class_exists($class) && !$this->isTransient($class)) {
+                $classes[] = $class;
+            }
         }
 
         return $classes;
