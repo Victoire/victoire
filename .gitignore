@@ -15,3 +15,4 @@
 /Tests/App/app/config/parameters.yml
 /Bundle/UIBundle/Resources/public/bower_components/*
 node_modules
+/.idea
