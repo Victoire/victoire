@@ -103,7 +103,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     /**
      *  get_declared_classes doesn't list anymore all classes since issue #23014 of Symfony
      *  I suggest using tokenizer. Faster than including or requiring all the files
-     *  Function recovered on http://jarretbyrne.com/2015/06/197/ Thank you to him
+     *  Function recovered on http://jarretbyrne.com/2015/06/197/ Thank you to him.
      *
      *  @return string
      */
@@ -126,7 +126,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
 
                 if (is_array($token) && in_array($token[0], [T_STRING, T_NS_SEPARATOR])) {
                     $namespace .= $token[1];
-                } else if ($token === ';') {
+                } elseif ($token === ';') {
                     $getting_namespace = false;
                 }
             }
