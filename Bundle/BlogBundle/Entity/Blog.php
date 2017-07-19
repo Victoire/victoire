@@ -151,11 +151,11 @@ class Blog extends Page
     }
 
     /**
-     * @param Category $rootCategory
+     * @param BlogCategory $rootCategory
      *
      * @return $this
      */
-    public function addRootCategory(Category $rootCategory)
+    public function addRootCategory(BlogCategory $rootCategory)
     {
         $rootCategory->setBlog($this);
         $this->categories->add($rootCategory);

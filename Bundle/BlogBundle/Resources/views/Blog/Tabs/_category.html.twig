@@ -90,6 +90,7 @@
 
 {% macro category_render_form(form) %}
     {{ form_widget(form.title, {'attr': {'placeholder': form.title.vars.label}, 'required' : true}) }}
+    {{ form_widget(form.description, {'attr': {'placeholder': form.description.vars.label}, 'required' : false}) }}
 
     {% spaceless %}
     <a onclick="deleteBlogCategoryRow(this);return false;" href="#" class="vic-btn -square -framed vic-btn-danger vic-blogCategoryWidget-btn vic-blogCategoryWidget-deleteRow">

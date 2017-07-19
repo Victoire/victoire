@@ -39,6 +39,14 @@ class BlogCategory
     /**
      * @var string
      *
+     * @ORM\Column(name="description", type="string", length=255)
+     * @Vic\BusinessProperty("textable")
+     */
+    protected $description;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="slug", type="string", length=255)
      * @Gedmo\Slug(fields={"title"}, updatable=true, unique=false)
      */
@@ -367,9 +375,7 @@ class BlogCategory
     }
 
     /**
-     * Get children.
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getChildren()
     {
@@ -407,10 +413,7 @@ class BlogCategory
     }
 
     /**
-     * Set blog.
-     *
-     * @param string $blog
-     *
+     * @param Blog $blog
      * @return $this
      */
     public function setBlog(Blog $blog)
@@ -420,6 +423,24 @@ class BlogCategory
             $child->setBlog($blog);
         }
 
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     * @return BlogCategory
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
         return $this;
     }
 }
