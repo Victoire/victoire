@@ -118,6 +118,10 @@
         <source>blog.form.description.label</source>
         <target>Déscription</target>
       </trans-unit>
+      <trans-unit id="45698b991fe9a" resname="form.description.vars.label">
+        <source>form.description.vars.label</source>
+        <target>Déscription</target>
+      </trans-unit>
       <trans-unit id="58893b9924bb9" resname="form.article.type.author.label">
         <source>form.article.type.author.label</source>
         <target>Auteur</target>
