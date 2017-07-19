@@ -254,6 +254,10 @@
         <source>blog.form.description.label</source>
         <target>Description</target>
       </trans-unit>
+      <trans-unit id="68423b991fe8a" resname="form.description.vars.label">
+        <source>form.description.vars.label</source>
+        <target>Description</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
