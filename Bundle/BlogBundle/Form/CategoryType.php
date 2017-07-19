@@ -114,7 +114,7 @@ class CategoryType extends AbstractType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\Category',
+            'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\BlogCategory',
             'translation_domain' => 'victoire',
 
         ]);

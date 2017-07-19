@@ -561,4 +561,12 @@ class Widget extends BaseWidget implements VictoireQueryInterface
 
         return $defaultLocale;
     }
+
+    /**
+     * @param $view
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
+    }
 }
