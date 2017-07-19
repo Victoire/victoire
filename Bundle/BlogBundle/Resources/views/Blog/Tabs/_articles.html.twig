@@ -35,7 +35,7 @@
                     <a class="vic-panelBlog-title" href="{{ articleUrl }}">
                         {{ translation.name }}
                     </a>
-                    {% if article.author %}
+                    {% if article.author is not null%}
                         <em>{{ article.author.firstname }} {{ article.author.lastname }}</em>
                     {% endif %}
 
