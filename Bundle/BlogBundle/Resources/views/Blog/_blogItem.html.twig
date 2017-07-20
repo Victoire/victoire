@@ -10,6 +10,18 @@
             {{ form_row(chooseBlogForm.blog) }}
             {{ form_end(chooseBlogForm) }}
         </div>
+    {% endif %}
+    <div class="vic-row">
+        {% if blog %}
+            {% if blog.name %}
+                {% for translation in blog.translations %}
+                    {% if translation.locale == locale %}
+                        <div class="vic-col-sm-3">
+                            <h3>{{ translation.name }}</h3>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
         {% endif %}
 
         {% set addBlogButton %}
