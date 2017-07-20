@@ -39,6 +39,14 @@ class BlogCategory
     /**
      * @var string
      *
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     * @Vic\BusinessProperty("textable")
+     */
+    protected $description;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="slug", type="string", length=255)
      * @Gedmo\Slug(fields={"title"}, updatable=true, unique=false)
      * @Vic\BusinessProperty("businessParameter")

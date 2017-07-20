@@ -6,6 +6,7 @@ use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -45,6 +46,10 @@ class ArticleType extends AbstractType
                 ->create('blog', HiddenType::class, ['label' => 'form.article.blog.label'])
                 ->addModelTransformer($viewToIdTransformer))
             ->add('template')
+            ->add('promoted', CheckboxType::class, [
+                "label" => "form.article.type.promoted.label",
+                "required" => false
+            ])
             ->add('tags', TagsType::class, [
                 'required' => false,
                 'multiple' => true,
