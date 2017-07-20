@@ -254,6 +254,10 @@
         <source>form.article.slug.help_block</source>
         <target>Si ce champ est vide, le slug sera auto-généré</target>
       </trans-unit>
+      <trans-unit id="4567b9924f85">
+        <source>form.article.type.promoted.label</source>
+        <target>Mettre cette article en avant</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

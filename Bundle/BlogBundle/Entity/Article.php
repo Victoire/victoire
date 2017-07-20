@@ -146,6 +146,13 @@ class Article
     private $deletedAt;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="promoted", type="boolean", nullable=true)
+     */
+    private $promoted = false;
+
+    /**
      * @Gedmo\Locale
      */
     protected $locale;
@@ -518,5 +525,23 @@ class Article
     {
         $this->translate($locale, false)->setImage($image);
         $this->mergeNewTranslations();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPromoted()
+    {
+        return $this->promoted;
+    }
+
+    /**
+     * @param bool $promoted
+     * @return Article
+     */
+    public function setPromoted($promoted)
+    {
+        $this->promoted = $promoted;
+        return $this;
     }
 }
