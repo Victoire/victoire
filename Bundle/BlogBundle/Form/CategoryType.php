@@ -35,6 +35,12 @@ class CategoryType extends AbstractType
 
                 ]
             )
+            ->add('description', TextType::class, [
+                'label' => 'blog.form.description.label',
+                'attr'          => [
+                    'class'     => 'vic-blogCategoryWidget-formControl',
+                ],
+            ])
             ->remove('removeButton');
 
         /*
@@ -108,7 +114,7 @@ class CategoryType extends AbstractType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\Category',
+            'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\BlogCategory',
             'translation_domain' => 'victoire',
 
         ]);
