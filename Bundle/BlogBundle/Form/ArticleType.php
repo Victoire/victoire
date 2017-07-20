@@ -47,8 +47,8 @@ class ArticleType extends AbstractType
                 ->addModelTransformer($viewToIdTransformer))
             ->add('template')
             ->add('promoted', CheckboxType::class, [
-                "label" => "form.article.type.promoted.label",
-                "required" => false
+                'label'    => 'form.article.type.promoted.label',
+                'required' => false,
             ])
             ->add('tags', TagsType::class, [
                 'required' => false,

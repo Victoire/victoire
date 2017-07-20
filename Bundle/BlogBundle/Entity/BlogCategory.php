@@ -414,6 +414,7 @@ class BlogCategory
 
     /**
      * @param Blog $blog
+     *
      * @return $this
      */
     public function setBlog(Blog $blog)
@@ -436,11 +437,13 @@ class BlogCategory
 
     /**
      * @param string $description
+     *
      * @return BlogCategory
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 }

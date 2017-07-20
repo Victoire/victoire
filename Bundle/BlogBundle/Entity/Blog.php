@@ -95,8 +95,7 @@ class Blog extends Page
     }
 
     /**
-     * @param Category $category
-     *
+     * @param Category     $category
      * @param BlogCategory $category
      *
      * @return Blog

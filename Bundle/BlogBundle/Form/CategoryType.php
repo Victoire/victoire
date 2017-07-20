@@ -36,7 +36,7 @@ class CategoryType extends AbstractType
                 ]
             )
             ->add('description', TextType::class, [
-                'label' => 'blog.form.description.label',
+                'label'         => 'blog.form.description.label',
                 'attr'          => [
                     'class'     => 'vic-blogCategoryWidget-formControl',
                 ],
