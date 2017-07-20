@@ -125,6 +125,6 @@ Feature: I can edit multiple blogs in multiples locales
     And I wait 1 second
     And I should see "title1"
     When I select "fr" from "choose_blog_locale"
-    And I wait 1 second
+    And I wait 3 seconds
     When I select "blog 2 FR" from "choose_blog_blog"
     Then I should see "titre2"
