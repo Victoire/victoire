@@ -112,7 +112,7 @@ class Article
     private $deletedAt;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="promoted", type="boolean", nullable=true)
      */
@@ -497,11 +497,13 @@ class Article
 
     /**
      * @param bool $promoted
+     *
      * @return Article
      */
     public function setPromoted($promoted)
     {
         $this->promoted = $promoted;
+
         return $this;
     }
 }
