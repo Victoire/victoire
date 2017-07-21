@@ -114,6 +114,14 @@
         <source>blog.form.title.label</source>
         <target>Catégorie</target>
       </trans-unit>
+      <trans-unit id="58893b991fe9a" resname="blog.form.description.label">
+        <source>blog.form.description.label</source>
+        <target>Déscription</target>
+      </trans-unit>
+      <trans-unit id="45698b991fe9a" resname="form.description.vars.label">
+        <source>form.description.vars.label</source>
+        <target>Déscription</target>
+      </trans-unit>
       <trans-unit id="58893b9924bb9" resname="form.article.type.author.label">
         <source>form.article.type.author.label</source>
         <target>Auteur</target>
@@ -245,6 +253,10 @@
       <trans-unit id="58893b9924fbe" resname="form.article.slug.help_block">
         <source>form.article.slug.help_block</source>
         <target>Si ce champ est vide, le slug sera auto-généré</target>
+      </trans-unit>
+      <trans-unit id="4567b9924f85">
+        <source>form.article.type.promoted.label</source>
+        <target>Mettre cette article en avant</target>
       </trans-unit>
     </body>
   </file>

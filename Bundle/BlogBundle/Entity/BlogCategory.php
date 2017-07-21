@@ -4,16 +4,21 @@ namespace Victoire\Bundle\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
+use Victoire\Bundle\CoreBundle\Annotations as Vic;
 
 /**
  * Category.
  *
  * @ORM\Table("vic_category")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\CategoryRepository")
+ * @Vic\BusinessEntity({"Redactor", "Listing", "BlogArticles", "Title", "CKEditor", "Text", "UnderlineTitle", "Cover", "Image", "Authorship", "ArticleList", "SliderNav", "Render", "Tab"})
  * @Gedmo\Tree(type="nested")
  */
-class Category
+class BlogCategory
 {
+    use BusinessEntityTrait;
+
     /**
      * @var int
      *
@@ -27,8 +32,17 @@ class Category
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Vic\BusinessProperty("textable")
      */
     protected $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     * @Vic\BusinessProperty("textable")
+     */
+    protected $description;
 
     /**
      * @var string
@@ -77,13 +91,13 @@ class Category
 
     /**
      * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="BlogCategory", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="cascade")
      */
     protected $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="BlogCategory", mappedBy="parent", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     protected $children;
@@ -124,7 +138,7 @@ class Category
      *
      * @param string $title
      *
-     * @return Category
+     * @return BlogCategory
      */
     public function setTitle($title)
     {
@@ -148,7 +162,7 @@ class Category
      *
      * @param string $slug
      *
-     * @return Category
+     * @return BlogCategory
      */
     public function setSlug($slug)
     {
@@ -294,7 +308,7 @@ class Category
      *
      * @return Menu
      */
-    public function setParent(Category $parent = null)
+    public function setParent(BlogCategory $parent = null)
     {
         $this->parent = $parent;
 
@@ -318,7 +332,7 @@ class Category
      *
      * @return Menu
      */
-    public function addChild(Category $child)
+    public function addChild(BlogCategory $child)
     {
         $child->setParent($this);
         $this->children[] = $child;
@@ -331,7 +345,7 @@ class Category
      *
      * @param Menu $child
      */
-    public function removeChild(Category $child)
+    public function removeChild(BlogCategory $child)
     {
         $this->children->removeElement($child);
     }
@@ -341,7 +355,7 @@ class Category
      *
      * @param Menu $child
      */
-    public function removeChildren(Category $child)
+    public function removeChildren(BlogCategory $child)
     {
         $this->children->removeElement($child);
     }
@@ -351,7 +365,7 @@ class Category
      *
      * @param array $children
      *
-     * @return \Victoire\Bundle\BlogBundle\Entity\Category
+     * @return \Victoire\Bundle\BlogBundle\Entity\BlogCategory
      */
     public function setChildren($children)
     {
@@ -361,9 +375,7 @@ class Category
     }
 
     /**
-     * Get children.
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getChildren()
     {
@@ -401,9 +413,7 @@ class Category
     }
 
     /**
-     * Set blog.
-     *
-     * @param string $blog
+     * @param Blog $blog
      *
      * @return $this
      */
@@ -413,6 +423,26 @@ class Category
         foreach ($this->children as $child) {
             $child->setBlog($blog);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return BlogCategory
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
 
         return $this;
     }
