@@ -38,7 +38,7 @@
                 </a>
 
                 {% if article.author is not null %}
-                    <em>{{ article.author.firstname }} {{ article.author.lastname }}</em>
+                    <em>{{ article.author.firstname is defined ? article.author.firstname : "" }} {{ article.author.lastname is defined ? article.author.lastname : "" }}</em>
                 {% endif %}
 
                     <time datetime="{{ article.publishedAt|date("Y-m-d") }}" class="vic-panelBlog-date">{{ article.publishedAt|localizeddate("medium", "none", locale, null, "cccc d LLLL yyyy") }}</time>
