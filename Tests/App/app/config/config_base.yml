@@ -121,10 +121,8 @@ security:
             switch_user: ~
         main:
             pattern: ^/
-#            anonymous: true
             http_basic: ~
     access_control:
-        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
 
 victoire_core:
