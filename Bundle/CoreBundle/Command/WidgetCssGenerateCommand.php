@@ -4,6 +4,7 @@ namespace Victoire\Bundle\CoreBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -71,8 +72,8 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
         }
 
         //Set progress for output
-        $progress = $this->getHelper('progress');
-        $progress->start($output, $limit);
+        $progress = new ProgressBar($output, $limit);
+        $progress->start();
 
         foreach ($views as $view) {
             if ($count >= $limit) {
@@ -121,9 +122,9 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
         $templates = [];
         $recursiveGetTemplates = function ($template) use (&$recursiveGetTemplates, &$templates) {
             array_push($templates, $template);
-            foreach ($template->getInheritors() as $template) {
-                if ($template instanceof Template) {
-                    $recursiveGetTemplates($template);
+            foreach ($template->getInheritors() as $_template) {
+                if ($_template instanceof Template) {
+                    $recursiveGetTemplates($_template);
                 }
             }
         };
