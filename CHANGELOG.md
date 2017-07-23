@@ -1,6 +1,6 @@
 # Change Log
 
-## [Unreleased](https://github.com/Victoire/victoire/tree/HEAD)
+## [2.2.16](https://github.com/Victoire/victoire/tree/2.2.16)
 
 - Remove dependency on InfiniteFormBundle (used by [WidgetFilterBundle](https://github.com/FriendsOfVictoire/WidgetFilterBundle) in order to filter blog articles)
 
