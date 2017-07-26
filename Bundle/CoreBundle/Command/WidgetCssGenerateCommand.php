@@ -8,10 +8,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Victoire\Bundle\CoreBundle\Entity\View;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 class WidgetCssGenerateCommand extends ContainerAwareCommand
 {
+    const SPOOL_FLUSH = 30;
+
     /**
      * {@inheritdoc}
      */
@@ -51,73 +52,55 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
 
         $widgetRepo = $entityManager->getRepository('Victoire\Bundle\WidgetBundle\Entity\Widget');
 
-//        //Get View's CSS to generate
-        $templateRepo = $entityManager->getRepository('VictoireTemplateBundle:Template');
-        $rootTemplates = $templateRepo->getInstance()
-            ->where('template.template IS NULL')
-            ->getQuery()
-            ->getResult();
-        $templates = [];
-        $recursiveGetTemplates = function ($template) use (&$recursiveGetTemplates, &$templates) {
-            array_push($templates, $template);
-            foreach ($template->getInheritors() as $template) {
-                if ($template instanceof Template) {
-                    $recursiveGetTemplates($template);
-                }
-            }
-        };
-
-        foreach ($rootTemplates as $rootTemplate) {
-            $recursiveGetTemplates($rootTemplate);
-        }
-
-        $pageRepo = $entityManager->getRepository('VictoirePageBundle:BasePage');
-        $pages = $pageRepo->findAll();
-        $errorRepo = $entityManager->getRepository('VictoireTwigBundle:ErrorPage');
-        $errorPages = $errorRepo->findAll();
-
-        /* @var $views View[] */
-        $views = array_merge($templates, array_merge($pages, $errorPages));
+        $viewRepo = $entityManager->getRepository('VictoireCoreBundle:View');
+        $viewsCount = $entityManager->createQuery('SELECT COUNT(v)  FROM Victoire\Bundle\CoreBundle\Entity\View v')->getSingleScalarResult();
 
         //Prepare limit
-        $limit = ($limit && $limit < count($views)) ? $limit : count($views);
+        $limit = ($limit && $limit < $viewsCount) ? $limit : $viewsCount;
         $count = 0;
 
         //Set progress for output
         $progress = $this->getHelper('progress');
         $progress->start($output, $limit);
 
-        foreach ($views as $view) {
-            if ($outOfDate && $view->isCssUpToDate()) {
-                continue;
+        for ($ii = 0; $ii <= $limit; $ii = $ii + self::SPOOL_FLUSH) {
+            /* @var $views View[] */
+            $views = $viewRepo->findBy([], ['updatedAt' => 'ASC'], self::SPOOL_FLUSH, $ii);
+
+            foreach ($views as $view) {
+                if ($outOfDate && $view->isCssUpToDate()) {
+                    continue;
+                }
+
+                //Exit if limit reached
+                if ($count >= $limit) {
+                    break;
+                }
+
+                //If hash already exist, remove CSS file, else generate a hash
+                if ($viewHash = $view->getCssHash()) {
+                    $viewCssBuilder->removeCssFile($viewHash);
+                } else {
+                    $view->changeCssHash();
+                }
+
+                //Generate CSS file with its widgets style
+                $widgetMapBuilder->build($view, $entityManager);
+                $widgets = $widgetRepo->findAllWidgetsForView($view);
+                $viewCssBuilder->generateViewCss($view, $widgets);
+
+                //Set View's CSS as up to date
+                $view->setCssUpToDate(true);
+                $entityManager->persist($view);
+
+                ++$count;
+
+                $progress->advance();
             }
-
-            //Exit if limit reached
-            if ($count >= $limit) {
-                break;
-            }
-
-            //If hash already exist, remove CSS file, else generate a hash
-            if ($viewHash = $view->getCssHash()) {
-                $viewCssBuilder->removeCssFile($viewHash);
-            } else {
-                $view->changeCssHash();
-            }
-
-            //Generate CSS file with its widgets style
-            $widgetMapBuilder->build($view, $entityManager);
-            $widgets = $widgetRepo->findAllWidgetsForView($view);
-            $viewCssBuilder->generateViewCss($view, $widgets);
-
-            //Set View's CSS as up to date
-            $view->setCssUpToDate(true);
-            $entityManager->persist($view);
-            $entityManager->flush($view);
-
-            ++$count;
-            $progress->advance();
+            // Clear Entity Manager
+            $entityManager->flush();
+            $entityManager->clear();
         }
-
         $progress->finish();
 
         return true;
