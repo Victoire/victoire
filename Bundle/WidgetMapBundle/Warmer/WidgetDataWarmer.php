@@ -228,14 +228,14 @@ class WidgetDataWarmer
                     foreach ($associatedEntitiesToWarm as $associatedEntityToWarm) {
                         foreach ($foundEntities as $foundEntity) {
                             if ($associatedEntityToWarm->getType() == AssociatedEntityToWarm::TYPE_MANY_TO_ONE
-                                && $foundEntity->getId() == $associatedEntityToWarm->getEntityId()
+                                && $foundEntity->getId() === $associatedEntityToWarm->getEntityId()
                             ) {
                                 $inheritorEntity = $associatedEntityToWarm->getInheritorEntity();
                                 $inheritorPropertyName = $associatedEntityToWarm->getInheritorPropertyName();
                                 $this->accessor->setValue($inheritorEntity, $inheritorPropertyName, $foundEntity);
                                 continue;
                             } elseif ($associatedEntityToWarm->getType() == AssociatedEntityToWarm::TYPE_ONE_TO_MANY
-                                && $this->accessor->getValue($foundEntity, $findMethod) == $associatedEntityToWarm->getInheritorEntity()
+                                && $this->accessor->getValue($foundEntity, $findMethod) === $associatedEntityToWarm->getInheritorEntity()
                             ) {
                                 $inheritorEntity = $associatedEntityToWarm->getInheritorEntity();
                                 $inheritorPropertyName = $associatedEntityToWarm->getInheritorPropertyName();
