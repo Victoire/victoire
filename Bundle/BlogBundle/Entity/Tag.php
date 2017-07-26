@@ -12,7 +12,7 @@ use Victoire\Bundle\CoreBundle\Annotations as VIC;
  *
  * @ORM\Table("vic_tag")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\TagRepository")
- * @VIC\BusinessEntity("Listing")
+ * @VIC\BusinessEntity({"Listing", "Title", "CKEditor", "Text", "Cover", "Render", "ArticleList"})
  */
 class Tag
 {
@@ -31,6 +31,7 @@ class Tag
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @VIC\BusinessProperty({"textable", "businessParameter", "seoable"})
      */
     protected $title;
 
@@ -39,6 +40,7 @@ class Tag
      *
      * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(name="slug", type="string", length=255)
+     * @VIC\BusinessProperty("businessParameter")
      */
     protected $slug;
 
