@@ -74,9 +74,10 @@ class ArticleRepository extends EntityRepository
     }
 
     /**
-     * Use to assemble ArticleList Query with Filter Query
+     * Use to assemble ArticleList Query with Filter Query.
      *
      * @param null $listingQuery
+     *
      * @return $this
      */
     public function filterWithListingQuery($listingQuery = null)
