@@ -3,17 +3,17 @@
 namespace Victoire\Bundle\TwigBundle\Controller;
 
 // BC for Symfony ≤ 2.8
-if (class_exists('\Symfony\Component\Debug\Exception\FlattenException')) {
-    class_alias('\Symfony\Component\Debug\Exception\FlattenException', 'FlattenException');
-} else {
-    class_alias('\Symfony\Component\HttpKernel\Exception\FlattenException', 'FlattenException');
+if (class_exists('Symfony\Component\Debug\Exception\FlattenException')) {
+    class_alias('Symfony\Component\Debug\Exception\FlattenException', 'Symfony\Component\HttpKernel\Exception\FlattenException');
 }
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\TwigBundle\Controller\ExceptionController as BaseExceptionController;
+use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\FlattenException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 use Symfony\Component\Routing\Router;
