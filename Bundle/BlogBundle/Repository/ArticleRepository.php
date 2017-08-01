@@ -73,11 +73,17 @@ class ArticleRepository extends EntityRepository
         return $this->getInstance()->getQuery()->$method($hydrationMode);
     }
 
+    /**
+     * Use to assemble ArticleList Query with Filter Query
+     *
+     * @param null $listingQuery
+     * @return $this
+     */
     public function filterWithListingQuery($listingQuery = null)
     {
         if ($listingQuery) {
-            $dql = $this->createQueryBuilder('a_article')
-                ->leftJoin('a_article.blog', 'blog')
+            $dql = $this->createQueryBuilder('item')
+                ->leftJoin('item.blog', 'blog')
                 ->getDql();
             $dql = $dql.' '.$listingQuery;
             $this->qb
