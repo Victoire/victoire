@@ -57,7 +57,7 @@ $vic('#{{ id }} .{{ confirm_button_class }}').click(function(){
     elem.removeClass('vic-confirm-waiting');
     elem.addClass('vic-confirmed');
     $vic('#{{ id }}').vicmodal('hide');
-    {% if type == "form" %}
+    {% if app.request.get('type', 'form') == "form" %}
         elem.submit();
     {% else %}
         elem.click();
