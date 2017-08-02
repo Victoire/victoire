@@ -49,6 +49,7 @@ class BlogCategory
      *
      * @ORM\Column(name="slug", type="string", length=255)
      * @Gedmo\Slug(fields={"title"}, updatable=true, unique=false)
+     * @Vic\BusinessProperty("businessParameter")
      */
     protected $slug;
 
