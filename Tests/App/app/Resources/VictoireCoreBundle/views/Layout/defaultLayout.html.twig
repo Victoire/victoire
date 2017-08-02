@@ -37,5 +37,5 @@
     {% javascripts injector="alertify-notie" %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'messages'}) }}?locales={{ victoire_i18n_available_locales|join(',') }}"></script>
+    <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'messages'}) }}?locales={{ victoire_i18n_available_locales|default([])|join(',') }}"></script>
 {% endblock foot_script %}

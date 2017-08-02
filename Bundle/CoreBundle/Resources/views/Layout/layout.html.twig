@@ -118,7 +118,7 @@
                 <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}
 
-            <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'victoire'}) }}?locales={{ victoire_i18n_available_locales|join(',') }}"></script>
+            <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'victoire'}) }}?locales={{ victoire_i18n_available_locales|default([])|join(',') }}"></script>
 
             <script type="text/javascript">
                 $vic(document).ready(function(){
