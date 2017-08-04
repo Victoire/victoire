@@ -70,7 +70,7 @@ class WidgetMap
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", mappedBy="replaced")
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", mappedBy="replaced", cascade={"persist"}))
      */
     protected $substitutes;
 
