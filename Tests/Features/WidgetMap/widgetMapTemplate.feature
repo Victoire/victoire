@@ -143,6 +143,7 @@ Scenario: I delete widget from template
   Given I press "J'ai bien compris, je confirme la suppression"
   And I reload the page
   And "Widget 3" should precede "Widget 2"
+  And I should not see "widget 1"
   Then I am on "/fr/victoire-dcms/template/show/1"
   And "Widget 1" should precede "Widget 3"
   And "Widget 3" should precede "Widget 2"

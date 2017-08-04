@@ -319,10 +319,11 @@ class WidgetManager
             $this->entityManager->remove($widget);
         }
 
-        //we update the view
-        $this->entityManager->persist($view);
         //update the view deleting the widget
         $this->widgetMapManager->delete($view, $widget);
+
+        //we update the view
+        $this->entityManager->persist($view);
 
         $this->entityManager->flush();
 
