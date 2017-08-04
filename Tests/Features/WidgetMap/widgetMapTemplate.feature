@@ -131,12 +131,14 @@ Feature: Test widgetMap
         Then I should see "Widget 1"
         When I switch to "edit" mode
         And I edit the "Text" widget
-        Then I should see "DELETE"
+        Then I should see "Widget 1"
+        And I should see "DELETE"
         Given I follow "DELETE"
         Then I should see "This action will permanently delete this content from the database. This action is irreversible."
         Given I press "YES, I WANT TO DELETE IT!"
         And I reload the page
         And "Widget 3" should precede "Widget 2"
+        And I should not see "Widget 1"
         Then I am on "/en/victoire-dcms/template/show/1"
         And "Widget 1" should precede "Widget 3"
         And "Widget 3" should precede "Widget 2"

@@ -70,7 +70,7 @@ class WidgetMap
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", mappedBy="replaced", cascade={"persist"}))
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", mappedBy="replaced")
      */
     protected $substitutes;
 
@@ -106,6 +106,11 @@ class WidgetMap
      * @ORM\Column(name="slot", type="string", length=255, nullable=true)
      */
     protected $slot;
+
+    public function __toString()
+    {
+        return $value = (string) $this->id;
+    }
 
     public function __construct()
     {
