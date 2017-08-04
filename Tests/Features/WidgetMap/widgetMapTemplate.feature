@@ -116,30 +116,31 @@ Feature: Test widgetMap
         And "Widget 1" should precede "Widget 3"
         And "Widget 3" should precede "Widget 2"
 
-    Scenario: I delete widget from template
-        Given the following WidgetMaps:
-            | id | action | position | parent | slot         | view |
-            | 1  | create |          |        | main_content | base |
-            | 2  | create | after    | 1      | main_content | base |
-            | 3  | create | before   | 2      | main_content | base |
-        Given the following WidgetTexts:
-            | content  | mode   | widgetMap |
-            | Widget 1 | static | 1         |
-            | Widget 2 | static | 2         |
-            | Widget 3 | static | 3         |
-        And I am on the homepage
-        Then I should see "Widget 1"
-        When I switch to "edit" mode
-        And I edit the "Text" widget
-        Then I should see "DELETE"
-        Given I follow "DELETE"
-        Then I should see "This action will permanently delete this content from the database. This action is irreversible."
-        Given I press "YES, I WANT TO DELETE IT!"
-        And I reload the page
-        And "Widget 3" should precede "Widget 2"
-        Then I am on "/en/victoire-dcms/template/show/1"
-        And "Widget 1" should precede "Widget 3"
-        And "Widget 3" should precede "Widget 2"
+
+Scenario: I delete widget from template
+  Given the following WidgetMaps:
+    | id | action | position | parent | slot         |   view  |
+    | 1  | create |          |        | main_content |   base  |
+    | 2  | create |  after   |   1    | main_content |   base  |
+    | 3  | create |  before  |   2    | main_content |   base  |
+  Given the following WidgetTexts:
+    | content  | mode   | widgetMap |
+    | Widget 1 | static |    1       |
+    | Widget 2 | static |    2       |
+    | Widget 3 | static |    3       |
+  And I am on the homepage
+  Then I should see "Widget 1"
+  When I switch to "edit" mode
+  And I edit the "Text" widget
+  Then I should see "DELETE"
+  Given I follow "DELETE"
+  Then I should see "This action will permanently delete this content from the database. This action is irreversible."
+  Given I press "YES, I WANT TO DELETE IT!"
+  And I reload the page
+  And "Widget 3" should precede "Widget 2"
+  And I should not see "widget 1"Then I am on "/en/victoire-dcms/template/show/1"
+  And "Widget 1" should precede "Widget 3"
+  And "Widget 3" should precede "Widget 2"
 
     Scenario: I overwrite a widget from template
         Given the following WidgetMaps:
