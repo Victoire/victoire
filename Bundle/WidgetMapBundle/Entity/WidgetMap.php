@@ -117,11 +117,6 @@ class WidgetMap
      */
     protected $slot;
 
-    public function __toString()
-    {
-        return $value = (string) $this->id;
-    }
-
     public function __construct()
     {
         $this->children = new ArrayCollection();
