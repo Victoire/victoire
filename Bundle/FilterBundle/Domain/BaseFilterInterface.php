@@ -1,6 +1,6 @@
 <?php
 
-namespace Victoire\Bundle\FilterBundle\Filter;
+namespace Victoire\Bundle\FilterBundle\Domain;
 
 use Doctrine\ORM\QueryBuilder;
 

@@ -1,3 +1,21 @@
 services:
     victoire_core.filter_chain:
         class: Victoire\Bundle\FilterBundle\Filter\Chain\FilterChain
+
+    #############################
+    ######## DOMAIN
+    ############################
+
+    victoire_filter_bundle.abstract_base_filter:
+        class: Victoire\Bundle\FilterBundle\Domain\BaseFilter
+        abstract: true
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@request_stack"
+            - "@victoire_filter_bundle.filter_form_field_query.handler"
+
+    victoire_filter_bundle.filter_form_field_query.handler:
+        class: Victoire\Bundle\FilterBundle\Domain\FilterFormFieldQueryHandler
+        arguments:
+            - "@victoire_query.query_helper"
+            - "@doctrine.orm.entity_manager"
