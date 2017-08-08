@@ -20,9 +20,9 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
      */
     protected $entityManager;
     /**
-     * @var Request
+     * @var RequestStack
      */
-    protected $request;
+    protected $requestStack;
     /**
      * @var FilterFormFieldQueryHandler
      */
@@ -32,12 +32,12 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
      * BaseFilter constructor.
      *
      * @param EntityManager               $entityManager
-     * @param RequestStack                $request
+     * @param RequestStack                $requestStack
      * @param FilterFormFieldQueryHandler $filterQueryHandler
      */
     public function __construct(
         EntityManager $entityManager,
-        RequestStack $request,
+        RequestStack $requestStack,
         FilterFormFieldQueryHandler $filterQueryHandler
     ) {
         $this->entityManager = $entityManager;
@@ -80,6 +80,6 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
      */
     public function getRequest()
     {
-        return $this->request->getCurrentRequest();
+        return $this->requestStack->getCurrentRequest();
     }
 }
