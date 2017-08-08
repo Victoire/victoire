@@ -25,18 +25,18 @@ class CategoryFilter extends BaseFilter
     /**
      * CategoryFilter constructor.
      *
-     * @param EntityManager               $em
+     * @param EntityManager               $entityManager
      * @param RequestStack                $request
-     * @param FilterFormFieldQueryHandler $filterFormFieldQueryHandler
+     * @param FilterFormFieldQueryHandler $filterQueryHandler
      * @param TranslatorInterface         $translator
      */
     public function __construct(
-        EntityManager $em,
+        EntityManager $entityManager,
         RequestStack $request,
-        FilterFormFieldQueryHandler $filterFormFieldQueryHandler,
+        FilterFormFieldQueryHandler $filterQueryHandler,
         TranslatorInterface $translator
     ) {
-        parent::__construct($em, $request, $filterFormFieldQueryHandler);
+        parent::__construct($entityManager, $request, $filterQueryHandler);
         $this->translator = $translator;
     }
 
