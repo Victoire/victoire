@@ -69,7 +69,7 @@ class TagFilter extends BaseFilter
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $tags = $this->filterFormFieldQueryHandler->handle($options['widget'], Tag::class);
+        $tags = $this->filterQueryHandler->handle($options['widget'], Tag::class);
 
         foreach ($tags as $tag) {
             $tagsChoices[$tag->getTitle()] = $tag->getId();

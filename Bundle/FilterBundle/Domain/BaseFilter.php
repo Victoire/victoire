@@ -25,23 +25,23 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
     /**
      * @var FilterFormFieldQueryHandler
      */
-    protected $filterFormFieldQueryHandler;
+    protected $filterQueryHandler;
 
     /**
      * BaseFilter constructor.
      *
      * @param EntityManager                                                    $em
      * @param RequestStack                                                     $request
-     * @param \Victoire\Bundle\FilterBundle\Domain\FilterFormFieldQueryHandler $filterFormFieldQueryHandler
+     * @param \Victoire\Bundle\FilterBundle\Domain\FilterFormFieldQueryHandler $filterQueryHandler
      */
     public function __construct(
         EntityManager $em,
         RequestStack $request,
-        FilterFormFieldQueryHandler $filterFormFieldQueryHandler
+        FilterFormFieldQueryHandler $filterQueryHandler
     ) {
         $this->entityManager = $em;
         $this->requestStack = $requestStack;
-        $this->filterFormFieldQueryHandler = $filterFormFieldQueryHandler;
+        $this->filterFormFieldQueryHandler = $filterQueryHandler;
     }
 
     /**
