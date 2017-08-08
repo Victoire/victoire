@@ -5,26 +5,38 @@ namespace Victoire\Bundle\BlogBundle\Filter;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface;
 use Victoire\Bundle\BlogBundle\Entity\BlogCategory;
-use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
+use Victoire\Bundle\FilterBundle\Domain\BaseFilter;
+use Victoire\Bundle\FilterBundle\Domain\FilterFormFieldQueryHandler;
 
 /**
- * CategoryFilter form type.
+ * Class CategoryFilter
+ * @package Victoire\Bundle\BlogBundle\Filter
  */
 class CategoryFilter extends BaseFilter
 {
+    /**
+     * @var TranslatorInterface
+     */
     protected $translator;
 
     /**
-     * @param EntityManager       $entityManager
-     * @param Request             $request
+     * CategoryFilter constructor.
+     * @param EntityManager $em
+     * @param RequestStack $request
+     * @param FilterFormFieldQueryHandler $filterFormFieldQueryHandler
      * @param TranslatorInterface $translator
      */
-    public function __construct(EntityManager $entityManager, Request $request, TranslatorInterface $translator)
+    public function __construct(
+        EntityManager $em,
+        RequestStack $request,
+        FilterFormFieldQueryHandler $filterFormFieldQueryHandler,
+        TranslatorInterface $translator
+    )
     {
-        parent::__construct($entityManager, $request);
+        parent::__construct($em, $request, $filterFormFieldQueryHandler);
         $this->translator = $translator;
     }
 
@@ -97,26 +109,8 @@ class CategoryFilter extends BaseFilter
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $categories = $this->filterFormFieldQueryHandler->handle($options['widget'], BlogCategory::class);
 
-        //getAll categories
-        $categoryQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:BlogCategory')->getAll();
-        //getAll published articles
-        $articleQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Article')->getAll(true);
-
-        //get Listing
-        $listing = $options['widget']->getListing();
-
-        $mode = $listing->getMode();
-        switch ($mode) {
-            case 'query':
-                //filter with listingQuery
-                $articleQb->filterWithListingQuery($listing->getQuery());
-                break;
-        }
-        $categoryQb->filterByArticles($articleQb->getInstance('article'));
-        $categories = $categoryQb->getInstance('c_category')->getQuery()->getResult();
-
-        //the blank value
         $categoriesChoices = [];
 
         foreach ($categories as $category) {
@@ -134,6 +128,7 @@ class CategoryFilter extends BaseFilter
                 $data = $this->getRequest()->query->get('filter')['category_filter']['category'];
             }
         }
+
         $builder
             ->add(
                 'category', 'choice', [
