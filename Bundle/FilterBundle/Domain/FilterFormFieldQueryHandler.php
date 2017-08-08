@@ -38,6 +38,7 @@ class FilterFormFieldQueryHandler
     /**
      * @param Widget $widgetFilter
      * @param $entity
+     *
      * @return array
      */
     public function handle(Widget $widgetFilter, $entity)
@@ -53,7 +54,6 @@ class FilterFormFieldQueryHandler
             /* if listing widget is in query mode we had a subquery with here parameter */
             $queryBuilder = $this->queryHelper->buildWithSubQuery($widgetListing, $queryBuilder, $this->entityManager);
         }
-
 
         $subQuery = $queryBuilder->getQuery();
         $subQueryParameters = $queryBuilder->getParameters();
