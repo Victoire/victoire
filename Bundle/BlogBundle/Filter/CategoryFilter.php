@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface;
 use Victoire\Bundle\BlogBundle\Entity\Category;
-use Victoire\Bundle\FilterBundle\Domain\BaseFilter;
+use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
 use Victoire\Bundle\FilterBundle\Domain\FilterFormFieldQueryHandler;
 
 /**

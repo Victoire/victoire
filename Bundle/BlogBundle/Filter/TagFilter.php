@@ -6,7 +6,7 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Victoire\Bundle\BlogBundle\Entity\Tag;
-use Victoire\Bundle\FilterBundle\Domain\BaseFilter;
+use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
 
 /**
  * TagFilter form type.
