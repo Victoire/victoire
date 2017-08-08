@@ -4,6 +4,7 @@ namespace Victoire\Bundle\BlogBundle\Filter;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -130,7 +131,7 @@ class CategoryFilter extends BaseFilter
 
         $builder
             ->add(
-                'category', 'choice', [
+                'category', ChoiceType::class, [
                     'label'       => false,
                     'choices'     => $categoriesChoices,
                     'required'    => false,
