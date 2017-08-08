@@ -52,11 +52,11 @@ class FilterFormFieldQueryHandler
 
         $filterEntityRepo = $this->entityManager->getRepository($entity);
 
-        $aliases = explode('\\', $entity);
-        $aliases = end($aliases);
+        $alias = explode('\\', $entity);
+        $alias = end($alias);
 
-        $queryBuilder = $filterEntityRepo->createQueryBuilder($aliases);
-        $queryBuilder->andWhere($queryBuilder->expr()->in($aliases, $subQuery->getDQL()));
+        $queryBuilder = $filterEntityRepo->createQueryBuilder($alias);
+        $queryBuilder->andWhere($queryBuilder->expr()->in($alias, $subQuery->getDQL()));
 
         $parameters = new ArrayCollection(
             array_merge($subQueryParameters->toArray(), $queryBuilder->getParameters()->toArray())
