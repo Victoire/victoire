@@ -13,8 +13,7 @@ use Victoire\Bundle\FilterBundle\Domain\BaseFilter;
 use Victoire\Bundle\FilterBundle\Domain\FilterFormFieldQueryHandler;
 
 /**
- * Class CategoryFilter
- * @package Victoire\Bundle\BlogBundle\Filter
+ * Class CategoryFilter.
  */
 class CategoryFilter extends BaseFilter
 {
@@ -25,18 +24,18 @@ class CategoryFilter extends BaseFilter
 
     /**
      * CategoryFilter constructor.
-     * @param EntityManager $em
-     * @param RequestStack $request
+     *
+     * @param EntityManager               $em
+     * @param RequestStack                $request
      * @param FilterFormFieldQueryHandler $filterFormFieldQueryHandler
-     * @param TranslatorInterface $translator
+     * @param TranslatorInterface         $translator
      */
     public function __construct(
         EntityManager $em,
         RequestStack $request,
         FilterFormFieldQueryHandler $filterFormFieldQueryHandler,
         TranslatorInterface $translator
-    )
-    {
+    ) {
         parent::__construct($em, $request, $filterFormFieldQueryHandler);
         $this->translator = $translator;
     }

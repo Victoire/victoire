@@ -8,11 +8,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Victoire\Bundle\FilterBundle\Domain\FilterFormFieldQueryHandler;
 
 /**
- * Class BaseFilter
- * @package Victoire\Bundle\FilterBundle\Filter
+ * Class BaseFilter.
  */
 abstract class BaseFilter extends AbstractType implements BaseFilterInterface
 {
@@ -31,16 +29,16 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
 
     /**
      * BaseFilter constructor.
-     * @param EntityManager $em
-     * @param RequestStack $request
+     *
+     * @param EntityManager                                                    $em
+     * @param RequestStack                                                     $request
      * @param \Victoire\Bundle\FilterBundle\Domain\FilterFormFieldQueryHandler $filterFormFieldQueryHandler
      */
     public function __construct(
         EntityManager $em,
         RequestStack $request,
         FilterFormFieldQueryHandler $filterFormFieldQueryHandler
-    )
-    {
+    ) {
         $this->entityManager = $em;
         $this->requestStack = $requestStack;
         $this->filterFormFieldQueryHandler = $filterFormFieldQueryHandler;
@@ -48,7 +46,8 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
 
     /**
      * @param QueryBuilder $qb
-     * @param array $parameters
+     * @param array        $parameters
+     *
      * @return mixed
      */
     abstract public function buildQuery(QueryBuilder $qb, array $parameters);
