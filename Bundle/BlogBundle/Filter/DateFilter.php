@@ -5,7 +5,7 @@ namespace Victoire\Bundle\BlogBundle\Filter;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Victoire\Bundle\FilterBundle\Domain\BaseFilter;
+use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
 use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
