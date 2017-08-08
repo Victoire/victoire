@@ -155,15 +155,13 @@ services:
             - { name: form.type }
             - { name: victoire_core.filter }
 
-#    #DATE FILTER
-#    victoire_blog.date_filters.form.type:
-#        class: "%victoire_blog_date_filters_form_type_class%"
-#        arguments:
-#            - "@doctrine.orm.entity_manager"
-#            - "@request_stack"
-#        tags:
-#            - { name: form.type }
-#            - { name: victoire_core.filter }
+    #DATE FILTER
+    victoire_blog.date_filters.form.type:
+        class: %victoire_blog_date_filters_form_type_class%
+        parent: victoire_filter_bundle.abstract_base_filter
+        tags:
+            - { name: form.type }
+            - { name: victoire_core.filter }
 
     victoire_blog.manager.article:
         class: Victoire\Bundle\BlogBundle\Manager\ArticleManager
