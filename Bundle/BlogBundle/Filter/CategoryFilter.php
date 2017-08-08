@@ -108,7 +108,7 @@ class CategoryFilter extends BaseFilter
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $categories = $this->filterFormFieldQueryHandler->handle($options['widget'], BlogCategory::class);
+        $categories = $this->filterQueryHandler->handle($options['widget'], BlogCategory::class);
 
         $categoriesChoices = [];
 
