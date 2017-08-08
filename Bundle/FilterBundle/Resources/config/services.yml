@@ -7,7 +7,7 @@ services:
     ############################
 
     victoire_filter_bundle.abstract_base_filter:
-        class: Victoire\Bundle\FilterBundle\Domain\BaseFilter
+        class: Victoire\Bundle\FilterBundle\Filter\BaseFilter
         abstract: true
         arguments:
             - "@doctrine.orm.entity_manager"
