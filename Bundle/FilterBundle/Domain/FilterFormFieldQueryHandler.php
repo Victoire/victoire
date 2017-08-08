@@ -8,8 +8,7 @@ use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 
 /**
- * Class FilterFormFieldQueryHandler
- * @package Victoire\Bundle\FilterBundle\Domain
+ * Class FilterFormFieldQueryHandler.
  */
 class FilterFormFieldQueryHandler
 {
@@ -24,14 +23,14 @@ class FilterFormFieldQueryHandler
 
     /**
      * FilterFormFieldQueryHandler constructor.
-     * @param QueryHelper $queryHelper
+     *
+     * @param QueryHelper   $queryHelper
      * @param EntityManager $entityManager
      */
     public function __construct(
         QueryHelper $queryHelper,
         EntityManager $entityManager
-    )
-    {
+    ) {
         $this->queryHelper = $queryHelper;
         $this->entityManager = $entityManager;
     }
@@ -44,7 +43,7 @@ class FilterFormFieldQueryHandler
 
         $mode = $widgetListing->getMode();
 
-        if ($mode == "query") {
+        if ($mode == 'query') {
             $queryBuilder = $this->queryHelper->buildWithSubQuery($widgetListing, $queryBuilder, $this->entityManager);
         }
 
@@ -53,7 +52,7 @@ class FilterFormFieldQueryHandler
 
         $filterEntityRepo = $this->entityManager->getRepository($entity);
 
-        $aliases = explode("\\", $entity);
+        $aliases = explode('\\', $entity);
         $aliases = end($aliases);
 
         $queryBuilder = $filterEntityRepo->createQueryBuilder($aliases);
