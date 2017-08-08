@@ -35,17 +35,25 @@ class FilterFormFieldQueryHandler
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @param Widget $widgetFilter
+     * @param $entity
+     * @return array
+     */
     public function handle(Widget $widgetFilter, $entity)
     {
         $widgetListing = $widgetFilter->getListing();
 
+        /* first we generate the query for the listing widget */
         $queryBuilder = $this->queryHelper->getQueryBuilder($widgetListing, $this->entityManager);
 
         $mode = $widgetListing->getMode();
 
         if ($mode == 'query') {
+            /* if listing widget is in query mode we had a subquery with here parameter */
             $queryBuilder = $this->queryHelper->buildWithSubQuery($widgetListing, $queryBuilder, $this->entityManager);
         }
+
 
         $subQuery = $queryBuilder->getQuery();
         $subQueryParameters = $queryBuilder->getParameters();
@@ -55,7 +63,9 @@ class FilterFormFieldQueryHandler
         $alias = explode('\\', $entity);
         $alias = end($alias);
 
+        /* we build a new query for the filter entity */
         $queryBuilder = $filterEntityRepo->createQueryBuilder($alias);
+        /* and give the query for the listing entity has subquery */
         $queryBuilder->andWhere($queryBuilder->expr()->in($alias, $subQuery->getDQL()));
 
         $parameters = new ArrayCollection(
