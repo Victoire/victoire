@@ -122,6 +122,7 @@ class Blog extends Page
 
     /**
      * @param BlogCategory $category
+     *
      * @return $this
      */
     public function addCategory(BlogCategory $category)
