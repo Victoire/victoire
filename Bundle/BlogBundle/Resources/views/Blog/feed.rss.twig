@@ -3,7 +3,7 @@
     <channel>
         <title>{{ blog.name }}</title>
         <link>{{ url('victoire_core_page_show', {'url': blog.url}) }}</link>
-        <description>{{ blog.seo|default({'description' : ''}).description }}</description>
+        <description>{{ blog.seo|default({'ogDescription' : ''}).ogDescription }}</description>
 
         {% if blog.seo and blog.seo.ogImage %}
         <image>
