@@ -5,9 +5,8 @@
         <li{% if tab == currentTab %} class="vic-active"{% endif %}>
             <a class="offer-tab-nav-anchor" href="#victoire-blog-{{tab}}" role="vic-tab" data-toggle="vic-tab">
                 {% spaceless %}
-                <span class="icon victoire-blog-tab-nav-icons victoire-blog-tab-nav-icons-{{ tab }}"></span>
                 {% set label = 'victoire.blog.nav.'~ tab ~ '.label' %}
-                <span class="hidden-xs">{{ label|trans }}</span>
+                {{ label|trans }}
                 {% endspaceless %}
             </a>
         </li>
