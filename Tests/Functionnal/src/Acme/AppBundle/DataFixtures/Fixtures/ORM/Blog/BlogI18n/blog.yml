@@ -1,8 +1,8 @@
 Victoire\Bundle\BlogBundle\Entity\Blog:
     blog:
-        parent: @home
-        template: @template_base
-        author: @anakin
+        parent: "@home"
+        template: "@template_base"
+        author: "@anakin"
         undeletable: true
         status: published
         publishedAt: <dateTime('now')>
@@ -14,10 +14,10 @@ Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
     article_template:
         backendName: "article template"
         businessEntityId: article
-        author: @anakin
-        template: @template_base
+        author: "@anakin"
+        template: "@template_base"
         status: published
-        parent: @blog
+        parent: "@blog"
         publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
@@ -28,9 +28,9 @@ Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
         name: blog
         slug: blog
         locale: fr
-        translatable: @blog
+        translatable: "@blog"
     article_template_tr:
         name: article {{item.name}}
         slug: article-{{item.slug}}
         locale: fr
-        translatable: @article_template
+        translatable: "@article_template"

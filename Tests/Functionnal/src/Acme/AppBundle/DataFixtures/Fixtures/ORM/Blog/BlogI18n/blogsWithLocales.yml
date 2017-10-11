@@ -1,8 +1,8 @@
 Victoire\Bundle\BlogBundle\Entity\Blog:
     blog_1:
-        parent: @home
-        template: @template_base
-        author: @anakin
+        parent: "@home"
+        template: "@template_base"
+        author: "@anakin"
         undeletable: true
         status: published
         publishedAt: <dateTime('now')>
@@ -10,9 +10,9 @@ Victoire\Bundle\BlogBundle\Entity\Blog:
         updatedAt: <dateTime('now')>
         cssUpToDate: false
     blog_2:
-        parent: @home
-        template: @template_base
-        author: @anakin
+        parent: "@home"
+        template: "@template_base"
+        author: "@anakin"
         undeletable: true
         status: published
         publishedAt: <dateTime('now')>
@@ -24,10 +24,10 @@ Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
     article_template_1:
         backendName: "article template 1"
         businessEntityId: article
-        author: @anakin
-        template: @template_base
+        author: "@anakin"
+        template: "@template_base"
         status: published
-        parent: @blog_1
+        parent: "@blog_1"
         publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
@@ -35,10 +35,10 @@ Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
     article_template_2:
         backendName: "article template 2"
         businessEntityId: article
-        author: @anakin
-        template: @template_base
+        author: "@anakin"
+        template: "@template_base"
         status: published
-        parent: @blog_2
+        parent: "@blog_2"
         publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
@@ -49,29 +49,29 @@ Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
         name: blog 1 FR
         slug: blog-1-fr
         locale: fr
-        translatable: @blog_1
+        translatable: "blog_1"
     blog_1_en:
         name: blog 1 EN
         slug: blog-1-en
         locale: en
-        translatable: @blog_1
+        translatable: "@blog_1"
     blog_2_fr:
         name: blog 2 FR
         slug: blog-2-fr
         locale: fr
-        translatable: @blog_2
+        translatable: "@blog_2"
     article_template_1_fr:
         name: article 1 FR {{item.name}}
         slug: article-1-fr-{{item.slug}}
         locale: fr
-        translatable: @article_template_1
+        translatable: "@article_template_1"
     article_template_1_en:
         name: article 1 EN {{item.name}}
         slug: article-1-en-{{item.slug}}
         locale: en
-        translatable: @article_template_1
+        translatable: "@article_template_1"
     article_template_2_fr:
         name: article 2 FR {{item.name}}
         slug: article-2-fr-{{item.slug}}
         locale: fr
-        translatable: @article_template_2
+        translatable: "@article_template_2"
