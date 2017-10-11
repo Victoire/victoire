@@ -140,30 +140,30 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
     {
         if (is_dir($folder)) {
             // Open folder
-        $openFolder = opendir($folder);
+            $openFolder = opendir($folder);
 
-        // While folder is not empty
-        while ($file = readdir($openFolder)) {
-            if ($file != '.' && $file != '..') {
-                // Remove file
-                $recursiveDelete = function ($str) use (&$recursiveDelete) {
-                    if (is_file($str)) {
-                        return @unlink($str);
-                    } elseif (is_dir($str)) {
-                        $scan = glob(rtrim($str, '/').'/*');
-                        foreach ($scan as $path) {
-                            $recursiveDelete($path);
+            // While folder is not empty
+            while ($file = readdir($openFolder)) {
+                if ($file != '.' && $file != '..') {
+                    // Remove file
+                    $recursiveDelete = function ($str) use (&$recursiveDelete) {
+                        if (is_file($str)) {
+                            return @unlink($str);
+                        } elseif (is_dir($str)) {
+                            $scan = glob(rtrim($str, '/').'/*');
+                            foreach ($scan as $path) {
+                                $recursiveDelete($path);
+                            }
+
+                            return @rmdir($str);
                         }
-
-                        return @rmdir($str);
-                    }
-                };
-                $recursiveDelete($folder.$file);
+                    };
+                    $recursiveDelete($folder.$file);
+                }
             }
-        }
 
-        // Close empty folder
-        closedir($openFolder);
+            // Close empty folder
+            closedir($openFolder);
         }
     }
 
