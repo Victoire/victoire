@@ -95,6 +95,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
@@ -109,6 +110,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
@@ -123,6 +125,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
@@ -177,6 +180,7 @@ class VictoireContext extends RawMinkContext
         );
         if (null === $element) {
             $message = sprintf('"%s" does not preceed "%s"', $textBefore, $textAfter);
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }
@@ -212,6 +216,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found. String generate: %s[%s="%s"]', $element, $selector, $value);
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }
@@ -225,6 +230,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }
@@ -288,6 +294,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $newQuantum) {
             $message = sprintf('New quantum not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
 

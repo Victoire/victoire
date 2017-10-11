@@ -255,6 +255,7 @@ class BasePageController extends Controller
             //Throw Exception if Page is undeletable
             if ($page->isUndeletable()) {
                 $message = $this->get('translator')->trans('page.undeletable', [], 'victoire');
+
                 throw new \Exception($message);
             }
 

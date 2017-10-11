@@ -125,6 +125,7 @@ class LinkExtension extends \Twig_Extension
                         'id'     => $viewReference,
                         'locale' => $parameters['locale'],
                     ];
+
                     try {
                         $page = $this->pageHelper->findPageByParameters($params);
                     } catch (ViewReferenceNotFoundException $e) {
