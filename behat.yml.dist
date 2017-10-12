@@ -13,7 +13,6 @@ default:
                  - Knp\FriendlyContexts\Context\EntityContext
                  - Knp\FriendlyContexts\Context\AliceContext
                  - Victoire\Tests\Features\Context\VictoireContext
-                 - Victoire\Tests\Features\Context\CoverageContext
                  - Victoire\Tests\Features\Context\FeatureContext
                  - Victoire\Tests\Features\Context\JavascriptContext
                  - Victoire\Tests\Features\Context\MinkContext
@@ -59,14 +58,14 @@ default:
                      Article:            Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article.yml
                      BlogBP:             Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/businessPage.yml
 
-                     Mercenary:          Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/mercenary.yml
-                     Jedi:               Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/jedi.yml
-                     CharacterTemplates: Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/template.yml
-                     SpaceshipTemplates: Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Spaceship/template.yml
-                     Blogi18n:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/blog.yml
-                     BlogsWithLocalesi18n:  Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/blogsWithLocales.yml
-                     BlogWithLocalesi18n:   Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/blogWithLocales.yml
-                     LocaleWithBlogsi18n:   Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/localeWithBlogs.yml
+                     Mercenary:             Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/mercenary.yml
+                     Jedi:                  Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/jedi.yml
+                     CharacterTemplates:    Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/template.yml
+                     SpaceshipTemplates:    Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Spaceship/template.yml
+                     Blogi18n:              Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/blog.yml
+                     BlogsWithLocalesi18n:  Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/blogsWithLocales.yml
+                     BlogWithLocalesi18n:   Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/blogWithLocales.yml
+                     LocaleWithBlogsi18n:   Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/localeWithBlogs.yml
                  dependencies:
                      Template:             [User]
                      ErrorPage:            [Template, User]

@@ -1,9 +1,13 @@
 Victoire\Bundle\BlogBundle\Entity\Blog:
     blog:
-        parent: "@home"
+        currentLocale: en
         template: "@template_base"
         author: "@anakin"
-        undeletable: true
+        parent: "@home"
+        name: The Jedi Network
+        slug: the-jedi-network
+        homepage: false
+        undeletable: false
         status: published
         publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>
