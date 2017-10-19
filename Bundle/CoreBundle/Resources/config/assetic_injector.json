@@ -60,6 +60,7 @@
             "victoire-edit":
             [
                 "@VictoireCoreBundle/Resources/public/vendor/font-awesome/4.2.0/css/font-awesome.css",
+                "@VictoireCoreBundle/Resources/style/less/bricks/typo.less",
                 "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/css/bootstrap.min.css",
                 "@VictoireCoreBundle/Resources/style/less/bricks/bricks.less",
                 "@VictoireCoreBundle/Resources/style/less/layouts/layouts.less",

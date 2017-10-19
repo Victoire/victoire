@@ -8,7 +8,7 @@ use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\CoreBundle\Annotations as Vic;
 
 /**
- * Category.
+ * BlogCategory.
  *
  * @ORM\Table("vic_category")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\CategoryRepository")
