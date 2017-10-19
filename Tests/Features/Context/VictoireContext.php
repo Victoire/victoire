@@ -168,6 +168,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
@@ -186,6 +187,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
@@ -203,6 +205,7 @@ class VictoireContext extends RawMinkContext
         );
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
@@ -220,6 +223,7 @@ class VictoireContext extends RawMinkContext
         );
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
@@ -237,6 +241,7 @@ class VictoireContext extends RawMinkContext
         );
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
@@ -255,6 +260,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
@@ -273,6 +279,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
@@ -291,6 +298,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
@@ -309,6 +317,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
@@ -328,6 +337,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
@@ -342,6 +352,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $element->click();
@@ -357,6 +368,7 @@ class VictoireContext extends RawMinkContext
 
         if (count($elements) < 1) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
 
@@ -416,6 +428,7 @@ class VictoireContext extends RawMinkContext
         );
         if (null === $element) {
             $message = sprintf('"%s" does not preceed "%s"', $textBefore, $textAfter);
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }
@@ -451,6 +464,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found. String generate: %s[%s="%s"]', $element, $selector, $value);
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }
@@ -464,6 +478,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }
@@ -477,6 +492,7 @@ class VictoireContext extends RawMinkContext
 
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }
@@ -554,6 +570,7 @@ class VictoireContext extends RawMinkContext
 
         if (count($quantums) != $nb) {
             $message = sprintf('%s quantum(s) found', count($quantums));
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }
@@ -576,6 +593,7 @@ class VictoireContext extends RawMinkContext
         $menus = $page->findAll('xpath', sprintf('descendant-or-self::a[contains(@class, "v-mode-trigger")]'));
         if (count($menus) < 1) {
             $message = sprintf('Collapse menu not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
 
@@ -589,6 +607,7 @@ class VictoireContext extends RawMinkContext
 
         if (count($links) < 1) {
             $message = sprintf('Menu link not found in the page after 10 seconds"');
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
 
