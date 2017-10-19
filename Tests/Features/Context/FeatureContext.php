@@ -90,6 +90,7 @@ class FeatureContext extends RawMinkContext implements Context, KernelAwareConte
 
         if (null === $element) {
             $message = sprintf('"%s" is not the title of the page', $title);
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }

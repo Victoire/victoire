@@ -220,6 +220,7 @@ EOT
 
         // namespace
         $namespace = null;
+
         try {
             $namespace = $input->getOption('namespace') ? Validators::validateBundleNamespace($input->getOption('namespace')) : null;
         } catch (\Exception $error) {
@@ -318,6 +319,7 @@ EOT
 
         // format
         $format = null;
+
         try {
             $format = $input->getOption('format') ? Validators::validateFormat($input->getOption('format')) : null;
         } catch (\Exception $error) {

@@ -90,14 +90,14 @@ class Category
      */
     protected $children;
 
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-            $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-            $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
-        }
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * undocumented function.
