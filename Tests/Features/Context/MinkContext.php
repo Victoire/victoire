@@ -21,6 +21,7 @@ class MinkContext extends KFMinkContext
         $element = $this->findOrRetry($this->getSession()->getPage(), $text, $timeout);
         if (!$element) {
             $message = sprintf('The text "%s" was not found anywhere in the text of the current page.', $text);
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }
@@ -35,6 +36,7 @@ class MinkContext extends KFMinkContext
         $element = $this->findOrRetry($this->getSession()->getPage(), $text, $timeout);
         if ($element && $element->isVisible()) {
             $message = sprintf('The text "%s" was found in the text of the current page although it should not.', $text);
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }
@@ -48,6 +50,7 @@ class MinkContext extends KFMinkContext
     {
         if ($timeout <= 0) {
             $message = sprintf('The element "%s" was not found in the page.', $element);
+
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
         $selectorType = 'css';

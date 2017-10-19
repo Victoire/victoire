@@ -8,7 +8,7 @@ use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
 use Victoire\Bundle\CoreBundle\Annotations as Vic;
 
 /**
- * Category.
+ * BlogCategory.
  *
  * @ORM\Table("vic_category")
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\CategoryRepository")
@@ -103,14 +103,14 @@ class BlogCategory
      */
     protected $children;
 
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-            $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-            $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
-        }
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * undocumented function.

@@ -70,6 +70,7 @@ class QueryHelper
         //test that there is a business entity name
         if ($businessEntityId === null || $businessEntityId === '') {
             $containerId = $containerEntity->getId();
+
             throw new \Exception('The container entity ['.$containerId.'] does not have any businessEntityId.');
         }
 

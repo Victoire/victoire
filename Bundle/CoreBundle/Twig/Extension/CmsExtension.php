@@ -151,6 +151,7 @@ class CmsExtension extends \Twig_Extension_Core
             /* @var WidgetMap $widgetMap */
             foreach ($currentView->getBuiltWidgetMap()[$slotId] as $widgetMap) {
                 $widget = null;
+
                 try {
                     //get the widget
                     $widget = $this->widgetResolver->resolve($widgetMap);
