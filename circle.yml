@@ -27,7 +27,7 @@ dependencies:
       fi
 
   override:
-    - npm install less
+    - npm install less@2.7.2
     - mkdir fails
     - composer install --prefer-dist
     - php Tests/Functionnal/bin/console --env=ci doctrine:database:create --no-debug
