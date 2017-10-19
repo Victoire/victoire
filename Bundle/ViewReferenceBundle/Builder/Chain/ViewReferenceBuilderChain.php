@@ -40,6 +40,7 @@ class ViewReferenceBuilderChain
         if (array_key_exists($viewClass = ClassUtils::getClass($view), $this->viewsReferenceBuilders)) {
             return $this->viewsReferenceBuilders[$viewClass];
         }
+
         throw new ServiceNotFoundException('No view reference builder found for '.$viewClass);
     }
 }

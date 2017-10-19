@@ -188,6 +188,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                                 $supplicantWidget = $widgetRepo->find($_oldWidgetMap['widgetId']);
                                 $replacedWidgetView = $replacedWidget->getView();
                                 $this->getContainer()->get('victoire_widget_map.builder')->build($replacedWidgetView);
+
                                 try {
                                     $replacedWidgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($replacedWidget, $replacedWidgetView);
                                     $output->writeln('has replacedWidgetMap');
@@ -218,6 +219,7 @@ class WidgetMapMigrationCommand extends ContainerAwareCommand
                             $widgetMap->setPosition(null);
                             $output->writeln('set parent'.null);
                             $widgetMap->setParent(null);
+
                             try {
                                 $deletedWidgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($replacedWidget, $view);
                                 $replacedWidgetView = $replacedWidget->getView();
