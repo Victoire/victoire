@@ -90,12 +90,12 @@ class CategoryType extends AbstractType
     {
         $form->add('children', CollectionType::class,
             [
-                'type'          => self::class,
-                'required'      => false,
-                'allow_add'     => true,
-                'allow_delete'  => true,
-                'prototype'     => true,
-                'by_reference'  => false,
+                'entry_type'   => self::class,
+                'required'     => false,
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'prototype'    => true,
+                'by_reference' => false,
             ]
         );
     }
