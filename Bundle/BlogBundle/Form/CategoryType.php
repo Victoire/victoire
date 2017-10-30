@@ -29,8 +29,8 @@ class CategoryType extends AbstractType
                 'constraints' => [
                     new \Symfony\Component\Validator\Constraints\NotBlank(),
                 ],
-                'attr'          => [
-                    'class'     => 'vic-blogCategoryWidget-formControl',
+                'attr' => [
+                    'class' => 'vic-blogCategoryWidget-formControl',
                     ],
 
                 ]

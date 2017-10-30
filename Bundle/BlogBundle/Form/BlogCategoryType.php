@@ -22,12 +22,12 @@ class BlogCategoryType extends AbstractType
     {
         $builder
             ->add('rootCategories', CollectionType::class, [
-                'entry_type'    => CategoryType::class,
-                'required'      => false,
-                'allow_add'     => true,
-                'allow_delete'  => true,
-                'by_reference'  => false,
-                'prototype'     => true,
+                'entry_type'   => CategoryType::class,
+                'required'     => false,
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'prototype'    => true,
             ]);
     }
 

@@ -95,7 +95,7 @@ class AnalyticsViewHelper
             if ($viewReference = $this->viewReferenceRepository->getOneReferenceByParameters(
                 [
                     'entityNamespace' => 'Victoire\Bundle\BlogBundle\Entity\Article',
-                    'entityId'        => $article->getId(),
+                    'entityId' => $article->getId(),
                 ]
             )) {
                 $viewReferences[$viewReference->getId()] = $viewReference;

@@ -45,12 +45,12 @@ class WidgetFormBuilder
         return $this->container->get('templating')->render(
             $templateName,
             [
-                'widget'    => $widget,
-                'form'      => $form->createView(),
-                'slot'      => $slot,
-                'entity'    => $entity,
-                'view'      => $view,
-                'quantum'   => $quantum,
+                'widget'  => $widget,
+                'form'    => $form->createView(),
+                'slot'    => $slot,
+                'entity'  => $entity,
+                'view'    => $view,
+                'quantum' => $quantum,
             ]
         );
     }
@@ -234,12 +234,12 @@ class WidgetFormBuilder
         if ($widget->getId() === null) {
             $viewReference = $view->getReference();
             $actionParams = [
-                'viewReference'      => $viewReference->getId(),
-                'slot'               => $slotId,
-                'type'               => $widget->getType(), // @todo: use the config
-                'position'           => $position,
-                'parentWidgetMap'    => $parentWidgetMap,
-                'quantum'            => $quantum,
+                'viewReference'   => $viewReference->getId(),
+                'slot'            => $slotId,
+                'type'            => $widget->getType(), // @todo: use the config
+                'position'        => $position,
+                'parentWidgetMap' => $parentWidgetMap,
+                'quantum'         => $quantum,
             ];
             $action = 'victoire_core_widget_create';
             if ($businessEntityId) {
@@ -274,13 +274,13 @@ class WidgetFormBuilder
         );
 
         $optionsContainer = new WidgetOptionsContainer([
-            'businessEntityId'      => $businessEntityId,
-            'namespace'             => $namespace,
-            'mode'                  => $formMode,
-            'quantum'               => $quantum,
-            'action'                => $formUrl,
-            'method'                => 'POST',
-            'dataSources'           => $this->container->get('victoire_criteria.chain.data_source_chain'),
+            'businessEntityId' => $businessEntityId,
+            'namespace'        => $namespace,
+            'mode'             => $formMode,
+            'quantum'          => $quantum,
+            'action'           => $formUrl,
+            'method'           => 'POST',
+            'dataSources'      => $this->container->get('victoire_criteria.chain.data_source_chain'),
         ]);
 
         $event = new WidgetFormPreCreateEvent($optionsContainer, $widgetFormTypeClass);

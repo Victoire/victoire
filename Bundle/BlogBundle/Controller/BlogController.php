@@ -86,7 +86,8 @@ class BlogController extends BasePageController
             $category = $entityManager->getRepository('VictoireBlogBundle:Category')->find($categoryId);
             $categoryIds = [];
 
-            function findIds(Category $category, &$categoryIds) {
+            function findIds(Category $category, &$categoryIds)
+            {
                 $categoryIds[] = $category->getId();
 
                 foreach ($category->getChildren() as $childCategory) {

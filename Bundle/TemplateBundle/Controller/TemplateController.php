@@ -112,8 +112,8 @@ class TemplateController extends Controller
             $em->flush();
 
             return new JsonResponse([
-                'success'  => true,
-                'url'      => $this->generateUrl('victoire_template_show', ['id' => $template->getId()]),
+                'success' => true,
+                'url'     => $this->generateUrl('victoire_template_show', ['id' => $template->getId()]),
             ]);
         }
 
