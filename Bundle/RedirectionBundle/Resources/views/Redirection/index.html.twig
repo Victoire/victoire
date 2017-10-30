@@ -1,0 +1,27 @@
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+{% trans_default_domain "victoire" %}
+
+{% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
+
+{% block modal_header_title %}
+    {{"victoire_redirections.index.title"|trans() }}
+{% endblock modal_header_title %}
+
+{% block modal_body_content %}
+    <div id="victoire-blog-modal">
+        <h3>Liste des redirections</h3>
+        <ul class="vic-bordered-list ui-sortable">
+        {% for redirection in redirections %}
+            <li class="item -subcontainer">
+                <span>test</span>
+                {{ redirection.input }}
+                {{ redirection.output }}
+                {{ redirection.count }}
+            </li>
+        {% endfor %}
+        </ul>
+        {#{% include 'VictoireBlogBundle:Blog:_blogItem.html.twig' %}#}
+    </div>
+{% endblock modal_body_content %}
+
+{% block modal_footer_content %}{% endblock modal_footer_content %}

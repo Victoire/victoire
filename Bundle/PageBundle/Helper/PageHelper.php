@@ -26,6 +26,7 @@ use Victoire\Bundle\CoreBundle\Event\PageRenderEvent;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\RedirectionBundle\Entity\NotFoundError;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException;
@@ -152,10 +153,11 @@ class PageHelper
      * @param string $url
      * @param        $locale
      * @param null   $layout
+     * @param null   $uri
      *
      * @return Response
      */
-    public function renderPageByUrl($url, $locale, $layout = null)
+    public function renderPageByUrl($url, $locale, $layout = null, $uri)
     {
         $page = null;
         if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
@@ -175,6 +177,36 @@ class PageHelper
 
             return $this->renderPage($page, $layout);
         } else {
+            // 404
+            $redirection = $this->entityManager->getRepository('VictoireRedirectionBundle:Redirection')
+                ->findOneBy([
+                    'input' => $uri
+                ]);
+
+            if ($redirection) {
+                // redirection already defined
+                return new RedirectResponse($redirection->getOutput());
+
+            } else {
+                // no redirection associated
+                $notFoundError = $this->entityManager->getRepository('VictoireRedirectionBundle:NotFoundError')
+                    ->findOneBy([
+                        'url' => $uri
+                    ]);
+
+                if ($notFoundError) {
+                    // 404 exists
+                    $notFoundError->increaseCount();
+                } else {
+                    // create 404
+                    $notFoundError = new NotFoundError();
+                    $notFoundError->setUrl($uri);
+                }
+
+                $this->entityManager->persist($notFoundError);
+                $this->entityManager->flush();
+            }
+
             throw new NotFoundHttpException(sprintf('Page not found (url: "%s", locale: "%s")', $url, $locale));
         }
     }

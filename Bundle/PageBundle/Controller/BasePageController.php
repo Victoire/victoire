@@ -34,7 +34,8 @@ class BasePageController extends Controller
         $response = $this->get('victoire_page.page_helper')->renderPageByUrl(
             $url,
             $request->getLocale(),
-            $request->isXmlHttpRequest() ? $request->query->get('modalLayout', null) : null
+            $request->isXmlHttpRequest() ? $request->query->get('modalLayout', null) : null,
+            $request->getUri()
         );
 
         return $response;
