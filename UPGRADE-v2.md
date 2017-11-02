@@ -19,3 +19,28 @@ It simply remove deprecated associations that are not required anymore and could
 UPDATE vic_widget_map SET widget_id = NULL;
 UPDATE vic_widget SET view_id = NULL;
 ```
+
+## UPGRADE 2.2.31
+If you use custom Filter in your project, you need to fix service declaration
+```yaml
+# short
+my_custom_filters.form.type:
+    class: AppBundle\Filter\MyCustomFilter
+    parent: victoire_filter_bundle.abstract_base_filter
+    tags:
+        - { name: form.type }
+        - { name: victoire_core.filter }
+
+# full
+my_custom_filters.form.type:
+    class: AppBundle\Filter\MyCustomFilter
+    arguments:
+        - "@doctrine.orm.entity_manager"
+        - "@request_stack"
+        - "@victoire_filter_bundle.filter_form_field_query.handler"
+    tags:
+        - { name: form.type }
+        - { name: victoire_core.filter }
+```
+
+If you use custom filter with more constructor's arguments, you need to replace Request with RequestStack too 
