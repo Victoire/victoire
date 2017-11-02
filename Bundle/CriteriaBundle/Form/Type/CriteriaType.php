@@ -18,8 +18,8 @@ class CriteriaType extends AbstractType
             'label' => 'victoire_criteria.criteria.name.label',
         ]);
         $builder->add('operator', TextType::class, [
-            'vic_help_block'    => 'victoire_criteria.criteria.operator.help_block',
-            'label'             => 'victoire_criteria.criteria.operator.label',
+            'vic_help_block' => 'victoire_criteria.criteria.operator.help_block',
+            'label'          => 'victoire_criteria.criteria.operator.label',
         ]);
 
         $builder->addEventListener(

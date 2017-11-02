@@ -174,10 +174,10 @@ class PageSeoType extends AbstractType
                         'preferred_choices' => ['monthly'],
                     ],
                     'sitemapPriority' => [
-                        'field_type'        => ChoiceType::class,
-                        'label'             => 'form.pageSeo.sitemapPriority.label',
-                        'choices'           => array_combine(range(0, 1, 0.1), range(0, 1, 0.1)),
-                        'data'              => $builder->getData() ? $builder->getData()->getSitemapPriority() : PageSeoTranslation::SITEMAP_PRIORITY_DEFAULT,
+                        'field_type' => ChoiceType::class,
+                        'label'      => 'form.pageSeo.sitemapPriority.label',
+                        'choices'    => array_combine(range(0, 1, 0.1), range(0, 1, 0.1)),
+                        'data'       => $builder->getData() ? $builder->getData()->getSitemapPriority() : PageSeoTranslation::SITEMAP_PRIORITY_DEFAULT,
                     ],
                     'relCanonical' => [
                         'label' => 'form.pageSeo.relCanonical.label',
