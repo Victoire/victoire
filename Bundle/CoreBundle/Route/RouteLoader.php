@@ -43,7 +43,6 @@ class RouteLoader extends Loader
             '@VictoireCoreBundle/Controller/',
             '@VictoireWidgetBundle/Controller/',
             '@VictoireSitemapBundle/Controller/',
-            '@VictoireRedirectionBundle/Controller/',
         ];
         foreach ($resources as $resource) {
             $importedRoutes = $this->import($resource, 'annotation');
