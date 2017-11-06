@@ -26,7 +26,8 @@ use Victoire\Bundle\CoreBundle\Event\PageRenderEvent;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
-use Victoire\Bundle\RedirectionBundle\Entity\NotFoundError;
+use Victoire\Bundle\SeoBundle\Entity\NotFoundError;
+use Victoire\Bundle\SeoBundle\Entity\Redirection;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException;
@@ -177,33 +178,26 @@ class PageHelper
 
             return $this->renderPage($page, $layout);
         } else {
-            // 404
-            $redirection = $this->entityManager->getRepository('VictoireRedirectionBundle:Redirection')
+            $redirection = $this->entityManager->getRepository('VictoireSeoBundle:Redirection')
                 ->findOneBy([
                     'input' => $uri
                 ]);
 
-            if ($redirection) {
-                // redirection already defined
+            if ($redirection && $redirection->getOutput()) {
+                $redirection->increaseCount();
+
                 return new RedirectResponse($redirection->getOutput());
 
             } else {
-                // no redirection associated
-                $notFoundError = $this->entityManager->getRepository('VictoireRedirectionBundle:NotFoundError')
-                    ->findOneBy([
-                        'url' => $uri
-                    ]);
-
-                if ($notFoundError) {
-                    // 404 exists
-                    $notFoundError->increaseCount();
+                if ($redirection) {
+                    $redirection->increaseCount();
                 } else {
-                    // create 404
-                    $notFoundError = new NotFoundError();
-                    $notFoundError->setUrl($uri);
+                    $redirection = new Redirection();
+                    $redirection->setInput($uri);
+                    $redirection->setStatusCode(Response::HTTP_NOT_FOUND);
                 }
 
-                $this->entityManager->persist($notFoundError);
+                $this->entityManager->persist($redirection);
                 $this->entityManager->flush();
             }
 
