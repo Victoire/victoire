@@ -1,8 +1,0 @@
-services:
-
-    #  ==================  MENU ================== #
-    victoire_redirection.redirection_menu_listener:
-            class: Victoire\Bundle\RedirectionBundle\Listener\RedirectionMenuListener
-            arguments: ["@victoire_core.admin_menu_builder"]
-            tags:
-                - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal }
