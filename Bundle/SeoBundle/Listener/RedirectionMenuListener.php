@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\SeoBundle\Listener;
 
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 
@@ -12,15 +13,18 @@ class RedirectionMenuListener
 {
     private $menuBuilder;
     private $mainItem;
+    private $router;
 
     /**
-     * Constructor.
+     * RedirectionMenuListener constructor.
      *
      * @param MenuBuilder $menuBuilder
+     * @param Router $router
      */
-    public function __construct(MenuBuilder $menuBuilder)
+    public function __construct(MenuBuilder $menuBuilder, Router $router)
     {
         $this->menuBuilder = $menuBuilder;
+        $this->router = $router;
     }
 
     /**
@@ -36,11 +40,17 @@ class RedirectionMenuListener
 
         $dropdown->addChild('Erreurs 404', [
             'route' => 'victoire_404_index'
-        ])->setLinkAttribute('data-toggle', 'vic-modal');
+        ])
+            ->setLinkAttribute('ic-get-from', $this->router->generate('victoire_404_index'))
+            ->setLinkAttribute('ic-target', '#vic-modal-container')
+        ;
 
         $dropdown->addChild('Redirections', [
             'route' => 'victoire_redirection_index'
-        ])->setLinkAttribute('data-toggle', 'vic-modal');
+        ])
+            ->setLinkAttribute('ic-get-from', $this->router->generate('victoire_redirection_index'))
+            ->setLinkAttribute('ic-target', '#vic-modal-container')
+        ;
 
         return $this->mainItem;
     }

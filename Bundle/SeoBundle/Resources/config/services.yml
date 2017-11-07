@@ -12,6 +12,6 @@ services:
     #  ==================  MENU ================== #
     victoire_seo.redirection_menu_listener:
         class: Victoire\Bundle\SeoBundle\Listener\RedirectionMenuListener
-        arguments: ["@victoire_core.admin_menu_builder"]
+        arguments: ["@victoire_core.admin_menu_builder", "@router"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal }

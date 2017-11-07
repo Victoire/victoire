@@ -27,6 +27,7 @@
         <!-- END HEAD_SCRIPT -->
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/intercooler-js/1.2.0/intercooler.min.js"></script>
     {% endblock head_script %}
     {% block head_style %}
         <!-- HEAD_STYLE -->
@@ -60,6 +61,7 @@
                 {{ cms_slot_widgets('main_content') }}
             {% endblock body_content_main %}
         </main>
+        <div id="vic-modal-container"><!-- Modal container --></div>
     {% endblock body_content %}
 
     {% block foot_script %}

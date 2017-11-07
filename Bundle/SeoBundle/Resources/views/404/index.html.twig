@@ -1,0 +1,109 @@
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+
+{% trans_default_domain "victoire" %}
+
+{% block modal_container_classes %}{{ parent() }} vic-view-modal{% endblock modal_container_classes %}
+
+{% block modal_header_title %}
+    {#{{"victoire_redirections.index.title"|trans() }}#}Liste des erreurs <strong>404</strong>
+{% endblock modal_header_title %}
+
+{% block modal_body_content %}
+
+    {# TODO move style from template #}
+    <style>
+
+        .d-none { display: none; }
+
+        /*.mt-0 { margin-top: 0; }*/
+        .mt-2 { margin-top: 20px; }
+        .mb-2 { margin-bottom: 20px; }
+
+        .pt-1 { padding-top: 10px; }
+        .pb-1 { padding-bottom: 10px; }
+
+        .text-white { color: white; }
+
+    </style>
+
+    {% if errors|default(false) %}
+    <div id="victoire-blog-modal">
+        {{  form_start(form) }}
+        <ul class="vic-bordered-list">
+            {% for error in errors %}
+                {% set id = error.id %}
+                <li class="list-group-item">
+                    <div class="row" id="main">
+                        <div class="col-md-1 text-center">
+                            {% set deleteLink = path('victoire_redirection_delete', { 'id': error.id }) %}
+                            <a href="#" data-ic-post-to="{{ deleteLink }}" class="btn-lg btn-secondary btn-transparent text-danger" data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire') }}" data-modal="delete">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-7">
+                            <a href="{{ error.input }}">
+                                {{ error.input }}
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            Nb de requêtes : <strong style="padding-left: 10px">{{ error.count }}</strong>
+                        </div>
+                        <div class="col-md-1 text-center">
+                            <a href="#" class="btn-lg btn-secondary">
+                                <i class="fa fa-plus" id="{{ error.id }}"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row d-none pt-1 pb-1" id="notFound_{{ error.id }}">
+                        <div class="col-md-6 col-md-offset-1">
+                            {{ form_widget(form.children.redirections.children[id].output) }}
+                            <div class="d-none">
+                                {{ form_widget(form.children.redirections.children[id].input) }}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+            {{ form_rest(form) }}
+        </ul>
+        <div class="pull-right">
+            <button type="submit" class="vic-btn vic-btn-success"><i class="fa fa-check-circle"></i> {{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}</button>
+            {#<a class="vic-btn vic-btn-default vic-bg-green text-white mt-2" href="#" data-modal="update" data-toggle="vic-modal">Mettre à jour</a>#}
+        </div>
+        {{ form_end(form) }}
+    </div>
+    {% else %}
+        <div class="vic-alert vic-alert-info">
+            <i class="fa fa-info"></i>&nbsp;&nbsp;La liste des erreurs 404 est vide
+        </div>
+    {% endif %}
+{% endblock modal_body_content %}
+
+{% block modal_footer %}
+    <div class="vic-modal-footer">
+        <div class="vic-container">
+            <div class="vic-modal-footer-content">
+                {% block modal_footer_content %}
+                    {#<a href="#" data-ic-post-to="{{ path('victoire_404_update') }}" class="vic-btn vic-btn-success" data-modal="{% block action %}index{% endblock action %}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}</a>#}
+                {% endblock modal_footer_content %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $vic('i.fa-plus').on('click', function () {
+
+            var id = $(this).attr('id');
+            var notFound = $vic('#notFound_' + id);
+
+            (notFound.is( ":hidden" ))
+                ? notFound.slideDown()
+                : notFound.slideUp();
+
+            $(this).toggleClass('fa-plus fa-minus');
+        });
+    </script>
+{% endblock modal_footer %}
+
+{% block javascripts %}
+{% endblock javascripts %}

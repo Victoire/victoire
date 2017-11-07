@@ -14,15 +14,9 @@ function openModal(url) {
         if (false === response.success) {
             warn(response.message, 10000);
         } else {
-            //remove the previous instance of the modal
-            $vic('#vic-modal').remove();
             //add the html of the modal
-            $vic('body').append(response.html);
+            $vic('#vic-modal-container').html(response.html);
             //display the modal
-            $vic('#vic-modal').vicmodal({
-                keyboard: true,
-                backdrop: false
-            });
         }
         loading(false);
         $vic(document).trigger('victoire_modal_open_after');

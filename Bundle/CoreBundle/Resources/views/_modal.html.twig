@@ -36,4 +36,15 @@
         </div>
     </div>
 </div>
+
+    <script>
+        $vic('#{{ block('modal_container_id') }}').vicmodal({
+            keyboard: true,
+            backdrop: false
+        });
+        $vic('#{{ block('modal_container_id') }}').on('hidden.bs.modal', function () {
+            $vic(this).remove();
+        });
+
+    </script>
 {% endblock modal_container %}
