@@ -1,5 +1,7 @@
 services:
+
 #  ==================  Widgets ================== #
+
     victoire_core.entity_proxy.fields_builder:
         class: Victoire\Bundle\CoreBundle\Form\Builder\EntityProxyFieldsBuilder
         arguments:
@@ -15,6 +17,7 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
 
 #  ==================  MENU ================== #
+
     victoire_core.admin_menu_builder:
         class: Victoire\Bundle\CoreBundle\Menu\MenuBuilder
         arguments: [ '@knp_menu.factory', '@security.authorization_checker' ]
@@ -66,6 +69,7 @@ services:
             - { name: kernel.event_listener, event: kernel.controller, method: preExecuteAutorun }
 
 #  ==================  Twig ================== #
+
     victoire_core.twig.cms_extension:
         class: Victoire\Bundle\CoreBundle\Twig\Extension\CmsExtension
         arguments:
@@ -122,15 +126,15 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-
 #  ==================  Cache =================== #
+
     victoire_core.cache_warmer.entity_proxy_warmer:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyWarmer
         arguments:
             - "@victoire_core.helper.business_entity_helper"
             - "@file_locator"
         tags:
-            - { name: kernel.cache_warmer, priority: 100} #Must be lower than victoire_business_entity.warmer
+            - { name: kernel.cache_warmer, priority: 100} # Must be lower than victoire_business_entity.warmer
 
     victoire_core.entity_proxy.cache_driver:
         class: Victoire\Bundle\CoreBundle\CacheWarmer\EntityProxyCacheDriver
@@ -161,7 +165,6 @@ services:
 
 #  ==================  View ================== #
 
-
     victoire_core.view_helper:
         class: Victoire\Bundle\CoreBundle\Helper\ViewHelper
         arguments:
@@ -187,7 +190,6 @@ services:
 
     victoire_core.current_view:
         class: Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper
-
 
     twig.extension.routing:
         class: 'Victoire\Bundle\CoreBundle\Twig\Extension\RoutingExtension'
@@ -217,6 +219,7 @@ services:
             - { name: data_collector, template: 'VictoireCoreBundle:Profiler:widget_cache', id: 'victoire_core.victoire_collector', priority: 200 }
 
     #  ==================  Repositories ================== #
+
     victoire.repository.error_page:
         class: Doctrine\ORM\EntityRepository
         factory: ['@doctrine.orm.default_entity_manager', getRepository]

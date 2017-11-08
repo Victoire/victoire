@@ -40,22 +40,24 @@ $vic('#{{ id }} .{{ cancel_button_class }}').click(function(){
     $vic('.vic-confirm-waiting').removeClass('vic-confirm-waiting');
 });
 
-{# if no callback were given, we submit or go to the url of given as parameter #}
-$vic('#{{ id }} .{{ confirm_button_class }}').click(function(){
-    elem = $vic('.vic-confirm-waiting');
-    elem.removeAttr('data-toggle');
-    elem.data('toggle', null);
-    elem.removeClass('vic-confirm-waiting');
-    elem.addClass('vic-confirmed');
-    $vic('#{{ id }}').vicmodal('hide');
-    {% if type == "form" %}
-        elem.submit();
+$vic('#{{ id }} .{{ confirm_button_class }}').click(function(event){
+    {% if confirmCallback != null %}
+        {{ confirmCallback|raw }}
     {% else %}
-        elem.click();
+        {# if no callback were given, we submit or go to the url of given as parameter #}
+        elem = $vic('.vic-confirm-waiting');
+        elem.removeAttr('data-toggle');
+        elem.data('toggle', null);
+        elem.removeClass('vic-confirm-waiting');
+        elem.addClass('vic-confirmed');
+        $vic('#{{ id }}').vicmodal('hide');
+        {% if type == "form" %}
+            elem.submit();
+        {% else %}
+            elem.click();
+        {% endif %}
     {% endif %}
-    {% if confirmCallback == null %}
-        {{ confirmCallback|raw }};
-    {% endif %}
+    $vic('#{{ id }}').vicmodal('hide');
 });
 
 //Focus on confirm button
