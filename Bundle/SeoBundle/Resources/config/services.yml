@@ -3,6 +3,7 @@ services:
         class: "Victoire\Bundle\SeoBundle\Form\PageSeoType"
         tags:
             - { name: form.type }
+
     victoire_seo.helper.pageseo_helper:
         class: Victoire\Bundle\SeoBundle\Helper\PageSeoHelper
         arguments:
@@ -10,6 +11,7 @@ services:
             - "@victoire_business_entity.converter.parameter_converter"
 
     #  ==================  MENU ================== #
+
     victoire_seo.redirection_menu_listener:
         class: Victoire\Bundle\SeoBundle\Listener\RedirectionMenuListener
         arguments: ["@victoire_core.admin_menu_builder", "@router"]

@@ -5,14 +5,11 @@ namespace Victoire\Bundle\SeoBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\SeoBundle\Entity\Redirection;
-use Victoire\Bundle\SeoBundle\Form\RedirectionListType;
 use Victoire\Bundle\SeoBundle\Form\RedirectionType;
-use Victoire\Bundle\SeoBundle\Model\RedirectionList;
 
 /**
  * Class RedirectionController
@@ -26,93 +23,64 @@ class RedirectionController extends Controller
     /**
      * @Route("/index", name="victoire_redirection_index")
      *
+     * @Method("GET")
+     *
      * @return Response
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $redirections = $em->getRepository('VictoireSeoBundle:Redirection')->findBy(
-            ['statusCode' => 301],
-            ['count' => 'DESC']
-        );
-
-        $list = new RedirectionList();
-
-        foreach ($redirections as $redirection) {
-            $list->addRedirection($redirection);
-        }
-
-        /**
-         * Build redirection list form
-         */
-        $listForm = $this->createForm(new RedirectionListType(), $list, [
-            'action' => $this->generateUrl('victoire_redirection_update'),
-            'method' => 'POST'
-        ]);
-
-        /**
-         * Build new redirection form
-         */
-        $newForm = $this->createForm(new RedirectionType(), new Redirection(), [
-            'action' => $this->generateUrl('victoire_redirection_new'),
-            'method' => 'POST',
-            'attr' => [
-                'ic-post-to' => $this->generateUrl('victoire_redirection_new'),
-                'ic-target-id' => '#vic-modal-container'
-            ]
-        ]);
-
-        return $this->render($this->getBaseTemplatePath().':index.html.twig', [
-            'redirections' => $redirections,
-            'newForm' => $newForm->createView(),
-            'listForm' => $listForm->createView()
-        ]);
+        return $this->generateView();
     }
 
     /**
-     * @Route("/update", name="victoire_redirection_update")
+     * @Route("/{id}/update", name="victoire_redirection_update")
+     *
+     * @Method("POST")
      *
      * @param Request $request
+     * @param Redirection $redirection
      *
-     * @return JsonResponse
+     * @return Response
      */
-    public function updateAction(Request $request)
+    public function updateAction(Request $request, Redirection $redirection)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $form = $this->createForm(new RedirectionListType(), null);
+        $form = $this->createForm(RedirectionType::class, $redirection);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
 
-            $redirections = $form->getData();
-            foreach ($redirections as $redirection) {
+        if ($form->isSubmitted()) {
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+
                 $em->persist($redirection);
-            }
-            $em->flush();
+                $em->flush();
 
-//            return $this->indexAction();
-//            return $this->redirectToRoute('victoire_redirection_index');
+                $this->congrat('La redirection a été modifiée avec succès');
+
+                return $this->generateView();
+            }
         }
 
-        return new JsonResponse();
+        $this->warn('Une erreur est survenue, veuillez réessayer');
+
+        return $this->generateView();
     }
 
     /**
      * @Route("/new", name="victoire_redirection_new")
      *
-     * @Method({"POST", "GET"})
+     * @Method("POST")
      *
      * @param Request $request
      *
-     * @return JsonResponse|Response
+     * @return Response
      */
     public function newAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm(new RedirectionType(), null);
+        $form = $this->createForm(RedirectionType::class, new Redirection());
 
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
@@ -126,26 +94,25 @@ class RedirectionController extends Controller
                 $em->persist($redirection);
                 $em->flush();
 
-                $this->congrat($this->get('translator')->trans('Success', [], 'victoire'));
+                $this->congrat('La redirection a été créée avec succès');
 
-                return $this->redirectToRoute('victoire_redirection_index');
+                return $this->generateView();
             }
-
-            $this->congrat($this->get('translator')->trans('Error', [], 'victoire'));
         }
 
-        return $this->redirectToRoute('victoire_redirection_index');
-//        return new JsonResponse([
-//            'message' => 'error'
-//        ]);
+        $this->warn('Une erreur est survenue, veuillez réessayer');
+
+        return $this->generateView();
     }
 
     /**
      * @Route("/{id}/delete", name="victoire_redirection_delete")
      *
+     * @Method("DELETE")
+     *
      * @param Redirection $redirection
      *
-     * @return JsonResponse
+     * @return Response
      */
     public function deleteAction(Redirection $redirection)
     {
@@ -154,9 +121,62 @@ class RedirectionController extends Controller
         $em->remove($redirection);
         $em->flush();
 
-        return new JsonResponse([
-            'success' => true,
-            'url'     => $this->generateUrl('victoire_redirection_index'),
+        $this->congrat('La redirection a été supprimée avec succès');
+
+        return $this->generateView();
+    }
+
+    /**
+     * Build index view.
+     *
+     * @return Response
+     */
+    private function generateView()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $redirections = $em->getRepository('VictoireSeoBundle:Redirection')->findBy(
+            ['statusCode' => 301],
+            ['count' => 'DESC']
+        );
+
+        $listForm = [];
+
+        /**
+         * Build error list form
+         *
+         * @var Redirection $redirection
+         */
+        foreach ($redirections as $redirection) {
+            $redirectionId = $redirection->getId();
+            $listForm[$redirectionId] = $this->createForm(RedirectionType::class, $redirection, [
+                'action' => $this->generateUrl('victoire_redirection_update', [
+                    'id' => $redirectionId
+                ]),
+                'attr' => [
+                    'ic-post-to' => $this->generateUrl('victoire_redirection_update', [
+                        'id' => $redirectionId
+                    ]),
+                    'ic-target' => '#vic-modal-container'
+                ]
+            ])->createView();
+        }
+
+        /**
+         * Build new redirection form
+         */
+        $newForm = $this->createForm(new RedirectionType(), new Redirection(), [
+            'action' => $this->generateUrl('victoire_redirection_new'),
+            'attr' => [
+                'ic-post-to' => $this->generateUrl('victoire_redirection_new'),
+                'ic-target' => '#vic-modal-container'
+            ]
+        ])->createView();
+
+        return $this->render($this->getBaseTemplatePath().':index.html.twig', [
+            'redirections' => $redirections,
+            'listForm'     => $listForm,
+            'newForm'      => $newForm
         ]);
     }
 

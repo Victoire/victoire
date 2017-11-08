@@ -28,6 +28,11 @@ class Redirection
      */
     private $input;
 
+//    /**
+//     * @ORM\OneToOne(targetEntity="Victoire\Bundle\CoreBundle\Entity\Link")
+//     * @ORM\JoinColumn(name="output", referencedColumnName="id", onDelete="CASCADE")
+//     */
+
     /**
      * @var string
      *

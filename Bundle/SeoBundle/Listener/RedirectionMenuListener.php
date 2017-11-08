@@ -39,7 +39,8 @@ class RedirectionMenuListener
         $dropdown = $this->menuBuilder->createDropdownMenuItem($this->mainItem, 'Redirections');
 
         $dropdown->addChild('Erreurs 404', [
-            'route' => 'victoire_404_index'
+            'route' => 'victoire_404_index',
+            'title' => 'erreurs_404'
         ])
             ->setLinkAttribute('ic-get-from', $this->router->generate('victoire_404_index'))
             ->setLinkAttribute('ic-target', '#vic-modal-container')
