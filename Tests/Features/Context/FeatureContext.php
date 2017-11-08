@@ -94,4 +94,15 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
         }
     }
+
+    /**
+     * @Then I follow :arg1 form the :arg2 menu
+     *
+     * @param string $arg1 Level 1 menu item
+     * @param string $arg2 Level 0 menu item
+     */
+    public function iFollowFormTheMenu($arg1, $arg2)
+    {
+        $element = $this->getSession()->getPage()->find( '' );
+    }
 }

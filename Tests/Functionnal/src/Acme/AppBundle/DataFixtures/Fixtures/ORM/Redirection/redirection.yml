@@ -1,0 +1,6 @@
+Victoire\Bundle\SeoBundle\Entity\Redirection:
+    redirection_1:
+        input: 'input'
+        output: 'output'
+        statusCode: 404
+        count: 12
