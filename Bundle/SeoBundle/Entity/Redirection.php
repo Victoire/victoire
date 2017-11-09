@@ -3,12 +3,16 @@
 namespace Victoire\Bundle\SeoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Redirection.
  *
  * @ORM\Entity()
  * @ORM\Table("vic_redirection")
+ *
+ * @UniqueEntity("input")
  */
 class Redirection
 {
@@ -22,16 +26,15 @@ class Redirection
     private $id;
 
     /**
-     * @var string
+     * @var string $input
      *
-     * @ORM\Column(name="input", type="string", nullable=false)
+     * @ORM\Column(name="input", type="string", nullable=false, unique=true)
+     *
+     * @Assert\NotNull()
+     * @Assert\Url(message="input")
      */
     private $input;
 
-//    /**
-//     * @ORM\OneToOne(targetEntity="Victoire\Bundle\CoreBundle\Entity\Link")
-//     * @ORM\JoinColumn(name="output", referencedColumnName="id", onDelete="CASCADE")
-//     */
 
     /**
      * @var string
@@ -115,7 +118,7 @@ class Redirection
      *
      * @return Redirection
      */
-    public function setStatusCode(int $statusCode)
+    public function setStatusCode($statusCode)
     {
         $this->statusCode = $statusCode;
 

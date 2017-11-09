@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\SeoBundle\Entity\Redirection;
 use Victoire\Bundle\SeoBundle\Form\RedirectionType;
@@ -51,6 +52,7 @@ class RedirectionController extends Controller
         if ($form->isSubmitted()) {
 
             if ($form->isValid()) {
+
                 $em = $this->getDoctrine()->getManager();
 
                 $em->persist($redirection);
@@ -60,10 +62,13 @@ class RedirectionController extends Controller
 
                 return $this->generateView();
             }
+
+            $errors = $this->validatorMessageToString($redirection);
+            $this->warn($errors);
+            return $this->generateView();
         }
 
         $this->warn('Une erreur est survenue, veuillez réessayer');
-
         return $this->generateView();
     }
 
@@ -85,8 +90,9 @@ class RedirectionController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
 
+            $redirection = $form->getData();
+
             if ($form->isValid()) {
-                $redirection = $form->getData();
 
                 $redirection->setStatusCode(Response::HTTP_MOVED_PERMANENTLY);
                 $redirection->setCount(0);
@@ -98,10 +104,13 @@ class RedirectionController extends Controller
 
                 return $this->generateView();
             }
+
+            $errors = $this->validatorMessageToString($redirection);
+            $this->warn($errors);
+            return $this->generateView();
         }
 
         $this->warn('Une erreur est survenue, veuillez réessayer');
-
         return $this->generateView();
     }
 
@@ -178,6 +187,27 @@ class RedirectionController extends Controller
             'listForm'     => $listForm,
             'newForm'      => $newForm
         ]);
+    }
+
+    /**
+     * @param Redirection $redirection
+     *
+     * @return string
+     */
+    private function validatorMessageToString(Redirection $redirection){
+
+        $validator = $this->get('validator');
+
+        $errors = [];
+
+        /**
+         * @var ConstraintViolationInterface $error
+         */
+        foreach ($validator->validate($redirection) as $error){
+            $errors[] = $error->getMessage();
+        }
+
+        return implode(" - ", $errors);
     }
 
     /**
