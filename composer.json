@@ -54,6 +54,7 @@
         "symfony/polyfill-apcu": "^1.0",
         "symfony/symfony": "^3.0,<3.2.10",
         "symfony/swiftmailer-bundle": "^2.3",
+        "symfony/twig-bundle": "~3.0",
         "troopers/alertify-bundle": "^3.0",
         "troopers/assetic-injector-bundle": "^1.1",
         "twig/extensions": "~1.0",
