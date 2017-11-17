@@ -238,7 +238,7 @@ class Folder
      *
      * @return Folder
      */
-    public function setParent(Folder $parent)
+    public function setParent(self $parent)
     {
         $this->parent = $parent;
 
@@ -277,7 +277,7 @@ class Folder
      *
      * @return Folder
      */
-    public function addChild(Folder $child)
+    public function addChild(self $child)
     {
         $this->children[] = $child;
         $child->setParent($this);

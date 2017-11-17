@@ -22,9 +22,9 @@ class ChooseBlogType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('blog', EntityType::class, [
-                'label'             => 'victoire.blog.choose.blog.label',
-                'class'             => 'Victoire\Bundle\BlogBundle\Entity\Blog',
-                'choice_label'      => function ($blog) {
+                'label'        => 'victoire.blog.choose.blog.label',
+                'class'        => 'Victoire\Bundle\BlogBundle\Entity\Blog',
+                'choice_label' => function ($blog) {
                     return $blog->getName();
                 },
                 'preferred_choices' => $options['blog'] ? [$options['blog']] : [],
@@ -44,10 +44,10 @@ class ChooseBlogType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class'           => null,
-                'translation_domain'   => 'victoire',
-                'blog'                 => null,
-                'locale'               => null,
+                'data_class'         => null,
+                'translation_domain' => 'victoire',
+                'blog'               => null,
+                'locale'             => null,
             ]
         );
     }

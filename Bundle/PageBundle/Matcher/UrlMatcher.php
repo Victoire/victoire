@@ -98,8 +98,8 @@ class UrlMatcher
 
                     //information found
                     $BusinessTemplateInstance = [
-                        'BusinessTemplate'            => $BusinessTemplate,
-                        'entity'                      => $entity,
+                        'BusinessTemplate' => $BusinessTemplate,
+                        'entity'           => $entity,
                     ];
                 } else {
                     throw new \Exception('The business entity page pattern ['.$BusinessTemplate->getId().'] has no identifier.');

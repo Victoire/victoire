@@ -99,7 +99,7 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
             $this->entityManager->flush($view);
 
             $progress->advance();
-            ++$count;
+            $count++;
         }
 
         $progress->finish();

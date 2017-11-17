@@ -55,18 +55,18 @@ class MediaController extends Controller
                 $media = $helper->getMedia();
                 $em->getRepository('VictoireMediaBundle:Media')->save($media);
 
-                return new RedirectResponse($this->generateUrl('VictoireMediaBundle_media_show', ['mediaId'  => $media->getId()]));
+                return new RedirectResponse($this->generateUrl('VictoireMediaBundle_media_show', ['mediaId' => $media->getId()]));
             }
         }
         $showTemplate = $mediaManager->getHandler($media)->getShowTemplate($media);
 
         return $this->render($showTemplate, [
-                'handler'       => $handler,
-                'mediamanager'  => $this->get('victoire_media.media_manager'),
-                'editform'      => $form->createView(),
-                'media'         => $media,
-                'helper'        => $helper,
-                'folder'        => $folder, ]);
+                'handler'      => $handler,
+                'mediamanager' => $this->get('victoire_media.media_manager'),
+                'editform'     => $form->createView(),
+                'media'        => $media,
+                'helper'       => $helper,
+                'folder'       => $folder, ]);
     }
 
     /**
@@ -89,7 +89,7 @@ class MediaController extends Controller
 
         $this->congrat('Entry \''.$medianame.'\' has been deleted!');
 
-        return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', ['folderId'  => $folder->getId()]));
+        return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', ['folderId' => $folder->getId()]));
     }
 
     /**
@@ -126,7 +126,7 @@ class MediaController extends Controller
 
                 $this->congrat('New entry has been uploaded');
 
-                return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', ['folderId'  => $folder->getId()]));
+                return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', ['folderId' => $folder->getId()]));
             }
         }
 
@@ -137,8 +137,8 @@ class MediaController extends Controller
         ]);
 
         return [
-            'form'      => $formView,
-            'folder'    => $folder,
+            'form'   => $formView,
+            'folder' => $folder,
         ];
     }
 

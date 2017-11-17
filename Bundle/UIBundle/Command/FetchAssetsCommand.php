@@ -32,6 +32,7 @@ class FetchAssetsCommand extends ContainerAwareCommand
     {
         $output->writeln('<fg=white;bg=cyan;options=bold>Fetching Bower dependencies</>');
         $process = new Process('cd vendor/victoire/victoire/Bundle/UIBundle/Resources/config && bower install');
+
         try {
             $process->mustRun();
 
