@@ -114,7 +114,7 @@ class CategoryFilter extends BaseFilter
         $categoriesChoices = [];
 
         foreach ($categories as $category) {
-            $categoriesChoices[$category->getId()] = $category->getTitle();
+            $categoriesChoices[$category->getTitle()] = $category->getId();
         }
 
         $data = null;
@@ -137,7 +137,7 @@ class CategoryFilter extends BaseFilter
                     'required'    => false,
                     'expanded'    => true,
                     'multiple'    => $options['multiple'],
-                    'empty_value' => $this->translator->trans('blog.category_filter.empty_value.label'),
+                    'placeholder' => $this->translator->trans('blog.category_filter.empty_value.label'),
                     'data'        => $data,
                 ]
             );

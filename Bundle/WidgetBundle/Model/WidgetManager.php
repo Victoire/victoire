@@ -133,15 +133,15 @@ class WidgetManager
             'html'   => $this->templating->render(
                 'VictoireCoreBundle:Widget:Form/new.html.twig',
                 [
-                    'id'                 => time(),
-                    'view'               => $view,
-                    'slot'               => $slot,
-                    'position'           => $position,
-                    'parentWidgetMap'    => $parentWidgetMap,
-                    'classes'            => $classes,
-                    'widgets'            => $widgets,
-                    'widget'             => $widget,
-                    'forms'              => $forms,
+                    'id'              => time(),
+                    'view'            => $view,
+                    'slot'            => $slot,
+                    'position'        => $position,
+                    'parentWidgetMap' => $parentWidgetMap,
+                    'classes'         => $classes,
+                    'widgets'         => $widgets,
+                    'widget'          => $widget,
+                    'forms'           => $forms,
                 ]
             ),
         ];
@@ -288,11 +288,11 @@ class WidgetManager
                 $formErrorHelper = $this->formErrorHelper;
                 //Return a message for developer in console and form view in order to refresh view and show form errors
                 $response = [
-                    'success'     => false,
-                    'widgetId'    => $initialWidgetId,
-                    'slot'        => $widget->getWidgetMap()->getSlot(),
-                    'message'     => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
-                    'html'        => $this->widgetFormBuilder->renderForm($form, $widget, $businessEntityId),
+                    'success'  => false,
+                    'widgetId' => $initialWidgetId,
+                    'slot'     => $widget->getWidgetMap()->getSlot(),
+                    'message'  => $noValidate === false ? $formErrorHelper->getRecursiveReadableErrors($form) : null,
+                    'html'     => $this->widgetFormBuilder->renderForm($form, $widget, $businessEntityId),
                 ];
             }
         } else {
@@ -300,18 +300,18 @@ class WidgetManager
             $forms = $this->widgetFormBuilder->renderNewQuantumForms($widget->getSlot(), $currentView, $widgets, $widget, $classes);
 
             $response = [
-                'success'  => true,
-                'html'     => $this->templating->render(
+                'success' => true,
+                'html'    => $this->templating->render(
                     'VictoireCoreBundle:Widget:Form/edit.html.twig',
                     [
-                        'view'               => $currentView,
-                        'slot'               => $widget->getWidgetMap()->getSlot(),
-                        'position'           => $widget->getWidgetMap()->getPosition(),
-                        'parentWidgetMap'    => $widget->getWidgetMap()->getParent() ? $widget->getWidgetMap()->getParent()->getId() : null,
-                        'classes'            => $classes,
-                        'forms'              => $forms,
-                        'widgets'            => $widgets,
-                        'widget'             => $widget,
+                        'view'            => $currentView,
+                        'slot'            => $widget->getWidgetMap()->getSlot(),
+                        'position'        => $widget->getWidgetMap()->getPosition(),
+                        'parentWidgetMap' => $widget->getWidgetMap()->getParent() ? $widget->getWidgetMap()->getParent()->getId() : null,
+                        'classes'         => $classes,
+                        'forms'           => $forms,
+                        'widgets'         => $widgets,
+                        'widget'          => $widget,
                     ]
                 ),
             ];

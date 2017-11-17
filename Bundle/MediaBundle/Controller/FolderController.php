@@ -44,11 +44,11 @@ class FolderController extends Controller
         $editForm = $this->createForm(FolderType::class, $folder, ['folder' => $folder]);
 
         return [
-            'mediamanager'  => $this->get('victoire_media.media_manager'),
-            'subform'       => $subForm->createView(),
-            'editform'      => $editForm->createView(),
-            'folder'        => $folder,
-            'folders'       => $folders,
+            'mediamanager' => $this->get('victoire_media.media_manager'),
+            'subform'      => $subForm->createView(),
+            'editform'     => $editForm->createView(),
+            'folder'       => $folder,
+            'folders'      => $folders,
         ];
     }
 
@@ -80,7 +80,7 @@ class FolderController extends Controller
             $folderId = $parentFolder->getId();
         }
 
-        return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', ['folderId'  => $folderId]));
+        return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', ['folderId' => $folderId]));
     }
 
     /**

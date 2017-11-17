@@ -26,7 +26,7 @@ class MediaMenuListener
 
         $topNavbar
             ->addChild('menu.media', [
-                'uri'        => '#',
+                'uri' => '#',
             ])
             ->setLinkAttribute('id', 'media-manager');
     }

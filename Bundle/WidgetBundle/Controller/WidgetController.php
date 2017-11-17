@@ -208,6 +208,7 @@ class WidgetController extends Controller
             $view->setReference($reference);
         }
         $this->get('victoire_core.current_view')->setCurrentView($view);
+
         try {
             $response = new JsonResponse(
                 $this->get('widget_manager')->editWidget(
@@ -292,6 +293,7 @@ class WidgetController extends Controller
     public function deleteAction(Widget $widget, $viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
+
         try {
             $widgetId = $widget->getId();
             $this->get('widget_manager')->deleteWidget($widget, $view);
@@ -320,6 +322,7 @@ class WidgetController extends Controller
     public function deleteBulkAction(Widget $widget, $viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
+
         try {
             $widgets = $widget->getWidgetMap()->getWidgets();
 
@@ -351,6 +354,7 @@ class WidgetController extends Controller
     public function unlinkAction($id, $viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
+
         try {
             $this->get('victoire_widget.widget_helper')->deleteById($id);
             $this->get('doctrine.orm.entity_manager')->flush();
@@ -388,6 +392,7 @@ class WidgetController extends Controller
     public function updatePositionAction(Request $request, $viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
+
         try {
             //the sorted order for the widgets
             $sortedWidget = $request->get('sorted');

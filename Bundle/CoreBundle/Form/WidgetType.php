@@ -62,8 +62,8 @@ class WidgetType extends AbstractType
             ]);
         $builder->add('theme', HiddenType::class);
         $builder->add('quantum', QuantumType::class, [
-            'label'    => 'victoire.widget.type.quantum.label',
-            'attr'     => [
+            'label' => 'victoire.widget.type.quantum.label',
+            'attr'  => [
                 'data-flag' => 'v-quantum-name',
             ],
         ]);

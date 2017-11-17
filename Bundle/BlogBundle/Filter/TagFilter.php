@@ -92,7 +92,7 @@ class TagFilter extends BaseFilter
                 'label'             => false,
                 'choices'           => $tagsChoices,
                 'choices_as_values' => true,
-                'empty_value'       => 'blog.tag_filter.empty_value',
+                'placeholder'       => 'blog.tag_filter.empty_value',
                 'required'          => false,
                 'expanded'          => true,
                 'multiple'          => $options['multiple'],
