@@ -39,6 +39,7 @@ class Blog extends Page
      */
     public function __construct()
     {
+        parent::__construct();
         $this->categories = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->tags = new ArrayCollection();
@@ -73,7 +74,7 @@ class Blog extends Page
      */
     public function getPublishedArticles()
     {
-        return $this->articles->filter(function ($article) {
+        return $this->articles->filter(function (Article $article) {
             return $article->getPublishedAt() <= new \DateTime();
         });
     }

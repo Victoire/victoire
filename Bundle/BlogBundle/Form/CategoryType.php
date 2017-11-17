@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -32,7 +33,6 @@ class CategoryType extends AbstractType
                 'attr' => [
                     'class' => 'vic-blogCategoryWidget-formControl',
                     ],
-
                 ]
             )
             ->add('description', TextType::class, [
@@ -48,12 +48,11 @@ class CategoryType extends AbstractType
          */
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function ($event) {
+            function (FormEvent $event) {
                 $entity = $event->getData();
 
                 if ($entity !== null) {
                     $nbChildren = count($entity->getChildren());
-                    // error_log($nbChildren);
 
                     if ($nbChildren > 0) {
                         $form = $event->getForm();
@@ -70,7 +69,7 @@ class CategoryType extends AbstractType
          */
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function ($event) {
+            function (FormEvent $event) {
                 $rawData = $event->getData();
                 if (isset($rawData['children'])) {
                     $addChildren = true;
@@ -94,7 +93,9 @@ class CategoryType extends AbstractType
      */
     protected function addChildrenField($form)
     {
-        $form->add('children', CollectionType::class,
+        $form->add(
+            'children',
+            CollectionType::class,
             [
                 'entry_type'   => self::class,
                 'required'     => false,
