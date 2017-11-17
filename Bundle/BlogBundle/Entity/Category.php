@@ -90,14 +90,14 @@ class Category
      */
     protected $children;
 
-        /**
-         * Constructor.
-         */
-        public function __construct()
-        {
-            $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-            $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
-        }
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * undocumented function.
@@ -296,7 +296,7 @@ class Category
      *
      * @return Menu
      */
-    public function setParent(Category $parent = null)
+    public function setParent(self $parent = null)
     {
         $this->parent = $parent;
 
@@ -320,7 +320,7 @@ class Category
      *
      * @return Menu
      */
-    public function addChild(Category $child)
+    public function addChild(self $child)
     {
         $child->setParent($this);
         $this->children[] = $child;
@@ -333,7 +333,7 @@ class Category
      *
      * @param Menu $child
      */
-    public function removeChild(Category $child)
+    public function removeChild(self $child)
     {
         $this->children->removeElement($child);
     }
@@ -343,7 +343,7 @@ class Category
      *
      * @param Menu $child
      */
-    public function removeChildren(Category $child)
+    public function removeChildren(self $child)
     {
         $this->children->removeElement($child);
     }

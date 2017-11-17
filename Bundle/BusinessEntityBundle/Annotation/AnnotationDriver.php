@@ -196,6 +196,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 if ($annotationObj instanceof BusinessProperty && !in_array($class, $businessProperties)) {
                     if (!$annotations[$key]->getTypes()) {
                         $message = $class->name.':$'.$property->name.'" field';
+
                         throw AnnotationException::requiredError('type', 'BusinessProperty annotation', $message, 'array or string');
                     }
                     foreach ($annotations[$key]->getTypes() as $type) {
@@ -246,6 +247,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 if ($annotationObj instanceof ReceiverPropertyAnnotation && !in_array($class, $receiverPropertiesTypes)) {
                     if (!$annotations[$key]->getTypes()) {
                         $message = $class->name.':$'.$property->name.'" field';
+
                         throw AnnotationException::requiredError('type', 'ReceiverProperty annotation', $message, 'array or string');
                     }
                     foreach ($annotations[$key]->getTypes() as $type) {

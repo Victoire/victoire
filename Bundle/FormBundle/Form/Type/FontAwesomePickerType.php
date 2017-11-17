@@ -20,7 +20,7 @@ class FontAwesomePickerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'options'    => [
+            'options' => [
                 'title'        => false, // Popover title (optional) only if specified in the template
                 'selected'     => false, // use this value as the current item and ignore the original
                 'defaultValue' => false, // use this value as the current item if input or element value is empty

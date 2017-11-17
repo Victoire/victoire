@@ -91,11 +91,19 @@ class BlogController extends BasePageController
             $entityManager = $this->getDoctrine()->getManager();
             /** @var Category $category */
             $category = $entityManager->getRepository('VictoireBlogBundle:Category')->find($categoryId);
-            $categoryIds = [$categoryId];
-            while ($category->getChildren()) {
-                $category = $category->getChildren();
+            $categoryIds = [];
+
+            function findIds(Category $category, &$categoryIds)
+            {
                 $categoryIds[] = $category->getId();
+
+                foreach ($category->getChildren() as $childCategory) {
+                    findIds($childCategory, $categoryIds);
+                }
             }
+
+            findIds($category, $categoryIds);
+
             $articles = $articles->filter(function ($article) use ($categoryIds) {
                 /* @var Article $article */
                 return $article->getCategory() && in_array($article->getCategory()->getId(), $categoryIds, true);
