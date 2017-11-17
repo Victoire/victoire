@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface;
-use Victoire\Bundle\BlogBundle\Entity\Category;
+use Victoire\Bundle\BlogBundle\Entity\BlogCategory;
 use Victoire\Bundle\FilterBundle\Domain\FilterFormFieldQueryHandler;
 use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
 
@@ -60,7 +60,7 @@ class CategoryFilter extends BaseFilter
             if ($parameter === '') {
                 unset($parameters['category'][$index]);
             } else {
-                $parentCategory = $this->getEntityManager()->getRepository('VictoireBlogBundle:Category')->findOneById($parameter);
+                $parentCategory = $this->getEntityManager()->getRepository('VictoireBlogBundle:BlogCategory')->findOneById($parameter);
                 $childrenArray = array_merge($childrenArray, $this->getCategoryChildrens($parentCategory, []));
             }
         }
@@ -87,7 +87,7 @@ class CategoryFilter extends BaseFilter
         return $qb;
     }
 
-    public function getCategoryChildrens(Category $category, $childrenArray)
+    public function getCategoryChildrens(BlogCategory $category, $childrenArray)
     {
         $childrenArray[] = $category->getId();
         $childrens = $category->getChildren();
@@ -111,6 +111,25 @@ class CategoryFilter extends BaseFilter
     {
         $categories = $this->filterQueryHandler->handle($options['widget'], BlogCategory::class);
 
+        //getAll categories
+        $categoryQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:BlogCategory')->getAll();
+        //getAll published articles
+        $articleQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Article')->getAll(true);
+
+        //get Listing
+        $listing = $options['widget']->getListing();
+
+        $mode = $listing->getMode();
+        switch ($mode) {
+            case 'query':
+                //filter with listingQuery
+                $articleQb->filterWithListingQuery($listing->getQuery());
+                break;
+        }
+        $categoryQb->filterByArticles($articleQb->getInstance('article'));
+        $categories = $categoryQb->getInstance('c_category')->getQuery()->getResult();
+
+        //the blank value
         $categoriesChoices = [];
 
         foreach ($categories as $category) {
@@ -131,7 +150,9 @@ class CategoryFilter extends BaseFilter
 
         $builder
             ->add(
-                'category', ChoiceType::class, [
+                'category',
+                ChoiceType::class,
+                [
                     'label'       => false,
                     'choices'     => $categoriesChoices,
                     'required'    => false,
@@ -152,7 +173,7 @@ class CategoryFilter extends BaseFilter
      */
     public function getFilters($filters)
     {
-        return $this->getEntityManager()->getRepository('VictoireBlogBundle:Category')->findById($filters['category']);
+        return $this->getEntityManager()->getRepository('VictoireBlogBundle:BlogCategory')->findById($filters['category']);
     }
 
     /**
