@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\BlogBundle\Entity\Article;
+use Victoire\Bundle\BlogBundle\Entity\ArticleTemplate;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\BlogBundle\Repository\ArticleTemplateRepository;
 use Victoire\Bundle\BlogBundle\Repository\TagRepository;
@@ -184,7 +185,7 @@ class ArticleType extends AbstractType
                 };
                 $form->add('template', null, [
                     'label'        => 'form.article.type.template.label',
-                    'choice_label' => function ($template) {
+                    'choice_label' => function (ArticleTemplate $template) {
                         return $template->getBackendName();
                     },
                     'required'      => true,
