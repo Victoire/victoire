@@ -119,7 +119,7 @@ class DateFilter extends BaseFilter
                         'required'    => false,
                         'expanded'    => false,
                         'multiple'    => false,
-                        'empty_value' => false,
+                        'placeholder' => false,
                         'data'        => $data['year'],
                     ]
                 );

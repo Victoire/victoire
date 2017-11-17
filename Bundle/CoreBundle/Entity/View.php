@@ -231,7 +231,7 @@ abstract class View
      *
      * @param View $parent
      */
-    public function setParent(View $parent = null)
+    public function setParent(self $parent = null)
     {
         $this->parent = $parent;
         if ($parent && !($this instanceof VirtualBusinessPage)) {
@@ -293,7 +293,7 @@ abstract class View
      *
      * @param View $child
      */
-    public function addChild(View $child)
+    public function addChild(self $child)
     {
         $this->children[] = $child;
     }
@@ -303,7 +303,7 @@ abstract class View
      *
      * @param View $child
      */
-    public function removeChild(View $child)
+    public function removeChild(self $child)
     {
         $this->children->removeElement($child);
     }
@@ -700,7 +700,7 @@ abstract class View
      *
      * @return bool
      */
-    public function isTemplateOf(View $view)
+    public function isTemplateOf(self $view)
     {
         while ($_view = $view->getTemplate()) {
             if ($this === $_view) {
