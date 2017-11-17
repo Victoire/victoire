@@ -5,6 +5,7 @@ namespace Victoire\Bundle\BlogBundle\Filter;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Victoire\Bundle\BlogBundle\Entity\Tag;
 use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
 
 /**
@@ -68,25 +69,7 @@ class TagFilter extends BaseFilter
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        //getAll tags
-        $tagQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Tag')->getAll();
-        //getAll published articles
-        $articleQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Article')->getAll(true);
-
-        //get Listing
-        $listing = $options['widget']->getListing();
-
-        $mode = $listing->getMode();
-        switch ($mode) {
-            case 'query':                //filter with listingQuery
-                $articleQb->filterWithListingQuery($listing->getQuery());
-                break;
-        }
-        //filter tags with right articles
-        $tagQb->filterByArticles($articleQb->getInstance('article'));
-        $tags = $tagQb->getInstance('t_tag')->getQuery()->getResult();
-        //the blank value
-        $tagsChoices = [];
+        $tags = $this->filterQueryHandler->handle($options['widget'], Tag::class);
 
         foreach ($tags as $tag) {
             $tagsChoices[$tag->getTitle()] = $tag->getId();
