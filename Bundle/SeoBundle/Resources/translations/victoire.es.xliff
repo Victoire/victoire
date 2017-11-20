@@ -306,6 +306,58 @@
         <source>form.pageSeo.keyword.placeholder</source>
         <target>especificar las palabras claves, separadas por comas</target>
       </trans-unit>
+      <trans-unit id="58893b9a020ca" resname="modal.error404.title">
+        <source>modal.error404.title</source>
+        <target><![CDATA[Lista de <strong>errores 404</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="58893b9a020da" resname="modal.redirection.title">
+        <source>modal.redirection.title</source>
+        <target><![CDATA[Lista de <strong>redirecciones</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="58893b9a020cb" resname="modal.error404.list.empty">
+        <source>modal.error404.list.empty</source>
+        <target>La lista de errores 404 está vacía</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020db" resname="modal.redirection.list.empty">
+        <source>modal.redirection.list.empty</source>
+        <target>La lista de redirecciones está vacía</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020cc" resname="modal.error404.form.submit.value">
+        <source>modal.error404.form.submit.value</source>
+        <target>Actualizar</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020dc" resname="modal.redirection.form.submit.value">
+        <source>modal.redirection.form.submit.value</source>
+        <target>Actualizar</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020cd" resname="modal.error404.counter.label">
+        <source>modal.error404.counter.label</source>
+        <target>Cantidad : </target>
+      </trans-unit>
+      <trans-unit id="58893b9a020dd" resname="modal.redirection.counter.label">
+        <source>modal.redirection.counter.label</source>
+        <target>Cantidad : </target>
+      </trans-unit>
+      <trans-unit id="58893b9a020de" resname="modal.redirection.form.new.label">
+        <source>modal.redirection.form.new.label</source>
+        <target>Crear una redirección</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020cf" resname="menu.left.redirection.mainItem.label">
+        <source>menu.left.redirection.mainItem.label</source>
+        <target><![CDATA[<i class='fa fa-random'></i> Redirecciones]]></target>
+      </trans-unit>
+      <trans-unit id="58893b9a020cg" resname="menu.left.redirection.subItem.404.label">
+        <source>menu.left.redirection.subItem.404.label</source>
+        <target><![CDATA[<i class='fa fa-exclamation'></i> 404 errores]]></target>
+      </trans-unit>
+      <trans-unit id="58893b9a020dg" resname="menu.left.redirection.subItem.redirection.label">
+        <source>menu.left.redirection.subItem.redirection.label</source>
+        <target><![CDATA[<i class='fa fa-random'></i> Redirecciones]]></target>
+      </trans-unit>
+      <trans-unit id="58893b9a020ef" resname="redirection.form.url.placeholder">
+        <source>redirection.form.url.placeholder</source>
+        <target>Url de redirección</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
