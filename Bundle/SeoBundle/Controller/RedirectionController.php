@@ -7,6 +7,7 @@ use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -79,8 +80,13 @@ class RedirectionController extends Controller
 
         if ($request->query->get('novalidate', false) === false) {
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->flush();
+                if ($redirection->getLink()->getLinkType() !== Link::TYPE_NONE) {
+                    $em = $this->getDoctrine()->getManager();
+                    $em->flush();
+                } else {
+                    // force form error when no link submitted
+                    $form->addError(new FormError('This value should not be blank.'));
+                }
             }
 
             return new Response($this->renderView('@VictoireSeo/Redirection/_item.html.twig', [
@@ -122,30 +128,39 @@ class RedirectionController extends Controller
 
         if ($request->query->get('novalidate', false) === false) {
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                /** @var Redirection $redirection */
-                $redirection = $form->getData();
+                if ($redirection->getLink()->getLinkType() !== Link::TYPE_NONE) {
+                    $em = $this->getDoctrine()->getManager();
+                    /** @var Redirection $redirection */
+                    $redirection = $form->getData();
 
-                /** @var Link $link */
-                $link = $form->getData()->getLink();
+                    /** @var Link $link */
+                    $link = $form->getData()->getLink();
 
-                $link->setUrl($form->getData()->getLink()->getUrl());
-                $link->setLocale($request->getLocale());
-                $redirection->setLink($link);
+                    $link->setUrl($form->getData()->getLink()->getUrl());
+                    $link->setLocale($request->getLocale());
+                    $redirection->setLink($link);
 
-                $em->persist($redirection);
-                $em->flush();
+                    $em->persist($redirection);
+                    $em->flush();
 
-                return new Response($this->renderView('@VictoireSeo/Redirection/_form.html.twig', [
-                    'form' => $this->getRedirectionForm(new Redirection(), '#new-form-container')->createView(),
-                    'icTrigger' => [
-                        'target' => '#redirections-list-container',
-                        'url'    => $this->generateUrl('victoire_redirection_showListItem', [
-                            'id' => $redirection->getId()
-                        ])
-                    ]
-                ]));
+                    return new Response($this->renderView('@VictoireSeo/Redirection/_form.html.twig', [
+                        'form' => $this->getRedirectionForm(new Redirection(), '#new-form-container')->createView(),
+                        'icTrigger' => [
+                            'target' => '#redirections-list-container',
+                            'url'    => $this->generateUrl('victoire_redirection_showListItem', [
+                                'id' => $redirection->getId()
+                            ])
+                        ]
+                    ]));
+                } else {
+                    // force form error when no link submitted
+                    $form->addError(new FormError('This value should not be blank.'));
+                }
             }
+
+            return new Response($this->renderView('@VictoireSeo/Redirection/_form.html.twig', [
+                'form' => $form->createView(),
+            ]));
         }
 
         // rebuild form to avoid wrong form error
