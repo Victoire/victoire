@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\SeoBundle\Listener;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\EventDispatcher\Event;
 use Victoire\Bundle\CoreBundle\Menu\MenuBuilder;
 
 /**
@@ -28,7 +27,7 @@ class RedirectionMenuListener
     }
 
     /**
-     * add global menu items.
+     * Add global menu items.
      *
      * @return \Knp\Menu\ItemInterface <\Knp\Menu\ItemInterface, NULL>
      */
@@ -36,19 +35,24 @@ class RedirectionMenuListener
     {
         $this->mainItem = $this->menuBuilder->getLeftNavbar();
 
-        $dropdown = $this->menuBuilder->createDropdownMenuItem($this->mainItem, 'Redirections');
+        $dropdown = $this->menuBuilder->createDropdownMenuItem($this->mainItem, 'menu.left.redirection.mainItem.label')
+            ->setAttribute('id', 'menu-redirection-main-item')
+        ;
 
-        $dropdown->addChild('Erreurs 404', [
+        $dropdown->addChild('menu.left.redirection.subItem.404.label', [
             'route' => 'victoire_404_index',
             'title' => 'erreurs_404'
         ])
+            ->setAttribute('id', 'menu-404-sub-item')
             ->setLinkAttribute('ic-get-from', $this->router->generate('victoire_404_index'))
             ->setLinkAttribute('ic-target', '#vic-modal-container')
         ;
 
-        $dropdown->addChild('Redirections', [
-            'route' => 'victoire_redirection_index'
+        $dropdown->addChild('menu.left.redirection.subItem.redirection.label', [
+            'route' => 'victoire_redirection_index',
+            'title' => 'redirections'
         ])
+            ->setAttribute('id', 'menu-redirection-sub-item')
             ->setLinkAttribute('ic-get-from', $this->router->generate('victoire_redirection_index'))
             ->setLinkAttribute('ic-target', '#vic-modal-container')
         ;
