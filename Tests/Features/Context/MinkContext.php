@@ -92,6 +92,8 @@ class MinkContext extends KFMinkContext
      * @param Element $element
      * @param string  $value
      * @param int     $timeout
+     *
+     * @return \Behat\Mink\Element\NodeElement|bool|mixed|null
      */
     protected function findOrRetry(Element $element, $value, $timeout = 10000)
     {

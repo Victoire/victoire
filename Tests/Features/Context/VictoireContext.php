@@ -4,6 +4,7 @@ namespace Victoire\Tests\Features\Context;
 
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Mink\Element\Element;
+use Behat\Mink\Exception\ResponseTextException;
 use Behat\Symfony2Extension\Context\KernelDictionary;
 use Knp\FriendlyContexts\Context\RawMinkContext;
 
@@ -96,7 +97,7 @@ class VictoireContext extends RawMinkContext
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
 
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+            throw new ResponseTextException($message, $this->getSession());
         }
         $element->click();
     }
@@ -111,9 +112,10 @@ class VictoireContext extends RawMinkContext
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
 
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+            throw new ResponseTextException($message, $this->getSession());
         }
         $element->click();
+        $this->getSession()->wait(500);
     }
 
     /**
@@ -126,7 +128,7 @@ class VictoireContext extends RawMinkContext
         if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
 
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+            throw new ResponseTextException($message, $this->getSession());
         }
         $element->click();
     }

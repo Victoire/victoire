@@ -1,4 +1,25 @@
+Victoire\Bundle\CoreBundle\Entity\Link:
+
+    link_1:
+        url: 'http://victoire/fr/output-1'
+        locale: 'FR'
+        createdAt: <datetimeBetween('-5 days', 'now')>
+        updatedAt: <datetime('now')>
+
+    link_2:
+        url: 'http://victoire/fr/output-2'
+        locale: 'FR'
+        createdAt: <datetimeBetween('-5 days', 'now')>
+        updatedAt: <datetime('now')>
+
+    link_3:
+        url: 'http://victoire/fr/output-3'
+        locale: 'FR'
+        createdAt: <datetimeBetween('-5 days', 'now')>
+        updatedAt: <datetime('now')>
+
 Victoire\Bundle\SeoBundle\Entity\Redirection:
+
     redirection_1:
         url: 'http://victoire/fr/input-1'
         link: '@link_1'

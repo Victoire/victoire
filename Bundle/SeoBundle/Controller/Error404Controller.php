@@ -93,7 +93,7 @@ class Error404Controller extends Controller
                         'X-IC-Remove' => '100ms',
                     ]);
                 } else {
-                    // force form error when no linkType === none
+                    // force form error when linkType === none
                     $form->addError(new FormError('This value should not be blank.'));
                 }
             }

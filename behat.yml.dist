@@ -71,6 +71,7 @@ default:
                      BlogWithLocalesi18n:   Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/blogWithLocales.yml
                      LocaleWithBlogsi18n:   Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/BlogI18n/localeWithBlogs.yml
                      Redirection:           Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Redirection/redirection.yml
+                     Error404:              Tests/Functionnal/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/HttpError/error404.yml
                  dependencies:
                      Template:             [User]
                      ErrorPage:            [Template, User]

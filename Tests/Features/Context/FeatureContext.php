@@ -5,13 +5,17 @@ namespace Victoire\Tests\Features\Context;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Mink\Driver\DriverInterface;
+use Behat\Mink\Driver\Goutte\Client;
 use Behat\Mink\Element\DocumentElement;
+use Behat\Mink\Element\Element;
 use Behat\Mink\Exception\ResponseTextException;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
+use Behat\Mink\Session;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Behat\Symfony2Extension\Context\KernelDictionary;
 use Behat\Symfony2Extension\Driver\KernelDriver;
 use Knp\FriendlyContexts\Context\RawMinkContext;
+use Twig\Node\Node;
 
 /**
  * Feature context.
@@ -23,15 +27,22 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
     /**
      * @Given /^I wait (\d+) second$/
      * @Given /^I wait (\d+) seconds$/
+     *
+     * @param $nbr
      */
     public function iWaitSeconds($nbr)
     {
-        $this->getSession()->wait($nbr * 1000);
+        /** @var Session $session */
+        $session = $this->getSession();
+        $session->wait($nbr * 1000);
     }
 
     public function getSymfonyProfile()
     {
-        $driver = $this->getSession()->getDriver();
+        /** @var Session $session */
+        $session = $this->getSession();
+        /** @var DriverInterface $driver */
+        $driver = $session->getDriver();
         if (!$driver instanceof KernelDriver) {
             throw new UnsupportedDriverActionException(
                 'You need to tag the scenario with '.
@@ -56,12 +67,15 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
      * @Then /^I should see the css property "(.+)" of "(.+)" with "(.+)"$/
      *
      * @param string $property
+     * @param $elementId
      * @param string $value
      */
     public function iShouldSeeCssOfWith($property, $elementId, $value)
     {
+        /** @var Session $session */
+        $session = $this->getSession();
         $script = "return $('#".$elementId."').css('".$property."') === '".$value."';";
-        $evaluated = $this->getSession()->evaluateScript($script);
+        $evaluated = $session->evaluateScript($script);
         if (!$evaluated) {
             throw new \RuntimeException('The element with id "'.$elementId.'" and css property "'.$property.': '.$value.';" not found.');
         }
@@ -69,9 +83,13 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
 
     /**
      * @Then I should see background-image of :id with relative url :url
+     *
+     * @param $id
+     * @param $url
      */
     public function iShouldSeeBackgroundImageWithRelativeUrl($id, $url)
     {
+        /** @var Session $session */
         $session = $this->getSession();
         $base_url = $session->getCurrentUrl();
         $parse_url = parse_url($base_url);
@@ -82,10 +100,14 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
 
     /**
      * @Then the title should be :title
+     *
+     * @param $title
+     *
+     * @throws ResponseTextException
      */
     public function theTitleShouldBe($title)
     {
-        $element = $this->getSession()->getPage()->find(
+        $element = $this->getPage()->find(
             'xpath',
             sprintf('//title[normalize-space(text()) = "%s"]', $title)
         );
@@ -93,23 +115,43 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
         if (null === $element) {
             $message = sprintf('"%s" is not the title of the page', $title);
 
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+            throw new ResponseTextException($message, $this->getSession());
         }
     }
 
     /**
-     * @Then I follow :arg1 form the :arg2 menu
+     * @Then The modal title should be :title
+     *
+     * @param $title
+     *
+     * @throws ResponseTextException
+     */
+    public function theModalTitleShouldBe($title)
+    {
+        $element = $this->getPage()->find('xpath', '//*[@id="victoire-modal-label"]');
+
+        if ($title !== $element->getText()) {
+            $message = sprintf('"%s" is not the modal title, the title is "%s"', $title, $element->getText());
+
+            throw new ResponseTextException($message, $this->getSession());
+        }
+    }
+
+    /**
+     * @Then I follow :arg1 from the :arg2 dropdown menu
      *
      * @param string $dropdownItem Level 1 menu item title
      * @param string $mainItem     Level 0 menu item title
      *
      * @throws ResponseTextException
      */
-    public function iFollowFormTheMenu($dropdownItem, $mainItem)
+    public function iFollowFromTheMenu($dropdownItem, $mainItem)
     {
-        $page = $this->getPage();
+        /** @var Session $session */
+        $session = $this->getSession();
 
-        $mainElement = $page->find('xpath', '//li[@id="'.$mainItem.'"]');
+        $mainElement = $this->getPage()->find('xpath', '//li[@id="'.$mainItem.'"]');
+        $session->wait(2000);
 
         if (null === $mainElement) {
             throw new ResponseTextException(sprintf('"%s" element id was not found in the menu', $mainItem), $this->getSession());
@@ -117,6 +159,7 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
 
         $mainElement->click();
         $subElement = $mainElement->find('xpath', '//li[@id="'.$dropdownItem.'"]');
+        $session->wait(2000);
 
         if (null === $subElement) {
             throw new ResponseTextException(sprintf('"%s" element id was not found in the menu', $dropdownItem), $this->getSession());

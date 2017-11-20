@@ -75,15 +75,15 @@ class RedirectionController extends Controller
     public function saveAction(Request $request, Redirection $redirection)
     {
         $form = $this->getRedirectionForm($redirection, sprintf('#redirection-%d-item-container', $redirection->getId()));
-        $form->handleRequest($request);
 
+        $form->handleRequest($request);
         if ($request->query->get('novalidate', false) === false) {
             if ($form->isValid()) {
                 if ($redirection->getLink()->getLinkType() !== Link::TYPE_NONE) {
                     $em = $this->getDoctrine()->getManager();
                     $em->flush();
                 } else {
-                    // force form error when no link submitted
+                    // force form error when linkType === none
                     $form->addError(new FormError('This value should not be blank.'));
                 }
             }
