@@ -1,33 +1,29 @@
 <section id="vic-admin-menu" class="victoire vic-menu-main vic-list-unstyled vic-clearfix vic-navbar-fixed-top" role="navigation">
 
     {% block header %}
-    {% block leftMenu %}
-    {% if is_granted('ROLE_VICTOIRE_LEFTNAVBAR') %}
-    <div class="vic-trigger vic-pull-left">
-        <a class="vic-menu-leftnavbar-trigger" id="vic-menu-leftnavbar-trigger">
-            <i></i>
-        </a>
+        {% block leftMenu %}
+            {% if is_granted('ROLE_VICTOIRE_LEFTNAVBAR') %}
+                <div class="vic-trigger vic-pull-left">
+                    <a class="vic-menu-leftnavbar-trigger" id="vic-menu-leftnavbar-trigger">
+                        <i></i>
+                    </a>
 
-        <nav class="vic-menu-leftnavbar">
-            <div class="vic-scroller">
-                {#
-                <ul id="vic-menu" class="vic-menu-main vic-list-unstyled vic-clearfix"></ul>
-                #}
-                {{ knp_menu_render('leftnavbar') }}
-            </div>
-        </nav>
-    </div>
-    {% endif %}
-    {% endblock %}
-
-    {% block brand %}
-    <div class="vic-topNavbar-logo vic-loading">
-        <a href="#">
-            <img class="vic-picto" src="{{ asset('bundles/victoirecore/images/menu/vic-logo-menu-main-picto.svg') }}" alt="Logo Victoire DCMS" />
-            <img class="vic-logo-label" src="{{ asset('bundles/victoirecore/images/menu/vic-logo-menu-main-label.svg') }}" alt="Logo Victoire DCMS" />
-        </a>
-    </div>
-    {% endblock %}
+                    <nav class="vic-menu-leftnavbar">
+                        <div class="vic-scroller">
+                            {{ knp_menu_render('leftnavbar') }}
+                        </div>
+                    </nav>
+                </div>
+            {% endif %}
+        {% endblock %}
+        {% block brand %}
+        <div class="vic-topNavbar-logo vic-loading">
+            <a href="#">
+                <img class="vic-picto" src="{{ asset('bundles/victoirecore/images/menu/vic-logo-menu-main-picto.svg') }}" alt="Logo Victoire DCMS" />
+                <img class="vic-logo-label" src="{{ asset('bundles/victoirecore/images/menu/vic-logo-menu-main-label.svg') }}" alt="Logo Victoire DCMS" />
+            </a>
+        </div>
+        {% endblock %}
     {% endblock %}
 
     {% block menu_container %}
