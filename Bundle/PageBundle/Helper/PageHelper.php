@@ -18,7 +18,6 @@ use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
-use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\PageRenderEvent;
@@ -27,8 +26,6 @@ use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 use Victoire\Bundle\SeoBundle\Entity\Error404;
-use Victoire\Bundle\SeoBundle\Entity\NotFoundError;
-use Victoire\Bundle\SeoBundle\Entity\Redirection;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException;
@@ -115,9 +112,9 @@ class PageHelper
      *
      * @param $parameters
      *
-     * @throws ViewReferenceNotFoundException
-     *
      * @return View
+     *
+     * @throws ViewReferenceNotFoundException
      */
     public function findPageByParameters($parameters)
     {
@@ -185,7 +182,7 @@ class PageHelper
             $uri = sprintf('%s%s/%s/%s',
                 $this->container->get('request')->getSchemeAndHttpHost(),
                 $this->container->get('router')->getContext()->getBaseUrl(),
-                $this->container->get('request')->getLocale(),
+                $this->container->get('request')->getLocale()
             );
 
             /** @var Error404 $error404 */
@@ -226,9 +223,9 @@ class PageHelper
      *
      * @return Response
      */
-    public function renderPage($view, $layout = null)
+    public function renderPage(View $view, $layout = null)
     {
-        $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view);
+        $event = new PageMenuContextualEvent($view);
 
         //Set currentView and dispatch victoire.on_render_page event with this currentView
         $this->currentViewHelper->setCurrentView($view);
@@ -247,7 +244,7 @@ class PageHelper
             $eventName = 'victoire_core.page_menu.contextual';
             if (!$view->getId()) {
                 $eventName = 'victoire_core.business_template_menu.contextual';
-                $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view->getTemplate());
+                $event = new PageMenuContextualEvent($view->getTemplate());
             }
             $this->eventDispatcher->dispatch($eventName, $event);
             $type = $view->getBusinessEntityId();

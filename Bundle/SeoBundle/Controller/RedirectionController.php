@@ -40,7 +40,6 @@ class RedirectionController extends Controller
             ->getManager()
             ->getRepository('VictoireSeoBundle:Redirection');
 
-        /* todo fix pager */
         $adapter = new DoctrineORMAdapter($redirectionRepository->getUnresolvedQuery());
         $pager = new Pagerfanta($adapter);
 

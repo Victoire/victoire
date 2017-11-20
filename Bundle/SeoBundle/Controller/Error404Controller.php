@@ -41,7 +41,6 @@ class Error404Controller extends Controller
             ->getManager()
             ->getRepository('VictoireSeoBundle:HttpError');
 
-        /* todo fix pager */
         $adapter = new DoctrineORMAdapter($error404Repository->getUnresolvedQuery());
         $pager = new Pagerfanta($adapter);
 

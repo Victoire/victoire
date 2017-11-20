@@ -341,16 +341,16 @@ class Link
         // check if the name is actually a fake name
         switch ($this->getLinkType()) {
             case self::TYPE_VIEW_REFERENCE:
-            $violation = $this->getViewReference() == null;
+            $violation = $this->getViewReference() === null;
                 break;
             case self::TYPE_ROUTE:
-            $violation = $this->getRoute() == null;
+            $violation = $this->getRoute() === null;
                 break;
             case self::TYPE_URL:
-            $violation = $this->getUrl() == null;
+            $violation = $this->getUrl() === null;
                 break;
             case self::TYPE_WIDGET:
-            $violation = $this->getAttachedWidget() == null;
+            $violation = $this->getAttachedWidget() === null;
                 break;
             default:
                 break;
