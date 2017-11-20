@@ -26,6 +26,7 @@ use Victoire\Bundle\CoreBundle\Event\PageRenderEvent;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\SeoBundle\Entity\Error404;
 use Victoire\Bundle\SeoBundle\Entity\NotFoundError;
 use Victoire\Bundle\SeoBundle\Entity\Redirection;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
@@ -178,26 +179,36 @@ class PageHelper
 
             return $this->renderPage($page, $layout);
         } else {
-            $redirection = $this->entityManager->getRepository('VictoireSeoBundle:Redirection')
+            $uri = sprintf('%s%s/%s/%s',
+                $this->container->get('request')->getSchemeAndHttpHost(),
+                $this->container->get('router')->getContext()->getBaseUrl(),
+                $this->container->get('request')->getLocale(),
+                $url
+            );
+
+            /** @var Error404 $error404 */
+            $error404 = $this->entityManager->getRepository('VictoireSeoBundle:Error404')
                 ->findOneBy([
-                    'input' => $uri
+                    'url' => $uri
                 ]);
 
-            if ($redirection && $redirection->getOutput()) {
-                $redirection->increaseCount();
+            if ($error404) {
+                if ($error404->getRedirection()) {
+                    $error404->getRedirection()->increaseCounter();
+                    $this->entityManager->flush();
 
-                return new RedirectResponse($redirection->getOutput());
-
-            } else {
-                if ($redirection) {
-                    $redirection->increaseCount();
+                    return new RedirectResponse(
+                        $this->container->get('victoire_widget.twig.link_extension')
+                            ->victoireLinkUrl($error404->getRedirection()->getLink()->getParameters()));
                 } else {
-                    $redirection = new Redirection();
-                    $redirection->setInput($uri);
-                    $redirection->setStatusCode(Response::HTTP_NOT_FOUND);
+                    $error404->increaseCounter();
+                    $this->entityManager->flush();
                 }
+            } else {
+                $error404 = new Error404();
+                $error404->setUrl($uri);
 
-                $this->entityManager->persist($redirection);
+                $this->entityManager->persist($error404);
                 $this->entityManager->flush();
             }
 
