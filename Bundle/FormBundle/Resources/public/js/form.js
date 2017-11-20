@@ -43,7 +43,8 @@ $vic(document).on('change', 'select[data-refreshOnChange="true"], input:checkbox
         });
         //By default, the updateStrategy is html (a simple replace) but you can set your own function
         //for example, append, after etc or even a custom one.
-        eval('$target.' + updateStrategy + '(response.html)');
+        eval('$target.' + updateStrategy + '(response.html);');
+        eval('Intercooler.processNodes($target);');
 
         $vic(actives).each(function() {
             $vic('a[href="#'+this+'"]').victab('show');
