@@ -1,0 +1,5 @@
+{% include '@VictoireSeo/Error404/_preview.html.twig' with { 'error': error } %}
+<div id="404-{{ error.id }}-form-container" class="collapse {{ isOpened|default(false) ? 'in' : '' }}">
+    <hr>
+    {% include '@VictoireSeo/Error404/_form.html.twig' with { 'form': form } %}
+</div>

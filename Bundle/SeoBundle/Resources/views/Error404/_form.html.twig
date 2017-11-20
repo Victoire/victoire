@@ -1,0 +1,29 @@
+{% trans_default_domain "victoire" %}
+
+{% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+
+{{ form_start(form) }}
+    <div class="row vic-mt-1">
+        <div class="col-md-10 col-md-offset-1">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+    <div class="row vic-mb-1">
+        <div class="col-md-10 col-md-offset-1">
+            {{ form_widget(form.link) }}
+            {{ form_errors(form.link) }}
+        </div>
+    </div>
+    <div class="row vic-mb-1">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="vic-float-right">
+                <input
+                    type="submit"
+                    value="{{ 'modal.error404.form.submit.value'|trans }}"
+                    class="vic-btn vic-btn-default vic-bg-green vic-text-white"
+                >
+            </div>
+        </div>
+    </div>
+{{ form_rest(form) }}
+{{ form_end(form) }}

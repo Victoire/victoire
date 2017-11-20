@@ -1,0 +1,41 @@
+{% trans_default_domain "victoire" %}
+
+<div class="row">
+    <div class="col-md-1 vic-text-left">
+        <a href="#"
+           id="delete-link-{{ redirection.id }}"
+           ic-delete-from="{{ path('victoire_redirection_delete', { 'id': redirection.id }) }}"
+           ic-target="closest li"
+           class="btn-lg btn-secondary btn-transparent text-danger"
+           ic-trigger-on="confirmed-by-user"
+           data-toggle="vic-confirm"
+           data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire') }}"
+           data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire') }}"
+           data-confirm-callback="$('#delete-link-{{ redirection.id }}').trigger('confirmed-by-user')"
+        >
+            <i class="fa fa-times"></i>
+            <i class="fa fa-spinner fa-spin ic-indicator collapse"></i>
+        </a>
+    </div>
+    <div class="col-md-4 col-sm-12 col-sm-align-center col-sm-mt-1">
+        <a href="{{ redirection.url }}">
+            {{ redirection.url }}
+        </a>
+    </div>
+    <div class="col-md-1 text-center col-sm-12 col-sm-align-center col-sm-mt-1">
+        <i class="fa fa-long-arrow-right"></i>
+    </div>
+    <div class="col-md-3 col-sm-12 col-sm-align-center col-sm-mt-1">
+        {% if redirection.link.parameters is defined %}
+            <a href="{{ vic_link_url(redirection.link.parameters) }}">{{ vic_link_url(redirection.link.parameters) }}</a>
+        {% endif %}
+    </div>
+    <div class="col-md-2 col-sm-12 col-sm-align-center col-sm-mb-1 vic-text-right">
+        {{ 'modal.redirection.counter.label'|trans }}<strong class="vic-pl-1">{{ redirection.counter }}</strong>
+    </div>
+    <div class="col-md-1 vic-text-right">
+        <a id="collapse-icon-{{ redirection.id }}" data-toggle="collapse" href="#redirection-{{ redirection.id }}-form-container" class="btn-lg btn-secondary" {% if isOpened|default(false) %} aria-expanded="true"{% endif %}>
+            <i class="fa fa-plus" id="{{ redirection.id }}"></i>
+        </a>
+    </div>
+</div>
