@@ -97,7 +97,7 @@ class RedirectionController extends Controller
         }
 
         // rebuild form to avoid wrong form error
-        $form = $this->getRedirectionForm($redirection, sprintf('#redirection-%d-item-container', $redirection->getId()));// remove when no more url field in redirection form
+        $form = $this->getRedirectionForm($redirection, sprintf('#redirection-%d-item-container', $redirection->getId()));
         // refresh redirection.link to avoid empty link datas
         $this->getDoctrine()->getManager()->refresh($redirection->getLink());
 
@@ -130,16 +130,6 @@ class RedirectionController extends Controller
             if ($form->isValid()) {
                 if ($redirection->getLink()->getLinkType() !== Link::TYPE_NONE) {
                     $em = $this->getDoctrine()->getManager();
-                    /** @var Redirection $redirection */
-                    $redirection = $form->getData();
-
-                    /** @var Link $link */
-                    $link = $form->getData()->getLink();
-
-                    $link->setUrl($form->getData()->getLink()->getUrl());
-                    $link->setLocale($request->getLocale());
-                    $redirection->setLink($link);
-
                     $em->persist($redirection);
                     $em->flush();
 
