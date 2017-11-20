@@ -27,12 +27,15 @@ class RedirectionType extends AbstractType
                     'class' => 'vic-form-control'
                 ]
             ])
-            ->add('output', TextType::class, [
+            ->add('output', LinkType::class, [
+//                'refresh-target' => '#basics',
+//                'label'          => 'form.pageSeo.redirectTo.label',
+//                'vic_help_block' => 'form.pageSeo.redirectTo.vic_help_block',
                 'label' => false,
-                'required' => false,
-                'attr' => [
-                    'class' => 'vic-form-control'
-                ]
+                'required' => false
+//                'attr' => [
+//                    'class' => 'vic-form-control'
+//                ]
             ])
         ;
     }

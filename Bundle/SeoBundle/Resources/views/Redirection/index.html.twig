@@ -40,7 +40,7 @@
                         {{ form_widget(newForm.children.input, {'value' : 'Url de départ'}) }}
                     </div>
                     <div class="col-lg-3 col-lg-offset-1">
-                        {{ form_widget(newForm.children.output, {'value' : 'Url de destination'}) }}
+                        {{ form_widget(newForm.children.output) }}
                     </div>
                     <div class="col-lg-2 col-lg-offset-2">
                         <div class="pull-right">
@@ -84,8 +84,8 @@
                                 <i class="fa fa-long-arrow-right"></i>
                             </div>
                             <div class="col-md-4">
-                                <a href="{{ redirection.output }}">
-                                    {{ redirection.output }}
+                                <a href="{{ redirection.output.url }}">
+                                    {{ redirection.output.url }}
                                 </a>
                             </div>
                             <div class="col-md-2">

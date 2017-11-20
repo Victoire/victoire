@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -25,7 +26,7 @@ class Link
     const TARGET_BLANK = '_blank';
     const TARGET_MODAL = '_modal';
 
-    use \Gedmo\Timestampable\Traits\TimestampableEntity;
+    use TimestampableEntity;
 
     /**
      * @var int
@@ -40,6 +41,8 @@ class Link
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
+     *
+     * @Assert\Url(message = "This is not a valid url")
      */
     protected $url;
 

@@ -3,16 +3,17 @@
 namespace Victoire\Bundle\SeoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Victoire\Bundle\CoreBundle\Entity\Link;
 /**
  * Redirection.
  *
- * @ORM\Entity()
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\SeoBundle\Repository\RedirectionRepository")
  * @ORM\Table("vic_redirection")
  *
- * @UniqueEntity("input")
+ * @UniqueEntity("url")
  */
 class Redirection
 {
@@ -26,36 +27,34 @@ class Redirection
     private $id;
 
     /**
-     * @var string $input
+     * @Assert\Valid()
+     * @Assert\NotBlank()
      *
-     * @ORM\Column(name="input", type="string", nullable=false, unique=true)
-     *
-     * @Assert\NotNull()
-     * @Assert\Url(message="input")
+     * @ORM\OneToOne(
+     *     targetEntity="Victoire\Bundle\CoreBundle\Entity\Link",
+     *     cascade={"persist", "remove"}
+     * )
+     * @ORM\JoinColumn(
+     *     name="link",
+     *     referencedColumnName="id",
+     *     onDelete="CASCADE"
+     * )
      */
-    private $input;
+    private $link;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="counter", type="integer", nullable=false)
+     */
+    private $counter = 1;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="output", type="string", nullable=true)
+     * @ORM\Column(name="url", type="string", unique=true, nullable=true)
      */
-    private $output;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="status_code", type="integer", nullable=false)
-     */
-    private $statusCode;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="count", type="integer", nullable=false)
-     */
-    private $count = 1;
+    private $url;
 
     /**
      * @return int
@@ -66,41 +65,21 @@ class Redirection
     }
 
     /**
-     * @return string
+     * @return Link
      */
-    public function getInput()
+    public function getLink()
     {
-        return $this->input;
+        return $this->link;
     }
 
     /**
-     * @param string $input
+     * @param string $link
      *
      * @return Redirection
      */
-    public function setInput($input)
+    public function setLink($link)
     {
-        $this->input = $input;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOutput()
-    {
-        return $this->output;
-    }
-
-    /**
-     * @param string $output
-     *
-     * @return Redirection
-     */
-    public function setOutput($output)
-    {
-        $this->output = $output;
+        $this->link = $link;
 
         return $this;
     }
@@ -108,39 +87,19 @@ class Redirection
     /**
      * @return int
      */
-    public function getStatusCode()
+    public function getCounter()
     {
-        return $this->statusCode;
+        return $this->counter;
     }
 
     /**
-     * @param int $statusCode
+     * @param int $counter
      *
      * @return Redirection
      */
-    public function setStatusCode($statusCode)
+    public function setCounter($counter)
     {
-        $this->statusCode = $statusCode;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCount()
-    {
-        return $this->count;
-    }
-
-    /**
-     * @param int $count
-     *
-     * @return Redirection
-     */
-    public function setCount($count)
-    {
-        $this->count = $count;
+        $this->counter = $counter;
 
         return $this;
     }
@@ -148,9 +107,29 @@ class Redirection
     /**
      * @return $this
      */
-    public function increaseCount()
+    public function increaseCounter()
     {
-        $this->count += 1;
+        $this->counter += 1;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return Redirection
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
 
         return $this;
     }

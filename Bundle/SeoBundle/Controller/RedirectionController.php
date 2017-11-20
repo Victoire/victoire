@@ -159,6 +159,7 @@ class RedirectionController extends Controller
         foreach ($redirections as $redirection) {
             $redirectionId = $redirection->getId();
             $listForm[$redirectionId] = $this->createForm(RedirectionType::class, $redirection, [
+                'method' => 'POST',
                 'action' => $this->generateUrl('victoire_redirection_update', [
                     'id' => $redirectionId
                 ]),
@@ -175,6 +176,7 @@ class RedirectionController extends Controller
          * Build new redirection form
          */
         $newForm = $this->createForm(new RedirectionType(), new Redirection(), [
+            'method' => 'POST',
             'action' => $this->generateUrl('victoire_redirection_new'),
             'attr' => [
                 'ic-post-to' => $this->generateUrl('victoire_redirection_new'),

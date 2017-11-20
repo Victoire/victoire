@@ -5,6 +5,7 @@ namespace Victoire\Bundle\SeoBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationInterface;
@@ -51,7 +52,9 @@ class Error404Controller extends Controller
 
         if ($form->isSubmitted()) {
 
-            if ($form->isValid()) {
+            $noValidate = $request->query->get('novalidate', false);
+
+            if ($noValidate === false && $form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
 
                 $redirection->setStatusCode(Response::HTTP_MOVED_PERMANENTLY);
@@ -62,6 +65,12 @@ class Error404Controller extends Controller
                 $this->congrat('L\'erreur 404 à bien été transformée en redirection');
 
                 return $this->generateView();
+            } else {
+
+                return new JsonResponse([
+                    'success' => true,
+                    'html'    => 'test',
+                ]);
             }
 
             $errors = $this->validatorMessageToString($redirection);
@@ -120,10 +129,10 @@ class Error404Controller extends Controller
         foreach ($errors as $error) {
             $errorId = $error->getId();
             $formArray[$errorId] = $this->createForm(RedirectionType::class, $error, [
+                'method' => 'POST',
                 'action' => $this->generateUrl('victoire_404_update', [
                     'id' => $errorId
                 ]),
-                'method' => 'POST',
                 'attr' => [
                     'ic-post-to' => $this->generateUrl('victoire_404_update', [
                         'id' => $errorId
