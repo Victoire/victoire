@@ -41,7 +41,6 @@ class RedirectionRepository extends EntityRepository
     {
         $this->getAll();
 
-        return $this->qb;
-        //->orderBy($order, $direction);
+        return $this->qb->orderBy($order, $direction);
     }
 }

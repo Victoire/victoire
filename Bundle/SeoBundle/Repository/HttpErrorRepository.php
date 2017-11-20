@@ -4,8 +4,6 @@ namespace Victoire\Bundle\SeoBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
 use Victoire\Bundle\CoreBundle\Repository\StateFullRepositoryTrait;
 
 /**
@@ -49,7 +47,6 @@ class HttpErrorRepository extends EntityRepository
     {
         $this->getAll(true);
 
-        return $this->qb;
-        //->orderBy($order, $direction);
+        return $this->qb->orderBy($order, $direction);
     }
 }
