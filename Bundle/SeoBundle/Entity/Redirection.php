@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\CoreBundle\Entity\Link;
+
 /**
  * Redirection.
  *
@@ -27,6 +28,8 @@ class Redirection
     private $id;
 
     /**
+     * @var Link
+     *
      * @Assert\Valid()
      * @Assert\NotBlank()
      *

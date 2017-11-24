@@ -8,8 +8,6 @@ use Victoire\Bundle\CoreBundle\Repository\StateFullRepositoryTrait;
 
 /**
  * Class RedirectionRepository.
- *
- * @package Victoire\Bundle\SeoBundle\Repository
  */
 class RedirectionRepository extends EntityRepository
 {

@@ -17,7 +17,7 @@ use Victoire\Bundle\SeoBundle\Form\RedirectionType;
 use Victoire\Bundle\SeoBundle\Repository\RedirectionRepository;
 
 /**
- * Class RedirectionController
+ * Class RedirectionController.
  *
  * @Route("/redirection")
  */
@@ -42,7 +42,7 @@ class RedirectionController extends Controller
 
         /* todo fix pager */
         $adapter = new DoctrineORMAdapter($redirectionRepository->getUnresolvedQuery());
-        $pager   = new Pagerfanta($adapter);
+        $pager = new Pagerfanta($adapter);
 
         $pager->setMaxPerPage(100);
         $pager->setCurrentPage($request->query->get('page', 1));
@@ -57,9 +57,9 @@ class RedirectionController extends Controller
         $newForm = $this->getRedirectionForm(new Redirection(), '#new-form-container')->createView();
 
         return $this->render($this->getBaseTemplatePath().':index.html.twig', [
-            'newForm'      => $newForm,
-            'forms'        => $forms,
-            'pager'        => $pager
+            'newForm' => $newForm,
+            'forms'   => $forms,
+            'pager'   => $pager,
         ]);
     }
 
@@ -91,8 +91,8 @@ class RedirectionController extends Controller
 
             return new Response($this->renderView('@VictoireSeo/Redirection/_item.html.twig', [
                 'redirection' => $redirection,
-                'form' => $form->createView(),
-                'isOpened' => true
+                'form'        => $form->createView(),
+                'isOpened'    => true,
             ]));
         }
 
@@ -105,8 +105,8 @@ class RedirectionController extends Controller
             'html' => $this->renderView('@VictoireSeo/Redirection/_item.html.twig', [
                 'form'        => $form->createView(),
                 'redirection' => $redirection,
-                'isOpened'    => true
-            ])
+                'isOpened'    => true,
+            ]),
         ]);
     }
 
@@ -134,13 +134,13 @@ class RedirectionController extends Controller
                     $em->flush();
 
                     return new Response($this->renderView('@VictoireSeo/Redirection/_form.html.twig', [
-                        'form' => $this->getRedirectionForm(new Redirection(), '#new-form-container')->createView(),
+                        'form'      => $this->getRedirectionForm(new Redirection(), '#new-form-container')->createView(),
                         'icTrigger' => [
                             'target' => '#redirections-list-container',
                             'url'    => $this->generateUrl('victoire_redirection_showListItem', [
-                                'id' => $redirection->getId()
-                            ])
-                        ]
+                                'id' => $redirection->getId(),
+                            ]),
+                        ],
                     ]));
                 } else {
                     // force form error when no link submitted
@@ -158,8 +158,8 @@ class RedirectionController extends Controller
 
         return new JsonResponse([
             'html' => $this->renderView('@VictoireSeo/Redirection/_form.html.twig', [
-                'form' => $form->createView()
-            ])
+                'form' => $form->createView(),
+            ]),
         ]);
     }
 
@@ -180,7 +180,7 @@ class RedirectionController extends Controller
         $em->flush();
 
         return new Response(null, 204, [
-            'X-IC-Remove' => '100ms'
+            'X-IC-Remove' => '100ms',
         ]);
     }
 
@@ -199,7 +199,7 @@ class RedirectionController extends Controller
 
         return $this->render('@VictoireSeo/Redirection/_item.html.twig', [
             'redirection' => $redirection,
-            'form'        => $form->createView()
+            'form'        => $form->createView(),
         ]);
     }
 
@@ -215,8 +215,7 @@ class RedirectionController extends Controller
             /* update redirection */
             ? $this->generateUrl('victoire_redirection_new')
             /* create redirection */
-            : $this->generateUrl('victoire_redirection_save', ['id' => $redirection->getId()])
-        ;
+            : $this->generateUrl('victoire_redirection_save', ['id' => $redirection->getId()]);
 
         return $this->createForm(RedirectionType::class, $redirection, [
             'method'      => 'POST',
@@ -225,7 +224,7 @@ class RedirectionController extends Controller
             'withUrl'     => (null === $redirection->getId()) ? true : false,
             'attr'        => [
                 'ic-post-to' => $action,
-                'ic-target'  => $containerId
+                'ic-target'  => $containerId,
             ],
         ]);
     }

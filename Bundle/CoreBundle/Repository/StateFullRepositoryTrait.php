@@ -12,6 +12,9 @@ use Doctrine\ORM\QueryBuilder;
  */
 trait StateFullRepositoryTrait
 {
+    /**
+     * @var QueryBuilder
+     */
     protected $qb;
 
     /**
@@ -65,7 +68,7 @@ trait StateFullRepositoryTrait
      * Run active query.
      *
      * @param string $method        The method to run
-     * @param string $hydrationMode How the results will be (Object ? Array )
+     * @param int    $hydrationMode How the results will be (Object ? Array )
      * @param bool   $autoClear     AutoClear means reset active instance
      *
      * @return array()

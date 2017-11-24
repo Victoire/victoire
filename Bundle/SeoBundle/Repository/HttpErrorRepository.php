@@ -8,8 +8,6 @@ use Victoire\Bundle\CoreBundle\Repository\StateFullRepositoryTrait;
 
 /**
  * Class HttpErrorRepository.
- *
- * @package SeoBundle\Repository
  */
 class HttpErrorRepository extends EntityRepository
 {

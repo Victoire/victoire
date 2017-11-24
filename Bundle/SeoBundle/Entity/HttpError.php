@@ -25,28 +25,28 @@ abstract class HttpError
     protected $id;
 
     /**
-     * @var string $url
+     * @var string
      *
      * @ORM\Column(name="url", type="string", nullable=false, unique=true)
      */
     protected $url;
 
     /**
-     * @var string $errorMessage
+     * @var string
      *
      * @ORM\Column(name="error_message", type="string")
      */
     protected $errorMessage;
 
     /**
-     * @var int $counter
+     * @var int
      *
      * @ORM\Column(name="counter", type="integer", options={"default": 1})
      */
     protected $counter = 1;
 
     /**
-     * @var ErrorRedirection $redirection
+     * @var ErrorRedirection
      *
      * @ORM\OneToOne(
      *     targetEntity="Victoire\Bundle\SeoBundle\Entity\ErrorRedirection",
@@ -56,6 +56,11 @@ abstract class HttpError
      */
     protected $redirection;
 
+    /**
+     * HttpError constructor.
+     *
+     * @param $errorMessage
+     */
     public function __construct($errorMessage)
     {
         $this->errorMessage = $errorMessage;

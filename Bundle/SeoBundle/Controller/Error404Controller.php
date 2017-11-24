@@ -18,7 +18,7 @@ use Victoire\Bundle\SeoBundle\Form\RedirectionType;
 use Victoire\Bundle\SeoBundle\Repository\HttpErrorRepository;
 
 /**
- * Class Error404Controller
+ * Class Error404Controller.
  *
  * @Route("/error404")
  */
@@ -43,7 +43,7 @@ class Error404Controller extends Controller
 
         /* todo fix pager */
         $adapter = new DoctrineORMAdapter($error404Repository->getUnresolvedQuery());
-        $pager   = new Pagerfanta($adapter);
+        $pager = new Pagerfanta($adapter);
 
         $pager->setMaxPerPage(100);
         $pager->setCurrentPage($request->query->get('page', 1));
@@ -59,7 +59,7 @@ class Error404Controller extends Controller
 
         return $this->render($this->getBaseTemplatePath().':index.html.twig', [
             'pager' => $pager,
-            'forms' => $forms
+            'forms' => $forms,
         ]);
     }
 
@@ -91,7 +91,7 @@ class Error404Controller extends Controller
                     $em->flush();
 
                     return new Response(null, 204, [
-                        'X-IC-Remove' => '100ms'
+                        'X-IC-Remove' => '100ms',
                     ]);
                 } else {
                     // force form error when no linkType === none
@@ -102,7 +102,7 @@ class Error404Controller extends Controller
             return new Response($this->renderView('@VictoireSeo/Error404/_item.html.twig', [
                 'form'     => $form->createView(),
                 'error'    => $error404,
-                'isOpened' => true
+                'isOpened' => true,
             ]));
         }
 
@@ -113,8 +113,8 @@ class Error404Controller extends Controller
             'html' => $this->renderView('@VictoireSeo/Error404/_item.html.twig', [
                 'form'     => $form->createView(),
                 'error'    => $error404,
-                'isOpened' => true
-            ])
+                'isOpened' => true,
+            ]),
         ]);
     }
 
@@ -135,7 +135,7 @@ class Error404Controller extends Controller
         $em->flush();
 
         return new Response(null, 204, [
-            'X-IC-Remove' => '100ms'
+            'X-IC-Remove' => '100ms',
         ]);
     }
 
@@ -157,7 +157,7 @@ class Error404Controller extends Controller
             'attr'        => [
                 'ic-post-to' => $action,
                 'ic-target'  => $containerId,
-            ]
+            ],
         ]);
     }
 

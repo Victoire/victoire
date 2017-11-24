@@ -4,7 +4,6 @@ namespace Victoire\Bundle\PageBundle\Helper;
 
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\Orm\EntityManager;
-use Doctrine\ORM\ORMInvalidArgumentException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -26,6 +25,7 @@ use Victoire\Bundle\CoreBundle\Event\PageRenderEvent;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 use Victoire\Bundle\SeoBundle\Entity\Error404;
 use Victoire\Bundle\SeoBundle\Entity\NotFoundError;
 use Victoire\Bundle\SeoBundle\Entity\Redirection;
@@ -113,6 +113,10 @@ class PageHelper
     /**
      * generates a response from parameters.
      *
+     * @param $parameters
+     *
+     * @throws ViewReferenceNotFoundException
+     *
      * @return View
      */
     public function findPageByParameters($parameters)
@@ -155,11 +159,10 @@ class PageHelper
      * @param string $url
      * @param        $locale
      * @param null   $layout
-     * @param null   $uri
      *
      * @return Response
      */
-    public function renderPageByUrl($url, $locale, $layout = null, $uri)
+    public function renderPageByUrl($url, $locale, $layout = null)
     {
         $page = null;
         if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
@@ -183,13 +186,12 @@ class PageHelper
                 $this->container->get('request')->getSchemeAndHttpHost(),
                 $this->container->get('router')->getContext()->getBaseUrl(),
                 $this->container->get('request')->getLocale(),
-                $url
             );
 
             /** @var Error404 $error404 */
             $error404 = $this->entityManager->getRepository('VictoireSeoBundle:Error404')
                 ->findOneBy([
-                    'url' => $uri
+                    'url' => $uri,
                 ]);
 
             if ($error404) {
@@ -344,20 +346,6 @@ class PageHelper
         }
 
         return $page;
-    }
-
-    /**
-     * @param View $page
-     * @param $locale
-     */
-    private function refreshPage($page, $locale)
-    {
-        if ($page && $page instanceof View) {
-            try {
-                $this->entityManager->refresh($page->setTranslatableLocale($locale));
-            } catch (ORMInvalidArgumentException $e) {
-            }
-        }
     }
 
     /**

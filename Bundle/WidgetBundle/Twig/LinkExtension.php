@@ -132,12 +132,12 @@ class LinkExtension extends \Twig_Extension
                         $this->logger->error($e->getMessage(), $params);
                         /** @var ErrorPage $page */
                         $page = $this->errorPageRepository->findOneByCode(404);
-                        $linkUrl = "#";
+                        $linkUrl = '#';
                         if ($page instanceof ErrorPage) {
                             $linkUrl = $this->router->generate(
                                 'victoire_core_page_show', array_merge([
                                     '_locale' => $parameters['locale'],
-                                    'url' => $page->getSlug()
+                                    'url'     => $page->getSlug(),
                             ], $params));
                         }
                     }

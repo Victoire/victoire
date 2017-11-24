@@ -18,7 +18,7 @@ class RedirectionMenuListener
      * RedirectionMenuListener constructor.
      *
      * @param MenuBuilder $menuBuilder
-     * @param Router $router
+     * @param Router      $router
      */
     public function __construct(MenuBuilder $menuBuilder, Router $router)
     {
@@ -36,26 +36,23 @@ class RedirectionMenuListener
         $this->mainItem = $this->menuBuilder->getLeftNavbar();
 
         $dropdown = $this->menuBuilder->createDropdownMenuItem($this->mainItem, 'menu.left.redirection.mainItem.label')
-            ->setAttribute('id', 'menu-redirection-main-item')
-        ;
+            ->setAttribute('id', 'menu-redirection-main-item');
 
         $dropdown->addChild('menu.left.redirection.subItem.404.label', [
             'route' => 'victoire_404_index',
-            'title' => 'erreurs_404'
+            'title' => 'erreurs_404',
         ])
             ->setAttribute('id', 'menu-404-sub-item')
             ->setLinkAttribute('ic-get-from', $this->router->generate('victoire_404_index'))
-            ->setLinkAttribute('ic-target', '#vic-modal-container')
-        ;
+            ->setLinkAttribute('ic-target', '#vic-modal-container');
 
         $dropdown->addChild('menu.left.redirection.subItem.redirection.label', [
             'route' => 'victoire_redirection_index',
-            'title' => 'redirections'
+            'title' => 'redirections',
         ])
             ->setAttribute('id', 'menu-redirection-sub-item')
             ->setLinkAttribute('ic-get-from', $this->router->generate('victoire_redirection_index'))
-            ->setLinkAttribute('ic-target', '#vic-modal-container')
-        ;
+            ->setLinkAttribute('ic-target', '#vic-modal-container');
 
         return $this->mainItem;
     }

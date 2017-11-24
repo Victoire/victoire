@@ -23,17 +23,17 @@ class RedirectionType extends AbstractType
         if (true === $options['withUrl']) {
             $builder->add('url', UrlType::class, [
                 'label' => false,
-                'attr' => [
+                'attr'  => [
+                    'class'       => 'vic-form-control',
                     'placeholder' => 'redirection.form.url.placeholder',
-                    'class' => 'vic-form-control',
-                ]
+                ],
             ]);
         }
 
         $builder->add('link', LinkType::class, [
-            'label' => false,
-            'withTarget' => false,
-            'refresh-target' => $options['containerId']
+            'label'          => false,
+            'withTarget'     => false,
+            'refresh-target' => $options['containerId'],
         ]);
     }
 
@@ -47,7 +47,7 @@ class RedirectionType extends AbstractType
             'method'             => 'POST',
             'translation_domain' => 'victoire',
             'data_class'         => Redirection::class,
-            'withUrl'            => false
+            'withUrl'            => false,
         ]);
     }
 

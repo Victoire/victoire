@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ErrorRedirection extends Redirection
 {
     /**
-     * @var HttpError $error
+     * @var HttpError
      *
      * @ORM\OneToOne(
      *     targetEntity="Victoire\Bundle\SeoBundle\Entity\HttpError",
@@ -42,7 +42,7 @@ class ErrorRedirection extends Redirection
     }
 
     /**
-     * Simple proxy to Error's url
+     * Simple proxy to Error's url.
      *
      * @return string
      */
