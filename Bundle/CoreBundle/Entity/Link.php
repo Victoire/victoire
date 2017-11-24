@@ -42,7 +42,7 @@ class Link
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
      *
-     * @Assert\Url(message = "This value is not a valid URL.")
+     * @Assert\Url()
      */
     protected $url;
 

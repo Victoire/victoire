@@ -125,8 +125,6 @@ abstract class View
     protected $references;
 
     /**
-     * @var string
-     *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -161,7 +159,7 @@ abstract class View
     protected $cssUpToDate = false;
 
     /**
-     * @var bool
+     * @var string
      *
      * @ORM\Column(name="roles", type="text", nullable=true)
      */
@@ -229,7 +227,7 @@ abstract class View
     /**
      * Get template.
      *
-     * @return string
+     * @return View
      */
     public function getTemplate()
     {
@@ -816,7 +814,7 @@ abstract class View
     }
 
     /**
-     * @return bool
+     * @return string
      */
     public function getRoles()
     {

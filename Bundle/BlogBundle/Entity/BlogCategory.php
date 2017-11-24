@@ -188,7 +188,7 @@ class BlogCategory
      *
      * @param string $articles
      *
-     * @return $this
+     * @return BlogCategory
      */
     public function setArticles($articles)
     {
@@ -212,7 +212,7 @@ class BlogCategory
      *
      * @param int $lft
      *
-     * @return $this
+     * @return BlogCategory
      */
     public function setLft($lft)
     {
@@ -236,7 +236,7 @@ class BlogCategory
      *
      * @param int $lvl
      *
-     * @return $this
+     * @return BlogCategory
      */
     public function setLvl($lvl)
     {
@@ -260,7 +260,7 @@ class BlogCategory
      *
      * @param int $rgt
      *
-     * @return $this
+     * @return BlogCategory
      */
     public function setRgt($rgt)
     {
@@ -284,7 +284,7 @@ class BlogCategory
      *
      * @param int $root
      *
-     * @return Menu
+     * @return BlogCategory
      */
     public function setRoot($root)
     {
@@ -308,7 +308,7 @@ class BlogCategory
      *
      * @param BlogCategory $parent
      *
-     * @return $this
+     * @return BlogCategory
      */
     public function setParent(self $parent = null)
     {
@@ -332,7 +332,7 @@ class BlogCategory
      *
      * @param BlogCategory $child
      *
-     * @return $this
+     * @return BlogCategory
      */
     public function addChild(self $child)
     {
@@ -367,7 +367,7 @@ class BlogCategory
      *
      * @param array $children
      *
-     * @return \Victoire\Bundle\BlogBundle\Entity\BlogCategory
+     * @return BlogCategory
      */
     public function setChildren($children)
     {
@@ -377,7 +377,7 @@ class BlogCategory
     }
 
     /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @return ArrayCollection
      */
     public function getChildren()
     {
@@ -417,7 +417,7 @@ class BlogCategory
     /**
      * @param Blog $blog
      *
-     * @return $this
+     * @return BlogCategory
      */
     public function setBlog(Blog $blog)
     {

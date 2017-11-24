@@ -54,7 +54,7 @@ class RedirectionType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'seo_bundle_redirection';
     }

@@ -1,6 +1,3 @@
 imports:
     - { resource: parameters.yml }
     - { resource: config_base.yml }
-
-imports:
-     - behat.yml.dist
