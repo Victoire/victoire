@@ -367,7 +367,7 @@ class WidgetMap
     /**
      * @param null|WidgetMap $parent
      */
-    public function setParent(WidgetMap $parent = null)
+    public function setParent(self $parent = null)
     {
         if ($this->parent) {
             $this->parent->removeChild($this);
@@ -447,7 +447,7 @@ class WidgetMap
     /**
      * @param WidgetMap $substitute
      */
-    public function addSubstitute(WidgetMap $substitute)
+    public function addSubstitute(self $substitute)
     {
         $this->substitutes->add($substitute);
     }
