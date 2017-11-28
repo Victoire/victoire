@@ -309,7 +309,7 @@ class BlogCategory
      *
      * @return Menu
      */
-    public function setParent(BlogCategory $parent = null)
+    public function setParent(self $parent = null)
     {
         $this->parent = $parent;
 
@@ -333,7 +333,7 @@ class BlogCategory
      *
      * @return Menu
      */
-    public function addChild(BlogCategory $child)
+    public function addChild(self $child)
     {
         $child->setParent($this);
         $this->children[] = $child;
@@ -346,7 +346,7 @@ class BlogCategory
      *
      * @param Menu $child
      */
-    public function removeChild(BlogCategory $child)
+    public function removeChild(self $child)
     {
         $this->children->removeElement($child);
     }
@@ -356,7 +356,7 @@ class BlogCategory
      *
      * @param Menu $child
      */
-    public function removeChildren(BlogCategory $child)
+    public function removeChildren(self $child)
     {
         $this->children->removeElement($child);
     }
