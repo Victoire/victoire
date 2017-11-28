@@ -182,7 +182,8 @@ class PageHelper
             $uri = sprintf('%s%s/%s/%s',
                 $this->container->get('request')->getSchemeAndHttpHost(),
                 $this->container->get('router')->getContext()->getBaseUrl(),
-                $this->container->get('request')->getLocale()
+                $this->container->get('request')->getLocale(),
+                $url
             );
 
             /** @var Error404 $error404 */
