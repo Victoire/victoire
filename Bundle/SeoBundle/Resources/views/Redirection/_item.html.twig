@@ -1,9 +1,5 @@
-<div id="redirection-{{ redirection.id }}-item-container">
-    <li class="list-group-item">
-        {% include '@VictoireSeo/Redirection/_preview.html.twig' with {'redirection': redirection} %}
-        <div id="redirection-{{ redirection.id }}-form-container" class="collapse {{ isOpened|default(false) ? 'in' : '' }}">
-            <hr>
-            {% include '@VictoireSeo/Redirection/_form.html.twig' with { 'form': form } %}
-        </div>
-    </li>
+{% include '@VictoireSeo/Redirection/_preview.html.twig' with {'redirection': redirection} %}
+<div id="redirection-{{ redirection.id }}-form-container" class="collapse {{ isOpened|default(false) ? 'in' : '' }}">
+    <hr>
+    {% include '@VictoireSeo/Redirection/_form.html.twig' with { 'form': form } %}
 </div>

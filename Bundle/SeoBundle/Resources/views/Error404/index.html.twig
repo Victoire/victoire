@@ -25,9 +25,9 @@
                             </li>
                         {% endfor %}
                     {% else %}
-                        <div class="vic-alert vic-alert-info text-center">
-                            {{ 'modal.error404.list.empty'|trans }}
-                        </div>
+                        <li class="list-group-item">
+                            {% include '@VictoireSeo/Error404/_empty.html.twig' %}
+                        </li>
                     {% endif %}
                 </ul>
             </div>

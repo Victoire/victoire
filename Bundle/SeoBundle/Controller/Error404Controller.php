@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\SeoBundle\Entity\Error404;
 use Victoire\Bundle\SeoBundle\Entity\ErrorRedirection;
@@ -24,6 +25,8 @@ use Victoire\Bundle\SeoBundle\Repository\HttpErrorRepository;
  */
 class Error404Controller extends Controller
 {
+    use VictoireAlertifyControllerTrait;
+
     /**
      * @Route("/index", name="victoire_404_index")
      *
@@ -89,13 +92,24 @@ class Error404Controller extends Controller
                     $em->persist($redirection);
                     $em->flush();
 
-                    return new Response(null, 204, [
+                    $this->congrat($this->get('translator')->trans('alert.error_404.redirect.success'));
+
+                    if (0 == count($em->getRepository('VictoireSeoBundle:HttpError')->findBy(['redirection' => null]))) {
+                        return new Response($this->renderView('@VictoireSeo/Error404/_empty.html.twig'), 200, [
+                            'X-Inject-Alertify' => true,
+                        ]);
+                    }
+
+                    return new Response(null, 200, [
                         'X-IC-Remove' => '100ms',
+                        'X-Inject-Alertify' => true,
                     ]);
                 } else {
                     // force form error when linkType === none
                     $form->addError(new FormError('This value should not be blank.'));
                 }
+            } else {
+                $this->warn($this->get('translator')->trans('alert.error_404.form.error'));
             }
 
             return new Response($this->renderView('@VictoireSeo/Error404/_item.html.twig', [
@@ -133,8 +147,17 @@ class Error404Controller extends Controller
         $em->remove($error404);
         $em->flush();
 
-        return new Response(null, 204, [
+        $this->congrat($this->get('translator')->trans('alert.error_404.delete.success'));
+
+        if (0 == count($em->getRepository('VictoireSeoBundle:HttpError')->findBy(['redirection' => null]))) {
+            return new Response($this->renderView('@VictoireSeo/Error404/_empty.html.twig'), 200, [
+                'X-Inject-Alertify' => true,
+            ]);
+        }
+
+        return new Response(null, 200, [
             'X-IC-Remove' => '100ms',
+            'X-Inject-Alertify' => true,
         ]);
     }
 

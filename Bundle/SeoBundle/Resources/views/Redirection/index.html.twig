@@ -17,7 +17,7 @@
                 <a id="new-redirection-button" class="vic-btn vic-btn-default vic-bg-green vic-text-white vic-mb-2" data-toggle="collapse" href="#new-form-container">
                     {{ 'modal.redirection.form.new.label'|trans }}
                 </a>
-                <div class="vic-mb-2 vic-pt-2 vic-pb-2 collapse table-bordered" id="new-form-container">
+                <div class="vic-mb-2 vic-pt-2 vic-pb-2 table-bordered collapse" id="new-form-container">
                     {% include '@VictoireSeo/Redirection/_form.html.twig' with { 'form': newForm } %}
                 </div>
             </div>
@@ -27,19 +27,20 @@
                 <ul id="redirections-list-container" class="vic-bordered-list">
                     {% if pager.count > 0 %}
                         {% for redirection in pager.currentPageResults %}
-                            {% include '@VictoireSeo/Redirection/_item.html.twig' with {
-                                'redirection': redirection,
-                                'form': forms[redirection.id]
-                            } %}
+                            <li class="list-group-item" id="redirection-{{ redirection.id }}-item-container">
+                                {% include '@VictoireSeo/Redirection/_item.html.twig' with {
+                                    'redirection': redirection,
+                                    'form': forms[redirection.id]
+                                } %}
+                            </li>
                         {% endfor %}
                     {% else %}
-                        <div class="vic-alert vic-alert-info text-center">
-                            {{ 'modal.redirection.list.empty'|trans }}
-                        </div>
+                        <li class="list-group-item">
+                            {% include '@VictoireSeo/Redirection/_empty.html.twig' %}
+                        </li>
                     {% endif %}
                 </ul>
             </div>
         </div>
     </div>
-
 {% endblock modal_body_content %}

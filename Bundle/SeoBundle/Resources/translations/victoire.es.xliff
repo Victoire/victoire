@@ -358,6 +358,34 @@
         <source>redirection.form.url.placeholder</source>
         <target>Url de redirección</target>
       </trans-unit>
+      <trans-unit id="58893b9a020fa" resname="alert.error_404.delete.success">
+        <source>alert.error_404.delete.success</source>
+        <target>Error 404 borada con éxito !</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020fb" resname="alert.redirection.delete.success">
+        <source>alert.redirection.delete.success</source>
+        <target>Redirección borada con éxito !</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020ga" resname="alert.error_404.redirect.success">
+        <source>alert.error_404.redirect.success</source>
+        <target>Error 404 redirigida con éxito !</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020gb" resname="alert.redirection.modify.success">
+        <source>alert.redirection.modify.success</source>
+        <target>Redirección modificada con éxito !</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020ha" resname="alert.redirection.create.success">
+        <source>alert.redirection.create.success</source>
+        <target>Redirección suprimida con éxito !</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020ia" resname="alert.error404.form.error">
+        <source>alert.error404.form.error</source>
+        <target>Un error ocurrido.</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020ib" resname="alert.redirection.form.error">
+        <source>alert.redirection.form.error</source>
+        <target>Un error ocurrido.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

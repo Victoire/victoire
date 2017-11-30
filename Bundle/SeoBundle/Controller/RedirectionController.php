@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\SeoBundle\Entity\Redirection;
 use Victoire\Bundle\SeoBundle\Form\RedirectionType;
@@ -23,6 +24,8 @@ use Victoire\Bundle\SeoBundle\Repository\RedirectionRepository;
  */
 class RedirectionController extends Controller
 {
+    use VictoireAlertifyControllerTrait;
+
     /**
      * @Route("/index", name="victoire_redirection_index")
      *
@@ -78,21 +81,28 @@ class RedirectionController extends Controller
 
         $form->handleRequest($request);
         if ($request->query->get('novalidate', false) === false) {
+            $isOpened = true;
             if ($form->isValid()) {
                 if ($redirection->getLink()->getLinkType() !== Link::TYPE_NONE) {
                     $em = $this->getDoctrine()->getManager();
                     $em->flush();
+                    $this->congrat($this->get('translator')->trans('alert.redirection.modify.success'));
+                    $isOpened = false;
                 } else {
                     // force form error when linkType === none
                     $form->addError(new FormError('This value should not be blank.'));
                 }
+            } else {
+                $this->warn($this->get('translator')->trans('alert.redirection.form.error'));
             }
 
             return new Response($this->renderView('@VictoireSeo/Redirection/_item.html.twig', [
                 'redirection' => $redirection,
                 'form'        => $form->createView(),
-                'isOpened'    => true,
-            ]));
+                'isOpened'    => $isOpened,
+            ]), 200, [
+                'X-Inject-Alertify' => true,
+            ]);
         }
 
         // rebuild form to avoid wrong form error
@@ -132,6 +142,8 @@ class RedirectionController extends Controller
                     $em->persist($redirection);
                     $em->flush();
 
+                    $this->congrat($this->get('translator')->trans('alert.redirection.create.success'));
+
                     return new Response($this->renderView('@VictoireSeo/Redirection/_form.html.twig', [
                         'form'      => $this->getRedirectionForm(new Redirection(), '#new-form-container')->createView(),
                         'icTrigger' => [
@@ -140,16 +152,22 @@ class RedirectionController extends Controller
                                 'id' => $redirection->getId(),
                             ]),
                         ],
-                    ]));
+                    ]), 200, [
+                        'X-Inject-Alertify' => true,
+                    ]);
                 } else {
                     // force form error when no link submitted
                     $form->addError(new FormError('This value should not be blank.'));
                 }
+            } else {
+                $this->warn($this->get('translator')->trans('alert.redirection.form.error'));
             }
 
             return new Response($this->renderView('@VictoireSeo/Redirection/_form.html.twig', [
                 'form' => $form->createView(),
-            ]));
+            ]), 200, [
+                'X-Inject-Alertify' => true,
+            ]);
         }
 
         // rebuild form to avoid wrong form error
@@ -178,8 +196,17 @@ class RedirectionController extends Controller
         $em->remove($redirection);
         $em->flush();
 
-        return new Response(null, 204, [
+        $this->congrat($this->get('translator')->trans('alert.redirection.delete.success'));
+
+        if (0 == count($em->getRepository('VictoireSeoBundle:Redirection')->findAll())) {
+            return new Response($this->renderView('@VictoireSeo/Error404/_empty.html.twig'), 200, [
+                'X-Inject-Alertify' => true,
+            ]);
+        }
+
+        return new Response(null, 200, [
             'X-IC-Remove' => '100ms',
+            'X-Inject-Alertify' => true,
         ]);
     }
 
@@ -196,7 +223,7 @@ class RedirectionController extends Controller
     {
         $form = $this->getRedirectionForm($redirection, sprintf('#redirection-%d-item-container', $redirection->getId()));
 
-        return $this->render('@VictoireSeo/Redirection/_item.html.twig', [
+        return $this->render('@VictoireSeo/Redirection/_item_new.html.twig', [
             'redirection' => $redirection,
             'form'        => $form->createView(),
         ]);
