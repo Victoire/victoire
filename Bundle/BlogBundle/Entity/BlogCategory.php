@@ -320,7 +320,7 @@ class BlogCategory
     /**
      * Get parent.
      *
-     * @return mixed
+     * @return BlogCategory
      */
     public function getParent()
     {

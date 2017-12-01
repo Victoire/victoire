@@ -4,6 +4,7 @@ namespace Victoire\Bundle\PageBundle\Helper;
 
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\Orm\EntityManager;
+use Doctrine\ORM\NoResultException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -25,7 +26,9 @@ use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
+use Victoire\Bundle\PageBundle\Handler\RedirectionHandler;
 use Victoire\Bundle\SeoBundle\Entity\Error404;
+use Victoire\Bundle\SeoBundle\Entity\Redirection;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException;
@@ -50,11 +53,13 @@ class PageHelper
     protected $pageSeoHelper;
     protected $session;
     protected $tokenStorage;
+    protected $authorizationChecker;
     protected $widgetMapBuilder;
     protected $businessPageBuilder;
     protected $businessPageHelper;
-    protected $viewReferenceRepository;
     protected $widgetDataWarmer;
+    protected $viewReferenceRepository;
+    protected $redirectionHelper;
 
     /**
      * @param BusinessEntityHelper     $businessEntityHelper
@@ -72,6 +77,7 @@ class PageHelper
      * @param BusinessPageHelper       $businessPageHelper
      * @param WidgetDataWarmer         $widgetDataWarmer
      * @param ViewReferenceRepository  $viewReferenceRepository
+     * @param RedirectionHandler        $redirectionHelper
      */
     public function __construct(
         BusinessEntityHelper $businessEntityHelper,
@@ -88,7 +94,8 @@ class PageHelper
         BusinessPageBuilder $businessPageBuilder,
         BusinessPageHelper $businessPageHelper,
         WidgetDataWarmer $widgetDataWarmer,
-        ViewReferenceRepository $viewReferenceRepository
+        ViewReferenceRepository $viewReferenceRepository,
+        RedirectionHandler $redirectionHelper
     ) {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->entityManager = $entityManager;
@@ -105,6 +112,7 @@ class PageHelper
         $this->businessPageHelper = $businessPageHelper;
         $this->widgetDataWarmer = $widgetDataWarmer;
         $this->viewReferenceRepository = $viewReferenceRepository;
+        $this->redirectionHelper = $redirectionHelper;
     }
 
     /**
@@ -153,13 +161,14 @@ class PageHelper
      * generates a response from a page url.
      * if seo redirect, return target.
      *
+     * @param string $uri
      * @param string $url
      * @param        $locale
      * @param null   $layout
      *
      * @return Response
      */
-    public function renderPageByUrl($url, $locale, $layout = null)
+    public function renderPageByUrl($uri, $url, $locale, $layout = null)
     {
         $page = null;
         if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
@@ -179,36 +188,20 @@ class PageHelper
 
             return $this->renderPage($page, $layout);
         } else {
-            $uri = sprintf('%s%s/%s/%s',
-                $this->container->get('request')->getSchemeAndHttpHost(),
-                $this->container->get('router')->getContext()->getBaseUrl(),
-                $this->container->get('request')->getLocale(),
-                $url
-            );
-
-            /** @var Error404 $error404 */
-            $error404 = $this->entityManager->getRepository('VictoireSeoBundle:Error404')
-                ->findOneBy([
-                    'url' => $uri,
-                ]);
-
-            if ($error404) {
-                if ($error404->getRedirection()) {
-                    $error404->getRedirection()->increaseCounter();
-                    $this->entityManager->flush();
-
+            try {
+                /** @var Error404 $error */
+                $error = $this->entityManager->getRepository('VictoireSeoBundle:Error404')->findOneBy(['url' => $uri]);
+                if ($this->redirectionHelper->handleError($error) instanceof Redirection) {
                     return new RedirectResponse(
-                        $this->container->get('victoire_widget.twig.link_extension')
-                            ->victoireLinkUrl($error404->getRedirection()->getLink()->getParameters()));
-                } else {
-                    $error404->increaseCounter();
-                    $this->entityManager->flush();
+                        $this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl(
+                            $error->getRedirection()->getLink()->getParameters()
+                        )
+                    );
                 }
-            } else {
-                $error404 = new Error404();
-                $error404->setUrl($uri);
-
-                $this->entityManager->persist($error404);
+            } catch (NoResultException $e) {
+                $error = new Error404();
+                $error->setUrl($uri);
+                $this->entityManager->persist($error);
                 $this->entityManager->flush();
             }
 
