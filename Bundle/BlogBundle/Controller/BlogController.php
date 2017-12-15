@@ -65,12 +65,9 @@ class BlogController extends BasePageController
             );
         }
 
-        return new JsonResponse(
-            [
-                'html' => $this->container->get('templating')->render(
-                    $this->getBaseTemplatePath().':index.html.twig', $parameters
-                ),
-            ]
+        return $this->render(
+            'VictoireBlogBundle:Blog:index.html.twig',
+            $parameters
         );
     }
 
@@ -151,7 +148,7 @@ class BlogController extends BasePageController
      * @param BasePage $blog
      *
      * @Route("/{id}/settings", name="victoire_blog_settings")
-     * @Method("GET")
+     * @Method(methods={"GET", "POST"})
      * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
      *
      * @throws \InvalidArgumentException
@@ -160,56 +157,32 @@ class BlogController extends BasePageController
      */
     public function settingsAction(Request $request, BasePage $blog)
     {
-        $form = $this->createForm($this->getPageSettingsType(), $blog);
+        $form = $this->getSettingsForm($blog);
+
 
         $form->handleRequest($request);
+        if ($request->isMethod('POST')) {
+            if ($form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+                $form = $this->getSettingsForm($blog);
+            } else {
+                $this->warn('error_occured');
+            }
+        }
 
-        return new Response($this->container->get('templating')->render(
-            $this->getBaseTemplatePath().':Tabs/_settings.html.twig',
+        return $this->render(
+            'VictoireBlogBundle:Blog/Tabs:_settings.html.twig',
             [
                 'blog'               => $blog,
                 'form'               => $form->createView(),
                 'businessProperties' => [],
-            ]
-        ));
+            ],
+            new Response(null, 200, [
+                'X-Inject-Alertify' => true
+            ])
+        );
     }
 
-    /**
-     * Save Blog settings.
-     *
-     * @Route("/{id}/settings", name="victoire_blog_settings_post")
-     * @Method("POST")
-     * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
-     *
-     * @return JsonResponse
-     */
-    protected function settingsPostAction(Request $request, BasePage $blog)
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $form = $this->createForm($this->getPageSettingsType(), $blog);
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $entityManager->persist($blog);
-            $entityManager->flush();
-
-            return new JsonResponse($this->getViewReferenceRedirect($request, $blog));
-        }
-
-        return new JsonResponse([
-            'success' => false,
-            'message' => $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form),
-            'html'    => $this->container->get('templating')->render(
-                $this->getBaseTemplatePath().':Tabs/_settings.html.twig',
-                [
-                    'blog'               => $blog,
-                    'form'               => $form->createView(),
-                    'businessProperties' => [],
-                ]
-            ),
-        ]);
-    }
 
     /**
      * List Blog Categories.
@@ -241,20 +214,23 @@ class BlogController extends BasePageController
         //we display the form
         $errors = $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form);
         if ($errors != '') {
-            return new JsonResponse(['html' => $this->container->get('templating')->render(
-                        $this->getBaseTemplatePath().':Tabs/_category.html.twig',
-                            [
-                                'blog'               => $blog,
-                                'form'               => $form->createView(),
-                                'businessProperties' => $businessProperties,
-                            ]
-                        ),
-                        'message' => $errors,
-                    ]
-                );
+            return new JsonResponse(
+                [
+                    'html' => $this->container->get('templating')->render(
+                        'VictoireBlogBundle:Blog:Tabs/_category.html.twig',
+                        [
+                            'blog'               => $blog,
+                            'form'               => $form->createView(),
+                            'businessProperties' => $businessProperties,
+                        ]
+                    ),
+                    'message' => $errors,
+                ]
+            );
         }
 
-        return new Response($this->container->get('templating')->render(
+        return new Response(
+            $this->container->get('templating')->render(
                     $this->getBaseTemplatePath().':Tabs/_category.html.twig',
                     [
                         'blog'               => $blog,
@@ -381,5 +357,22 @@ class BlogController extends BasePageController
         }
 
         return $blog;
+    }
+
+    /**
+     * @param Blog $blog
+     * @return \Symfony\Component\Form\Form
+     */
+    private function getSettingsForm(Blog $blog)
+    {
+        return $this->createForm($this->getPageSettingsType(), $blog, [
+            'attr' => [
+                'novalidate' => true,
+                'v-ic-post-to' => $this->generateUrl('victoire_blog_settings', [
+                    'id' => $blog->getId()
+                ]),
+                'v-ic-target' => '#victoire-blog-settings'
+            ]
+        ]);
     }
 }
