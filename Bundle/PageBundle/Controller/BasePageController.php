@@ -61,7 +61,9 @@ class BasePageController extends Controller
         }
         $page = $this->get('victoire_page.page_helper')->findPageByParameters($parameters);
 
-        return $this->redirect($this->generateUrl('victoire_core_page_show', array_merge(
+        return $this->redirect($this->generateUrl(
+            'victoire_core_page_show',
+            array_merge(
                 ['url' => $page->getReference()->getUrl()],
                 $request->query->all()
             )
