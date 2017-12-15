@@ -19,16 +19,8 @@ function openModal(url) {
                 $vic($vic(el).attr('data-droptarget')).remove();
             });
 
-            //remove the previous instance of the modal
-            $vic('#vic-modal').remove();
-            //add the html of the modal
-            $vic('body').append(response.html);
-            //display the modal
-            $vic('#vic-modal').vicmodal({
-                keyboard: true,
-                backdrop: false
-            });
-            $vic('#vic-modal').attr('data-modal', 'show');
+            $vic('#vic-modal-container').html(response);
+            eval("VicIntercooler.processNodes($vic('#vic-modal-container'));");
 
             // set FAB on open mode
             $vic('#v-float-container .v-btn--fab').addClass('v-btn--fab-open');

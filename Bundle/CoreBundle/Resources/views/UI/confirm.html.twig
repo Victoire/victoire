@@ -49,22 +49,24 @@ $vic('#{{ id }} .{{ cancel_button_class }}').click(function(){
     $vic('.vic-confirm-waiting').removeClass('vic-confirm-waiting');
 });
 
-{# if no callback were given, we submit or go to the url of given as parameter #}
-$vic('#{{ id }} .{{ confirm_button_class }}').click(function(){
-    elem = $vic('.vic-confirm-waiting');
-    elem.removeAttr('data-toggle');
-    elem.data('toggle', null);
-    elem.removeClass('vic-confirm-waiting');
-    elem.addClass('vic-confirmed');
-    $vic('#{{ id }}').vicmodal('hide');
-    {% if app.request.get('type', 'form') == "form" %}
-        elem.submit();
+$vic('#{{ id }} .{{ confirm_button_class }}').click(function(event){
+    {% if app.request.get('confirm_callback') != null %}
+        {{ app.request.get('confirm_callback')|raw }}
     {% else %}
-        elem.click();
+        {# if no callback were given, we submit or go to the url of given as parameter #}
+        elem = $vic('.vic-confirm-waiting');
+        elem.removeAttr('data-toggle');
+        elem.data('toggle', null);
+        elem.removeClass('vic-confirm-waiting');
+        elem.addClass('vic-confirmed');
+        $vic('#{{ id }}').vicmodal('hide');
+        {% if app.request.get('type') == "form" %}
+            elem.submit();
+        {% else %}
+            elem.click();
+        {% endif %}
     {% endif %}
-    {% if app.request.get('confirm_callback', null) != null %}
-        {{ app.request.get('confirm_callback')|raw }};
-    {% endif %}
+    $vic('#{{ id }}').vicmodal('hide');
 });
 
 //Focus on confirm button
