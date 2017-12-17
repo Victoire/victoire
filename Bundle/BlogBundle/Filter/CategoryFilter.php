@@ -111,25 +111,6 @@ class CategoryFilter extends BaseFilter
     {
         $categories = $this->filterQueryHandler->handle($options['widget'], BlogCategory::class);
 
-        //getAll categories
-        $categoryQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:BlogCategory')->getAll();
-        //getAll published articles
-        $articleQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Article')->getAll(true);
-
-        //get Listing
-        $listing = $options['widget']->getListing();
-
-        $mode = $listing->getMode();
-        switch ($mode) {
-            case 'query':
-                //filter with listingQuery
-                $articleQb->filterWithListingQuery($listing->getQuery());
-                break;
-        }
-        $categoryQb->filterByArticles($articleQb->getInstance('article'));
-        $categories = $categoryQb->getInstance('c_category')->getQuery()->getResult();
-
-        //the blank value
         $categoriesChoices = [];
 
         foreach ($categories as $category) {
