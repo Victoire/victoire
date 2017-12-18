@@ -156,7 +156,10 @@ class LinkType extends AbstractType
                 ])->add('locale', ChoiceType::class, [
                     'label'   => 'form.link_type.locale.label',
                     'choices' => array_combine($this->availableLocales, $this->availableLocales),
-                    'attr'    => ['data-refreshOnChange' => 'true'],
+                    'attr'    => [
+                        'data-refreshOnChange' => 'true',
+                        'data-target'          => $options['refresh-target'],
+                    ],
                 ]);
                 break;
             case Link::TYPE_ROUTE:
@@ -234,6 +237,7 @@ class LinkType extends AbstractType
             'horizontal'         => false,
             'linkTypeChoices'    => $this->getDefaultLinkTypeChoices(),
             'refresh-target'     => null,
+            'withTarget'         => true,
         ]);
     }
 
@@ -268,21 +272,24 @@ class LinkType extends AbstractType
     protected function addTargetField($form, array $options)
     {
         $rootFormName = $form->getRoot()->getName();
-        $form->add('target', ChoiceType::class, [
-            'label'    => 'form.link_type.target.label',
-            'required' => true,
-            'choices'  => [
-                'form.link_type.choice.target.parent'     => Link::TARGET_PARENT,
-                'form.link_type.choice.target.blank'      => Link::TARGET_BLANK,
-                'form.link_type.choice.target.ajax-modal' => Link::TARGET_MODAL,
-            ],
-            'choices_as_values' => true,
-            'attr'              => [
-                'data-refreshOnChange' => 'true',
-                'data-target'          => $options['refresh-target'] ?: 'form[name="'.$rootFormName.'"]',
-                'data-update-strategy' => 'replaceWith',
-            ],
-            'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group viewReference-type page-type url-type route-type attachedWidget-type'],
-        ]);
+
+        if ($options['withTarget']) {
+            $form->add('target', ChoiceType::class, [
+                'label'    => 'form.link_type.target.label',
+                'required' => true,
+                'choices'  => [
+                    'form.link_type.choice.target.parent'     => Link::TARGET_PARENT,
+                    'form.link_type.choice.target.blank'      => Link::TARGET_BLANK,
+                    'form.link_type.choice.target.ajax-modal' => Link::TARGET_MODAL,
+                ],
+                'choices_as_values' => true,
+                'attr'              => [
+                    'data-refreshOnChange' => 'true',
+                    'data-target'          => $options['refresh-target'] ?: 'form[name="'.$rootFormName.'"]',
+                    'data-update-strategy' => 'replaceWith',
+                ],
+                'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group viewReference-type page-type url-type route-type attachedWidget-type'],
+            ]);
+        }
     }
 }
