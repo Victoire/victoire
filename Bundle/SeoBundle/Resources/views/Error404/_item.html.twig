@@ -5,9 +5,9 @@
        title="{{ 'modal.button.delete.title'|trans({}, 'victoire') }}"
        id="delete-link-{{ error.id }}"
        class="btn-lg btn-secondary btn-transparent text-danger vic-confirm-waiting"
-       {#ic-delete-from="{{ path('victoire_404_delete', { 'id': error.id }) }}"#}
-       {#ic-target="closest li"#}
-       {#ic-trigger-on="confirmed-by-user"#}
+       v-ic-delete-from="{{ path('victoire_404_delete', { 'id': error.id }) }}"
+       v-ic-target="closest li"
+       v-ic-trigger-on="confirmed-by-user"
        data-toggle="vic-confirm"
        data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire') }}"
        data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire') }}"
