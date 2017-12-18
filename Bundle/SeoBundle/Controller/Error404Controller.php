@@ -46,6 +46,13 @@ class Error404Controller extends Controller
             $forms[$error->getId()] = $this->getError404RedirectionForm($redirection)->createView();
         }
 
+        return new Response($this->renderView('@VictoireSeo/Error404/index.html.twig', [
+            'errors' => $errors,
+            'forms'  => $forms
+        ]), 200, [
+            'html' => '<h1>TEST</h1>'
+        ]);
+
         return new JsonResponse([
             'success' => true,
             'html'    => $this->get('templating')->render($this->getBaseTemplatePath().':index.html.twig', [
@@ -137,16 +144,17 @@ class Error404Controller extends Controller
         $em->flush();
 
 //        $this->congrat($this->get('translator')->trans('alert.error_404.delete.success'));
+        $this->congrat('Erreur supprimée avec succès !');
 
-//        if (0 == count($em->getRepository('VictoireSeoBundle:HttpError')->findBy(['redirection' => null]))) {
-//            return new Response($this->renderView('@VictoireSeo/Error404/_empty.html.twig'), 200, [
-//                'X-Inject-Alertify' => true,
-//            ]);
-//        }
+        if (0 == count($em->getRepository('VictoireSeoBundle:HttpError')->findBy(['redirection' => null]))) {
+            return new Response($this->renderView('@VictoireSeo/Error404/_empty.html.twig'), 200, [
+                'X-Inject-Alertify' => true,
+            ]);
+        }
 
         return new Response(null, 200, [
-            'X-IC-Remove' => '100ms',
-//            'X-Inject-Alertify' => true,
+            'X-VIC-Remove' => '100ms',
+            'X-Inject-Alertify' => true,
         ]);
     }
 
