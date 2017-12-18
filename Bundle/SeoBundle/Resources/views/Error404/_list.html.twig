@@ -1,0 +1,10 @@
+{% trans_default_domain "victoire" %}
+
+<div id="404-{{ error.id }}-item-container">
+    <div class="row">
+        {% include '@VictoireSeo/Error404/_item.html.twig' %}
+    </div>
+    <div class="row collapse{{ isOpened|default(false) ? ' in' : '' }}" id="collapse-form-{{ error.id }}"><hr>
+        {% include '@VictoireSeo/Error404/_form.html.twig' %}
+    </div>
+</div>
