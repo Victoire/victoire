@@ -1,0 +1,48 @@
+{% trans_default_domain "victoire" %}
+
+<div class="col-md-1 text-center">
+    <a href="#"
+       title="{{ 'modal.button.delete.title'|trans({}, 'victoire') }}"
+       id="delete-link-{{ redirection.id }}"
+       class="btn-lg btn-secondary btn-transparent text-danger"
+       ic-delete-from="{{ path('victoire_redirection_delete', { 'id': redirection.id }) }}"
+       ic-target="closest li"
+       ic-trigger-on="confirmed-by-user"
+       data-toggle="vic-confirm"
+       data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire') }}"
+       data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire') }}"
+       data-confirm-callback="$('#delete-link-{{ redirection.id }}').trigger('confirmed-by-user')"
+       data-modal="delete"
+    >
+        <i class="fa fa-times"></i>
+        <i class="fa fa-spinner fa-spin ic-indicator collapse"></i>
+    </a>
+</div>
+<div class="col-md-4 col-sm-12 col-sm-align-center col-sm-mt-1">
+    <a href="{{ redirection.url }}">
+        {{ redirection.url|truncate(40) }}
+    </a>
+</div>
+<div class="col-md-1 text-center col-sm-12 col-sm-align-center col-sm-mt-1">
+    <i class="fa fa-long-arrow-right"></i>
+</div>
+<div class="col-md-3 col-sm-12 col-sm-align-center col-sm-mt-1">
+    {% if redirection.link.parameters is defined %}
+        <a href="{{ vic_link_url(redirection.link.parameters) }}">
+            {{ vic_link_url(redirection.link.parameters)|truncate(40) }}
+        </a>
+    {% endif %}
+</div>
+<div class="col-md-2 col-sm-12 col-sm-align-center col-sm-mb-1 vic-text-right">
+    Nb requêtes : <strong class="vic-pl-1">{{ redirection.counter }}</strong>
+</div>
+<div class="col-md-1 vic-text-right">
+    <a href="#redirection-{{ redirection.id }}-form-container"
+       id="collapse-icon-{{ redirection.id }}"
+       class="btn-lg btn-secondary" {% if isOpened|default(false) %} aria-expanded="true"{% endif %}
+       data-target="#collapse-form-{{ redirection.id }}"
+       data-toggle="collapse"
+    >
+        <i class="fa fa-plus" id="{{ redirection.id }}"></i>
+    </a>
+</div>
