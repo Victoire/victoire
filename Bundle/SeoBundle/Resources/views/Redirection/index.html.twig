@@ -1,0 +1,43 @@
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+
+{% trans_default_domain "victoire" %}
+
+{% block modal_container_classes %}
+    {{ parent() }} vic-view-modal
+{% endblock modal_container_classes %}
+
+{% block modal_header_title %}
+    Redirections
+{% endblock modal_header_title %}
+
+{% block modal_body_content %}
+    <div id="victoire-blog-modal">
+        <input
+            type="submit"
+            value="Nouvelle redirection"
+            class="vic-btn vic-btn-default vic-bg-green vic-text-white"
+            style="margin-bottom: 20px;"
+            data-target="#collapse-newForm"
+            data-toggle="collapse"
+        >
+        <div class="row collapse" id="collapse-newForm">
+            {% include '@VictoireSeo/Redirection/_newForm.html.twig' with {
+                'form': newForm
+            } %}
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="v-list-group v-list-group--main" style="border: none;">
+                    {% for redirection in redirections %}
+                        <li class="v-list-group__item"  style="border-radius: 5px; border: 1px solid lightgrey; margin: 0 0 10px 0;">
+                            {% include '@VictoireSeo/Redirection/_list.html.twig' with {
+                                'redirection': redirection,
+                                'form': forms[redirection.id]
+                            } %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock modal_body_content %}

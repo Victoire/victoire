@@ -1,0 +1,38 @@
+{% trans_default_domain "victoire" %}
+
+{% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+
+<div class="col-md-12" style="margin-bottom: 15px;">
+    {{ form_start(form) }}
+    <div class="row vic-mt-1">
+        <div class="col-md-12">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+    <div class="row vic-mb-1" style="margin-bottom: 20px;">
+        <div class="col-md-12">
+            {{ form_widget(form.url) }}
+            {{ form_errors(form.url) }}
+        </div>
+    </div>
+    <div class="row vic-mb-1">
+        <div class="col-md-12">
+            {{ form_widget(form.link) }}
+            {{ form_errors(form.link) }}
+        </div>
+    </div>
+    <div class="row vic-mb-1">
+        <div class="col-md-12">
+            <div class="vic-float-right">
+                {# todo translate #}
+                <input
+                    type="submit"
+                    value="Rediriger"
+                    class="vic-btn vic-btn-default vic-bg-green vic-text-white"
+                >
+            </div>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
