@@ -13,7 +13,7 @@ use Victoire\Bundle\SeoBundle\Entity\Redirection;
 class RedirectionHandler
 {
     /**
-     * @var EntityManager $entityManager
+     * @var EntityManager
      */
     private $entityManager;
 
@@ -32,9 +32,9 @@ class RedirectionHandler
      *
      * @param Error404 $error
      *
-     * @return Error404|Redirection
-     *
      * @throws NoResultException
+     *
+     * @return Error404|Redirection
      */
     public function handleError($error)
     {

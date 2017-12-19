@@ -5,9 +5,7 @@ namespace Victoire\Tests\Features\Context;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Mink\Driver\DriverInterface;
-use Behat\Mink\Driver\Goutte\Client;
 use Behat\Mink\Element\DocumentElement;
-use Behat\Mink\Element\Element;
 use Behat\Mink\Exception\ResponseTextException;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\Mink\Session;
@@ -15,7 +13,6 @@ use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Behat\Symfony2Extension\Context\KernelDictionary;
 use Behat\Symfony2Extension\Driver\KernelDriver;
 use Knp\FriendlyContexts\Context\RawMinkContext;
-use Twig\Node\Node;
 
 /**
  * Feature context.

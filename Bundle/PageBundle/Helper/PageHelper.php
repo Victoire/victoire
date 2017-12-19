@@ -77,7 +77,7 @@ class PageHelper
      * @param BusinessPageHelper       $businessPageHelper
      * @param WidgetDataWarmer         $widgetDataWarmer
      * @param ViewReferenceRepository  $viewReferenceRepository
-     * @param RedirectionHandler        $redirectionHelper
+     * @param RedirectionHandler       $redirectionHelper
      */
     public function __construct(
         BusinessEntityHelper $businessEntityHelper,
@@ -120,9 +120,9 @@ class PageHelper
      *
      * @param $parameters
      *
-     * @return View
-     *
      * @throws ViewReferenceNotFoundException
+     *
+     * @return View
      */
     public function findPageByParameters($parameters)
     {

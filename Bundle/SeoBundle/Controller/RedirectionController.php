@@ -205,7 +205,7 @@ class RedirectionController extends Controller
         }
 
         return new Response(null, 200, [
-            'X-VIC-Remove' => '100ms',
+            'X-VIC-Remove'      => '100ms',
             'X-Inject-Alertify' => true,
         ]);
     }

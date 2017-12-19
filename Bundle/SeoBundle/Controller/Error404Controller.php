@@ -101,7 +101,7 @@ class Error404Controller extends Controller
                     }
 
                     return new Response(null, 200, [
-                        'X-VIC-Remove' => '100ms',
+                        'X-VIC-Remove'      => '100ms',
                         'X-Inject-Alertify' => true,
                     ]);
                 } else {
@@ -156,7 +156,7 @@ class Error404Controller extends Controller
         }
 
         return new Response(null, 200, [
-            'X-VIC-Remove' => '100ms',
+            'X-VIC-Remove'      => '100ms',
             'X-Inject-Alertify' => true,
         ]);
     }
