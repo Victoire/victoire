@@ -4,17 +4,17 @@
     <div class="col-md-1 vic-text-left">
         <a href="#"
            id="delete-link-{{ redirection.id }}"
-           ic-delete-from="{{ path('victoire_redirection_delete', { 'id': redirection.id }) }}"
-           ic-target="closest li"
            class="btn-lg btn-secondary btn-transparent text-danger"
-           ic-trigger-on="confirmed-by-user"
+           v-ic-delete-from="{{ path('victoire_redirection_delete', { 'id': redirection.id }) }}"
+           v-ic-target="closest li"
+           v-ic-trigger-on="confirmed-by-user"
            data-toggle="vic-confirm"
            data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire') }}"
            data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire') }}"
-           data-confirm-callback="$('#delete-link-{{ redirection.id }}').trigger('confirmed-by-user')"
+           data-confirm-callback="$vic('#delete-link-{{ redirection.id }}').trigger('confirmed-by-user')"
         >
             <i class="fa fa-times"></i>
-            <i class="fa fa-spinner fa-spin ic-indicator collapse"></i>
+            <i class="fa fa-spinner fa-spin v-ic-indicator collapse"></i>
         </a>
     </div>
     <div class="col-md-4 col-sm-12 col-sm-align-center col-sm-mt-1">

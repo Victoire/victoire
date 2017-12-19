@@ -16,7 +16,7 @@ function openModal(url) {
         } else {
             //add the html of the modal
             $vic('#vic-modal-container').html(response.html);
-            //display the modal
+            eval("VicIntercooler.processNodes($vic('#vic-modal-container'));");
         }
         loading(false);
         $vic(document).trigger('victoire_modal_open_after');

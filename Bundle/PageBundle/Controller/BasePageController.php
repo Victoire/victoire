@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
@@ -282,7 +283,7 @@ class BasePageController extends Controller
      * @param Request  $request
      * @param BasePage $page
      *
-     * @return array
+     * @return Response
      */
     protected function getViewReferenceRedirect(Request $request, BasePage $page)
     {
@@ -299,16 +300,18 @@ class BasePageController extends Controller
 
         $page->setReference($viewReference);
 
-        return [
-            'success'  => true,
-            'url'      => $this->generateUrl(
-                'victoire_core_page_show',
-                [
-                    '_locale' => $request->getLocale(),
-                    'url'     => $viewReference->getUrl(),
-                ]
-            ),
-        ];
+        return new Response(
+            null,
+            200,
+            [
+                'X-VIC-Redirect' => $this->generateUrl(
+                    'victoire_core_page_show', [
+                        '_locale' => $request->getLocale(),
+                        'url'     => $viewReference->getUrl(),
+                    ]
+                )
+            ]
+         );
     }
 
     /**

@@ -205,7 +205,7 @@ class RedirectionController extends Controller
         }
 
         return new Response(null, 200, [
-            'X-IC-Remove' => '100ms',
+            'X-VIC-Remove' => '100ms',
             'X-Inject-Alertify' => true,
         ]);
     }
@@ -249,8 +249,8 @@ class RedirectionController extends Controller
             'containerId' => $containerId,
             'withUrl'     => (null === $redirection->getId()) ? true : false,
             'attr'        => [
-                'ic-post-to' => $action,
-                'ic-target'  => $containerId,
+                'v-ic-post-to' => $action,
+                'v-ic-target'  => $containerId,
             ],
         ]);
     }

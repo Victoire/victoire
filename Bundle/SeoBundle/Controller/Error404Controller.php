@@ -101,7 +101,7 @@ class Error404Controller extends Controller
                     }
 
                     return new Response(null, 200, [
-                        'X-IC-Remove' => '100ms',
+                        'X-VIC-Remove' => '100ms',
                         'X-Inject-Alertify' => true,
                     ]);
                 } else {
@@ -156,7 +156,7 @@ class Error404Controller extends Controller
         }
 
         return new Response(null, 200, [
-            'X-IC-Remove' => '100ms',
+            'X-VIC-Remove' => '100ms',
             'X-Inject-Alertify' => true,
         ]);
     }
@@ -177,8 +177,8 @@ class Error404Controller extends Controller
             'action'      => $action,
             'containerId' => $containerId,
             'attr'        => [
-                'ic-post-to' => $action,
-                'ic-target'  => $containerId,
+                'v-ic-post-to' => $action,
+                'v-ic-target'  => $containerId,
             ],
         ]);
     }

@@ -43,16 +43,16 @@ class RedirectionMenuListener
             'title' => 'erreurs_404',
         ])
             ->setAttribute('id', 'menu-404-sub-item')
-            ->setLinkAttribute('ic-get-from', $this->router->generate('victoire_404_index'))
-            ->setLinkAttribute('ic-target', '#vic-modal-container');
+            ->setLinkAttribute('v-ic-get-from', $this->router->generate('victoire_404_index'))
+            ->setLinkAttribute('v-ic-target', '#vic-modal-container');
 
         $dropdown->addChild('menu.left.redirection.subItem.redirection.label', [
             'route' => 'victoire_redirection_index',
             'title' => 'redirections',
         ])
             ->setAttribute('id', 'menu-redirection-sub-item')
-            ->setLinkAttribute('ic-get-from', $this->router->generate('victoire_redirection_index'))
-            ->setLinkAttribute('ic-target', '#vic-modal-container');
+            ->setLinkAttribute('v-ic-get-from', $this->router->generate('victoire_redirection_index'))
+            ->setLinkAttribute('v-ic-target', '#vic-modal-container');
 
         return $this->mainItem;
     }

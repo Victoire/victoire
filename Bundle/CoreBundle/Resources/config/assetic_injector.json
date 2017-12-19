@@ -28,7 +28,8 @@
             "victoire-head":
             [
                 "@VictoireCoreBundle/Resources/public/vendor/jquery/1.10.2/jquery-1.10.2.js",
-                "@VictoireCoreBundle/Resources/public/js/jquery.noConflict.js"
+                "@VictoireCoreBundle/Resources/public/js/jquery.noConflict.js",
+                "@VictoireCoreBundle/Resources/public/js/vic-intercooler.js"
             ],
             "modernizr":
             [

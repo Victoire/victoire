@@ -38,6 +38,7 @@
 </div>
 
 <script>
+    $vic('#{{ block('modal_container_id') }}').attr('data-modal', "show");
     $vic('#{{ block('modal_container_id') }}').vicmodal({
         keyboard: true,
         backdrop: false
@@ -46,7 +47,5 @@
         $vic(this).remove();
     });
 </script>
-
-{{ app.session|alertify|raw }}
 
 {% endblock modal_container %}
