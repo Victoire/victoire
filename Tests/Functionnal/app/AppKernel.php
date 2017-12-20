@@ -38,6 +38,7 @@ class AppKernel extends Kernel
             new Snc\RedisBundle\SncRedisBundle(),
             new Troopers\AsseticInjectorBundle\TroopersAsseticInjectorBundle(),
             new Troopers\AlertifyBundle\TroopersAlertifyBundle(),
+            new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
 
             //Victoire bundles
             new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),

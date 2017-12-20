@@ -262,7 +262,7 @@ class Folder
     {
         $parent = $this->getParent();
         $parents = [];
-        while ($parent != null) {
+        while ($parent !== null) {
             $parents[] = $parent;
             $parent = $parent->getParent();
         }
@@ -296,7 +296,7 @@ class Folder
             return $this->children;
         }
 
-        return $this->children->filter(function (Folder $entry) {
+        return $this->children->filter(function (self $entry) {
             if ($entry->isDeleted()) {
                 return false;
             }

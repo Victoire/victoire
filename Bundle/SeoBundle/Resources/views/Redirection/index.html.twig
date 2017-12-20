@@ -1,0 +1,46 @@
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+
+{% trans_default_domain "victoire" %}
+
+{% block modal_container_classes %}
+    {{ parent() }} vic-view-modal
+{% endblock modal_container_classes %}
+
+{% block modal_header_title %}
+    {{ 'modal.redirection.title'|trans|raw }}
+{% endblock modal_header_title %}
+
+{% block modal_body_content %}
+    <div id="victoire-blog-modal">
+        <div class="row">
+            <div class="col-md-12">
+                <a id="new-redirection-button" class="vic-btn vic-btn-default vic-bg-green vic-text-white vic-mb-2" data-toggle="collapse" href="#new-form-container">
+                    {{ 'modal.redirection.form.new.label'|trans }}
+                </a>
+                <div class="vic-mb-2 vic-pt-2 vic-pb-2 table-bordered collapse" id="new-form-container">
+                    {% include '@VictoireSeo/Redirection/_form.html.twig' with { 'form': newForm } %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul id="redirections-list-container" class="vic-bordered-list">
+                    {% if pager.count > 0 %}
+                        {% for redirection in pager.currentPageResults %}
+                            <li class="list-group-item" id="redirection-{{ redirection.id }}-item-container">
+                                {% include '@VictoireSeo/Redirection/_item.html.twig' with {
+                                    'redirection': redirection,
+                                    'form': forms[redirection.id]
+                                } %}
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item">
+                            {% include '@VictoireSeo/Redirection/_empty.html.twig' %}
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock modal_body_content %}

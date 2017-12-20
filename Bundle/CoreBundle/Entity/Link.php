@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -25,7 +26,7 @@ class Link
     const TARGET_BLANK = '_blank';
     const TARGET_MODAL = '_modal';
 
-    use \Gedmo\Timestampable\Traits\TimestampableEntity;
+    use TimestampableEntity;
 
     /**
      * @var int
@@ -40,6 +41,8 @@ class Link
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
+     *
+     * @Assert\Url()
      */
     protected $url;
 
@@ -338,16 +341,16 @@ class Link
         // check if the name is actually a fake name
         switch ($this->getLinkType()) {
             case self::TYPE_VIEW_REFERENCE:
-            $violation = $this->getViewReference() == null;
+            $violation = $this->getViewReference() === null;
                 break;
             case self::TYPE_ROUTE:
-            $violation = $this->getRoute() == null;
+            $violation = $this->getRoute() === null;
                 break;
             case self::TYPE_URL:
-            $violation = $this->getUrl() == null;
+            $violation = $this->getUrl() === null;
                 break;
             case self::TYPE_WIDGET:
-            $violation = $this->getAttachedWidget() == null;
+            $violation = $this->getAttachedWidget() === null;
                 break;
             default:
                 break;

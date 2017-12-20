@@ -306,6 +306,86 @@
         <source>form.pageSeo.keyword.placeholder</source>
         <target>specify keywords and phrases related to your site, separated by commas</target>
       </trans-unit>
+      <trans-unit id="58893b9a020ca" resname="modal.error404.title">
+        <source>modal.error404.title</source>
+        <target><![CDATA[<strong>404</strong> errors list]]></target>
+      </trans-unit>
+      <trans-unit id="58893b9a020da" resname="modal.redirection.title">
+        <source>modal.redirection.title</source>
+        <target><![CDATA[<strong>Redirections</strong> list]]></target>
+      </trans-unit>
+      <trans-unit id="58893b9a020cb" resname="modal.error404.list.empty">
+        <source>modal.error404.list.empty</source>
+        <target>The 404 errors list is empty</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020db" resname="modal.redirection.list.empty">
+        <source>modal.redirection.list.empty</source>
+        <target>The redirections list is empty</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020cc" resname="modal.error404.form.submit.value">
+        <source>modal.error404.form.submit.value</source>
+        <target>Update</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020dc" resname="modal.redirection.form.submit.value">
+        <source>modal.redirection.form.submit.value</source>
+        <target>Update</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020cd" resname="modal.error404.counter.label">
+        <source>modal.error404.counter.label</source>
+        <target>Requests nb : </target>
+      </trans-unit>
+      <trans-unit id="58893b9a020dd" resname="modal.redirection.counter.label">
+        <source>modal.redirection.counter.label</source>
+        <target>Requests nb : </target>
+      </trans-unit>
+      <trans-unit id="58893b9a020de" resname="modal.redirection.form.new.label">
+        <source>modal.redirection.form.new.label</source>
+        <target>Create a redirection</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020cf" resname="menu.left.redirection.mainItem.label">
+        <source>menu.left.redirection.mainItem.label</source>
+        <target><![CDATA[<i class='fa fa-random'></i> Redirections]]></target>
+      </trans-unit>
+      <trans-unit id="58893b9a020cg" resname="menu.left.redirection.subItem.404.label">
+        <source>menu.left.redirection.subItem.404.label</source>
+        <target><![CDATA[<i class='fa fa-exclamation'></i> 404 errors]]></target>
+      </trans-unit>
+      <trans-unit id="58893b9a020dg" resname="menu.left.redirection.subItem.redirection.label">
+        <source>menu.left.redirection.subItem.redirection.label</source>
+        <target><![CDATA[<i class='fa fa-random'></i> Redirections]]></target>
+      </trans-unit>
+      <trans-unit id="58893b9a020ef" resname="redirection.form.url.placeholder">
+        <source>redirection.form.url.placeholder</source>
+        <target>Url to redirect</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020fa" resname="alert.error_404.delete.success">
+        <source>alert.error_404.delete.success</source>
+        <target>Error 404 successfully deleted !</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020fb" resname="alert.redirection.delete.success">
+        <source>alert.redirection.delete.success</source>
+        <target>Redirection successfully deleted !</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020ga" resname="alert.error_404.redirect.success">
+        <source>alert.error_404.redirect.success</source>
+        <target>Error 404 successfully redirected !</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020gb" resname="alert.redirection.modify.success">
+        <source>alert.redirection.modify.success</source>
+        <target>Redirection successfully modified !</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020ha" resname="alert.redirection.create.success">
+        <source>alert.redirection.create.success</source>
+        <target>Redirection successfully deleted !</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020ia" resname="alert.error404.form.error">
+        <source>alert.error404.form.error</source>
+        <target>An error occured, please try again.</target>
+      </trans-unit>
+      <trans-unit id="58893b9a020ib" resname="alert.redirection.form.error">
+        <source>alert.redirection.form.error</source>
+        <target>An error occured, please try again.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
