@@ -38,9 +38,9 @@
 {{ form_end(form) }}
 
 {% if icTrigger is defined %}
-    <span ic-get-from="{{ icTrigger.url }}"
-          ic-target="{{ icTrigger.target }}"
-          ic-swap-style="append"
-          ic-trigger-on="load">
+    <span v-ic-get-from="{{ icTrigger.url }}"
+          v-ic-target="{{ icTrigger.target }}"
+          v-ic-swap-style="append"
+          v-ic-trigger-on="load">
     </span>
 {% endif %}
