@@ -283,7 +283,7 @@ class BasePageController extends Controller
      * @param Request  $request
      * @param BasePage $page
      *
-     * @return Response
+     * @return array
      */
     protected function getViewReferenceRedirect(Request $request, BasePage $page)
     {
@@ -300,18 +300,16 @@ class BasePageController extends Controller
 
         $page->setReference($viewReference);
 
-        return new Response(
-            null,
-            200,
-            [
-                'X-VIC-Redirect' => $this->generateUrl(
-                    'victoire_core_page_show', [
-                        '_locale' => $request->getLocale(),
-                        'url'     => $viewReference->getUrl(),
-                    ]
-                )
-            ]
-         );
+        return [
+            'success'  => true,
+            'url'      => $this->generateUrl(
+                'victoire_core_page_show',
+                [
+                    '_locale' => $request->getLocale(),
+                    'url'     => $viewReference->getUrl(),
+                ]
+            ),
+        ];
     }
 
     /**
