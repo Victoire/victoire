@@ -93,7 +93,7 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
                 $view->setCssUpToDate(true);
                 $entityManager->persist($view);
 
-                ++$count;
+                $count++;
 
                 $progress->advance();
             }
