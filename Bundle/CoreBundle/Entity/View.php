@@ -5,13 +5,12 @@ namespace Victoire\Bundle\CoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 /**
@@ -29,7 +28,7 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
  */
 abstract class View
 {
-    use \Gedmo\Timestampable\Traits\TimestampableEntity;
+    use TimestampableEntity;
     use Translatable;
 
     /**
@@ -126,8 +125,6 @@ abstract class View
     protected $references;
 
     /**
-     * @var string
-     *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\TemplateBundle\Entity\Template", inversedBy="inheritors", cascade={"persist"})
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -153,14 +150,16 @@ abstract class View
      * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $widgets;
+
     /**
      * @var bool
      *
      * @ORM\Column(name="cssUpToDate", type="boolean")
      */
     protected $cssUpToDate = false;
+
     /**
-     * @var bool
+     * @var string
      *
      * @ORM\Column(name="roles", type="text", nullable=true)
      */
@@ -300,7 +299,7 @@ abstract class View
     /**
      * Get WebView children.
      *
-     * @return string
+     * @return array
      */
     public function getWebViewChildren()
     {
@@ -815,7 +814,7 @@ abstract class View
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function getRoles()
     {

@@ -1,0 +1,36 @@
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+
+{% trans_default_domain "victoire" %}
+
+{% block modal_container_classes %}
+    {{ parent() }} vic-view-modal
+{% endblock modal_container_classes %}
+
+{% block modal_header_title %}
+    {{ 'modal.error404.title'|trans|raw }}
+{% endblock modal_header_title %}
+
+{% block modal_body_content %}
+    <div id="victoire-blog-modal">
+        <div class="row">
+            <div class="col-md-12">
+                <ul id="errors404-list-container" class="vic-bordered-list">
+                    {% if pager.count > 0 %}
+                        {% for error in pager.currentPageResults %}
+                            <li class="list-group-item" id="404-{{ error.id }}-item-container">
+                                {% include '@VictoireSeo/Error404/_item.html.twig' with {
+                                    'error': error,
+                                    'form': forms[error.id]
+                                } %}
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item">
+                            {% include '@VictoireSeo/Error404/_empty.html.twig' %}
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock modal_body_content %}

@@ -1,0 +1,46 @@
+{% trans_default_domain "victoire" %}
+
+{% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+
+{{ form_start(form) }}
+    <div class="row vic-mt-1">
+        <div class="col-md-10 col-md-offset-1">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+    {% if redirection is not defined %}
+        <div class="row vic-mt-1 vic-mb-2">
+            <div class="col-md-10 col-md-offset-1">
+                {{ form_widget(form.url) }}
+                {{ form_errors(form.url) }}
+            </div>
+        </div>
+    {% endif %}
+    <div class="row vic-mb-1">
+        <div class="col-md-10 col-md-offset-1">
+            {{ form_widget(form.link) }}
+            {{ form_errors(form.link) }}
+        </div>
+    </div>
+    <div class="row vic-mb-1">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="vic-float-right">
+                <input
+                    id="redirection-form"
+                    type="submit"
+                    value="{{ 'modal.redirection.form.submit.value'|trans }}"
+                    class="vic-btn vic-btn-default vic-bg-green vic-text-white"
+                >
+            </div>
+        </div>
+    </div>
+{{ form_rest(form) }}
+{{ form_end(form) }}
+
+{% if icTrigger is defined %}
+    <span v-ic-get-from="{{ icTrigger.url }}"
+          v-ic-target="{{ icTrigger.target }}"
+          v-ic-swap-style="append"
+          v-ic-trigger-on="load">
+    </span>
+{% endif %}

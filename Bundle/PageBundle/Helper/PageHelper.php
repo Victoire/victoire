@@ -4,7 +4,7 @@ namespace Victoire\Bundle\PageBundle\Helper;
 
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\Orm\EntityManager;
-use Doctrine\ORM\ORMInvalidArgumentException;
+use Doctrine\ORM\NoResultException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -19,13 +19,16 @@ use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
-use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\CoreBundle\Event\PageRenderEvent;
 use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
+use Victoire\Bundle\PageBundle\Handler\RedirectionHandler;
+use Victoire\Bundle\SeoBundle\Entity\Error404;
+use Victoire\Bundle\SeoBundle\Entity\Redirection;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException;
@@ -50,11 +53,13 @@ class PageHelper
     protected $pageSeoHelper;
     protected $session;
     protected $tokenStorage;
+    protected $authorizationChecker;
     protected $widgetMapBuilder;
     protected $businessPageBuilder;
     protected $businessPageHelper;
-    protected $viewReferenceRepository;
     protected $widgetDataWarmer;
+    protected $viewReferenceRepository;
+    protected $redirectionHelper;
 
     /**
      * @param BusinessEntityHelper     $businessEntityHelper
@@ -72,6 +77,7 @@ class PageHelper
      * @param BusinessPageHelper       $businessPageHelper
      * @param WidgetDataWarmer         $widgetDataWarmer
      * @param ViewReferenceRepository  $viewReferenceRepository
+     * @param RedirectionHandler       $redirectionHelper
      */
     public function __construct(
         BusinessEntityHelper $businessEntityHelper,
@@ -88,7 +94,8 @@ class PageHelper
         BusinessPageBuilder $businessPageBuilder,
         BusinessPageHelper $businessPageHelper,
         WidgetDataWarmer $widgetDataWarmer,
-        ViewReferenceRepository $viewReferenceRepository
+        ViewReferenceRepository $viewReferenceRepository,
+        RedirectionHandler $redirectionHelper
     ) {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->entityManager = $entityManager;
@@ -105,10 +112,15 @@ class PageHelper
         $this->businessPageHelper = $businessPageHelper;
         $this->widgetDataWarmer = $widgetDataWarmer;
         $this->viewReferenceRepository = $viewReferenceRepository;
+        $this->redirectionHelper = $redirectionHelper;
     }
 
     /**
      * generates a response from parameters.
+     *
+     * @param $parameters
+     *
+     * @throws ViewReferenceNotFoundException
      *
      * @return View
      */
@@ -149,13 +161,14 @@ class PageHelper
      * generates a response from a page url.
      * if seo redirect, return target.
      *
+     * @param string $uri
      * @param string $url
      * @param        $locale
      * @param null   $layout
      *
      * @return Response
      */
-    public function renderPageByUrl($url, $locale, $layout = null)
+    public function renderPageByUrl($uri, $url, $locale, $layout = null)
     {
         $page = null;
         if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
@@ -175,6 +188,23 @@ class PageHelper
 
             return $this->renderPage($page, $layout);
         } else {
+            try {
+                /** @var Error404 $error */
+                $error = $this->entityManager->getRepository('VictoireSeoBundle:Error404')->findOneBy(['url' => $uri]);
+                if ($this->redirectionHelper->handleError($error) instanceof Redirection) {
+                    return new RedirectResponse(
+                        $this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl(
+                            $error->getRedirection()->getLink()->getParameters()
+                        )
+                    );
+                }
+            } catch (NoResultException $e) {
+                $error = new Error404();
+                $error->setUrl($uri);
+                $this->entityManager->persist($error);
+                $this->entityManager->flush();
+            }
+
             throw new NotFoundHttpException(sprintf('Page not found (url: "%s", locale: "%s")', $url, $locale));
         }
     }
@@ -187,9 +217,9 @@ class PageHelper
      *
      * @return Response
      */
-    public function renderPage($view, $layout = null)
+    public function renderPage(View $view, $layout = null)
     {
-        $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view);
+        $event = new PageMenuContextualEvent($view);
 
         //Set currentView and dispatch victoire.on_render_page event with this currentView
         $this->currentViewHelper->setCurrentView($view);
@@ -208,7 +238,7 @@ class PageHelper
             $eventName = 'victoire_core.page_menu.contextual';
             if (!$view->getId()) {
                 $eventName = 'victoire_core.business_template_menu.contextual';
-                $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view->getTemplate());
+                $event = new PageMenuContextualEvent($view->getTemplate());
             }
             $this->eventDispatcher->dispatch($eventName, $event);
             $type = $view->getBusinessEntityId();
@@ -307,20 +337,6 @@ class PageHelper
         }
 
         return $page;
-    }
-
-    /**
-     * @param View $page
-     * @param $locale
-     */
-    private function refreshPage($page, $locale)
-    {
-        if ($page && $page instanceof View) {
-            try {
-                $this->entityManager->refresh($page->setTranslatableLocale($locale));
-            } catch (ORMInvalidArgumentException $e) {
-            }
-        }
     }
 
     /**

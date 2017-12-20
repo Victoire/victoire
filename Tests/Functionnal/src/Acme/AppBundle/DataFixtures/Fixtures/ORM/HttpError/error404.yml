@@ -1,0 +1,16 @@
+Victoire\Bundle\SeoBundle\Entity\Error404:
+
+    error404_1:
+        url: 'http://victoire/fr/test1'
+        errorMessage: 'Page not found'
+        counter: 8
+
+    error404_2:
+        url: 'http://victoire/fr/test2'
+        errorMessage: 'Page not found'
+        counter: 6
+
+    error404_3:
+        url: 'http://victoire/fr/test3'
+        errorMessage: 'Page not found'
+        counter: 4

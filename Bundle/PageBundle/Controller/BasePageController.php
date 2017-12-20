@@ -32,6 +32,7 @@ class BasePageController extends Controller
     public function showAction(Request $request, $url = '')
     {
         $response = $this->get('victoire_page.page_helper')->renderPageByUrl(
+            $request->getUri(),
             $url,
             $request->getLocale(),
             $request->isXmlHttpRequest() ? $request->query->get('modalLayout', null) : null

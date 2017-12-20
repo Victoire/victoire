@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Victoire\Bundle\BusinessEntityBundle\Entity\Traits\BusinessEntityTrait;
@@ -108,8 +109,8 @@ class BlogCategory
      */
     public function __construct()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     /**
@@ -187,7 +188,7 @@ class BlogCategory
      *
      * @param string $articles
      *
-     * @return PostPage
+     * @return BlogCategory
      */
     public function setArticles($articles)
     {
@@ -211,7 +212,7 @@ class BlogCategory
      *
      * @param int $lft
      *
-     * @return Menu
+     * @return BlogCategory
      */
     public function setLft($lft)
     {
@@ -235,7 +236,7 @@ class BlogCategory
      *
      * @param int $lvl
      *
-     * @return Menu
+     * @return BlogCategory
      */
     public function setLvl($lvl)
     {
@@ -259,7 +260,7 @@ class BlogCategory
      *
      * @param int $rgt
      *
-     * @return Menu
+     * @return BlogCategory
      */
     public function setRgt($rgt)
     {
@@ -283,7 +284,7 @@ class BlogCategory
      *
      * @param int $root
      *
-     * @return Menu
+     * @return BlogCategory
      */
     public function setRoot($root)
     {
@@ -305,9 +306,9 @@ class BlogCategory
     /**
      * Set parent.
      *
-     * @param Menu $parent
+     * @param BlogCategory $parent
      *
-     * @return Menu
+     * @return BlogCategory
      */
     public function setParent(self $parent = null)
     {
@@ -319,7 +320,7 @@ class BlogCategory
     /**
      * Get parent.
      *
-     * @return Menu
+     * @return BlogCategory
      */
     public function getParent()
     {
@@ -329,9 +330,9 @@ class BlogCategory
     /**
      * Add child.
      *
-     * @param Menu $child
+     * @param BlogCategory $child
      *
-     * @return Menu
+     * @return BlogCategory
      */
     public function addChild(self $child)
     {
@@ -344,7 +345,7 @@ class BlogCategory
     /**
      * Remove children.
      *
-     * @param Menu $child
+     * @param BlogCategory $child
      */
     public function removeChild(self $child)
     {
@@ -354,7 +355,7 @@ class BlogCategory
     /**
      * Remove children.
      *
-     * @param Menu $child
+     * @param BlogCategory $child
      */
     public function removeChildren(self $child)
     {
@@ -366,7 +367,7 @@ class BlogCategory
      *
      * @param array $children
      *
-     * @return \Victoire\Bundle\BlogBundle\Entity\BlogCategory
+     * @return BlogCategory
      */
     public function setChildren($children)
     {
@@ -376,7 +377,7 @@ class BlogCategory
     }
 
     /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @return ArrayCollection
      */
     public function getChildren()
     {
@@ -416,7 +417,7 @@ class BlogCategory
     /**
      * @param Blog $blog
      *
-     * @return $this
+     * @return BlogCategory
      */
     public function setBlog(Blog $blog)
     {

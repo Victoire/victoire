@@ -92,6 +92,8 @@ class WidgetMap
     protected $asynchronous = false;
 
     /**
+     * @var WidgetMap
+     *
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
      */
@@ -265,7 +267,7 @@ class WidgetMap
     /**
      * @param WidgetMap $replaced
      */
-    public function setReplaced($replaced)
+    public function setReplaced(self $replaced = null)
     {
         if ($replaced) {
             $replaced->addSubstitute($this);
@@ -290,13 +292,15 @@ class WidgetMap
     }
 
     /**
+     * @param $position
+     *
      * @return WidgetMap|null
      */
     public function getChild($position)
     {
         $child = null;
         foreach ($this->children as $_child) {
-            if ($_child && $_child->getPosition() == $position) {
+            if ($_child && $_child->getPosition() === $position) {
                 $child = $_child;
             }
         }
@@ -308,6 +312,8 @@ class WidgetMap
      * Return all children from contextual View (already loaded WidgetMaps)
      * for a given position.
      *
+     * @param $position
+     *
      * @return WidgetMap[]
      */
     public function getContextualChildren($position)
@@ -316,7 +322,7 @@ class WidgetMap
         $viewWidgetMaps = $this->getContextualView()->getWidgetMapsForViewAndTemplates();
 
         foreach ($viewWidgetMaps as $viewWidgetMap) {
-            if ($viewWidgetMap->getParent() == $this && $viewWidgetMap->getPosition() == $position) {
+            if ($viewWidgetMap->getParent() === $this && $viewWidgetMap->getPosition() === $position) {
                 $widgetMapChildren[] = $viewWidgetMap;
             }
         }
@@ -406,7 +412,7 @@ class WidgetMap
         $viewWidgetMaps = $this->getContextualView()->getWidgetMapsForViewAndTemplates();
 
         foreach ($viewWidgetMaps as $viewWidgetMap) {
-            if ($viewWidgetMap->getReplaced() == $this) {
+            if ($viewWidgetMap->getReplaced() === $this) {
                 $substitutesWidgetMaps[] = $viewWidgetMap;
             }
         }
@@ -416,6 +422,8 @@ class WidgetMap
 
     /**
      * Return substitute if used in View or in one of its inherited Template.
+     *
+     * @param View $view
      *
      * @return WidgetMap|null
      */

@@ -1,0 +1,31 @@
+{% trans_default_domain "victoire" %}
+
+<div class="row">
+    <div class="col-md-1 vic-text-left">
+        <a href="#"
+           id="delete-link-{{ error.id }}"
+           class="btn-lg btn-secondary btn-transparent text-danger"
+           v-ic-delete-from="{{ path('victoire_404_delete', { 'id': error.id }) }}"
+           v-ic-target="closest li"
+           v-ic-trigger-on="confirmed-by-user"
+           data-toggle="vic-confirm"
+           data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire') }}"
+           data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire') }}"
+           data-confirm-callback="$vic('#delete-link-{{ error.id }}').trigger('confirmed-by-user')"
+        >
+            <i class="fa fa-times"></i>
+            <i class="fa fa-spinner fa-spin v-ic-indicator collapse"></i>
+        </a>
+    </div>
+    <div class="col-md-7 col-sm-12 col-sm-align-center col-sm-mt-1">
+        <a href="{{ error.url }}">{{ error.url }}</a>
+    </div>
+    <div class="col-md-3 col-sm-12 col-sm-align-center col-sm-mb-1 vic-text-right">
+        {{ 'modal.error404.counter.label'|trans }}<strong class="vic-pl-1">{{ error.counter }}</strong>
+    </div>
+    <div class="col-md-1 vic-text-right">
+        <a id="collapse-icon-{{ error.id }}" class="btn-lg btn-secondary" data-toggle="collapse" href="#404-{{ error.id }}-form-container"{% if isOpened|default(false) %} aria-expanded="true"{% endif %}>
+            <i class="fa fa-plus" id="{{ error.id }}"></i>
+        </a>
+    </div>
+</div>
