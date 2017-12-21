@@ -11,31 +11,55 @@
 {% endblock modal_header_title %}
 
 {% block modal_body_content %}
+    <style>
+        {# todo move style from template #}
+        .vic-text-white {
+            color: white;
+        }
+
+        .redirection-list-item {
+            border: 1px solid lightgrey;
+            border-radius: 5px;
+            margin: 0 0 10px 0;
+        }
+    </style>
+
     <div id="victoire-blog-modal">
-        <input
-            type="submit"
+
+        {# new redirecion form button #}
+        <input type="submit"
+            {# todo translate #}
             value="Nouvelle redirection"
             class="vic-btn vic-btn-default vic-bg-green vic-text-white"
-            style="margin-bottom: 20px;"
-            data-target="#collapse-newForm"
+            data-target="#new-form-container"
             data-toggle="collapse"
         >
-        <div class="row collapse" id="collapse-newForm">
+
+        {# new redirection form #}
+        <div class="collapse" id="new-form-container">
             {% include '@VictoireSeo/Redirection/_newForm.html.twig' with {
                 'form': newForm
             } %}
         </div>
+
+        {# redirections list #}
         <div class="row">
             <div class="col-md-12">
-                <ul class="v-list-group v-list-group--main" style="border: none;">
-                    {% for redirection in redirections %}
-                        <li class="v-list-group__item"  style="border-radius: 5px; border: 1px solid lightgrey; margin: 0 0 10px 0;">
-                            {% include '@VictoireSeo/Redirection/_list.html.twig' with {
-                                'redirection': redirection,
-                                'form': forms[redirection.id]
-                            } %}
+                <ul class="v-list-group v-list-group--main" id="redirections-list-container" style="border: none;">
+                    {% if redirections %}
+                        {% for redirection in redirections %}
+                            <li class="v-list-group__item redirection-list-item">
+                                {% include '@VictoireSeo/Redirection/_list.html.twig' with {
+                                    'redirection': redirection,
+                                    'form': forms[redirection.id]
+                                } %}
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="v-list-group__item redirection-list-item">
+                            {% include '@VictoireSeo/Redirection/_empty.html.twig' %}
                         </li>
-                    {% endfor %}
+                    {% endif %}
                 </ul>
             </div>
         </div>
