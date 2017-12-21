@@ -11,13 +11,22 @@
 {% endblock modal_header_title %}
 
 {% block modal_body_content %}
+    <style>
+        {# todo move style from template #}
+        .redirection-list-item {
+            border: 1px solid lightgrey;
+            border-radius: 5px;
+            margin: 0 0 10px 0;
+        }
+    </style>
+
     <div id="victoire-blog-modal">
         <div class="row">
             <div class="col-md-12">
                 <ul class="v-list-group v-list-group--main" style="border: none;">
                     {% if errors %}
                         {% for error in errors %}
-                            <li class="v-list-group__item" style="border-radius: 5px; border: 1px solid lightgrey; margin: 0 0 10px 0;">
+                            <li class="v-list-group__item redirection-list-item">
                                 {% include '@VictoireSeo/Error404/_list.html.twig' with {
                                     'error': error,
                                     'form': forms[error.id]
@@ -25,7 +34,7 @@
                             </li>
                         {% endfor %}
                     {% else %}
-                        <li class="v-list-group__item" style="border-radius: 5px; border: 1px solid lightgrey; margin: 0 0 10px 0;">
+                        <li class="v-list-group__item redirection-list-item">
                             {% include '@VictoireSeo/Error404/_empty.html.twig' %}
                         </li>
                     {% endif %}
