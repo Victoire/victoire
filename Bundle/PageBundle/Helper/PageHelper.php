@@ -200,7 +200,7 @@ class PageHelper
                     return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl(
                         $result->getLink()->getParameters()
                     ));
-                } else if ($result->getRedirection()) {
+                } elseif ($result->getRedirection()) {
                     return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl(
                         $result->getRedirection()->getLink()->getParameters()
                     ));

@@ -5,7 +5,6 @@ namespace Victoire\Bundle\PageBundle\Handler;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
 use Victoire\Bundle\SeoBundle\Entity\Error404;
-use Victoire\Bundle\SeoBundle\Entity\ErrorRedirection;
 use Victoire\Bundle\SeoBundle\Entity\Redirection;
 
 /**
@@ -44,7 +43,7 @@ class RedirectionHandler
             $this->increaseCounter($redirection);
 
             return $redirection;
-        } else if ($error404) {
+        } elseif ($error404) {
             $this->increaseCounter($error404);
 
             return $error404;
