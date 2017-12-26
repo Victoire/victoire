@@ -15,6 +15,7 @@ use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\SeoBundle\Entity\Error404;
 use Victoire\Bundle\SeoBundle\Entity\ErrorRedirection;
+use Victoire\Bundle\SeoBundle\Entity\HttpError;
 use Victoire\Bundle\SeoBundle\Form\RedirectionType;
 use Victoire\Bundle\SeoBundle\Repository\HttpErrorRepository;
 
@@ -38,13 +39,15 @@ class Error404Controller extends Controller
      */
     public function indexAction(Request $request)
     {
-        /** @var HttpErrorRepository $error404Repository */
-        $error404Repository = $this
+        // Fetch routes errors and build corresponding forms
+
+        /** @var HttpErrorRepository $errorRepository */
+        $errorRepository = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('VictoireSeoBundle:HttpError');
 
-        $adapter = new DoctrineORMAdapter($error404Repository->getUnresolvedQuery());
+        $adapter = new DoctrineORMAdapter($errorRepository->getRouteErrors());
         $pager = new Pagerfanta($adapter);
 
         $pager->setMaxPerPage(100);
@@ -59,9 +62,30 @@ class Error404Controller extends Controller
             $forms[$error->getId()] = $this->getError404RedirectionForm($redirection)->createView();
         }
 
+        // Fetch files errors and build corresponding forms
+
+        $adapter = new DoctrineORMAdapter($errorRepository->findFileErrors());
+        $pagerFile = new Pagerfanta($adapter);
+
+        $pagerFile->setMaxPerPage(100);
+        $pagerFile->setCurrentPage($request->query->get('page', 1));
+
+        $fileForms = [];
+
+        /** @var Error404 $fileError */
+        foreach ($pagerFile->getCurrentPageResults() as $fileError) {
+            $redirection = new ErrorRedirection();
+            $redirection->setError($fileError);
+            $fileForms[$fileError->getId()] = $this->getError404RedirectionForm($redirection)->createView();
+        }
+
+        // Return datas
+
         return $this->render($this->getBaseTemplatePath().':index.html.twig', [
             'pager' => $pager,
             'forms' => $forms,
+            'fileErrors' => $pagerFile,
+            'fileForms'  => $fileForms,
         ]);
     }
 
@@ -168,7 +192,11 @@ class Error404Controller extends Controller
      */
     private function getError404RedirectionForm(ErrorRedirection $redirection)
     {
-        $containerId = sprintf('#404-%d-item-container', $redirection->getError()->getId());
+        if ($redirection->getError()->getType() === HttpError::TYPE_ROUTE) {
+            $containerId = sprintf('#404-%d-item-container', $redirection->getError()->getId());
+        } else {
+            $containerId = sprintf('#404File-%d-item-container', $redirection->getError()->getId());
+        }
 
         $action = $this->generateUrl('victoire_404_redirect', ['id' => $redirection->getError()->getId()]);
 
