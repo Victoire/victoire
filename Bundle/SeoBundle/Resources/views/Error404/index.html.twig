@@ -14,10 +14,12 @@
     <div id="victoire-blog-modal">
         <div class="row">
             <div class="col-md-12">
-                <ul id="errors404-list-container" class="vic-bordered-list">
+                {# route errors #}
+                <h4>Routes</h4><hr>
+                <ul id="RoutesErrors-list-container" class="vic-bordered-list">
                     {% if pager.count > 0 %}
                         {% for error in pager.currentPageResults %}
-                            <li class="list-group-item" id="404-{{ error.id }}-item-container">
+                            <li id="404Route-{{ error.id }}-item-container" class="list-group-item">
                                 {% include '@VictoireSeo/Error404/_item.html.twig' with {
                                     'error': error,
                                     'form': forms[error.id]
@@ -30,6 +32,32 @@
                         </li>
                     {% endif %}
                 </ul>
+                {# file errors #}
+                <div class="vic-mt-4">
+                    <h4 class="d-inline">Fichiers</h4>
+                    <a class="btn-lg btn-secondary d-inline" data-toggle="collapse" data-target="#filesErrors-container">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                    <div id="filesErrors-container" class="collapse">
+                        <hr>
+                        <ul id="filesErrors-list-container" class="vic-bordered-list">
+                            {% if fileErrors.count > 0 %}
+                                {% for fileError in fileErrors %}
+                                    <li id="404File-{{ fileError.id }}-item-container" class="list-group-item">
+                                        {% include '@VictoireSeo/Error404/_item.html.twig' with {
+                                            'error': fileError,
+                                            'form': fileForms[fileError.id]
+                                        } %}
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                <li class="list-group-item">
+                                    {% include '@VictoireSeo/Error404/_empty.html.twig' %}
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
