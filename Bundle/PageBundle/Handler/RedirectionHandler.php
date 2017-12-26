@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
 use Victoire\Bundle\SeoBundle\Entity\Error404;
 use Victoire\Bundle\SeoBundle\Entity\ErrorRedirection;
+use Victoire\Bundle\SeoBundle\Entity\HttpError;
 use Victoire\Bundle\SeoBundle\Entity\Redirection;
 
 /**
@@ -51,6 +52,22 @@ class RedirectionHandler
         }
 
         throw new NoResultException();
+    }
+
+    /**
+     * Return error extension type.
+     *
+     * @param string $extension
+     *
+     * @return int
+     */
+    public function handleErrorExtension($extension)
+    {
+        if ($extension && ($extension !== 'html' || $extension !== 'twig')) {
+            return HttpError::TYPE_FILE;
+        }
+
+        return HttpError::TYPE_ROUTE;
     }
 
     /**
