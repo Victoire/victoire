@@ -193,7 +193,7 @@ class Error404Controller extends Controller
     private function getError404RedirectionForm(ErrorRedirection $redirection)
     {
         if ($redirection->getError()->getType() === HttpError::TYPE_ROUTE) {
-            $containerId = sprintf('#404-%d-item-container', $redirection->getError()->getId());
+            $containerId = sprintf('#404Route-%d-item-container', $redirection->getError()->getId());
         } else {
             $containerId = sprintf('#404File-%d-item-container', $redirection->getError()->getId());
         }
