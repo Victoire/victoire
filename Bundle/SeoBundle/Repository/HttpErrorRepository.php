@@ -42,7 +42,7 @@ class HttpErrorRepository extends EntityRepository
      *
      * @return QueryBuilder
      */
-    public function findFileErrors($order = 'error.counter', $direction = 'DESC')
+    public function getFileErrors($order = 'error.counter', $direction = 'DESC')
     {
         $this->getAll(true);
 
