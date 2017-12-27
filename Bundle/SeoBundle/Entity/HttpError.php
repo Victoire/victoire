@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class HttpError
 {
     const TYPE_ROUTE = 1;
-    const TYPE_FILE  = 2;
+    const TYPE_FILE = 2;
 
     /**
      * @var int

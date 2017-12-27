@@ -28,7 +28,6 @@ use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
 use Victoire\Bundle\PageBundle\Handler\RedirectionHandler;
 use Victoire\Bundle\SeoBundle\Entity\Error404;
-use Victoire\Bundle\SeoBundle\Entity\HttpError;
 use Victoire\Bundle\SeoBundle\Entity\Redirection;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
@@ -201,7 +200,7 @@ class PageHelper
                     return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl(
                         $result->getLink()->getParameters()
                     ));
-                } else if ($result->getRedirection()) {
+                } elseif ($result->getRedirection()) {
                     return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl(
                         $result->getRedirection()->getLink()->getParameters()
                     ));

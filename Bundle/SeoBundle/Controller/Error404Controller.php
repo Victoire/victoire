@@ -56,7 +56,7 @@ class Error404Controller extends Controller
 
         // Build forms
 
-        $forms  = [];
+        $forms = [];
         $errors = array_merge($errorRoute->getQuery()->getResult(), $errorFile->getQuery()->getResult());
 
         /** @var Error404 $error */
@@ -71,7 +71,7 @@ class Error404Controller extends Controller
         return $this->render($this->getBaseTemplatePath().':index.html.twig', [
             'errorsRoute' => $pagerRoute,
             'errorsFile'  => $pagerFile,
-            'forms'       => $forms
+            'forms'       => $forms,
         ]);
     }
 
@@ -154,7 +154,7 @@ class Error404Controller extends Controller
     }
 
     /**
-     * Remove error if there is more than one record, else return _empty template
+     * Remove error if there is more than one record, else return _empty template.
      *
      * @param Error404 $error404
      *
@@ -178,7 +178,7 @@ class Error404Controller extends Controller
         }
 
         return new Response(null, 200, [
-            'X-VIC-Remove' => '100ms',
+            'X-VIC-Remove'      => '100ms',
             'X-Inject-Alertify' => true,
         ]);
     }
