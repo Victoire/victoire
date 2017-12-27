@@ -63,7 +63,7 @@ class RedirectionHandler
      */
     public function handleErrorExtension($extension)
     {
-        if ($extension && ($extension !== 'html' || $extension !== 'twig')) {
+        if ($extension && ($extension !== 'html' && $extension !== 'twig')) {
             return HttpError::TYPE_FILE;
         }
 
