@@ -1,0 +1,16 @@
+<ul class="vic-bordered-list">
+    {% if errors.count > 0 %}
+        {% for error in errors.currentPageResults %}
+            <li id="404-{{ error.id }}-item-container" class="list-group-item">
+                {% include '@VictoireSeo/Error404/_item.html.twig' with {
+                    'error': error,
+                    'form': forms[error.id]
+                } %}
+            </li>
+        {% endfor %}
+    {% else %}
+        <li class="list-group-item">
+            {% include '@VictoireSeo/Error404/_empty.html.twig' %}
+        </li>
+    {% endif %}
+</ul>
