@@ -57,7 +57,7 @@ class SitemapController extends Controller
 
         $basePageRepo = $this->getDoctrine()->getManager()->getRepository('VictoirePageBundle:BasePage');
         $basePages = $basePageRepo
-            ->getAll(true)
+            ->getAll()
             ->joinSeo()
             ->joinSeoTranslations($request->getLocale())
             ->run();
