@@ -39,53 +39,39 @@ class Error404Controller extends Controller
      */
     public function indexAction(Request $request)
     {
-        // Fetch routes errors and build corresponding forms
-
         /** @var HttpErrorRepository $errorRepository */
-        $errorRepository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('VictoireSeoBundle:HttpError');
+        $errorRepository = $this->getDoctrine()->getManager()->getRepository('VictoireSeoBundle:HttpError');
 
-        $adapter = new DoctrineORMAdapter($errorRepository->getRouteErrors());
-        $pager = new Pagerfanta($adapter);
+        // Fetch errors + build pager
 
-        $pager->setMaxPerPage(100);
-        $pager->setCurrentPage($request->query->get('page', 1));
+        $errorRoute = $errorRepository->getRouteErrors();
+        $pagerRoute = new Pagerfanta(new DoctrineORMAdapter($errorRoute));
+        $pagerRoute->setMaxPerPage(100);
+        $pagerRoute->setCurrentPage($request->query->get('page', 1));
 
-        $forms = [];
+        $errorFile = $errorRepository->getFileErrors();
+        $pagerFile = new Pagerfanta(new DoctrineORMAdapter($errorFile));
+        $pagerFile->setMaxPerPage(100);
+        $pagerFile->setCurrentPage($request->query->get('page', 1));
+
+        // Build forms
+
+        $forms  = [];
+        $errors = array_merge($errorRoute->getQuery()->getResult(), $errorFile->getQuery()->getResult());
 
         /** @var Error404 $error */
-        foreach ($pager->getCurrentPageResults() as $error) {
+        foreach ($errors as $error) {
             $redirection = new ErrorRedirection();
             $redirection->setError($error);
             $forms[$error->getId()] = $this->getError404RedirectionForm($redirection)->createView();
         }
 
-        // Fetch files errors and build corresponding forms
-
-        $adapter = new DoctrineORMAdapter($errorRepository->findFileErrors());
-        $pagerFile = new Pagerfanta($adapter);
-
-        $pagerFile->setMaxPerPage(100);
-        $pagerFile->setCurrentPage($request->query->get('page', 1));
-
-        $fileForms = [];
-
-        /** @var Error404 $fileError */
-        foreach ($pagerFile->getCurrentPageResults() as $fileError) {
-            $redirection = new ErrorRedirection();
-            $redirection->setError($fileError);
-            $fileForms[$fileError->getId()] = $this->getError404RedirectionForm($redirection)->createView();
-        }
-
         // Return datas
 
         return $this->render($this->getBaseTemplatePath().':index.html.twig', [
-            'pager' => $pager,
-            'forms' => $forms,
-            'fileErrors' => $pagerFile,
-            'fileForms'  => $fileForms,
+            'errorsRoute' => $pagerRoute,
+            'errorsFile'  => $pagerFile,
+            'forms'       => $forms
         ]);
     }
 
@@ -118,16 +104,7 @@ class Error404Controller extends Controller
 
                     $this->congrat($this->get('translator')->trans('alert.error_404.redirect.success'));
 
-                    if (0 == count($em->getRepository('VictoireSeoBundle:HttpError')->findBy(['redirection' => null]))) {
-                        return new Response($this->renderView('@VictoireSeo/Error404/_empty.html.twig'), 200, [
-                            'X-Inject-Alertify' => true,
-                        ]);
-                    }
-
-                    return new Response(null, 200, [
-                        'X-VIC-Remove'      => '100ms',
-                        'X-Inject-Alertify' => true,
-                    ]);
+                    return $this->returnAfterRemoval($error404);
                 } else {
                     // force form error when linkType === none
                     $form->addError(new FormError('This value should not be blank.'));
@@ -173,14 +150,35 @@ class Error404Controller extends Controller
 
         $this->congrat($this->get('translator')->trans('alert.error_404.delete.success'));
 
-        if (0 == count($em->getRepository('VictoireSeoBundle:HttpError')->findBy(['redirection' => null]))) {
+        return $this->returnAfterRemoval($error404);
+    }
+
+    /**
+     * Remove error if there is more than one record, else return _empty template
+     *
+     * @param Error404 $error404
+     *
+     * @return Response
+     */
+    private function returnAfterRemoval(Error404 $error404)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var HttpErrorRepository $errorRepository */
+        $errorRepository = $em->getRepository('VictoireSeoBundle:HttpError');
+
+        $errors = ($error404->getType() == HttpError::TYPE_ROUTE)
+            ? $errorRepository->getRouteErrors()
+            : $errorRepository->getFileErrors();
+
+        if (0 == count($errors->getQuery()->getResult())) {
             return new Response($this->renderView('@VictoireSeo/Error404/_empty.html.twig'), 200, [
                 'X-Inject-Alertify' => true,
             ]);
         }
 
         return new Response(null, 200, [
-            'X-VIC-Remove'      => '100ms',
+            'X-VIC-Remove' => '100ms',
             'X-Inject-Alertify' => true,
         ]);
     }
@@ -192,11 +190,7 @@ class Error404Controller extends Controller
      */
     private function getError404RedirectionForm(ErrorRedirection $redirection)
     {
-        if ($redirection->getError()->getType() === HttpError::TYPE_ROUTE) {
-            $containerId = sprintf('#404Route-%d-item-container', $redirection->getError()->getId());
-        } else {
-            $containerId = sprintf('#404File-%d-item-container', $redirection->getError()->getId());
-        }
+        $containerId = sprintf('#404-%d-item-container', $redirection->getError()->getId());
 
         $action = $this->generateUrl('victoire_404_redirect', ['id' => $redirection->getError()->getId()]);
 
