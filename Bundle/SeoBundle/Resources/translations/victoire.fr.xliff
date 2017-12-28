@@ -306,6 +306,74 @@
         <source>form.pageSeo.keyword.placeholder</source>
         <target>indiquez les expressions et mots clés relatifs à votre site séparés par des virgules</target>
       </trans-unit>
+      <trans-unit id="1" resname="victoire.404.modal.title">
+        <source>victoire.404.modal.title</source>
+        <target>Erreurs 404</target>
+      </trans-unit>
+      <trans-unit id="2" resname="victoire.redirection.modal.title">
+        <source>victoire.redirection.modal.title</source>
+        <target>Redirections</target>
+      </trans-unit>
+      <trans-unit id="3" resname="victoire.redirection.new.button.label">
+        <source>victoire.redirection.new.button.label</source>
+        <target>Nouvelle redirection</target>
+      </trans-unit>
+      <trans-unit id="4" resname="victoire.redirection.list.empty.message">
+        <source>victoire.redirection.list.empty.message</source>
+        <target>La liste est vide !</target>
+      </trans-unit>
+      <trans-unit id="5" resname="victoire.redirection.counter.label">
+        <source>victoire.redirection.counter.label</source>
+        <target>Nb requêtes : </target>
+      </trans-unit>
+      <trans-unit id="6" resname="victoire.404.list.route.title">
+        <source>victoire.404.list.route.title</source>
+        <target>Routes</target>
+      </trans-unit>
+      <trans-unit id="7" resname="victoire.404.list.file.title">
+        <source>victoire.404.list.file.title</source>
+        <target>Fichiers</target>
+      </trans-unit>
+      <trans-unit id="8" resname="victoire.404.redirection.success">
+        <source>victoire.404.redirection.success</source>
+        <target>Erreur 404 redirigée avec succès !</target>
+      </trans-unit>
+      <trans-unit id="9" resname="victoire.404.form.error.unvalid">
+        <source>victoire.404.form.error.unvalid</source>
+        <target>Une erreur est survenue, veuillez réessayer.</target>
+      </trans-unit>
+      <trans-unit id="10" resname="victoire.404.form.error.blank">
+        <source>victoire.404.form.error.blank</source>
+        <target>Cette valeur ne doit pas être nulle.</target>
+      </trans-unit>
+      <trans-unit id="11" resname="victoire.404.delete.success">
+        <source>victoire.404.delete.success</source>
+        <target>Erreur 404 supprimée avec succès !</target>
+      </trans-unit>
+      <trans-unit id="12" resname="victoire.404.form.submit.label">
+        <source>victoire.404.form.submit.label</source>
+        <target>Rediriger</target>
+      </trans-unit>
+      <trans-unit id="13" resname="victoire.redirection.modify.success">
+        <source>victoire.redirection.modify.success</source>
+        <target>Redirection modifiée avec succès !</target>
+      </trans-unit>
+      <trans-unit id="14" resname="victoire.redirection.create.success">
+        <source>victoire.redirection.create.success</source>
+        <target>Redirection créée avec succès !</target>
+      </trans-unit>
+      <trans-unit id="15" resname="victoire.redirection.delete.success">
+        <source>victoire.redirection.delete.success</source>
+        <target>Redirection supprimée avec succès !</target>
+      </trans-unit>
+      <trans-unit id="16" resname="victoire.redirection.form.submit.label">
+        <source>victoire.redirection.form.submit.label</source>
+        <target>Modifier</target>
+      </trans-unit>
+      <trans-unit id="17" resname="victoire.redirection.new.form.submit.label">
+        <source>victoire.redirection.new.form.submit.label</source>
+        <target>Créer</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
