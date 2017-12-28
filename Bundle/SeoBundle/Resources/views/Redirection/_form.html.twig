@@ -2,7 +2,7 @@
 
 {% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
 
-<div class="col-md-12" style="margin-bottom: 20px;">
+<div class="col-md-12 vic-mb-2">
     {{ form_start(form) }}
     <div class="row vic-mt-1">
         <div class="col-md-10 col-md-offset-1">
@@ -18,10 +18,9 @@
     <div class="row vic-mb-1">
         <div class="col-md-10 col-md-offset-1">
             <div class="vic-float-right">
-                {# todo translate #}
                 <input
                     type="submit"
-                    value="Rediriger"
+                    value="{{ 'victoire.redirection.form.submit.label'|trans }}"
                     class="vic-btn vic-btn-default vic-bg-green vic-text-white"
                 >
             </div>
