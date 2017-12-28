@@ -199,18 +199,28 @@ class PageHelper
             return $this->renderPage($page, $layout);
         } else {
             try {
-                /** @var Error404 $error */
-                $error = $this->entityManager->getRepository('VictoireSeoBundle:Error404')->findOneBy(['url' => $uri]);
-                if ($this->redirectionHandler->handleError($error) instanceof Redirection) {
-                    return new RedirectResponse(
-                        $this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl(
-                            $error->getRedirection()->getLink()->getParameters()
-                        )
-                    );
+                /** @var Error404 $error404 */
+                $error404 = $this->entityManager->getRepository('VictoireSeoBundle:Error404')->findOneBy(['url' => $uri]);
+                /** @var Redirection $redirection */
+                $redirection = $this->entityManager->getRepository('VictoireSeoBundle:Redirection')->findOneBy(['url' => $uri]);
+
+                $result = $this->redirectionHandler->handleError($redirection, $error404);
+
+                if ($result instanceof Redirection) {
+                    return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl(
+                        $result->getLink()->getParameters()
+                    ));
+                } elseif ($result->getRedirection()) {
+                    return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl(
+                        $result->getRedirection()->getLink()->getParameters()
+                    ));
                 }
             } catch (NoResultException $e) {
                 $error = new Error404();
+
                 $error->setUrl($uri);
+                $error->setType($this->redirectionHandler->handleErrorExtension(pathinfo($uri, PATHINFO_EXTENSION)));
+
                 $this->entityManager->persist($error);
                 $this->entityManager->flush();
             }
