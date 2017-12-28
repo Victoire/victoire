@@ -34,44 +34,44 @@
 {% block modal_footer %}{% endblock modal_footer %}
 
 {% block modal_container %}
-{{ parent() }}
+    {{ parent() }}
 
-<script>
-$vic('#{{ id }}').vicmodal({ show : true, keyboard: true, backdrop: false });
-$vic('#{{ id }}').attr('data-modal', 'show');
-$vic('#{{ id }} .{{ confirm_button_class }}').focus();
-$vic('#{{ id }}').on('hide',function(){
-    $vic('.vic-confirm-waiting').removeClass('vic-confirm-waiting');
-    $vic('#{{ id }}').remove();
-});
+    <script>
+        $vic('#{{ id }}').vicmodal({ show : true, keyboard: true, backdrop: false });
+        $vic('#{{ id }}').attr('data-modal', 'show');
+        $vic('#{{ id }} .{{ confirm_button_class }}').focus();
+        $vic('#{{ id }}').on('hide',function(){
+            $vic('.vic-confirm-waiting').removeClass('vic-confirm-waiting');
+            $vic('#{{ id }}').remove();
+        });
 
-$vic('#{{ id }} .{{ cancel_button_class }}').click(function(){
-    $vic('.vic-confirm-waiting').removeClass('vic-confirm-waiting');
-});
+        $vic('#{{ id }} .{{ cancel_button_class }}').click(function(){
+            $vic('.vic-confirm-waiting').removeClass('vic-confirm-waiting');
+        });
 
-$vic('#{{ id }} .{{ confirm_button_class }}').click(function(event){
-    {% if app.request.get('confirm_callback') != null %}
-        {{ app.request.get('confirm_callback')|raw }}
-    {% else %}
-        {# if no callback were given, we submit or go to the url of given as parameter #}
-        elem = $vic('.vic-confirm-waiting');
-        elem.removeAttr('data-toggle');
-        elem.data('toggle', null);
-        elem.removeClass('vic-confirm-waiting');
-        elem.addClass('vic-confirmed');
-        $vic('#{{ id }}').vicmodal('hide');
-        {% if app.request.get('type') == "form" %}
-            elem.submit();
-        {% else %}
-            elem.click();
-        {% endif %}
-    {% endif %}
-    $vic('#{{ id }}').vicmodal('hide');
-});
+        $vic('#{{ id }} .{{ confirm_button_class }}').click(function(event){
+            {% if app.request.get('confirm_callback') != null %}
+                {{ app.request.get('confirm_callback')|raw }}
+            {% else %}
+                {# if no callback were given, we submit or go to the url of given as parameter #}
+                var elem = $vic('.vic-confirm-waiting');
+                elem.removeAttr('data-toggle');
+                elem.data('toggle', null);
+                elem.removeClass('vic-confirm-waiting');
+                elem.addClass('vic-confirmed');
+                $vic('#{{ id }}').vicmodal('hide');
+                {% if app.request.get('type') == "form" %}
+                    elem.submit();
+                {% else %}
+                    elem.click();
+                {% endif %}
+            {% endif %}
+            $vic('#{{ id }}').vicmodal('hide');
+        });
 
-//Focus on confirm button
-$vic('#{{ id }}').focus(function(){
-    $vic('#{{ id }} .{{ confirm_button_class }}').focus();
-});
-</script>
+        //Focus on confirm button
+        $vic('#{{ id }}').focus(function(){
+            $vic('#{{ id }} .{{ confirm_button_class }}').focus();
+        });
+    </script>
 {% endblock modal_container %}
