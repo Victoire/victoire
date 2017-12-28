@@ -140,7 +140,7 @@ class BasePageController extends Controller
      *
      * @param Request $request
      *
-     * @return array
+     * @return array|Response
      */
     protected function newPostAction(Request $request)
     {
@@ -211,7 +211,7 @@ class BasePageController extends Controller
      * @param Request  $request
      * @param BasePage $page
      *
-     * @return array
+     * @return array|Response
      */
     protected function settingsPostAction(Request $request, BasePage $page)
     {
@@ -283,7 +283,7 @@ class BasePageController extends Controller
      * @param Request  $request
      * @param BasePage $page
      *
-     * @return array
+     * @return Response
      */
     protected function getViewReferenceRedirect(Request $request, BasePage $page)
     {
