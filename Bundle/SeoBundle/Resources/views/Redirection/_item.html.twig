@@ -34,7 +34,7 @@
     {% endif %}
 </div>
 <div class="col-md-2 col-sm-12 col-sm-align-center col-sm-mb-1 vic-text-right">
-    Nb requêtes : <strong class="vic-pl-1">{{ redirection.counter }}</strong>
+    {{ 'victoire.redirection.counter.label'|trans }}<strong class="vic-pl-1">{{ redirection.counter }}</strong>
 </div>
 <div class="col-md-1 vic-text-right">
     <a href="#redirection-{{ redirection.id }}-form-container"
