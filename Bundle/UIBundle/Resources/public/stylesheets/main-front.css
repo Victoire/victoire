@@ -1776,7 +1776,7 @@ ul.v-drop {
   width: 100%;
   background-image: none;
   background-clip: padding-box;
-  padding: 0 0 0.5em;
+  padding: 0.5em 0 0.5em 0.5em;
   font-size: 1em;
   line-height: 1.25;
   color: #2f3c59;
