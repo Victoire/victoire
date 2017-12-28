@@ -59,7 +59,8 @@
         "troopers/assetic-injector-bundle": "^1.1",
         "twig/extensions": "~1.0",
         "twig/twig": "~2.0",
-        "willdurand/js-translation-bundle": "^2.5"
+        "willdurand/js-translation-bundle": "^2.5",
+        "white-october/pagerfanta-bundle": "^1.1"
     },
     "require-dev": {
         "behat/behat": "~3.0",
