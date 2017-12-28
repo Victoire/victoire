@@ -31,7 +31,6 @@ class RedirectionMenuListener
     {
         $bottomRightNavbar = $this->menuBuilder->getBottomRightNavbar();
 
-        // todo add translation
         $bottomRightNavbar
             ->addChild('<i class="fa fa-arrow-right"></i>', [
                 'route'           => 'victoire_404_index',
@@ -40,7 +39,6 @@ class RedirectionMenuListener
                 ],
             ])->setLinkAttribute('data-toggle', 'vic-modal');
 
-        // todo add translation
         $bottomRightNavbar
             ->addChild('<i class="fa fa-random"></i>', [
                 'route'           => 'victoire_redirection_index',
