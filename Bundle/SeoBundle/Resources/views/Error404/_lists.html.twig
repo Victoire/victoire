@@ -1,0 +1,16 @@
+<ul class="v-list-group v-list-group--main" style="border: none;">
+    {% if errors.count %}
+        {% for error in errors.currentPageResults %}
+            <li class="v-list-group__item redirection-list-item">
+                {% include '@VictoireSeo/Error404/_list.html.twig' with {
+                    'error': error,
+                    'form': forms[error.id]
+                } %}
+            </li>
+        {% endfor %}
+    {% else %}
+        <li class="v-list-group__item redirection-list-item">
+            {% include '@VictoireSeo/Error404/_empty.html.twig' %}
+        </li>
+    {% endif %}
+</ul>

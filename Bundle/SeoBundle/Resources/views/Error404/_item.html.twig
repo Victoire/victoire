@@ -19,11 +19,14 @@
     </a>
 </div>
 <div class="col-md-7">
-    <p style="margin: 0"><a href="{{ error.url }}">{{ error.url }}</a></p>
+    <p class="vic-m-0">
+        <a href="{{ error.url }}">
+            {{ error.url }}
+        </a>
+    </p>
 </div>
 <div class="col-md-3">
-    {# todo translate #}
-    Nb requêtes : <strong class="vic-pl-1">{{ error.counter }}</strong>
+    {{ 'victoire.redirection.counter.label'|trans }}<strong class="vic-pl-1">{{ error.counter }}</strong>
 </div>
 <div class="col-md-1 text-center">
     <a href="#"
