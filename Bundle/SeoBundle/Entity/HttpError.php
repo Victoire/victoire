@@ -15,6 +15,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 abstract class HttpError
 {
+    const TYPE_ROUTE = 1;
+    const TYPE_FILE  = 2;
+
     /**
      * @var int
      *
@@ -55,6 +58,13 @@ abstract class HttpError
      * @ORM\JoinColumn(name="redirection_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $redirection;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="integer", nullable=false, options={"default": 1})
+     */
+    protected $type;
 
     /**
      * HttpError constructor.
@@ -160,6 +170,26 @@ abstract class HttpError
     public function setRedirection($redirection)
     {
         $this->redirection = $redirection;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return HttpError
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
 
         return $this;
     }
