@@ -301,8 +301,8 @@ class BasePageController extends Controller
         $page->setReference($viewReference);
 
         return [
-            'success'        => true,
-            'X-VIC-Redirect' => $this->generateUrl(
+            'success'  => true,
+            'url'      => $this->generateUrl(
                 'victoire_core_page_show',
                 [
                     '_locale' => $request->getLocale(),
