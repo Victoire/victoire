@@ -71,7 +71,7 @@ class Error404Controller extends Controller
         return new Response($this->renderView('@VictoireSeo/Error404/index.html.twig', [
             'pagerRoutes' => $pagerRoutes,
             'pagerFiles'  => $pagerFiles,
-            'forms'       => $forms
+            'forms'       => $forms,
         ]));
     }
 
@@ -96,7 +96,6 @@ class Error404Controller extends Controller
         if ($request->query->get('novalidate', false) === false) {
             if ($form->isValid()) {
                 if ($redirection->getLink()->getLinkType() !== Link::TYPE_NONE) {
-
                     $error404->setRedirection($redirection);
                     $redirection->setError($error404);
                     $redirection->setUrl($error404->getUrl());
@@ -180,7 +179,7 @@ class Error404Controller extends Controller
         }
 
         return new Response(null, 200, [
-            'X-VIC-Remove' => '100ms',
+            'X-VIC-Remove'      => '100ms',
             'X-Inject-Alertify' => true,
         ]);
     }
@@ -194,7 +193,7 @@ class Error404Controller extends Controller
     {
         $action = $this->generateUrl('victoire_404_redirect', ['id' => $redirection->getError()->getId()]);
 
-        $containerId = sprintf('#404-%d-item-container', $redirection ->getError()->getId());
+        $containerId = sprintf('#404-%d-item-container', $redirection->getError()->getId());
 
         return $this->createForm(RedirectionType::class, $redirection, [
             'method'      => 'POST',

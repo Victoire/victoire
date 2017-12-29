@@ -35,7 +35,7 @@ class RedirectionMenuListener
             ->addChild('<i class="fa fa-arrow-right"></i>', [
                 'route'           => 'victoire_404_index',
                 'linkAttributes'  => [
-                    'class' => 'v-btn v-btn--sm v-btn--transparent'
+                    'class' => 'v-btn v-btn--sm v-btn--transparent',
                 ],
             ])->setLinkAttribute('data-toggle', 'vic-modal');
 
@@ -43,7 +43,7 @@ class RedirectionMenuListener
             ->addChild('<i class="fa fa-random"></i>', [
                 'route'           => 'victoire_redirection_index',
                 'linkAttributes'  => [
-                    'class' => 'v-btn v-btn--sm v-btn--transparent'
+                    'class' => 'v-btn v-btn--sm v-btn--transparent',
                 ],
             ])->setLinkAttribute('data-toggle', 'vic-modal');
 
