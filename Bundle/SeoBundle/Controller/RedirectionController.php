@@ -65,7 +65,7 @@ class RedirectionController extends Controller
         return new Response($this->renderView('@VictoireSeo/Redirection/index.html.twig', [
             'pager'   => $pager,
             'newForm' => $newForm,
-            'forms'   => $forms
+            'forms'   => $forms,
         ]));
     }
 
@@ -184,7 +184,7 @@ class RedirectionController extends Controller
 
         return new JsonResponse([
             'html' => $this->renderView('@VictoireSeo/Redirection/_newForm.html.twig', [
-                'form' => $form->createView(),
+                'form'      => $form->createView(),
                 'isOpened'  => true,
             ]),
         ]);
