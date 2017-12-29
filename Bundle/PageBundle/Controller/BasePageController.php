@@ -229,7 +229,7 @@ class BasePageController extends Controller
             return $this->getViewReferenceRedirect($request, $page);
         }
 
-        return  [
+        return [
             'success' => false,
             'message' => $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form),
             'html'    => $this->get('templating')->render(
@@ -283,7 +283,7 @@ class BasePageController extends Controller
      * @param Request  $request
      * @param BasePage $page
      *
-     * @return Response
+     * @return array
      */
     protected function getViewReferenceRedirect(Request $request, BasePage $page)
     {
@@ -300,19 +300,16 @@ class BasePageController extends Controller
 
         $page->setReference($viewReference);
 
-        return new Response(
-            null,
-            200,
-            [
-                'X-VIC-Redirect' => $this->generateUrl(
-                    'victoire_core_page_show',
-                    [
-                        '_locale' => $request->getLocale(),
-                        'url'     => $viewReference->getUrl(),
-                    ]
-                ),
-            ]
-        );
+        return [
+            'success'        => true,
+            'X-VIC-Redirect' => $this->generateUrl(
+                'victoire_core_page_show',
+                [
+                    '_locale' => $request->getLocale(),
+                    'url'     => $viewReference->getUrl(),
+                ]
+            ),
+        ];
     }
 
     /**
