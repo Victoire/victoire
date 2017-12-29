@@ -19,8 +19,24 @@ function openModal(url) {
                 $vic($vic(el).attr('data-droptarget')).remove();
             });
 
-            $vic('#vic-modal-container').html(response);
-            eval("VicIntercooler.processNodes($vic('#vic-modal-container'));");
+            // if response format = JSON
+            if (response.html) {
+                //remove the previous instance of the modal
+                $vic('#vic-modal').remove();
+                //add the html of the modal
+                $vic('body').append(response.html);
+                //display the modal
+                $vic('#vic-modal').vicmodal({
+                    keyboard: true,
+                    backdrop: false
+                });
+                $vic('#vic-modal').attr('data-modal', 'show');
+            }
+            // if response format != JSON
+            else {
+                $vic('#vic-modal-container').html(response);
+                eval("VicIntercooler.processNodes($vic('#vic-modal-container'));");
+            }
 
             // set FAB on open mode
             $vic('#v-float-container .v-btn--fab').addClass('v-btn--fab-open');
