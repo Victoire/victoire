@@ -130,9 +130,9 @@ class PageHelper
      *
      * @param array $parameters
      *
-     * @return View
-     *
      * @throws ViewReferenceNotFoundException
+     *
+     * @return View
      */
     public function findPageByParameters($parameters)
     {
