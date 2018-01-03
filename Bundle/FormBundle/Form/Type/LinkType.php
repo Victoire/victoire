@@ -118,7 +118,6 @@ class LinkType extends AbstractType
                     'attr' => [
                         'data-refreshOnChange' => 'true',
                         'data-target'          => $options['refresh-target'] ?: 'form[name="'.$rootFormName.'"]',
-                        'data-update-strategy' => 'replaceWith',
                     ],
                 ]
             )
@@ -286,7 +285,6 @@ class LinkType extends AbstractType
                 'attr'              => [
                     'data-refreshOnChange' => 'true',
                     'data-target'          => $options['refresh-target'] ?: 'form[name="'.$rootFormName.'"]',
-                    'data-update-strategy' => 'replaceWith',
                 ],
                 'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group viewReference-type page-type url-type route-type attachedWidget-type'],
             ]);
