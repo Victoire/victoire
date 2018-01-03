@@ -11,33 +11,31 @@
 {% endblock modal_header_title %}
 
 {% block modal_body_content %}
-    <style>
-        {# todo move style from template #}
-        .vic-text-white {
-            color: white;
-        }
 
-        .redirection-list-new {
+    <style>
+        {# todo : remove style from template #}
+        #new-redirection-form-container {
+            border: 1px solid lightgrey;
+            border-radius: 5px;
+        }
+        .redirection-list-new-container {
             border: none;
             margin: 20px 0 10px 0;
         }
-
-        .redirection-list {
+        .redirection-list-container {
             border: none;
             margin: 0;
         }
-
-        .redirection-list-item {
-            border: 1px solid lightgrey;
-            border-radius: 5px;
-            margin: 0 0 10px 0;
-        }
-
-        .redirection-list-item-new {
+        .redirection-list-new {
             border: none;
             border-radius: 5px;
             margin: 0 0 10px 0;
             padding: 0;
+        }
+        .redirection-list {
+            border: 1px solid lightgrey;
+            border-radius: 5px;
+            margin: 0 0 10px 0;
         }
     </style>
 
@@ -48,8 +46,8 @@
             data-target="#new-redirection-form-container"
             data-toggle="collapse"
         >
-        <ul class="v-list-group v-list-group--main redirection-list-new">
-            <li class="v-list-group__item redirection-list-item-new">
+        <ul class="v-list-group v-list-group--main redirection-list-new-container">
+            <li class="v-list-group__item redirection-list-new">
                 {% include '@VictoireSeo/Redirection/_newForm.html.twig' with {
                     'form': newForm
                 } %}
@@ -57,10 +55,10 @@
         </ul>
         <div class="row">
             <div class="col-md-12">
-                <ul class="v-list-group v-list-group--main redirection-list" id="redirections-list-container">
+                <ul class="v-list-group v-list-group--main redirection-list-container" id="redirections-list-container">
                     {% if pager.count %}
                         {% for redirection in pager.getCurrentPageResults %}
-                            <li class="v-list-group__item redirection-list-item">
+                            <li class="v-list-group__item redirection-list">
                                 {% include '@VictoireSeo/Redirection/_list.html.twig' with {
                                     'redirection': redirection,
                                     'form': forms[redirection.id]
@@ -68,7 +66,7 @@
                             </li>
                         {% endfor %}
                     {% else %}
-                        <li class="v-list-group__item redirection-list-item">
+                        <li class="v-list-group__item redirection-list">
                             {% include '@VictoireSeo/Redirection/_empty.html.twig' %}
                         </li>
                     {% endif %}
@@ -76,4 +74,10 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $vic('a i.fa.fa-plus').click(function () {
+            $vic(this).toggleClass('fa-plus fa-minus');
+        });
+    </script>
 {% endblock modal_body_content %}
