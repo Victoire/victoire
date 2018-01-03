@@ -32,10 +32,11 @@ class RedirectionMenuListener
         $bottomRightNavbar = $this->menuBuilder->getBottomRightNavbar();
 
         $bottomRightNavbar
-            ->addChild('<i class="fa fa-arrow-right"></i>', [
+            ->addChild('<i class="fa fa-exclamation"></i>', [
                 'route'           => 'victoire_404_index',
                 'linkAttributes'  => [
                     'class' => 'v-btn v-btn--sm v-btn--transparent',
+                    'id'    => 'v-404-link',
                 ],
             ])->setLinkAttribute('data-toggle', 'vic-modal');
 
@@ -44,6 +45,7 @@ class RedirectionMenuListener
                 'route'           => 'victoire_redirection_index',
                 'linkAttributes'  => [
                     'class' => 'v-btn v-btn--sm v-btn--transparent',
+                    'id'    => 'v-redirection-link',
                 ],
             ])->setLinkAttribute('data-toggle', 'vic-modal');
 
