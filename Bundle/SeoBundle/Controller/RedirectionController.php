@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\SeoBundle\Controller;
 
+use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -42,7 +43,9 @@ class RedirectionController extends Controller
 
         // Fetch errors
 
+        /** @var QueryBuilder $redirections */
         $redirections = $redirectionRepository->getUnresolvedQuery();
+
         $pager = new Pagerfanta(new DoctrineORMAdapter($redirections));
         $pager->setMaxPerPage(100);
         $pager->setCurrentPage($request->query->get('page', 1));
@@ -63,8 +66,8 @@ class RedirectionController extends Controller
         // Return datas
 
         return new Response($this->renderView('@VictoireSeo/Redirection/index.html.twig', [
-            'pager'   => $pager,
             'newForm' => $newForm,
+            'pager'   => $pager,
             'forms'   => $forms,
         ]));
     }
@@ -94,13 +97,13 @@ class RedirectionController extends Controller
                     $em->flush();
 
                     $this->congrat($this->get('translator')->trans('victoire.redirection.modify.success'));
+                } else {
+                    // force form error when linkType === none
+                    $form->addError(new FormError('victoire.404.form.error.blank'));
                 }
-
-                // force form error when linkType === none
-                $form->addError(new FormError('victoire.404.form.error.blank'));
+            } else {
+                $this->warn($this->get('translator')->trans('victoire.404.form.error.unvalid'));
             }
-
-            $this->warn($this->get('translator')->trans('victoire.404.form.error.unvalid'));
 
             return new Response($this->renderView('@VictoireSeo/Redirection/_list.html.twig', [
                 'redirection' => $redirection,
@@ -163,13 +166,13 @@ class RedirectionController extends Controller
                     ]), 200, [
                         'X-Inject-Alertify' => true,
                     ]);
+                } else {
+                    // force form error when no link submitted
+                    $form->addError(new FormError('This value should not be blank.'));
                 }
-
-                // force form error when no link submitted
-                $form->addError(new FormError('This value should not be blank.'));
+            } else {
+                $this->warn($this->get('translator')->trans('victoire.404.form.error.unvalid'));
             }
-
-            $this->warn($this->get('translator')->trans('victoire.404.form.error.unvalid'));
 
             return new Response($this->renderView('@VictoireSeo/Redirection/_newForm.html.twig', [
                 'form'     => $form->createView(),
