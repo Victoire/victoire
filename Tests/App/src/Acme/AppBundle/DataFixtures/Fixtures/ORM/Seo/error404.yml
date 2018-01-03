@@ -1,0 +1,37 @@
+Victoire\Bundle\SeoBundle\Entity\Error404:
+
+    error404_1:
+        url: 'http://victoire/fr/test.php'
+        errorMessage: 'Page not found'
+        counter: 8
+        type: 1
+
+    error404_2:
+        url: 'http://victoire/fr/test.html'
+        errorMessage: 'Page not found'
+        counter: 6
+        type: 1
+
+    error404_3:
+        url: 'http://victoire/fr/test.twig'
+        errorMessage: 'Page not found'
+        counter: 4
+        type: 1
+
+    error404_4:
+        url: 'http://victoire/fr/test.js'
+        errorMessage: 'Page not found'
+        counter: 8
+        type: 2
+
+    error404_5:
+        url: 'http://victoire/fr/test.map'
+        errorMessage: 'Page not found'
+        counter: 6
+        type: 2
+
+    error404_6:
+        url: 'http://victoire/fr/test.test'
+        errorMessage: 'Page not found'
+        counter: 4
+        type: 2
