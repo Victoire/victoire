@@ -130,4 +130,6 @@ class FeatureContext extends RawMinkContext implements Context, KernelAwareConte
 
         $this->saveScreenshot($filename, $path);
     }
+
+
 }
