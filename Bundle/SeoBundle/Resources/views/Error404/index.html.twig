@@ -11,8 +11,10 @@
 {% endblock modal_header_title %}
 
 {% block modal_body_content %}
+
+    {# todo : remove style from template #}
     <style>
-        .redirection-list-item {
+        .redirection-list {
             border: 1px solid lightgrey;
             border-radius: 5px;
             margin: 0 0 10px 0;
@@ -24,6 +26,7 @@
             <div class="col-md-12">
                 <h4 class="d-inline">{{ 'victoire.404.list.route.title'|trans }}</h4><hr>
                 {% include '@VictoireSeo/Error404/_lists.html.twig' with {
+                    'listId' : 'route-list',
                     'errors' : pagerRoutes
                 } %}
                 <div class="vic-mt-4">
@@ -33,6 +36,7 @@
                     </a>
                     <div id="404-files-container" class="collapse"><hr>
                         {% include '@VictoireSeo/Error404/_lists.html.twig' with {
+                            'listId' : 'file-list',
                             'errors' : pagerFiles
                         } %}
                     </div>
@@ -40,4 +44,10 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $vic('a i.fa.fa-plus').click(function () {
+            $vic(this).toggleClass('fa-plus fa-minus');
+        });
+    </script>
 {% endblock modal_body_content %}
