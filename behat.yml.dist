@@ -62,6 +62,8 @@ default:
                      Jedi:               Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/jedi.yml
                      CharacterTemplates: Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/template.yml
                      SpaceshipTemplates: Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Spaceship/template.yml
+                     Error404:           Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Seo/error404.yml
+                     Redirection:        Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Seo/redirection.yml
                  dependencies:
                      Template:           [User]
                      ErrorPage:          [Template, User]
