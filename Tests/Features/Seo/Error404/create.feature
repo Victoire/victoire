@@ -11,4 +11,4 @@ Feature: Create new error
   Scenario: I can view the new error
     Then The modal title should be "404 ERRORS"
     And The list "route-list" should contain 1 element
-    And I should see text matching "http://localhost:8000/app_ci.php/fr/fake"
+    And I should see text matching "https?:\/\/.+\/app_ci\.php\/fr\/fake"
