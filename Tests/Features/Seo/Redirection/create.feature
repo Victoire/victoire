@@ -8,7 +8,7 @@ Feature: Create new redirection
     And I wait 1 second
 
   Scenario: I can view the new error
-    And The list "redirections-list-container" should contain 3 elements
+    And the list "redirections-list-container" should contain 3 elements
     When I click the ".vic-btn-default" element
     And I wait 1 second
     And I fill in "seo_bundle_redirection[url]" with "http://test"
@@ -19,4 +19,4 @@ Feature: Create new redirection
     # TODO : fix below lines, intercooler does not run correctly for this test
     # And I wait 1 second
     # Then I should see text matching "Redirection successfully created!"
-    # And The list "redirections-list-container" should contain 4 elements
+    # And the list "redirections-list-container" should contain 4 elements

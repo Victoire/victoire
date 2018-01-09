@@ -727,8 +727,8 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * @Then The list :listId should contain :number element
-     * @Then The list :listId should contain :number elements
+     * @Then the list :listId should contain :number element
+     * @Then the list :listId should contain :number elements
      *
      * @param string $listId
      * @param int    $number

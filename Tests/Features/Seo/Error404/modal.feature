@@ -10,5 +10,5 @@ Feature: Display the error's modal
   Scenario: I can view the 404 error modal's content
     Then The modal title should be "404 ERRORS"
     And I should see text matching "Routes"
-    And The list "route-list" should contain 3 element
+    And the list "route-list" should contain 3 element
     And I should see text matching "Files"
