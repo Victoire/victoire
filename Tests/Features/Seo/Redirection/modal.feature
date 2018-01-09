@@ -9,7 +9,7 @@ Feature: Create new redirection
 
   Scenario: I can view the new error
     Then The modal title should be "REDIRECTIONS"
-    And The list "redirections-list-container" should contain 3 element
+    And the list "redirections-list-container" should contain 3 element
     And I should see text matching "http://victoire/fr/input-1"
     And I should see text matching "http://victoire/fr/input-2"
     And I should see text matching "http://victoire/fr/input-3"
