@@ -18,5 +18,5 @@ Feature: Modify a redirection
     Then I should see text matching "Redirection successfully modified!"
     And the list "redirections-list-container" should contain 3 elements
     And I wait 1 second
-    # TODO : fix below line, intercooler does not run correctly for this test
-    # And I should see text matching "http://localhost:8000/app_ci.php/fr/modified"
+    # Text can be truncated by CSS, so we check only a part of the string
+    And I should see text matching "https?:\/\/.+\/app_ci\.php\/fr\/modi"
