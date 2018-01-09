@@ -1,7 +1,7 @@
 # System Requirements
 
 * A webserver like Apache or Nginx
-* PHP from 5.5.9
+* PHP from 7.1
     * [JSON extension](http://php.net/manual/book.json.php) needs to be enabled
     * [ctype extension](http://php.net/manual/book.ctype.php) needs to be enabled
     * php.ini recommended settings
@@ -18,7 +18,7 @@
 
 | Name                                 | Version      | Comment                     |
 | -------------------------------------|--------------|---------------------------- |
-| php                                  | >=5.4        | Traits                      |
+| php                                  | >=7.1        |                             |
 | a2lix/translation-form-bundle        | ^2.1         | Stable version start at 2.1 |
 | doctrine/doctrine-fixtures-bundle    | ^2.2         | Stable version start at 2.2 |
 | doctrine/doctrine-migrations-bundle  | ^1.1         | Framework 2.3               |
