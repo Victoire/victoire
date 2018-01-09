@@ -11,6 +11,10 @@
             </a>
         {% endspaceless %}
 
+        <div class="v-sitemap__cell v-sitemap__cell--status">
+            {{ ('page.status.label.' ~ page.status)|trans({}, 'victoire') }}
+        </div>
+
         {% set sitemapPriorityForm = attribute(forms, page.id) %}
 
         {{ form_start(sitemapPriorityForm) }}
@@ -52,7 +56,7 @@
         <ul class="v-list-group v-list-group__sub-list">
             {% set level = level + 1 %}
 
-            {% for _page in page.getWebViewChildren(true) %}
+            {% for _page in page.getWebViewChildren() %}
                 {% include 'VictoireSitemapBundle:Sitemap:_sitemapItem.html.twig' with {'page': _page, 'level': level} %}
             {% endfor %}
         </ul>

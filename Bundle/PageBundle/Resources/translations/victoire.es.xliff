@@ -46,20 +46,20 @@
             <source>form.page.type.status.label</source>
             <target>Estado de la publicación</target>
         </trans-unit>
-        <trans-unit id="58893b99ecba3" resname="form.page.type.status.choice.label.draft">
-            <source>form.page.type.status.choice.label.draft</source>
+        <trans-unit id="58893b99ecba3" resname="page.status.label.draft">
+            <source>page.status.label.draft</source>
             <target>Calado</target>
         </trans-unit>
-        <trans-unit id="58893b99ecbb1" resname="form.page.type.status.choice.label.published">
-            <source>form.page.type.status.choice.label.published</source>
+        <trans-unit id="58893b99ecbb1" resname="page.status.label.published">
+            <source>page.status.label.published</source>
             <target>Publicado</target>
         </trans-unit>
-        <trans-unit id="58893b99ecbbd" resname="form.page.type.status.choice.label.unpublished">
-            <source>form.page.type.status.choice.label.unpublished</source>
+        <trans-unit id="58893b99ecbbd" resname="page.status.label.unpublished">
+            <source>page.status.label.unpublished</source>
             <target>Inédito</target>
         </trans-unit>
-        <trans-unit id="58893b99ecbc7" resname="form.page.type.status.choice.label.scheduled">
-            <source>form.page.type.status.choice.label.scheduled</source>
+        <trans-unit id="58893b99ecbc7" resname="page.status.label.scheduled">
+            <source>page.status.label.scheduled</source>
             <target>Publicado desde</target>
         </trans-unit>
         <trans-unit id="58893b99ecbd1" resname="victoire.menu.publication.scheduled.tooltip">
