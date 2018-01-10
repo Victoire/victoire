@@ -17,6 +17,7 @@ use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\Link;
@@ -208,7 +209,7 @@ class PageHelper
         $this->widgetDataWarmer->warm($this->entityManager, $view);
 
         //Dispatch contextual event regarding page type
-        if (in_array($view->getType(), ['business_page', 'virtual_business_page'])) {
+        if ($view instanceof BusinessPage || $view instanceof VirtualBusinessPage) {
             //Dispatch also an event with the Business entity name
             $eventName = 'victoire_core.page_menu.contextual';
             if (!$view->getId()) {
