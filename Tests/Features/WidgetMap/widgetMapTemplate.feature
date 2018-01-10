@@ -121,8 +121,8 @@ Feature: Test widgetMap
         Given the following WidgetMaps:
             | id | action | position | parent | slot         | view |
             | 1  | create |          |        | main_content | base |
-            | 2  | create |  after   | 1      | main_content | base |
-            | 3  | create |  before  | 2      | main_content | base |
+            | 2  | create | after    | 1      | main_content | base |
+            | 3  | create | before   | 2      | main_content | base |
         Given the following WidgetTexts:
             | content  | mode   | widgetMap |
             | Widget 1 | static | 1         |
