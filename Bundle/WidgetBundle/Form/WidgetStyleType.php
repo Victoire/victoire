@@ -45,9 +45,9 @@ class WidgetStyleType extends AbstractType
     {
         $builder
             ->add('containerTag', ChoiceType::class, [
-                'label'             => 'widget_layout.form.containerTag.label',
-                'vic_help_block'    => 'widget_layout.form.containerTag.help_block',
-                'choices'           => array_combine(Widget::$tags, Widget::$tags),
+                'label'          => 'widget_layout.form.containerTag.label',
+                'vic_help_block' => 'widget_layout.form.containerTag.help_block',
+                'choices'        => array_combine(Widget::$tags, Widget::$tags),
             ])
             ->add('containerClass', null, [
                 'label'    => 'widget_layout.form.containerClass.label',

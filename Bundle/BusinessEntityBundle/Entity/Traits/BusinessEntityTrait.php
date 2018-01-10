@@ -81,6 +81,11 @@ trait BusinessEntityTrait
         if ($field) {
             $functionName = 'get'.ucfirst($field);
 
+            // Avoid error when the widget refer to a property that has been removed
+            if (!method_exists($this, $functionName)) {
+                return;
+            }
+
             $fieldValue = $this->{$functionName}();
         } else {
             $fieldValue = null;

@@ -26,6 +26,7 @@
 {% endblock modal_body_content %}
 
 {% macro templatesHierarchy(templates) %}
+    {% import _self as macros %}
     {% for template in templates %}
         <li class="v-list-group__item" id="list_{{ template.id }}">
             <div class="v-flex-grid v-flex-grid--justify-between v-flex-grid--align-center">

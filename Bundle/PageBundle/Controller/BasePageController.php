@@ -255,6 +255,7 @@ class BasePageController extends Controller
             //Throw Exception if Page is undeletable
             if ($page->isUndeletable()) {
                 $message = $this->get('translator')->trans('page.undeletable', [], 'victoire');
+
                 throw new \Exception($message);
             }
 
@@ -298,8 +299,8 @@ class BasePageController extends Controller
         $page->setReference($viewReference);
 
         return [
-            'success'  => true,
-            'url'      => $this->generateUrl(
+            'success' => true,
+            'url'     => $this->generateUrl(
                 'victoire_core_page_show',
                 [
                     '_locale' => $request->getLocale(),

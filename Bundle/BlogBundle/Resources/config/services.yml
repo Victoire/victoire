@@ -120,10 +120,9 @@ services:
 
     #CATEGORY FILTER
     victoire_blog.category_filters.form.type:
-        class: "%victoire_blog_category_filters_form_type_class%"
+        class: %victoire_blog_category_filters_form_type_class%
+        parent: victoire_filter_bundle.abstract_base_filter
         arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@request_stack"
             - "@translator"
         tags:
             - { name: form.type }
@@ -131,20 +130,16 @@ services:
 
     #TAG FILTER
     victoire_blog.tag_filters.form.type:
-        class: "%victoire_blog_tag_filters_form_type_class%"
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@request_stack"
+        class: %victoire_blog_tag_filters_form_type_class%
+        parent: victoire_filter_bundle.abstract_base_filter
         tags:
             - { name: form.type }
             - { name: victoire_core.filter }
 
     #DATE FILTER
     victoire_blog.date_filters.form.type:
-        class: "%victoire_blog_date_filters_form_type_class%"
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@request_stack"
+        class: %victoire_blog_date_filters_form_type_class%
+        parent: victoire_filter_bundle.abstract_base_filter
         tags:
             - { name: form.type }
             - { name: victoire_core.filter }

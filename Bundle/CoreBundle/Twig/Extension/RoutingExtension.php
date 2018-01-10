@@ -64,6 +64,7 @@ class RoutingExtension extends BaseRoutingExtension
                 $params['entityId'] = $parameters['entityId'];
                 unset($parameters['entityId']);
             }
+
             try {
                 $page = $this->pageHelper->findPageByParameters($params);
                 $parameters['url'] = $page->getReference($requestLocale)->getUrl();

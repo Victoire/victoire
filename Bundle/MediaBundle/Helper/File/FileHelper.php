@@ -108,6 +108,7 @@ class FileHelper
 
         if ($this->getMedia() == null) {
             unlink($path);
+
             throw new AccessDeniedException('Can not link file');
         }
     }

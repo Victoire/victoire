@@ -178,8 +178,8 @@ class ArticleType extends AbstractType
                     return $repo->filterByBlog($blog_id)->getInstance();
                 };
                 $form->add('template', null, [
-                    'label'             => 'form.article.type.template.label',
-                    'choice_label'      => function ($template) {
+                    'label'        => 'form.article.type.template.label',
+                    'choice_label' => function ($template) {
                         return $template->getBackendName();
                     },
                     'required'      => true,

@@ -9,23 +9,34 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface;
 use Victoire\Bundle\BlogBundle\Entity\Category;
+use Victoire\Bundle\FilterBundle\Domain\FilterFormFieldQueryHandler;
 use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
 
 /**
- * CategoryFilter form type.
+ * Class CategoryFilter.
  */
 class CategoryFilter extends BaseFilter
 {
+    /**
+     * @var TranslatorInterface
+     */
     protected $translator;
 
     /**
-     * @param EntityManager       $entityManager
-     * @param RequestStack        $requestStack
-     * @param TranslatorInterface $translator
+     * CategoryFilter constructor.
+     *
+     * @param EntityManager               $entityManager
+     * @param RequestStack                $requestStack
+     * @param FilterFormFieldQueryHandler $filterQueryHandler
+     * @param TranslatorInterface         $translator
      */
-    public function __construct(EntityManager $entityManager, RequestStack $requestStack, TranslatorInterface $translator)
-    {
-        parent::__construct($entityManager, $requestStack);
+    public function __construct(
+        EntityManager $entityManager,
+        RequestStack $requestStack,
+        FilterFormFieldQueryHandler $filterQueryHandler,
+        TranslatorInterface $translator
+    ) {
+        parent::__construct($entityManager, $requestStack, $filterQueryHandler);
         $this->translator = $translator;
     }
 
@@ -98,30 +109,12 @@ class CategoryFilter extends BaseFilter
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $categories = $this->filterQueryHandler->handle($options['widget'], Category::class);
 
-        //getAll categories
-        $categoryQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Category')->getAll();
-        //getAll published articles
-        $articleQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Article')->getAll(true);
-
-        //get Listing
-        $listing = $options['widget']->getListing();
-
-        $mode = $listing->getMode();
-        switch ($mode) {
-            case 'query':
-                //filter with listingQuery
-                $articleQb->filterWithListingQuery($listing->getQuery());
-                break;
-        }
-        $categoryQb->filterByArticles($articleQb->getInstance('article'));
-        $categories = $categoryQb->getInstance('c_category')->getQuery()->getResult();
-
-        //the blank value
         $categoriesChoices = [];
 
         foreach ($categories as $category) {
-            $categoriesChoices[$category->getId()] = $category->getTitle();
+            $categoriesChoices[$category->getTitle()] = $category->getId();
         }
 
         $data = null;
@@ -135,6 +128,7 @@ class CategoryFilter extends BaseFilter
                 $data = $this->getRequest()->query->get('filter')['category_filter']['category'];
             }
         }
+
         $builder
             ->add(
                 'category', ChoiceType::class, [
@@ -143,7 +137,7 @@ class CategoryFilter extends BaseFilter
                     'required'    => false,
                     'expanded'    => true,
                     'multiple'    => $options['multiple'],
-                    'empty_value' => $this->translator->trans('blog.category_filter.empty_value.label'),
+                    'placeholder' => $this->translator->trans('blog.category_filter.empty_value.label'),
                     'data'        => $data,
                 ]
             );

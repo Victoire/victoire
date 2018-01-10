@@ -65,7 +65,7 @@ class MenuBuilder
     {
         $this->bottomLeftNavbar = $this->factory->createItem('root', [
                 'childrenAttributes' => [
-                    'id'    => 'v-footer-navbar-bottom-left',
+                    'id' => 'v-footer-navbar-bottom-left',
                 ],
             ]
         );
@@ -84,13 +84,13 @@ class MenuBuilder
                     'data-toggle' => 'vic-dropdown',
                 ],
                 'linkAttributes' => [
-                    'id'                => 'v-additionals-drop',
-                    'class'             => 'v-btn v-btn--transparent v-drop-trigger--no-toggle',
-                    'data-flag'         => 'v-drop',
-                    'data-position'     => 'topout leftin',
-                    'data-droptarget'   => '#footer-drop-navbar-left',
+                    'id'              => 'v-additionals-drop',
+                    'class'           => 'v-btn v-btn--transparent v-drop-trigger--no-toggle',
+                    'data-flag'       => 'v-drop',
+                    'data-position'   => 'topout leftin',
+                    'data-droptarget' => '#footer-drop-navbar-left',
                 ],
-                'uri'   => '#',
+                'uri' => '#',
             ],
             false
         );
@@ -107,7 +107,7 @@ class MenuBuilder
     {
         $this->bottomRightNavbar = $this->factory->createItem('root', [
                 'childrenAttributes' => [
-                    'id'    => 'v-footer-navbar-bottom-right',
+                    'id' => 'v-footer-navbar-bottom-right',
                 ],
             ]
         );
@@ -126,12 +126,12 @@ class MenuBuilder
                     'data-toggle' => 'vic-dropdown',
                 ],
                 'linkAttributes' => [
-                    'class'             => 'v-btn v-btn--sm v-btn--transparent v-drop-trigger--no-toggle',
-                    'data-flag'         => 'v-drop',
-                    'data-position'     => 'topout rightin',
-                    'data-droptarget'   => '#footer-drop-navbar-template',
+                    'class'           => 'v-btn v-btn--sm v-btn--transparent v-drop-trigger--no-toggle',
+                    'data-flag'       => 'v-drop',
+                    'data-position'   => 'topout rightin',
+                    'data-droptarget' => '#footer-drop-navbar-template',
                 ],
-                'uri'   => '#',
+                'uri' => '#',
             ],
             false
         );
@@ -148,7 +148,7 @@ class MenuBuilder
     {
         $this->floatActionNavbar = $this->factory->createItem('root', [
                 'childrenAttributes' => [
-                    'id'    => 'v-float-container',
+                    'id' => 'v-float-container',
                 ],
             ]
         );
@@ -158,10 +158,10 @@ class MenuBuilder
             'menu.floatActionDropdown',
             [
                 'linkAttributes' => [
-                    'class'               => 'v-btn v-btn--square v-btn--lg v-btn--fab',
-                    'data-flag'           => 'v-drop v-drop-fab',
-                    'data-position'       => 'bottomout center',
-                    'data-droptarget'     => '#victoire-fab-dropdown',
+                    'class'           => 'v-btn v-btn--square v-btn--lg v-btn--fab',
+                    'data-flag'       => 'v-drop v-drop-fab',
+                    'data-position'   => 'bottomout center',
+                    'data-droptarget' => '#victoire-fab-dropdown',
                 ],
                 'childrenAttributes' => [
                     'class' => 'v-drop v-drop--fab v-drop__menu v-drop__menu',
@@ -213,7 +213,7 @@ class MenuBuilder
                     'class'       => 'vic-dropdown-toggle',
                     'data-toggle' => 'vic-dropdown',
                 ],
-                'uri'   => '#',
+                'uri' => '#',
             ],
             $attributes
         );
