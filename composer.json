@@ -35,7 +35,7 @@
         "a2lix/translation-form-bundle": "^2.1",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-migrations-bundle": "^1.2",
-        "doctrine/orm": "^2.5",
+        "doctrine/orm": "^2.5,<2.6",
         "friendsofsymfony/jsrouting-bundle": "^1.0|^2.0",
         "friendsofsymfony/user-bundle": "~2.0",
         "incenteev/composer-parameter-handler": "^2.0",
