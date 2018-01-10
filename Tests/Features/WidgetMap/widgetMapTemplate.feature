@@ -119,15 +119,15 @@ Feature: Test widgetMap
 
     Scenario: I delete widget from template
         Given the following WidgetMaps:
-            | id | action | position | parent | slot         |   view  |
-            | 1  | create |          |        | main_content |   base  |
-            | 2  | create |  after   |   1    | main_content |   base  |
-            | 3  | create |  before  |   2    | main_content |   base  |
+            | id | action | position | parent | slot         | view |
+            | 1  | create |          |        | main_content | base |
+            | 2  | create |  after   | 1      | main_content | base |
+            | 3  | create |  before  | 2      | main_content | base |
         Given the following WidgetTexts:
             | content  | mode   | widgetMap |
-            | Widget 1 | static |    1       |
-            | Widget 2 | static |    2       |
-            | Widget 3 | static |    3       |
+            | Widget 1 | static | 1         |
+            | Widget 2 | static | 2         |
+            | Widget 3 | static | 3         |
         And I am on the homepage
         Then I should see "Widget 1"
         When I switch to "edit" mode
