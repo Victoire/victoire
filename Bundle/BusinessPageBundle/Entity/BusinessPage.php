@@ -75,8 +75,6 @@ class BusinessPage extends Page
             //if there is a proxy
             if ($this->getEntityProxy() !== null) {
                 $this->businessEntity = $this->getEntityProxy()->getEntity($this->getBusinessEntityId());
-
-                return $this->businessEntity;
             }
         }
 
