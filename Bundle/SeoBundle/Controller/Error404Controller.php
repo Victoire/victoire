@@ -2,8 +2,6 @@
 
 namespace Victoire\Bundle\SeoBundle\Controller;
 
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -44,20 +42,16 @@ class Error404Controller extends Controller
 
         // Fetch errors
 
-        $errorRoutes = $errorRepository->getRouteErrors();
-        $pagerRoutes = new Pagerfanta(new DoctrineORMAdapter($errorRoutes));
-        $pagerRoutes->setMaxPerPage(100);
-        $pagerRoutes->setCurrentPage($request->query->get('page', 1));
+        $routes = $errorRepository->getRouteErrors();
+        $routesResults = $routes->getQuery()->getResult();
 
-        $errorFiles = $errorRepository->getFileErrors();
-        $pagerFiles = new Pagerfanta(new DoctrineORMAdapter($errorFiles));
-        $pagerFiles->setMaxPerPage(100);
-        $pagerFiles->setCurrentPage($request->query->get('page', 1));
+        $files = $errorRepository->getFileErrors();
+        $filesResults = $files->getQuery()->getResult();
 
         // Build forms
 
         $forms = [];
-        $errors = array_merge($errorRoutes->getQuery()->getResult(), $errorFiles->getQuery()->getResult());
+        $errors = array_merge($routesResults, $filesResults);
 
         /** @var Error404 $error */
         foreach ($errors as $error) {
@@ -69,9 +63,9 @@ class Error404Controller extends Controller
         // Return datas
 
         return new Response($this->renderView('@VictoireSeo/Error404/index.html.twig', [
-            'pagerRoutes' => $pagerRoutes,
-            'pagerFiles'  => $pagerFiles,
-            'forms'       => $forms,
+            'routes' => $routesResults,
+            'files'  => $filesResults,
+            'forms'  => $forms,
         ]));
     }
 
