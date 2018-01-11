@@ -10,7 +10,6 @@ use Victoire\Bundle\PageBundle\Entity\Page;
  * PostPage.
  *
  * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\BlogRepository"))
- * @ORM\Table("vic_blog")
  */
 class Blog extends Page
 {

@@ -18,8 +18,21 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
  * A victoire view is a visual representation with a widget map.
  *
  * @Gedmo\Tree(type="nested")
+ *
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({
+ *     "articletemplate"     = "Victoire\Bundle\BlogBundle\Entity\ArticleTemplate",
+ *     "blog"                = "Victoire\Bundle\BlogBundle\Entity\Blog",
+ *     "businesstemplate"    = "Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate",
+ *     "businesspage"        = "Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage",
+ *     "virtualbusinesspage" = "Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage",
+ *     "page"                = "Victoire\Bundle\PageBundle\Entity\Page",
+ *     "basepage"            = "Victoire\Bundle\PageBundle\Entity\BasePage",
+ *     "template"            = "Victoire\Bundle\TemplateBundle\Entity\Template",
+ *     "errorpage"           = "Victoire\Bundle\TwigBundle\Entity\ErrorPage"
+ * })
+ *
  * @ORM\Entity(
  *     repositoryClass="Victoire\Bundle\CoreBundle\Repository\ViewRepository"
  * )
