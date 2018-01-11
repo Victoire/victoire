@@ -8,7 +8,7 @@ Feature: Create new redirection
     And I wait 1 second
 
   Scenario: I can view the new error
-    Then The modal title should be "REDIRECTIONS"
+    Then the modal title should be "REDIRECTIONS"
     And the list "redirections-list-container" should contain 3 element
     And I should see text matching "http://victoire/fr/input-1"
     And I should see text matching "http://victoire/fr/input-2"

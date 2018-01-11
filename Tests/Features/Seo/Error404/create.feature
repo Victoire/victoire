@@ -9,6 +9,6 @@ Feature: Create new error
     And I wait 1 second
 
   Scenario: I can view the new error
-    Then The modal title should be "404 ERRORS"
+    Then the modal title should be "404 ERRORS"
     And the list "route-list" should contain 1 element
     And I should see text matching "https?:\/\/.+\/app_ci\.php\/fr\/fake"

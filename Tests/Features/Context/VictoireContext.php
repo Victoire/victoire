@@ -666,7 +666,7 @@ class VictoireContext extends RawMinkContext
         $links = $menu = $page->findAll('xpath', sprintf('descendant-or-self::div[contains(@class, "v-drop__menu")]//a[contains(@class, "v-drop__anchor") and normalize-space(text()) = "%s"]', $name));
 
         if (count($links) < 1) {
-            $message = sprintf('Menu link not found in the page after 10 seconds"');
+            $message = 'Menu link not found in the page after 10 seconds';
 
             throw new ResponseTextException($message, $this->getSession());
         }
@@ -707,7 +707,7 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * @Then The modal title should be :title
+     * @Then the modal title should be :title
      *
      * @param $title
      *
@@ -718,6 +718,12 @@ class VictoireContext extends RawMinkContext
         $page = $this->getPage();
 
         $element = $page->find('xpath', '//*[@class="v-modal__heading"]');
+
+        if (!$element) {
+            $message = 'No heading has been found';
+
+            throw new ResponseTextException($message, $this->getSession());
+        }
 
         if ($title !== $element->getText()) {
             $message = sprintf('"%s" is not the modal title, the title is "%s"', $title, $element->getText());
