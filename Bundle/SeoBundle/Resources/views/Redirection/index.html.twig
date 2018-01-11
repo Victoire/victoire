@@ -56,20 +56,18 @@
         <div class="row">
             <div class="col-md-12">
                 <ul class="v-list-group v-list-group--main redirection-list-container" id="redirections-list-container">
-                    {% if pager.count %}
-                        {% for redirection in pager.getCurrentPageResults %}
-                            <li class="v-list-group__item redirection-list">
-                                {% include '@VictoireSeo/Redirection/_list.html.twig' with {
-                                    'redirection': redirection,
-                                    'form': forms[redirection.id]
-                                } %}
-                            </li>
-                        {% endfor %}
+                    {% for redirection in redirections %}
+                        <li class="v-list-group__item redirection-list">
+                            {% include '@VictoireSeo/Redirection/_list.html.twig' with {
+                                'redirection': redirection,
+                                'form': forms[redirection.id]
+                            } %}
+                        </li>
                     {% else %}
                         <li class="v-list-group__item redirection-list">
                             {% include '@VictoireSeo/Redirection/_empty.html.twig' %}
                         </li>
-                    {% endif %}
+                    {% endfor %}
                 </ul>
             </div>
         </div>

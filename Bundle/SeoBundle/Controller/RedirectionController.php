@@ -3,8 +3,6 @@
 namespace Victoire\Bundle\SeoBundle\Controller;
 
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -44,18 +42,14 @@ class RedirectionController extends Controller
         // Fetch errors
 
         /** @var QueryBuilder $redirections */
-        $redirections = $redirectionRepository->getUnresolvedQuery();
-
-        $pager = new Pagerfanta(new DoctrineORMAdapter($redirections));
-        $pager->setMaxPerPage(100);
-        $pager->setCurrentPage($request->query->get('page', 1));
+        $redirections = $redirectionRepository->getUnresolvedQuery()->getQuery()->getResult();
 
         // Build forms
 
         $forms = [];
 
-        /** @var Redirection $redirection */
-        foreach ($redirections->getQuery()->getResult() as $redirection) {
+        /** @var Redirection[] $redirection */
+        foreach ($redirections as $redirection) {
             $forms[$redirection->getId()] = $this->getRedirectionForm($redirection,
                 sprintf('#redirection-%d-item-container', $redirection->getId())
             )->createView();
@@ -66,9 +60,9 @@ class RedirectionController extends Controller
         // Return datas
 
         return new Response($this->renderView('@VictoireSeo/Redirection/index.html.twig', [
-            'newForm' => $newForm,
-            'pager'   => $pager,
-            'forms'   => $forms,
+            'newForm'      => $newForm,
+            'redirections' => $redirections,
+            'forms'        => $forms,
         ]));
     }
 

@@ -1,16 +1,14 @@
 <ul id="{{ listId }}" class="v-list-group v-list-group--main" style="border: none;">
-    {% if errors.count %}
-        {% for error in errors.currentPageResults %}
-            <li class="v-list-group__item redirection-list">
-                {% include '@VictoireSeo/Error404/_list.html.twig' with {
-                    'error': error,
-                    'form': forms[error.id]
-                } %}
-            </li>
-        {% endfor %}
+    {% for error in errors %}
+        <li class="v-list-group__item redirection-list">
+            {% include '@VictoireSeo/Error404/_list.html.twig' with {
+                'error': error,
+                'form': forms[error.id]
+            } %}
+        </li>
     {% else %}
         <li class="v-list-group__item vic-m-0 vic-mt-1 redirection-list">
             {% include '@VictoireSeo/Error404/_empty.html.twig' %}
         </li>
-    {% endif %}
+    {% endfor %}
 </ul>
