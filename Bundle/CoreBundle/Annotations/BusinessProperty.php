@@ -33,7 +33,7 @@ class BusinessProperty
         }
 
         //return an array, no matter one or many types defined
-        if (count($this->types['value']) > 1) {
+        if (is_array($this->types['value']) && count($this->types['value']) > 1) {
             return $this->types['value'];
         } else {
             return [$this->types['value']];

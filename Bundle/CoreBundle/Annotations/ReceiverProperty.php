@@ -24,7 +24,7 @@ class ReceiverProperty
         }
 
         if (array_key_exists('value', $data)) {
-            if (count($data['value']) > 1) {
+            if (is_array($data['value']) && count($data['value']) > 1) {
                 $this->types = $data['value'];
             } else {
                 $this->types = [$data['value']];
