@@ -7,10 +7,6 @@ services:
             - '%kernel.default_locale%'
             - '%victoire_i18n.available_locales%'
 
-    victoire_i18n.translator:
-        class: Victoire\Bundle\I18nBundle\Translation\Translator
-        arguments: ["@service_container", "@translator.selector",{}, {cache_dir:"%kernel.cache_dir%/translations%", debug: "%kernel.debug%"}]
-
     victoire_i18n.locale_subscriber:
         class: Victoire\Bundle\I18nBundle\Subscriber\LocaleSubscriber
         arguments:
