@@ -35,7 +35,7 @@
         "a2lix/translation-form-bundle": "^2.1",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-migrations-bundle": "^1.2",
-        "doctrine/orm": "^2.5",
+        "doctrine/orm": "^2.5,<2.6",
         "friendsofsymfony/jsrouting-bundle": "^1.0|^2.0",
         "friendsofsymfony/user-bundle": "~2.0",
         "incenteev/composer-parameter-handler": "^2.0",
@@ -52,7 +52,7 @@
         "symfony/assetic-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.4|~3.0",
         "symfony/polyfill-apcu": "^1.0",
-        "symfony/symfony": "^3.0,<3.3.0",
+        "symfony/symfony": "^3.4",
         "symfony/swiftmailer-bundle": "^2.3",
         "symfony/twig-bundle": "~3.0",
         "troopers/alertify-bundle": "^3.0",
@@ -76,7 +76,8 @@
         "phpunit/phpunit": "~5.7",
         "sensio/generator-bundle": "~2.3|~3.0",
         "symfony/var-dumper": "~2.8|~3.1",
-        "doctrine/doctrine-fixtures-bundle": "^2.2"
+        "doctrine/doctrine-fixtures-bundle": "^2.2",
+        "symfony/web-server-bundle": "~3.4"
     },
     "autoload": {
         "psr-4": {

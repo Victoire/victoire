@@ -3,7 +3,7 @@
 namespace Victoire\Bundle\WidgetBundle\Renderer;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\DependencyInjection\Container;
+use Psr\Container\ContainerInterface;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
@@ -39,7 +39,7 @@ class WidgetRenderer
     /**
      * WidgetRenderer constructor.
      *
-     * @param Container          $container
+     * @param ContainerInterface $container
      * @param WidgetCache        $widgetCache
      * @param WidgetHelper       $widgetHelper
      * @param VictoireCollector  $victoireCollector
@@ -47,7 +47,7 @@ class WidgetRenderer
      *
      * @internal param Client $redis
      */
-    public function __construct(Container $container, WidgetCache $widgetCache, WidgetHelper $widgetHelper, VictoireCollector $victoireCollector, BusinessPageHelper $bepHelper)
+    public function __construct(ContainerInterface $container, WidgetCache $widgetCache, WidgetHelper $widgetHelper, VictoireCollector $victoireCollector, BusinessPageHelper $bepHelper)
     {
         $this->container = $container;
         $this->widgetCache = $widgetCache;

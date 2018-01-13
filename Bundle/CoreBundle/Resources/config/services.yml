@@ -87,7 +87,7 @@ services:
     victoire_core.twig.cms_extension:
         class: Victoire\Bundle\CoreBundle\Twig\Extension\CmsExtension
         arguments:
-            - "@Victoire_widget.widget_renderer"
+            - "@victoire_widget.widget_renderer"
             - "@security.authorization_checker"
             - "@victoire_core.widget_exception_handler"
             - "@victoire_core.current_view"
@@ -96,7 +96,6 @@ services:
             - "@victoire_widget.resolver.widget_resolver"
         tags:
             - { name: twig.extension }
-
 
 #  ==================  Cache ================== #
 
@@ -203,7 +202,6 @@ services:
 
     twig.extension.routing:
         class: 'Victoire\Bundle\CoreBundle\Twig\Extension\RoutingExtension'
-        public: false
         arguments:
             - '@victoire_page.page_helper'
             - '@router'
