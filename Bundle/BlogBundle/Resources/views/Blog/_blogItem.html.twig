@@ -1,15 +1,18 @@
-{% form_theme chooseBlogForm 'VictoireFormBundle:Form:fields.html.twig' %}
-
-
 <div id="vic-blog-item-header">
-    <div class="vic-row">
-
-        {% if blog %}
-        <div class="vic-col-sm-3">
-            {{ form_start(chooseBlogForm, {'attr' : {'id' : 'victoire_blog_choose_form'}, 'action' : path('victoire_blog_index')}) }}
-            {{ form_row(chooseBlogForm.blog) }}
-            {{ form_end(chooseBlogForm) }}
+    {% if chooseBlogForm is defined %}
+        <div class="vic-row">
+            {% form_theme chooseBlogForm 'VictoireFormBundle:Form:fields.html.twig' %}
+            <div class="vic-col-sm-3">
+                {{ form_start(chooseBlogForm, {'attr' : {'id' : 'victoire_blog_choose_form'}, 'action' : path('victoire_blog_index')}) }}
+                {{ form_end(chooseBlogForm) }}
+            </div>
         </div>
+    {% endif %}
+    <div class="vic-row">
+        {% if blog.name %}
+            <div class="vic-col-sm-3">
+                <h3>{{ blog.name }}</h3>
+            </div>
         {% endif %}
 
         {% set addBlogButton %}
@@ -34,6 +37,24 @@
 </div>
 
 <script type="text/javascript">
+    $vic('#choose_blog_locale').on('change', function () {
+
+        var form = $(this).parents('form');
+        var formdata = (window.FormData) ? new FormData(form[0]) : null;
+        var data = (formdata !== null) ? formdata : form.serialize();
+        $.ajax({
+            url         : form.attr('action') + (form.attr('action').split('?')[1] ? '&' : '?') + 'novalidate',
+            data        : data,
+            type        : $(form).attr('method'),
+            contentType : false,
+            dataType    : 'json',
+            processData : false,
+        }).done(function(response){
+            $('#vic-modal').html($vic($vic(response.html)).find('.vic-modal-dialog'));
+        }).fail(function(response) {
+            console.log(response);
+        });
+    })
     $vic('#choose_blog_blog').on('change', function(){
         $('#victoire_blog_choose_form').on('submit', function(event) {
             event.preventDefault();
@@ -56,7 +77,7 @@
                 async       : true,
                 cache       : false,
                 success     : function(jsonResponse) {
-                    $vic('#victoire-blog-modal').html(jsonResponse.html);
+                    $('#vic-modal').html($vic($vic(jsonResponse.html)).find('.vic-modal-dialog'));
                 }
             });
         }).submit();
@@ -64,6 +85,6 @@
 </script>
 
 {% if blog %}
-{% include 'VictoireBlogBundle:Blog:Tabs/nav.html.twig' %}
-{% include 'VictoireBlogBundle:Blog:Tabs/content.html.twig' %}
+    {% include 'VictoireBlogBundle:Blog:Tabs/nav.html.twig' %}
+    {% include 'VictoireBlogBundle:Blog:Tabs/content.html.twig' %}
 {% endif %}

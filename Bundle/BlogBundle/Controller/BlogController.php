@@ -32,36 +32,43 @@ class BlogController extends BasePageController
      * List all Blogs.
      *
      * @Route("/index/{blogId}/{tab}", name="victoire_blog_index", defaults={"blogId" = null, "tab" = "articles"})
+     * @ParamConverter("blog", class="VictoireBlogBundle:Blog", options={"id" = "blogId"})
      *
      * @param Request $request
      *
+     * @throws \OutOfBoundsException
+     *
      * @return JsonResponse
      */
-    public function indexAction(Request $request, $blogId = null, $tab = 'articles')
+    public function indexAction(Request $request, $blog = null, $tab = 'articles')
     {
-        $blog = $this->getBlog($request, $blogId);
-        $template = $this->getBaseTemplatePath().':index.html.twig';
-        $chooseBlogForm = $this->createForm(ChooseBlogType::class, null, [
-            'blog'   => $blog,
-            'locale' => $request->getLocale(),
-        ]);
-
-        $chooseBlogForm->handleRequest($request);
-        if ($chooseBlogForm->isValid()) {
-            $template = $this->getBaseTemplatePath().':_blogItem.html.twig';
+        /** @var BlogRepository $blogRepo */
+        $blogRepo = $this->get('doctrine.orm.entity_manager')->getRepository('VictoireBlogBundle:Blog');
+        $locale = $request->getLocale();
+        $parameters = [
+            'locale'             => $locale,
+            'blog'               => $blog,
+            'currentTab'         => $tab,
+            'tabs'               => ['articles', 'settings', 'category'],
+            'businessProperties' => $blog ? $this->getBusinessProperties($blog) : null,
+        ];
+        if ($blogRepo->hasMultipleBlog()) {
+            $chooseBlogForm = $this->createForm(ChooseBlogType::class, null, [
+                'blog'   => $blog,
+                'locale' => $locale,
+            ]);
+            $chooseBlogForm->handleRequest($request);
+            $parameters = array_merge(
+                $parameters,
+                ['chooseBlogForm' => $chooseBlogForm->createView()],
+                $chooseBlogForm->getData()
+            );
         }
 
         return new JsonResponse(
             [
                 'html' => $this->container->get('templating')->render(
-                    $template,
-                    [
-                        'blog'               => $blog,
-                        'currentTab'         => $tab,
-                        'tabs'               => ['articles', 'settings', 'category'],
-                        'chooseBlogForm'     => $chooseBlogForm->createView(),
-                        'businessProperties' => $blog ? $this->getBusinessProperties($blog) : null,
-                    ]
+                    $this->getBaseTemplatePath().':index.html.twig', $parameters
                 ),
             ]
         );
@@ -147,7 +154,9 @@ class BlogController extends BasePageController
      * @Method("GET")
      * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
      *
-     * @return JsonResponse
+     * @throws \InvalidArgumentException
+     *
+     * @return Response
      */
     public function settingsAction(Request $request, BasePage $blog)
     {
@@ -262,17 +271,20 @@ class BlogController extends BasePageController
      * @param Request  $request
      * @param BasePage $blog
      *
-     * @Route("/{id}/articles", name="victoire_blog_articles")
+     * @Route("/{id}/articles/{articleLocale}", name="victoire_blog_articles")
      * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
+     *
+     * @throws \InvalidArgumentException
      *
      * @return Response
      */
-    public function articlesAction(Request $request, BasePage $blog)
+    public function articlesAction(Request $request, BasePage $blog, $articleLocale = null)
     {
         return new Response($this->container->get('templating')->render(
             $this->getBaseTemplatePath().':Tabs/_articles.html.twig',
             [
-                'blog' => $blog,
+                'locale' => $articleLocale ? $articleLocale : $request->getLocale(),
+                'blog'   => $blog,
             ]
         ));
     }
