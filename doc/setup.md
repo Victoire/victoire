@@ -7,10 +7,9 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/victoirecms.svg?style=social&label=Victoirecms)](https://twitter.com/troopersagency) [![Gitter](https://badges.gitter.im/Victoire/victoire.svg)](https://gitter.im/Victoire/victoire?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ```sh
-symfony new tutorial 3.2
+symfony new tutorial 3.4
 cd tutorial
 ```
-`there is still some issues with symfony 3.3`
 
 ## Victoire and its dependencies
 
