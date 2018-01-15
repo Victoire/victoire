@@ -46,20 +46,20 @@
             <source>form.page.type.status.label</source>
             <target>Publication status</target>
         </trans-unit>
-        <trans-unit id="58893b99eb040" resname="form.page.type.status.choice.label.draft">
-            <source>form.page.type.status.choice.label.draft</source>
+        <trans-unit id="58893b99eb040" resname="page.status.label.draft">
+            <source>page.status.label.draft</source>
             <target>Draft</target>
         </trans-unit>
-        <trans-unit id="58893b99eb068" resname="form.page.type.status.choice.label.published">
-            <source>form.page.type.status.choice.label.published</source>
+        <trans-unit id="58893b99eb068" resname="page.status.label.published">
+            <source>page.status.label.published</source>
             <target>Published</target>
         </trans-unit>
-        <trans-unit id="58893b99eb08b" resname="form.page.type.status.choice.label.unpublished">
-            <source>form.page.type.status.choice.label.unpublished</source>
+        <trans-unit id="58893b99eb08b" resname="page.status.label.unpublished">
+            <source>page.status.label.unpublished</source>
             <target>Unpublished</target>
         </trans-unit>
-        <trans-unit id="58893b99eb0b0" resname="form.page.type.status.choice.label.scheduled">
-            <source>form.page.type.status.choice.label.scheduled</source>
+        <trans-unit id="58893b99eb0b0" resname="page.status.label.scheduled">
+            <source>page.status.label.scheduled</source>
             <target>Post from</target>
         </trans-unit>
         <trans-unit id="58893b99eb0d6" resname="victoire.menu.publication.scheduled.tooltip">

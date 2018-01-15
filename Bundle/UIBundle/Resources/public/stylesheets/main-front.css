@@ -2884,6 +2884,10 @@ ul.v-menu {
   padding-right: 3.75em;
   font-size: 16px; }
 
+.v-sitemap__head-cell--status {
+  width: 11.5em;
+  text-align: center; }
+
 .v-sitemap__head-cell--priority {
   width: 5.25em;
   text-align: center; }
@@ -2900,6 +2904,10 @@ ul.v-menu {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; }
+
+.v-sitemap__cell--status {
+  width: 11.5em;
+  text-align: center; }
 
 .v-sitemap__cell--priority {
   width: 5.25em;
