@@ -159,7 +159,6 @@ class BlogController extends BasePageController
     {
         $form = $this->getSettingsForm($blog);
 
-
         $form->handleRequest($request);
         if ($request->isMethod('POST')) {
             if ($form->isValid()) {
@@ -178,11 +177,10 @@ class BlogController extends BasePageController
                 'businessProperties' => [],
             ],
             new Response(null, 200, [
-                'X-Inject-Alertify' => true
+                'X-Inject-Alertify' => true,
             ])
         );
     }
-
 
     /**
      * List Blog Categories.
@@ -361,18 +359,19 @@ class BlogController extends BasePageController
 
     /**
      * @param Blog $blog
+     *
      * @return \Symfony\Component\Form\Form
      */
     private function getSettingsForm(Blog $blog)
     {
         return $this->createForm($this->getPageSettingsType(), $blog, [
             'attr' => [
-                'novalidate' => true,
+                'novalidate'   => true,
                 'v-ic-post-to' => $this->generateUrl('victoire_blog_settings', [
-                    'id' => $blog->getId()
+                    'id' => $blog->getId(),
                 ]),
-                'v-ic-target' => '#victoire-blog-settings'
-            ]
+                'v-ic-target' => '#victoire-blog-settings',
+            ],
         ]);
     }
 }

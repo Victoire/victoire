@@ -311,7 +311,7 @@ class BasePageController extends Controller
                         '_locale' => $request->getLocale(),
                         'url'     => $viewReference->getUrl(),
                     ]
-                )
+                ),
             ]
         );
     }
