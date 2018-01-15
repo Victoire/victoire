@@ -78,7 +78,7 @@ class VictoireCoreExtension extends Extension
             'victoire_core.base_paths', $config['base_paths']
         );
         $container->setParameter(
-            'victoire_core.base_paths', $config['base_paths']
+            'victoire_core.entity_finder_regex', $config['entity_finder_regex']
         );
         $container->setParameter(
             'victoire_core.businessTemplates', $config['businessTemplates']

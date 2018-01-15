@@ -138,6 +138,7 @@ victoire_core:
         - "%kernel.root_dir%/../src"
         - "%kernel.root_dir%/../../../Bundle/BlogBundle"
         - "%kernel.root_dir%/../../../vendor/victoire"
+    entity_finder_regex: '/^.+\/Entity\/.+\.php$/i' #(optional) required for a non standard installation
     business_entity_debug: false
 
 services:
