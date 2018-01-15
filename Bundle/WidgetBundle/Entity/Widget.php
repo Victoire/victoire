@@ -472,7 +472,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      */
     public function hasCriteriaNamed($criteriaAlias)
     {
-        return $this->criterias->exists(function ($key, $element) use ($criteriaAlias) {
+        return $this->criterias->exists(function ($key, Criteria $element) use ($criteriaAlias) {
             return $criteriaAlias === $element->getName();
         });
     }
@@ -501,12 +501,14 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     public function generateCacheId()
     {
         if (!$this->getCurrentView()) {
-            throw new \Exception(sprintf('Cannot generate an hash for widget %s if currentView is not defined.',
+            throw new \Exception(sprintf(
+                'Cannot generate an hash for widget %s if currentView is not defined.',
                 $this->getId()
             ));
         }
 
-        return sprintf('%s-%s-%s',
+        return sprintf(
+            '%s-%s-%s',
             $this->getId(),
             $this->getUpdatedAt()->getTimestamp(),
             $this->getCurrentView()->getReference()->getId()
@@ -529,5 +531,13 @@ class Widget extends BaseWidget implements VictoireQueryInterface
         }
 
         return $defaultLocale;
+    }
+
+    /**
+     * @param $view
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
     }
 }

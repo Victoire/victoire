@@ -27,6 +27,7 @@
             "victoire-head":
             [
                 "@VictoireCoreBundle/Resources/public/vendor/jquery/1.10.2/jquery-1.10.2.js",
+                "@VictoireUIBundle/Resources/public/scripts/vic-intercooler.js",
                 "@VictoireCoreBundle/Resources/public/js/jquery.noConflict.js"
             ],
             "modernizr":
@@ -62,7 +63,12 @@
                 "@VictoireCoreBundle/Resources/public/vendor/vic-bootstrap/3.0.3/css/bootstrap.min.css",
                 "@VictoireCoreBundle/Resources/style/less/bricks/bricks.less",
                 "@VictoireCoreBundle/Resources/style/less/layouts/layouts.less",
-                "@VictoireCoreBundle/Resources/style/less/ugly.less"
+                "@VictoireCoreBundle/Resources/style/less/ugly.less",
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-default.less",
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-bar.less",
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-attached.less",
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-growl.less",
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-other.less"
             ]
         }
     }

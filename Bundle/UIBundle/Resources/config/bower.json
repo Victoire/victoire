@@ -11,6 +11,7 @@
     "trowel-layouts": "^1.1.0",
     "jquery": "1.12.4",
     "angular": "1.5.6",
-    "bootstrap": "3.3.7"
+    "bootstrap": "3.3.7",
+    "intercooler-js" : "1.2.0"
   }
 }

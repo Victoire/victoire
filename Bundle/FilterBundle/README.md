@@ -24,7 +24,7 @@ To create a new filter you have to build a Filter class extending the abstract V
             public function getFilters(){}
         }
 ```
-        
+
 And you have to declare it in your services
 
 ```yaml

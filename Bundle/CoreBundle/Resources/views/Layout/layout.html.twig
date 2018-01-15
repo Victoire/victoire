@@ -55,7 +55,7 @@
     {% endstylesheets %}
 
     {% if is_granted('ROLE_VICTOIRE') or app.request.attributes.get('_route') == 'fos_user_security_login' %}
-        {% stylesheets filter='less, cssrewrite' injector="victoire-edit, alertify-codrops-notification" %}
+        {% stylesheets filter='less, cssrewrite' injector="victoire-edit" %}
             <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
         {% endstylesheets %}
 
@@ -84,6 +84,7 @@
             {{ cms_slot_widgets('main_content') }}
         {% endblock body_content_main %}
     </main>
+    <div id="vic-modal-container"><!-- Modal container --></div>
 {% endblock body_content %}
 
 {% block foot_script %}

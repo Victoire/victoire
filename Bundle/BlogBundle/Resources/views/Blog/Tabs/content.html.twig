@@ -1,7 +1,7 @@
 <div class="vic-tab-content vic-modal-tab-content">
     {% for tab in tabs %}
         <div class="vic-tab-pane{% if tab == currentTab %} vic-active{% endif %}" id="victoire-blog-{{tab}}">
-            {{ render(controller('VictoireBlogBundle:Blog:' ~ tab, {'id' : blog.id})) }}
+            {{ render(controller('VictoireBlogBundle:Blog:' ~ tab, {'id' : blog.id, 'articleLocale' : locale})) }}
         </div>
     {% endfor %}
     <div class="vic-tab-pane" id="victoire-blog-links">
