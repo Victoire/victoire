@@ -41,7 +41,7 @@ class Article
     /**
      * Categories of the article.
      *
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity="BlogCategory", inversedBy="articles")
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @VIC\BusinessProperty({"textable", "seoable"})
      */
@@ -112,6 +112,13 @@ class Article
     private $deletedAt;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="promoted", type="boolean", nullable=true)
+     */
+    private $promoted = false;
+
+    /**
      * @Gedmo\Locale
      */
     protected $locale;
@@ -167,11 +174,11 @@ class Article
     /**
      * Set category.
      *
-     * @param Category $category
+     * @param BlogCategory $category
      *
      * @return Article
      */
-    public function setCategory(Category $category)
+    public function setCategory(BlogCategory $category)
     {
         $this->category = $category;
     }
@@ -478,5 +485,25 @@ class Article
     {
         $this->translate($locale, false)->setImage($image);
         $this->mergeNewTranslations();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPromoted()
+    {
+        return $this->promoted;
+    }
+
+    /**
+     * @param bool $promoted
+     *
+     * @return Article
+     */
+    public function setPromoted($promoted)
+    {
+        $this->promoted = $promoted;
+
+        return $this;
     }
 }

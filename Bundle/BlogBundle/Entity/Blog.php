@@ -18,7 +18,7 @@ class Blog extends Page
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Category", mappedBy="blog", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="BlogCategory", mappedBy="blog", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $categories;
 
@@ -39,6 +39,7 @@ class Blog extends Page
      */
     public function __construct()
     {
+        parent::__construct();
         $this->categories = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->tags = new ArrayCollection();
@@ -73,7 +74,7 @@ class Blog extends Page
      */
     public function getPublishedArticles()
     {
-        return $this->articles->filter(function ($article) {
+        return $this->articles->filter(function (Article $article) {
             return $article->getPublishedAt() <= new \DateTime();
         });
     }
@@ -121,11 +122,11 @@ class Blog extends Page
     }
 
     /**
-     * @param Category $category
+     * @param BlogCategory $category
      *
      * @return $this
      */
-    public function addCategorie(Category $category)
+    public function addCategory(BlogCategory $category)
     {
         $category->setBlog($this);
         $this->categories->add($category);
@@ -175,11 +176,11 @@ class Blog extends Page
     }
 
     /**
-     * @param Category $rootCategory
+     * @param BlogCategory $rootCategory
      *
      * @return $this
      */
-    public function addRootCategory(Category $rootCategory)
+    public function addRootCategory(BlogCategory $rootCategory)
     {
         $rootCategory->setBlog($this);
         $this->categories->add($rootCategory);
