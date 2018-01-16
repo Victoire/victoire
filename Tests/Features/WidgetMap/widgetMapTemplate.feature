@@ -137,6 +137,7 @@ Feature: Test widgetMap
         Given I press "YES, I WANT TO DELETE IT!"
         And I reload the page
         And "Widget 3" should precede "Widget 2"
+        And I should not see "Widget 1"
         Then I am on "/en/victoire-dcms/template/show/1"
         And "Widget 1" should precede "Widget 3"
         And "Widget 3" should precede "Widget 2"
