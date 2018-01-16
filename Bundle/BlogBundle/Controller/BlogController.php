@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
-use Victoire\Bundle\BlogBundle\Entity\Category;
 use Victoire\Bundle\BlogBundle\Form\BlogCategoryType;
 use Victoire\Bundle\BlogBundle\Form\BlogSettingsType;
 use Victoire\Bundle\BlogBundle\Form\BlogType;
@@ -87,7 +86,7 @@ class BlogController extends BasePageController
         if ($categoryId = $request->query->get('category')) {
             $entityManager = $this->getDoctrine()->getManager();
             /** @var Category $category */
-            $category = $entityManager->getRepository('VictoireBlogBundle:Category')->find($categoryId);
+            $category = $entityManager->getRepository('VictoireBlogBundle:BlogCategory')->find($categoryId);
             $categoryIds = [];
 
             function findIds(Category $category, &$categoryIds)
