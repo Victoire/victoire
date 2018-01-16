@@ -18,7 +18,7 @@ class Blog extends Page
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="BlogCategory", mappedBy="blog", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\BlogBundle\Entity\BlogCategory", mappedBy="blog", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $categories;
 
