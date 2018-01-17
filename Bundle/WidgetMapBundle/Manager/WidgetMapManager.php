@@ -132,6 +132,8 @@ class WidgetMapManager
         $beforeChild = !empty($children[WidgetMap::POSITION_BEFORE]) ? $children[WidgetMap::POSITION_BEFORE] : null;
         $afterChild = !empty($children[WidgetMap::POSITION_AFTER]) ? $children[WidgetMap::POSITION_AFTER] : null;
 
+        $replaceWidgetMap = null;
+
         //we remove the widget from the current view
         if ($widgetMap->getView() === $view) {
             // If the widgetMap has substitutes, delete them or transform them in create mode
@@ -162,9 +164,11 @@ class WidgetMapManager
         //Move children for current WidgetMap View
         $this->moveChildren($view, $beforeChild, $afterChild, $originalParent, $originalPosition);
 
-        //Move children WidgetMap for children from other View
-        foreach ($widgetMap->getChildren() as $child) {
-            $this->moveWidgetMap($child->getView(), $child, $originalParent, $originalPosition);
+        // Move children WidgetMap for children from other View
+        if (null === $replaceWidgetMap) {
+            foreach ($widgetMap->getChildren() as $child) {
+                $this->moveWidgetMap($child->getView(), $child, $originalParent, $originalPosition);
+            }
         }
     }
 
