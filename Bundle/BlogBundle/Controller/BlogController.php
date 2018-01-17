@@ -137,7 +137,7 @@ class BlogController extends BasePageController
      */
     public function newPostAction(Request $request)
     {
-        return parent::newPostAction($request);
+        return new JsonResponse(parent::newPostAction($request));
     }
 
     /**

@@ -46,7 +46,6 @@ class PageController extends BasePageController
      * @Route("/new", name="victoire_core_page_new_post")
      * @Route("/homepage/new", name="victoire_core_homepage_new")
      * @Method("POST")
-     * @Template()
      *
      * @return JsonResponse
      */
