@@ -2,14 +2,14 @@
 
 namespace Victoire\Bundle\BlogBundle\Repository;
 
+use Doctrine\ORM\QueryBuilder;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
-use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\CoreBundle\Repository\StateFullRepositoryTrait;
 
 /**
- * The Category repository.
+ * The BlogCategory repository.
  */
-class CategoryRepository extends NestedTreeRepository
+class BlogCategoryRepository extends NestedTreeRepository
 {
     use StateFullRepositoryTrait;
 
@@ -40,7 +40,7 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @param $articles
+     * @param QueryBuilder $articles
      *
      * @return $this
      */
