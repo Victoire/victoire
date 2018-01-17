@@ -132,13 +132,12 @@ class BlogController extends BasePageController
      *
      * @Route("/new", name="victoire_blog_new_post")
      * @Method("POST")
-     * @Template()
      *
      * @return JsonResponse
      */
     public function newPostAction(Request $request)
     {
-        return new JsonResponse(parent::newPostAction($request));
+        return parent::newPostAction($request);
     }
 
     /**

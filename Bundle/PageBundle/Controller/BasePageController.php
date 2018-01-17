@@ -4,9 +4,9 @@ namespace Victoire\Bundle\PageBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
@@ -141,7 +141,7 @@ class BasePageController extends Controller
      *
      * @param Request $request
      *
-     * @return array
+     * @return JsonResponse|array
      */
     protected function newPostAction(Request $request)
     {
@@ -212,7 +212,7 @@ class BasePageController extends Controller
      * @param Request  $request
      * @param BasePage $page
      *
-     * @return array
+     * @return JsonResponse|array
      */
     protected function settingsPostAction(Request $request, BasePage $page)
     {
@@ -284,7 +284,7 @@ class BasePageController extends Controller
      * @param Request  $request
      * @param BasePage $page
      *
-     * @return array
+     * @return JsonResponse
      */
     protected function getViewReferenceRedirect(Request $request, BasePage $page)
     {
@@ -301,18 +301,18 @@ class BasePageController extends Controller
 
         $page->setReference($viewReference);
 
-        return new Response(
-            null,
-            200,
+        return new JsonResponse(
             [
-                'X-VIC-Redirect' => $this->generateUrl(
+                'success' => true,
+                'url'     => $this->generateUrl(
                     'victoire_core_page_show',
                     [
                         '_locale' => $request->getLocale(),
                         'url'     => $viewReference->getUrl(),
                     ]
                 ),
-            ]
+            ],
+            200
         );
     }
 
