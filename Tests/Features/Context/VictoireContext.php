@@ -175,25 +175,6 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
-     * @Then /^I (open|close|toggle) the hamburger menu$/
-     */
-    public function iOpenTheHamburgerMenu()
-    {
-        $element = $this->findOrRetry(
-            $this->getSession()->getPage(),
-            'xpath',
-            'descendant-or-self::*[@id="vic-menu-leftnavbar-trigger"]'
-        );
-
-        if (null === $element) {
-            $message = sprintf('Element not found in the page after 10 seconds"');
-
-            throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
-        }
-        $element->click();
-    }
-
-    /**
      * @When I open the widget mode drop for entity :entity
      */
     public function iOpenTheWidgetModeDrop($entity)

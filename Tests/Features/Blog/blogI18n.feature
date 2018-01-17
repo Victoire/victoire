@@ -3,12 +3,11 @@ Feature: I can edit multiple blogs in multiples locales
 
   Background:
     Given I maximize the window
-    And I am on homepage
+    And I am on "/fr/"
+    And I should see "Blog"
 
   @alice(Blogi18n)
   Scenario: I have one blog and one locale
-    Then I open the hamburger menu
-    And I should see "Blog"
     When I follow "Blog"
     Then I should see "Paramètres"
     When I follow the tab "Paramètres"
@@ -20,8 +19,6 @@ Feature: I can edit multiple blogs in multiples locales
 
   @alice(BlogWithLocalesi18n)
   Scenario: I have one blog and multiple locales
-    Then I open the hamburger menu
-    And I should see "Blog"
     When I follow "Blog"
     Then I should see "Choisissez la langue du blog"
     And I should see "Créer un article maintenant"
@@ -36,7 +33,6 @@ Feature: I can edit multiple blogs in multiples locales
     And I follow "Créer"
     Then I should be on "fr/blog-fr/article-fr-article-titre-article"
     When I am on "/"
-    And I open the hamburger menu
     And I should see "Blog"
     When I follow "Blog"
     Then I should see "titre article"
@@ -48,8 +44,6 @@ Feature: I can edit multiple blogs in multiples locales
 
   @alice(LocaleWithBlogsi18n)
   Scenario: I have one locale and multiple blogs
-    Then I open the hamburger menu
-    And I should see "Blog"
     When I follow "Blog"
     Then I should see "Choisissez votre blog"
     And I should see "Créer un article maintenant"
@@ -60,7 +54,6 @@ Feature: I can edit multiple blogs in multiples locales
     And I follow "Créer"
     And I should be on "fr/blog-1/article-1-titre"
     And I am on "/"
-    And I open the hamburger menu
     And I should see "Blog"
     When I follow "Blog"
     Then I should see "titre"
@@ -74,7 +67,6 @@ Feature: I can edit multiple blogs in multiples locales
     And I follow "Créer"
     And I should be on "fr/blog-2/article-2-titre2"
     And I am on "/"
-    And I open the hamburger menu
     And I should see "Blog"
     When I follow "Blog"
     And I wait 2 seconds
@@ -83,8 +75,6 @@ Feature: I can edit multiple blogs in multiples locales
 
   @alice(BlogsWithLocalesi18n)
   Scenario: I have multiple blogs and multiple locales
-    Then I open the hamburger menu
-    And I should see "Blog"
     When I follow "Blog"
     Then I should see "Choisissez votre blog"
     And I should see "Créer un article maintenant"
@@ -99,7 +89,6 @@ Feature: I can edit multiple blogs in multiples locales
     And I follow "Créer"
     And I should be on "fr/blog-1-fr/article-1-fr-titre1"
     And I am on "/"
-    And I open the hamburger menu
     And I should see "Blog"
     When I follow "Blog"
     Then I should see "titre"
@@ -116,7 +105,6 @@ Feature: I can edit multiple blogs in multiples locales
     And I follow "Créer"
     And I should be on "fr/blog-2-fr/article-2-fr-titre2"
     And I am on "/"
-    And I open the hamburger menu
     And I should see "Blog"
     When I follow "Blog"
     And I wait 2 seconds
