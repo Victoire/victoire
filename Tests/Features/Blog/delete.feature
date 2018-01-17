@@ -1,4 +1,4 @@
-@mink:selenium2 @alice(Page) @reset-schema @alice(Blog) @alice(BlogTemplate) @alice(Article)
+@mink:selenium2 @reset-schema @alice(Page) @alice(Blog) @alice(BlogTemplate) @alice(Article)
 Feature: Delete a blog (and article)
 
 Background:
@@ -20,7 +20,6 @@ Background:
         Then I should see "Blog"
         When I follow "Blog"
 	    Then I should see "Blog index"
-        And I should see "The Jedi Network"
         And I follow "Settings"
         And I should see "DELETE"
         When I follow the link containing "DELETE"
