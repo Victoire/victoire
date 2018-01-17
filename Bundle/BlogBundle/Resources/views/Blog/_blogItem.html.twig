@@ -9,7 +9,7 @@
         </div>
     {% endif %}
     <div class="vic-row">
-        {% if blog.name %}
+        {% if blog and blog.name %}
             <div class="vic-col-sm-3">
                 <h3>{{ blog.getName() }}</h3>
             </div>
