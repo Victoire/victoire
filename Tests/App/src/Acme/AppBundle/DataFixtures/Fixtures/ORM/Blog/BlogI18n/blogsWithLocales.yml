@@ -49,7 +49,7 @@ Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
         name: blog 1 FR
         slug: blog-1-fr
         locale: fr
-        translatable: "blog_1"
+        translatable: "@blog_1"
     blog_1_en:
         name: blog 1 EN
         slug: blog-1-en

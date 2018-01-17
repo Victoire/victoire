@@ -1,6 +1,5 @@
 Victoire\Bundle\BlogBundle\Entity\Blog:
     blog-jedi-network:
-        currentLocale: en
         currentLocale: fr
         template: "@template_base"
         author: "@anakin"
