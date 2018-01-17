@@ -37,51 +37,24 @@
 </div>
 
 <script type="text/javascript">
-    $vic('#choose_blog_locale').on('change', function () {
-
+    $vic('#choose_blog_locale, #choose_blog_blog').on('change', function (event) {
+        event.preventDefault();
         var form = $vic(this).parents('form');
-        var formdata = (window.FormData) ? new FormData(form[0]) : null;
-        var data = (formdata !== null) ? formdata : form.serialize();
+        var formData = $vic(form).serializeArray();
+        formData = $vic.param(formData);
+
         $vic.ajax({
-            url         : form.attr('action') + (form.attr('action').split('?')[1] ? '&' : '?') + 'novalidate',
-            data        : data,
-            type        : $vic(form).attr('method'),
-            contentType : false,
-            dataType    : 'json',
+            url         : $vic(form).attr('action'),
+            method      : 'POST',
+            data        : formData,
             processData : false,
-        }).done(function(response){
-            $vic('#vic-modal').replaceWith(response);
-            eval("VicIntercooler.processNodes($vic('#vic-modal'));");
-        }).fail(function(response) {
-            console.log(response);
-        });
-    })
-    $vic('#choose_blog_blog').on('change', function(){
-        $vic('#victoire_blog_choose_form').on('submit', function(event) {
-            event.preventDefault();
-            var form = $vic(this);
-            var formData = $vic(form).serializeArray();
-            formData = $vic.param(formData);
-
-            if ($vic(form).attr('enctype') == 'multipart/form-data') {
-                formData = new FormData($vic(form)[0]);
+            async       : true,
+            cache       : false,
+            success     : function(response) {
+                $vic('#vic-modal-container').html(response);
+                eval("VicIntercooler.processNodes($vic('#vic-modal-container'));");
             }
-
-            $vic.ajax({
-                url         : $vic(form).attr('action'),
-                context     : document.body,
-                data        : formData,
-                type        : $vic(form).attr('method'),
-                contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-                processData : false,
-                async       : true,
-                cache       : false,
-                success     : function(response) {
-                    $vic('#vic-modal').replaceWith(response);
-                    eval("VicIntercooler.processNodes($vic('#vic-modal'));");
-                }
-            });
-        }).submit();
+        });
     });
 </script>
 
