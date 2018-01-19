@@ -34,7 +34,7 @@ Feature: I can edit multiple blogs in multiples locales
     And I fill in "article_translations_fr_name" with "titre article"
     And I fill in "article_translations_fr_description" with "description fr"
     And I follow "Create"
-    And I wait 1 seconds
+    And I wait 1 second
     Then the url should match "/en/blog-en/article-en-title-article"
     And the title should be "article EN title article"
     # Check that there is a French translation of this article
@@ -62,6 +62,7 @@ Feature: I can edit multiple blogs in multiples locales
     When I fill in "article_translations_fr_name" with "titre"
     When I fill in "article_translations_fr_description" with "description"
     And I follow "Créer"
+    And I wait 1 second
     Then the url should match "/fr/blog-1/article-1-titre"
     And I should see "Blog"
     When I follow "Blog"
@@ -75,6 +76,7 @@ Feature: I can edit multiple blogs in multiples locales
     When I fill in "article_translations_fr_name" with "titre2"
     When I fill in "article_translations_fr_description" with "description"
     And I follow "Créer"
+    And I wait 1 second
     Then the url should match "/fr/blog-2/article-2-titre2"
     And I should see "Blog"
     When I follow "Blog"
@@ -96,6 +98,7 @@ Feature: I can edit multiple blogs in multiples locales
     When I fill in "article_translations_fr_name" with "titre1"
     When I fill in "article_translations_fr_description" with "description"
     And I follow "Create"
+    And I wait 1 second
     And the url should match "/fr/blog-1-fr/article-1-fr-titre1"
     And I should see "Blog"
     When I follow "Blog"

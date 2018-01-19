@@ -9,6 +9,9 @@ Victoire\Bundle\BlogBundle\Entity\Blog:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+        currentLocale: fr
+        name: blog 1
+        slug: blog-1
     blog_2:
         parent: "@home"
         template: "@template_base"
@@ -19,6 +22,9 @@ Victoire\Bundle\BlogBundle\Entity\Blog:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+        currentLocale: fr
+        name: blog 2
+        slug: blog-2
 
 Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
     article_template_1:
@@ -45,16 +51,6 @@ Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
         cssUpToDate: false
 
 Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
-    blog_1_tr:
-        name: blog 1
-        slug: blog-1
-        locale: fr
-        translatable: "@blog_1"
-    blog_2_tr:
-        name: blog 2
-        slug: blog-2
-        locale: fr
-        translatable: "@blog_2"
     article_template_1_fr:
         name: article 1 {{item.name}}
         slug: article-1-{{item.slug}}
