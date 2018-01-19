@@ -19,7 +19,7 @@ Background:
         And I select "First blog template" from "Template"
         And I follow "Create"
         And I wait 5 seconds
-        Then the url should match "/fr/the-jedi-network/i-m-your-father"
+        Then the url should match "/en/the-jedi-network/i-m-your-father"
         And I wait 3 seconds
         Then the title should be "I'm your father."
         When I open the settings menu
