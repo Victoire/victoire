@@ -31,6 +31,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     protected $eventDispatcher;
     protected $widgetHelper;
     protected $paths;
+    protected $regex;
     protected $logger;
 
     /**
@@ -40,6 +41,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
      * @param EventDispatcherInterface $eventDispatcher
      * @param WidgetHelper             $widgetHelper
      * @param array                    $paths           The paths where to search about Entities
+     * @param string                   $regex
      * @param LoggerInterface          $logger
      */
     public function __construct(
@@ -47,12 +49,14 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         EventDispatcherInterface $eventDispatcher,
         $widgetHelper,
         $paths,
+        $regex,
         LoggerInterface $logger
     ) {
         $this->reader = $reader;
         $this->eventDispatcher = $eventDispatcher;
         $this->widgetHelper = $widgetHelper;
         $this->paths = $paths;
+        $this->regex = $regex;
         $this->logger = $logger;
     }
 
@@ -83,7 +87,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                     new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS),
                     \RecursiveIteratorIterator::LEAVES_ONLY
                 ),
-                '/^.+\/Entity\/.+\.php$/i',
+                $this->regex,
                 \RecursiveRegexIterator::GET_MATCH
             );
             foreach ($iterator as $file) {
