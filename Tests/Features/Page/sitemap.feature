@@ -14,7 +14,7 @@ Feature: Manage sitemap
         When I fill in "Name" with "anakin skywalker"
         Then I submit the widget
         And I should see "Successfully created page"
-        And I should be on "/en/anakin-skywalker"
+        And the url should match "/en/anakin-skywalker"
         When I follow the float action button
         Then I should see "New page"
         When I follow "New page"
@@ -25,7 +25,7 @@ Feature: Manage sitemap
         When I submit the widget
         Then I should see "Successfully created page"
         When I wait 2 seconds
-        Then I should be on "/en/anakin-skywalker/luke-skywalker"
+        Then the url should match "/en/anakin-skywalker/luke-skywalker"
 
     Scenario: I can delete a page and his child
         Given the following Page:

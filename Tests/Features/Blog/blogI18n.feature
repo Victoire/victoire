@@ -31,10 +31,7 @@ Feature: I can edit multiple blogs in multiples locales
     And I fill in "article_translations_fr_name" with "titre article"
     And I fill in "article_translations_fr_description" with "description fr"
     And I follow "Create"
-    Then I should be on "/fr/blog-fr/article-fr-article-titre-article"
-    # Previous assertion is broken, the URL is different
-    # TODO: Fix 404 error from previous error
-    When I am on "/fr/"
+    Then the url should match "/fr/blog-fr/article-fr-article-titre-article"
     And I should see "Blog"
     When I follow "Blog"
     Then I should see "titre article"
@@ -42,7 +39,7 @@ Feature: I can edit multiple blogs in multiples locales
     When I select "en" from "choose_blog_locale"
     Then I should see "title article"
     When I follow "title article"
-    Then I should be on "/en/blog-en/article-en-title-article"
+    Then the url should match "/en/blog-en/article-en-title-article"
 
   @alice(LocaleWithBlogsi18n)
   Scenario: I have one locale and multiple blogs
@@ -55,11 +52,8 @@ Feature: I can edit multiple blogs in multiples locales
     When I fill in "article_translations_fr_name" with "titre"
     When I fill in "article_translations_fr_description" with "description"
     And I follow "Créer"
-    And I should be on "/fr/blog-1/article-1-titre"
-    # Previous assertion is broken, the URL is different
-    # TODO: Fix 404 error from previous error
-    When I am on "/fr/"
-    Then I should see "Blog"
+    Then the url should match "/fr/blog-1/article-1-titre"
+    And I should see "Blog"
     When I follow "Blog"
     Then I should see "titre"
     And I wait 2 seconds
@@ -71,11 +65,8 @@ Feature: I can edit multiple blogs in multiples locales
     When I fill in "article_translations_fr_name" with "titre2"
     When I fill in "article_translations_fr_description" with "description"
     And I follow "Créer"
-    And I should be on "/fr/blog-2/article-2-titre2"
-    # Previous assertion is broken, the URL is different
-    # TODO: Fix 404 error from previous error
-    When I am on "/fr/"
-    Then I should see "Blog"
+    Then the url should match "/fr/blog-2/article-2-titre2"
+    And I should see "Blog"
     When I follow "Blog"
     And I wait 2 seconds
     When I select "blog 2" from "choose_blog_blog"
@@ -95,11 +86,8 @@ Feature: I can edit multiple blogs in multiples locales
     When I fill in "article_translations_fr_name" with "titre1"
     When I fill in "article_translations_fr_description" with "description"
     And I follow "Create"
-    And I should be on "/fr/blog-1-fr/article-1-fr-titre1"
-    # Previous assertion is broken, the URL is different
-    # TODO: Fix 404 error from previous error
-    When I am on "/fr/"
-    Then I should see "Blog"
+    And the url should match "/fr/blog-1-fr/article-1-fr-titre1"
+    And I should see "Blog"
     When I follow "Blog"
     Then I should see "titre"
     And I wait 2 seconds
@@ -114,11 +102,8 @@ Feature: I can edit multiple blogs in multiples locales
     When I fill in "article_translations_fr_name" with "titre2"
     When I fill in "article_translations_fr_description" with "description"
     And I follow "Créer"
-    And I should be on "/fr/blog-2-fr/article-2-fr-titre2"
-    # Previous assertion is broken, the URL is different
-    # TODO: Fix 404 error from previous error
-    When I am on "/fr/"
-    Then I should see "Blog"
+    Then the url should match "/fr/blog-2-fr/article-2-fr-titre2"
+    And I should see "Blog"
     When I follow "Blog"
     And I wait 2 seconds
     Then I should see "titre1"

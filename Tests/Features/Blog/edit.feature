@@ -19,7 +19,7 @@ Background:
         And I select "First blog template" from "Template"
         And I follow "Create"
         And I wait 5 seconds
-        Then I should be on "/fr/the-jedi-network/i-m-your-father"
+        Then the url should match "/fr/the-jedi-network/i-m-your-father"
         And I wait 3 seconds
         Then the title should be "I'm your father."
         When I open the settings menu
@@ -30,4 +30,4 @@ Background:
         When I fill in "article_settings_translations_en_slug" with "new-custom-slug"
         And I follow "UPDATE"
         And I wait 5 seconds
-        Then I should be on "/en/the-jedi-network/new-custom-slug"
+        Then the url should match "/en/the-jedi-network/new-custom-slug"
