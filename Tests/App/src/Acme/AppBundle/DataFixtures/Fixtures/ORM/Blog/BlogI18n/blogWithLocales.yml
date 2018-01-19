@@ -9,6 +9,9 @@ Victoire\Bundle\BlogBundle\Entity\Blog:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
+        currentLocale: en
+        name: blog EN
+        slug: blog-en
 
 Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
     article_template:
@@ -28,11 +31,6 @@ Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
         name: blog FR
         slug: blog-fr
         locale: fr
-        translatable: "@blog"
-    blog_en:
-        name: blog EN
-        slug: blog-en
-        locale: en
         translatable: "@blog"
     article_template_fr:
         name: article FR {{item.name}}

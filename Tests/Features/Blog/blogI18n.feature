@@ -1,4 +1,4 @@
-@mink:selenium2 @alice(Page) @reset-schema
+@mink:selenium2 @reset-schema @alice(Page)
 Feature: I can edit multiple blogs in multiples locales
 
   Background:
@@ -19,9 +19,12 @@ Feature: I can edit multiple blogs in multiples locales
 
   @alice(BlogWithLocalesi18n)
   Scenario: I have one blog and multiple locales
+    # An English blog exists
+    Given I am on "/en/blog-en"
+    Then the title should be "blog EN"
     When I follow "Blog"
     Then I should see "Pick your blog's language"
-    And I should see "Create a post now"
+    Then I should see "Create a post now"
     When I follow "Create a post now"
     Then I should see "Create a new post"
     When I fill in "article_translations_en_name" with "title article"
@@ -31,15 +34,22 @@ Feature: I can edit multiple blogs in multiples locales
     And I fill in "article_translations_fr_name" with "titre article"
     And I fill in "article_translations_fr_description" with "description fr"
     And I follow "Create"
-    Then the url should match "/fr/blog-fr/article-fr-article-titre-article"
+    And I wait 1 seconds
+    Then the url should match "/en/blog-en/article-en-title-article"
+    And the title should be "article EN title article"
+    # Check that there is a French translation of this article
+    When I go to "/fr/blog-fr/article-fr-titre-article"
+    Then the title should be "article FR titre article"
+    When I am on homepage
     And I should see "Blog"
     When I follow "Blog"
-    Then I should see "titre article"
-    And I wait 2 seconds
-    When I select "en" from "choose_blog_locale"
     Then I should see "title article"
-    When I follow "title article"
-    Then the url should match "/en/blog-en/article-en-title-article"
+    And I wait 2 seconds
+    When I select "fr" from "choose_blog_locale"
+    And I wait 2 seconds
+    Then I should see "titre article"
+    When I follow "titre article"
+    Then the url should match "/fr/blog-fr/article-fr-titre-article"
 
   @alice(LocaleWithBlogsi18n)
   Scenario: I have one locale and multiple blogs

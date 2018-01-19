@@ -9,8 +9,7 @@ use Victoire\Bundle\PageBundle\Entity\Page;
 /**
  * PostPage.
  *
- * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\BlogRepository"))
- * @ORM\Table("vic_blog")
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\BlogBundle\Repository\BlogRepository")
  */
 class Blog extends Page
 {
