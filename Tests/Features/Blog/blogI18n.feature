@@ -86,6 +86,14 @@ Feature: I can edit multiple blogs in multiples locales
 
   @alice(BlogsWithLocalesi18n)
   Scenario: I have multiple blogs and multiple locales
+    # There are 3 blogs
+    Given I am on "/en/blog-1-en"
+    And the title should be "blog 1 EN"
+    And I am on "/fr/blog-1-fr"
+    And the title should be "blog 1 FR"
+    And I am on "/fr/blog-2-fr"
+    And the title should be "blog 2 FR"
+    Given I am on homepage
     When I follow "Blog"
     Then I should see "Pick your blog"
     And I should see "Create a post now"
@@ -99,22 +107,25 @@ Feature: I can edit multiple blogs in multiples locales
     When I fill in "article_translations_fr_description" with "description"
     And I follow "Create"
     And I wait 1 second
-    And the url should match "/fr/blog-1-fr/article-1-fr-titre1"
+    And the url should match "/en/blog-1-en/article-1-en-title1"
+    And the title should be "article 1 EN title1"
+    # Switch to French in order to show the second blog that only have French translation
+    When I go to "/fr/"
     And I should see "Blog"
     When I follow "Blog"
-    Then I should see "titre"
-    And I wait 2 seconds
-    When I select "fr" from "choose_blog_locale"
-    And I wait 1 second
-    Then I should see "blog 2 FR"
+    Then I should see "blog 1 FR"
+    And I should see "titre1"
     When I select "blog 2 FR" from "choose_blog_blog"
     And I wait 1 second
+    Then I should see "blog 2 FR"
+    Then I should not see "titre1"
     And I should see "Créer un article maintenant"
     When I follow "Créer un article maintenant"
     Then I should see "Créer un nouvel article"
     When I fill in "article_translations_fr_name" with "titre2"
     When I fill in "article_translations_fr_description" with "description"
     And I follow "Créer"
+    And I wait 1 second
     Then the url should match "/fr/blog-2-fr/article-2-fr-titre2"
     And I should see "Blog"
     When I follow "Blog"
