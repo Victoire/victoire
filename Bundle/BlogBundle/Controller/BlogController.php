@@ -44,7 +44,17 @@ class BlogController extends BasePageController
     {
         /** @var BlogRepository $blogRepo */
         $blogRepo = $this->get('doctrine.orm.entity_manager')->getRepository('VictoireBlogBundle:Blog');
+
+        // Default value for locale
         $locale = $request->getLocale();
+
+        // Overwrite locale when a locale is chosen in the form
+        if ($chooseBlog = $request->request->get('choose_blog')) {
+            if (array_key_exists('locale', $chooseBlog)) {
+                $locale = $chooseBlog['locale'];
+            }
+        }
+
         $parameters = [
             'locale'             => $locale,
             'blog'               => $blog,

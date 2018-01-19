@@ -85,6 +85,33 @@ Feature: I can edit multiple blogs in multiples locales
     Then I should see "titre2"
 
   @alice(BlogsWithLocalesi18n)
+  Scenario: I have multiple blogs and multiple locales and I can select them after having chosen a language
+    # There are 3 blogs
+    Given I am on "/en/blog-1-en"
+    And the title should be "blog 1 EN"
+    And I am on "/fr/blog-1-fr"
+    And the title should be "blog 1 FR"
+    And I am on "/fr/blog-2-fr"
+    And the title should be "blog 2 FR"
+    # Test is performed in French because of a conflict of labels with English labels:
+    # the string “Pick your blog” is found in the “Pick your blog's language” label
+    Given I am on "/fr/"
+    When I follow "Blog"
+    Then I should see "Choisissez la langue du blog"
+    When I select "en" from "choose_blog_locale"
+    And I wait 3 seconds
+    # There is only one English blog, so there is no dropdown
+    Then I should not see "Choisissez votre blog"
+    # We see the French name of this Blog
+    And I should see "blog 1 FR"
+    When I select "fr" from "Choisissez la langue du blog"
+    And I wait 3 seconds
+    Then I should see "Choisissez votre blog"
+    And I should see "blog 1 FR"
+    When I select "blog 2 FR" from "Choisissez votre blog"
+    Then I should see "blog 2 FR"
+
+  @alice(BlogsWithLocalesi18n)
   Scenario: I have multiple blogs and multiple locales
     # There are 3 blogs
     Given I am on "/en/blog-1-en"
