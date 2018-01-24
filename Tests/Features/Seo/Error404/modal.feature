@@ -3,7 +3,7 @@ Feature: Display the error's modal
 
   Background:
     Given I maximize the window
-    When I am on "/fr"
+    When I am on homepage
     And I open the 404 menu
     And I wait 1 second
 
