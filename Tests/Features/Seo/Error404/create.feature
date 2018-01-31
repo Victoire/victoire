@@ -4,7 +4,7 @@ Feature: Create new error
   Background:
     Given I maximize the window
     And I am on "/fr/fake"
-    When I am on "/fr"
+    When I am on homepage
     And I open the 404 menu
     And I wait 1 second
 

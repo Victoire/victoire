@@ -3,7 +3,7 @@ Feature: Modify a redirection
 
   Background:
     Given I maximize the window
-    When I am on "/fr"
+    And I am on homepage
     And I open the redirection menu
     And I wait 1 second
 
