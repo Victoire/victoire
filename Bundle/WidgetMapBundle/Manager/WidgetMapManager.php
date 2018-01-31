@@ -164,7 +164,7 @@ class WidgetMapManager
 
         //Move children WidgetMap for children from other View
         foreach ($widgetMap->getChildren() as $child) {
-            if ($child->getView()->getParent() === $view) {
+            if ($child->getView() === $view || $child->getView()->getTemplate() === $view) {
                 $this->moveWidgetMap($child->getView(), $child, $originalParent, $originalPosition);
             }
         }

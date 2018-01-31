@@ -355,6 +355,7 @@ Feature: Test widgetMap
         And I should not see "Widget 4"
         When I switch to "edit" mode
         And I press the "Widget 2" content
+        And I wait 5 second
         Then I should see "DELETE"
         When I follow "DELETE"
         Then I should see "This action will permanently delete this content from the database. This action is irreversible."
