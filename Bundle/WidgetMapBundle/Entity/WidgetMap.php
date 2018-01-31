@@ -109,7 +109,7 @@ class WidgetMap
 
     public function __toString()
     {
-        return $value = (string) $this->id;
+        return (string) $this->id;
     }
 
     public function __construct()
