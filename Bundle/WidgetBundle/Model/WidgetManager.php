@@ -391,13 +391,12 @@ class WidgetManager
      * Remove a widget.
      *
      * @param Widget $widget
+     * @param View   $view
      *
-     * @return array The parameter for the view
+     * @return void
      */
     public function deleteWidget(Widget $widget, View $view)
     {
-        //Used to update view in callback (we do it before delete it else it'll not exists anymore)
-        $widgetId = $widget->getId();
         //we update the widget map of the view
         $this->widgetMapBuilder->build($view);
         $widgetMap = $widget->getWidgetMap();
@@ -407,18 +406,13 @@ class WidgetManager
             $this->entityManager->remove($widget);
         }
 
-        //we update the view
-        $this->entityManager->persist($view);
         //update the view deleting the widget
         $this->widgetMapManager->delete($view, $widget);
 
-        $this->entityManager->flush();
+        //we update the view
+        $this->entityManager->persist($view);
 
-        return [
-            'success'     => true,
-            'widgetId'    => $widgetId,
-            'viewCssHash' => $view->getCssHash(),
-        ];
+        $this->entityManager->flush();
     }
 
     /**

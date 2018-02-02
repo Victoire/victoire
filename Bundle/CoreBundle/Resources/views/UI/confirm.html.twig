@@ -11,19 +11,19 @@
 
 {% block modal_body_content %}
     {% spaceless %}
-        <p class="v-text--center" style="margin-bottom: 30px;">
+        <p class="v-text--center vic-mb-3">
             {{ app.request.get('body')|raw }}
         </p>
 
         <div class="v-flex-grid v-flex-grid--align-center v-flex-grid--justify-center">
             <div class="v-flex-col">
-                <button class="v-btn {{ cancel_button_class }}" data-modal="close" aria-hidden="true">
+                <button id="cancel-button" class="v-btn {{ cancel_button_class }}" data-modal="close" aria-hidden="true">
                     {{ 'modal.button.delete.confirm.cancel.label'|trans }}
                 </button>
             </div>
 
             <div class="v-flex-col">
-                <button class="v-btn {{ confirm_button_class }}" aria-hidden="true">
+                <button id="delete-button" class="v-btn {{ confirm_button_class }}" aria-hidden="true">
                     {{ 'modal.button.delete.confirm.ok.label'|trans }}
                 </button>
             </div>
