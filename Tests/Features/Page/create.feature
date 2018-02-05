@@ -15,7 +15,7 @@ Feature: Create a page
         Then I submit the widget
         And I wait 3 second
         And I should see "Successfully created page"
-        And I should be on "/en/tatooine"
+        And the url should match "/en/tatooine"
 
     @alice(Template)
     Scenario: I can change the name and the url of a given page
@@ -29,5 +29,5 @@ Feature: Create a page
         Then I fill in "page_settings_translations_en_slug" with "anoth"
         And I submit the widget
         And I wait 5 seconds
-        Then I should be on "/en/anoth"
+        Then the url should match "/en/anoth"
         And I should see "Successfully modified page"

@@ -12,7 +12,7 @@ Feature: Business Domain Strategy
         And I am on "/victoire-dcms/backend/spaceship/"
         Then I should see "No result"
         When I follow "New spaceship"
-        Then I should be on "/victoire-dcms/backend/spaceship/new"
+        Then the url should match "/victoire-dcms/backend/spaceship/new"
         And I should see "New Spaceship"
         When I follow the tab "FR"
         And I fill in "space_ship[translations][fr][name]" with "Le Faucon Millénium"

@@ -8,7 +8,7 @@
     {% endif %}
 
     <div class="vic-tab-pane vic-active" id="basics">
-        {{ form_start(form, { 'action': path('victoire_blog_settings_post', {'id':blog.id} ), 'id': 'victoire_blog_settings_form' }) }}
+        {{ form_start(form, { 'id': 'victoire_blog_settings_form' }) }}
             <div class="vic-row">
                 <div class="vic-col-md-offset-8 vic-col-md-4">
                     {{ form_row(form.status) }}
@@ -55,7 +55,7 @@
             {% if not blog.undeletable %}
                 <a href="{{ path('victoire_blog_delete', {'id': blog.id}) }}" data-toggle="vic-confirm" class="vic-btn vic-btn-danger vic-pull-left" data-title="{{ 'modal.form.page.settings.action.delete.confirm.title'|trans({}, 'victoire') }}" data-body="{{ 'modal.form.page.settings.action.delete.confirm.body'|trans({}, 'victoire') }}" data-modal="delete"><i class="fa fa-trash-o"></i> {{ 'modal.button.delete.title'|trans({}, 'victoire') }}</a>
             {% endif %}
-            <button type="submit" href="#" class="vic-btn vic-btn-success vic-pull-right" title="{{ ('modal.button.settings.title')|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ ('modal.button.settings.title')|trans({}, 'victoire') }}</button>
+            <button type="submit" class="vic-btn vic-btn-success vic-pull-right" title="{{ ('modal.button.settings.title')|trans({}, 'victoire') }}"><i class="fa fa-check-circle"></i> {{ ('modal.button.settings.title')|trans({}, 'victoire') }}</button>
         {{ form_end(form) }}
 
     </div>

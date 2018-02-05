@@ -24,7 +24,7 @@ Feature: Create business entity pages
         And I fill in "URL" with "jedi-profile-{{item.slug}}"
         And I follow "Create"
         And I wait 2 seconds
-        Then I should be on "/en/victoire-dcms/business-template/show/4"
+        Then the url should match "/en/victoire-dcms/business-template/show/4"
         And I should see "The business template has been successfully created"
 
     Scenario: I can create some content in the pattern
@@ -104,7 +104,7 @@ Feature: Create business entity pages
         Then I should see "The dark side of the force"
         Given I am on "/victoire-dcms/backend/jedi/"
         When I follow "New jedi"
-        Then I should be on "/victoire-dcms/backend/jedi/new"
+        Then the url should match "/victoire-dcms/backend/jedi/new"
         And I should see "New Jedi"
         When I fill in "Name" with "Mace Windu"
         And I fill in "MidiChlorians" with "20000"

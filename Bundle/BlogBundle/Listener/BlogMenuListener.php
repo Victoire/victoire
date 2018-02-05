@@ -38,7 +38,8 @@ class BlogMenuListener implements MenuListenerInterface
         $currentArticle = $event->getPage()->getBusinessEntity();
         $currentBlog = $currentArticle->getBlog();
 
-        $floatActionDropdown->addChild('menu.blog.article.new',
+        $floatActionDropdown->addChild(
+            'menu.blog.article.new',
             [
                 'route'           => 'victoire_blog_article_new',
                 'routeParameters' => ['id' => $currentBlog->getId()],
@@ -60,7 +61,8 @@ class BlogMenuListener implements MenuListenerInterface
     {
         $floatActionDropdown = $this->menuBuilder->getFloatActionDropdown();
 
-        $floatActionDropdown->addChild('menu.blog.article.new',
+        $floatActionDropdown->addChild(
+            'menu.blog.article.new',
             [
                 'route'           => 'victoire_blog_article_new',
                 'routeParameters' => ['id' => $event->getPage()->getId()],
@@ -81,7 +83,8 @@ class BlogMenuListener implements MenuListenerInterface
     {
         if ($this->menuBuilder->isGranted('ROLE_VICTOIRE_BLOG')) {
             $this->menuBuilder->getTopNavbar()->addChild(
-                'menu.leftnavbar.blog.label', [
+                'menu.leftnavbar.blog.label',
+                [
                     'route' => 'victoire_blog_index',
                 ]
             )->setLinkAttribute('data-toggle', 'vic-modal');

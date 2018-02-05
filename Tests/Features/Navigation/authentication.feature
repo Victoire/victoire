@@ -6,7 +6,7 @@ Feature: Authentication
         When I fill in "Email" with "anakin@victoire.io"
         And I fill in "Password" with "test"
         And I press "Embark"
-        Then I should be on "/"
+        Then the url should match "/"
 
     Scenario: Login as a wrong user
         Given I am on "/login"

@@ -14,7 +14,7 @@ Background:
         Then I should see "This action will permanently remove the post. This action is irreversible. Are you sure?"
         Given I press "YES, I WANT TO DELETE IT!"
         Then I should see "The post has been removed"
-        And I should be on "/en/the-jedi-network"
+        And the url should match "/en/the-jedi-network"
 
     Scenario: I can delete a blog
         Then I should see "Blog"
@@ -26,4 +26,4 @@ Background:
         When I follow the link containing "DELETE"
         Then I should see "This action will permanently delete this page from the database. This action is irreversible."
         Given I press "YES, I WANT TO DELETE IT!"
-        And I should be on "/en/"
+        And the url should match "/en/"

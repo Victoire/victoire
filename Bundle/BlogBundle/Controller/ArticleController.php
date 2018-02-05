@@ -33,7 +33,6 @@ class ArticleController extends Controller
      *
      * @Route("/new/{id}", name="victoire_blog_article_new")
      * @Method("GET")
-     * @Template()
      *
      * @return JsonResponse
      */
@@ -92,7 +91,7 @@ class ArticleController extends Controller
                     'success' => true,
                     'url'     => $this->generateUrl('victoire_core_page_show', [
                         '_locale' => $request->getLocale(),
-                        'url'     => $this->container->get('victoire_core.url_builder')->buildUrl($page),
+                        'url'     => $page->getUrl(),
                     ]),
                 ]);
             }
@@ -181,7 +180,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * Delete a BLog Article.
+     * Delete a Blog Article.
      *
      * @param Article $article
      *

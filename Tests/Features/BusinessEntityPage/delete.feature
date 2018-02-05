@@ -24,6 +24,6 @@ Feature: Delete Business Entity pages
         Then I should see "The new side of the force"
         When I am on "/victoire-dcms/backend/jedi/1/edit"
         And I press "Delete"
-        Then I should be on "victoire-dcms/backend/jedi/"
+        Then the url should match "victoire-dcms/backend/jedi/"
         When I am on "/en/jedi-profile-anakin"
         Then I should see "404 Not Found"

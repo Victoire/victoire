@@ -113,7 +113,7 @@ class LinkExtension extends \Twig_Extension
 
         $viewReference = isset($parameters['viewReference']) ? $parameters['viewReference'] : null;
         switch ($parameters['linkType']) {
-            case 'viewReference':
+            case Link::TYPE_VIEW_REFERENCE:
                 if ($viewReference instanceof ViewReference) {
                     $viewReference = $viewReference->getId();
                 }
@@ -133,16 +133,19 @@ class LinkExtension extends \Twig_Extension
                         /** @var ErrorPage $page */
                         $page = $this->errorPageRepository->findOneByCode(404);
                         $linkUrl = $this->router->generate(
-                            'victoire_core_page_show', array_merge([
+                            'victoire_core_page_show',
+                            array_merge([
                             '_locale' => $parameters['locale'],
                             'url'     => $page->getSlug(),
-                        ], $params));
+                        ], $params)
+                        );
                     }
                 }
 
                 if ($page instanceof WebViewInterface) {
                     $linkUrl = $this->router->generate(
-                        'victoire_core_page_show', [
+                        'victoire_core_page_show',
+                        [
                             '_locale' => $parameters['locale'],
                             'url'     => $page->getReference($parameters['locale'])->getUrl(),
                         ],
@@ -154,7 +157,7 @@ class LinkExtension extends \Twig_Extension
                     $url = $linkUrl;
                 }
                 break;
-            case 'route':
+            case Link::TYPE_ROUTE:
                 $url = $this->router->generate($parameters['route'], $parameters['routeParameters'], $referenceType);
                 break;
             case Link::TYPE_WIDGET:
