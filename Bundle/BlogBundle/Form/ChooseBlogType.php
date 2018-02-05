@@ -118,7 +118,7 @@ class ChooseBlogType extends AbstractType
         if (($blogsNb = count($availableBlogs)) < 1) {
             return;
         }
-        
+
         $additionalParameters = ['class' => Blog::class];
         if ($blogsNb > 1) {
             $additionalParameters = [
