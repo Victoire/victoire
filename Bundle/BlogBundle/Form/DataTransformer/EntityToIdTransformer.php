@@ -44,14 +44,14 @@ class EntityToIdTransformer implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function reverseTransform($id)
+    public function reverseTransform($entityId)
     {
-        if (!$id) {
+        if (!$entityId) {
             return;
         }
         $entity = $this->objectManager
             ->getRepository($this->class)
-            ->find($id);
+            ->find($entityId);
         if (null === $entity) {
             throw new TransformationFailedException();
         }
