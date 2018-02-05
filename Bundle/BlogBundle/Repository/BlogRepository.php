@@ -16,11 +16,11 @@ class BlogRepository extends BasePageRepository
      */
     public function hasMultipleBlog()
     {
-        $qb = $this->createQueryBuilder('blog')
+        $queryBuilder = $this->createQueryBuilder('blog')
             ->select('b_translation.id')
             ->join('blog.translations', 'b_translation');
 
-        return count($qb->getQuery()->getResult()) >= 1;
+        return count($queryBuilder->getQuery()->getResult()) >= 1;
     }
 
     /**
@@ -30,12 +30,12 @@ class BlogRepository extends BasePageRepository
      */
     public function getUsedLocales()
     {
-        $qb = $this->createQueryBuilder('blog')
+        $queryBuilder = $this->createQueryBuilder('blog')
             ->select('DISTINCT(b_translation.locale) AS locale')
             ->join('blog.translations', 'b_translation');
 
         $locales = [];
-        foreach ($qb->getQuery()->getResult() as $locale) {
+        foreach ($queryBuilder->getQuery()->getResult() as $locale) {
             $locales[] = $locale['locale'];
         }
 
