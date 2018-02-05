@@ -118,7 +118,8 @@ class ChooseBlogType extends AbstractType
         if (($blogsNb = count($availableBlogs)) < 1) {
             return;
         }
-
+        
+        $additionalParameters = ['class' => Blog::class];
         if ($blogsNb > 1) {
             $additionalParameters = [
                 'choices'           => $availableBlogs,
@@ -132,8 +133,6 @@ class ChooseBlogType extends AbstractType
                     return $currentBlog->getName();
                 },
             ];
-        } else {
-            $additionalParameters = ['class' => Blog::class];
         }
 
         $builder->add('blog', $blogsNb > 1 ? ChoiceType::class : EntityHiddenType::class,
