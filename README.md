@@ -43,6 +43,10 @@ Victoire and its Widgets are tested with Behat through CircleCI. For further inf
 
 If you want to contribute to Victoire frontend, please read this [contribution guideline](doc/frontend-contribution.md).
 
+### Backend contribution
+
+If you want to contribute to Victoire, please read this [contribution guideline](doc/backend-contribution.md).
+
 ## Install Victoire
 
 To do so, follow the [setup guide](doc/setup.md).
