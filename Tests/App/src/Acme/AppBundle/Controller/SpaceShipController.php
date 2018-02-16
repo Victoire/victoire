@@ -42,7 +42,7 @@ class SpaceShipController extends BackendController
      *
      * @Route("/", name="acme_app_spaceship_create")
      * @Method("POST")
-     * @Template("AcmeAppBundle:SpaceShip:new.html.twig")
+     * @Template("AcmeAppBundle:space_ship:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -177,7 +177,7 @@ class SpaceShipController extends BackendController
      *
      * @Route("/{id}", name="acme_app_spaceship_update")
      * @Method("PUT")
-     * @Template("AcmeAppBundle:SpaceShip:edit.html.twig")
+     * @Template("AcmeAppBundle:space_ship:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {

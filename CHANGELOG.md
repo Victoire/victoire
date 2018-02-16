@@ -1,6 +1,14 @@
 # Change Log
 
-## [2.3.x]
+## [2.3.32](https://github.com/Victoire/victoire/tree/2.3.32)
+
+- BC break: Require `sensio/framework-extra-bundle:^5.0` that introduce a BC break (from 4.0):
+
+> [BC BREAK] changed template name generation from camelCase to under_score for both files and directories
+
+Solution is to rename Twig directories and files with `under_score` naming convention. 
+
+## [2.3.29](https://github.com/Victoire/victoire/tree/2.3.29)
 
 - BC break: Remove asynchronous mode
 

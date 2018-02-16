@@ -42,7 +42,7 @@ class JediController extends BackendController
      *
      * @Route("/", name="acme_app_jedi_create")
      * @Method("POST")
-     * @Template("AcmeAppBundle:Jedi:new.html.twig")
+     * @Template("AcmeAppBundle:jedi:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -177,7 +177,7 @@ class JediController extends BackendController
      *
      * @Route("/{id}", name="acme_app_jedi_update")
      * @Method("PUT")
-     * @Template("AcmeAppBundle:Jedi:edit.html.twig")
+     * @Template("AcmeAppBundle:jedi:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
