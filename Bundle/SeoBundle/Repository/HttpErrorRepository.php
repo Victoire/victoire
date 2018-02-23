@@ -5,6 +5,7 @@ namespace Victoire\Bundle\SeoBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\CoreBundle\Repository\StateFullRepositoryTrait;
+use Victoire\Bundle\SeoBundle\Entity\HttpError;
 
 /**
  * Class HttpErrorRepository.
@@ -14,7 +15,7 @@ class HttpErrorRepository extends EntityRepository
     use StateFullRepositoryTrait;
 
     /**
-     * Get all redirections in the repository.
+     * Get every errors in the repository.
      *
      * @param bool $exceptRedirected
      *
@@ -34,17 +35,38 @@ class HttpErrorRepository extends EntityRepository
     }
 
     /**
-     * Get all redirections in the repository.
+     * Get every file errors in the repository.
      *
      * @param string $order
      * @param string $direction
      *
      * @return QueryBuilder
      */
-    public function getUnresolvedQuery($order = 'error.counter', $direction = 'DESC')
+    public function getFileErrors($order = 'error.counter', $direction = 'DESC')
     {
         $this->getAll(true);
 
-        return $this->qb->orderBy($order, $direction);
+        return $this->qb
+            ->andWhere('error.type = :type')
+            ->setParameter('type', HttpError::TYPE_FILE)
+            ->orderBy($order, $direction);
+    }
+
+    /**
+     * Get every route errors in the repository.
+     *
+     * @param string $order
+     * @param string $direction
+     *
+     * @return QueryBuilder
+     */
+    public function getRouteErrors($order = 'error.counter', $direction = 'DESC')
+    {
+        $this->getAll(true);
+
+        return $this->qb
+            ->andWhere('error.type = :type')
+            ->setParameter('type', HttpError::TYPE_ROUTE)
+            ->orderBy($order, $direction);
     }
 }
