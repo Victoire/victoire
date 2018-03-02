@@ -4,7 +4,6 @@ namespace Victoire\Bundle\MediaBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,6 +73,8 @@ class MediaController extends Controller
      *
      * @Route("/delete/{mediaId}", requirements={"mediaId" = "\d+"}, name="VictoireMediaBundle_media_delete")
      *
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     *
      * @return RedirectResponse
      */
     public function deleteAction($mediaId)
@@ -98,10 +99,9 @@ class MediaController extends Controller
      *
      * @throws \Doctrine\ORM\EntityNotFoundException
      *
-     * @return array|RedirectResponse
+     * @return Response|RedirectResponse
      * @Route("bulkupload/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_media_bulk_upload")
      * @Method({"GET", "POST"})
-     * @Template()
      */
     public function bulkUploadAction(Request $request, $folderId)
     {
@@ -136,10 +136,10 @@ class MediaController extends Controller
             'full_name' => 'mediabundle_bulkupload[files][]',
         ]);
 
-        return [
+        return $this->render('@VictoireMedia/Media/bulkUpload.html.twig', [
             'form'   => $formView,
             'folder' => $folder,
-        ];
+        ]);
     }
 
     /**
@@ -183,14 +183,17 @@ class MediaController extends Controller
      * @param int     $folderId The folder id
      * @param string  $type     The type
      *
-     * @return array|RedirectResponse
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     *
+     * @return Response|RedirectResponse
      * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="VictoireMediaBundle_media_create")
      * @Method({"GET", "POST"})
-     * @Template()
      */
     public function createAction(Request $request, $folderId, $type)
     {
-        return $this->createAndRedirect($request, $folderId, $type, 'VictoireMediaBundle_folder_show');
+        $params = $this->createAndRedirect($request, $folderId, $type, 'VictoireMediaBundle_folder_show');
+
+        return $this->render('@VictoireMedia/Media/create.html.twig', $params);
     }
 
     /**
@@ -198,14 +201,17 @@ class MediaController extends Controller
      * @param int     $folderId The folder id
      * @param string  $type     The type
      *
-     * @return array|RedirectResponse
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     *
+     * @return Response|RedirectResponse
      * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="VictoireMediaBundle_media_modal_create")
      * @Method({"GET", "POST"})
-     * @Template()
      */
     public function createModalAction(Request $request, $folderId, $type)
     {
-        return $this->createAndRedirect($request, $folderId, $type, 'VictoireMediaBundle_chooser_show_folder');
+        $params = $this->createAndRedirect($request, $folderId, $type, 'VictoireMediaBundle_chooser_show_folder');
+
+        return $this->render('@VictoireMedia/Media/create.html.twig', $params);
     }
 
     /**
@@ -213,6 +219,8 @@ class MediaController extends Controller
      * @param int     $folderId    The folder Id
      * @param string  $type        The type
      * @param string  $redirectUrl The url where we want to redirect to on success
+     *
+     * @throws \Doctrine\ORM\EntityNotFoundException
      *
      * @return array
      */
