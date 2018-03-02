@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\MediaBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,9 +48,9 @@ class ChooserController extends Controller
      *
      * @throws \Doctrine\ORM\EntityNotFoundException
      *
-     * @return array
      * @Route("/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_chooser_show_folder")
-     * @Template()
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function chooserShowFolderAction(Request $request, $folderId)
     {
@@ -71,7 +70,7 @@ class ChooserController extends Controller
             $handler = $mediaHandler->getHandlerForType($type);
         }
 
-        return [
+        return $this->render('@VictoireMedia/Chooser/chooserShowFolder.html.twig', [
                 'mediamanager' => $mediaHandler,
                 'handler'      => $handler,
                 'folder'       => $folder,
@@ -81,7 +80,7 @@ class ChooserController extends Controller
                     'videoform' => $this->createTypeFormView($mediaHandler, RemoteVideoType::class),
                     'slideform' => $this->createTypeFormView($mediaHandler, RemoteSlideType::class),
                 ],
-        ];
+        ]);
     }
 
     /**

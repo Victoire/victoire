@@ -5,7 +5,6 @@ namespace Victoire\Bundle\PageBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
@@ -29,7 +28,6 @@ class PageController extends BasePageController
      * @Route("/new", name="victoire_core_page_new", defaults={"isHomepage" : false})
      * @Route("/homepage/new", name="victoire_core_homepage_new", defaults={"isHomepage" : true})
      * @Method("GET")
-     * @Template()
      *
      * @return JsonResponse
      */
@@ -62,7 +60,6 @@ class PageController extends BasePageController
      *
      * @Route("/{id}/settings", name="victoire_core_page_settings")
      * @Method("GET")
-     * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      *
      * @return JsonResponse The settings
@@ -80,7 +77,6 @@ class PageController extends BasePageController
      *
      * @Route("/{id}/settings", name="victoire_core_page_settings_post")
      * @Method("POST")
-     * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      *
      * @return JsonResponse The settings
@@ -97,7 +93,6 @@ class PageController extends BasePageController
      *
      * @return JsonResponse
      * @Route("/{id}/delete", name="victoire_core_page_delete")
-     * @Template()
      * @ParamConverter("page", class="VictoirePageBundle:BasePage")
      */
     public function deleteAction(BasePage $page)

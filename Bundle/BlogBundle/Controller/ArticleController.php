@@ -6,7 +6,6 @@ use Doctrine\ORM\NoResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -123,6 +122,8 @@ class ArticleController extends Controller
      *
      * @ParamConverter("article", class="VictoireBlogBundle:Article")
      *
+     * @throws \Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException
+     *
      * @return JsonResponse
      */
     public function settingsAction(Request $request, Article $article)
@@ -149,6 +150,8 @@ class ArticleController extends Controller
      * @Method("POST")
      *
      * @ParamConverter("article", class="VictoireBlogBundle:Article")
+     *
+     * @throws \Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException
      *
      * @return JsonResponse
      */
@@ -185,7 +188,6 @@ class ArticleController extends Controller
      * @param Article $article
      *
      * @Route("/{id}/delete", name="victoire_core_article_delete")
-     * @Template()
      * @ParamConverter("article", class="VictoireBlogBundle:Article")
      *
      * @return JsonResponse
@@ -218,6 +220,8 @@ class ArticleController extends Controller
      * @param FormInterface $form
      * @param Article       $article
      * @param $novalidate
+     *
+     * @throws \Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException
      *
      * @return array
      */

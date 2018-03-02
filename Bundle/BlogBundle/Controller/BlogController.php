@@ -5,7 +5,6 @@ namespace Victoire\Bundle\BlogBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -87,9 +86,8 @@ class BlogController extends BasePageController
      * @Route("/feed/{id}.rss", name="victoire_blog_rss", defaults={"_format" = "rss"})
      *
      * @param Request $request
-     * @Template("VictoireBlogBundle:Blog:feed.rss.twig")
      *
-     * @return array
+     * @return Response
      */
     public function feedAction(Request $request, Blog $blog)
     {
@@ -117,10 +115,10 @@ class BlogController extends BasePageController
             });
         }
 
-        return [
+        return $this->render('VictoireBlogBundle:Blog:feed.rss.twig', [
             'blog'     => $blog,
             'articles' => $articles,
-        ];
+        ]);
     }
 
     /**
@@ -128,7 +126,6 @@ class BlogController extends BasePageController
      *
      * @Route("/new", name="victoire_blog_new")
      * @Method("GET")
-     * @Template()
      *
      * @return JsonResponse
      */
@@ -278,8 +275,9 @@ class BlogController extends BasePageController
      * @param BasePage $blog
      *
      * @Route("/{id}/delete", name="victoire_blog_delete")
-     * @Template()
      * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
+     *
+     * @throws \Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException
      *
      * @return JsonResponse
      */

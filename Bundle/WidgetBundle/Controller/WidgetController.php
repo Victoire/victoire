@@ -31,12 +31,11 @@ class WidgetController extends Controller
      * @param int     $viewReferenceId
      *
      * @Route("/victoire-dcms-public/widget/show/{id}/{viewReferenceId}", name="victoire_core_widget_show", options={"expose"=true})
-     * @Template()
      * @ParamConverter("id", class="VictoireWidgetBundle:Widget")
      *
      * @throws Exception
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function showAction(Request $request, Widget $widget, $viewReferenceId)
     {
@@ -62,6 +61,8 @@ class WidgetController extends Controller
      *
      * @param string $widgetIds       the widget ids to fetch in json
      * @param int    $viewReferenceId
+     *
+     * @throws \Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException
      *
      * @Route("/victoire-dcms-public/api/widgets/{widgetIds}/{viewReferenceId}", name="victoire_core_widget_apiWidgets", options={"expose"=true})
      *
@@ -139,10 +140,11 @@ class WidgetController extends Controller
      * @param string $slot             The slot where attach the widget
      * @param string $businessEntityId The BusinessEntity::id (can be null if the submitted form is in static mode)
      *
-     * @return JsonResponse
+     * @throws Exception
+     *
+     * @return Response|JsonResponse
      * @Route("/victoire-dcms/widget/create/static/{type}/{viewReference}/{slot}/{quantum}/{position}/{parentWidgetMap}", name="victoire_core_widget_create_static", defaults={"mode":"static", "slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json", "quantum":"a"})
      * @Route("/victoire-dcms/widget/create/{mode}/{type}/{viewReference}/{slot}/{quantum}/{businessEntityId}/{position}/{parentWidgetMap}", name="victoire_core_widget_create", defaults={"slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json", "quantum":"a"})
-     * @Template()
      */
     public function createAction($mode, $type, $viewReference, $slot = null, $position = null, $parentWidgetMap = null, $businessEntityId = null, $quantum = null)
     {
@@ -190,11 +192,12 @@ class WidgetController extends Controller
      * @param int    $viewReference    The current view
      * @param string $businessEntityId The BusinessEntity::id (can be null if the submitted form is in static mode)
      *
+     * @throws Exception
+     *
      * @return JsonResponse
      *
      * @Route("/victoire-dcms/widget/edit/{id}/{viewReference}/{mode}/{businessEntityId}", name="victoire_core_widget_edit", options={"expose"=true}, defaults={"quantum":"a", "mode": "static"})
      * @Route("/victoire-dcms/widget/update/{id}/{viewReference}/{mode}/{quantum}/{businessEntityId}", name="victoire_core_widget_update", defaults={"businessEntityId": null, "mode": "static"})
-     * @Template()
      */
     public function editAction(Widget $widget, $viewReference, $mode = Widget::MODE_STATIC, $quantum = null, $businessEntityId = null)
     {
@@ -236,10 +239,11 @@ class WidgetController extends Controller
      * @param int     $viewReference
      * @param string  $quantum
      *
+     * @throws Exception
+     *
      * @return JsonResponse
      *
      * @Route("/victoire-dcms/widget/stylize/{id}/{viewReference}/{quantum}/", name="victoire_core_widget_stylize", defaults={"quantum":"a"}, options={"expose"=true})
-     * @Template()
      */
     public function stylizeAction(Request $request, Widget $widget, $viewReference, $quantum = null)
     {
@@ -286,9 +290,10 @@ class WidgetController extends Controller
      * @param Widget $widget        The widget to delete
      * @param int    $viewReference The current view
      *
+     * @throws Exception
+     *
      * @return JsonResponse response
      * @Route("/victoire-dcms/widget/delete/{id}/{viewReference}", name="victoire_core_widget_delete", defaults={"_format": "json"})
-     * @Template()
      */
     public function deleteAction(Widget $widget, $viewReference)
     {
@@ -315,9 +320,10 @@ class WidgetController extends Controller
      * @param Widget $widget        The widget to delete
      * @param int    $viewReference The current view
      *
+     * @throws Exception
+     *
      * @return JsonResponse response
      * @Route("/victoire-dcms/widget/delete/quantum/{id}/{viewReference}", name="victoire_core_widget_delete_bulk", defaults={"_format": "json"})
-     * @Template()
      */
     public function deleteBulkAction(Widget $widget, $viewReference)
     {
@@ -347,9 +353,10 @@ class WidgetController extends Controller
      * @param int $id            The widgetId to unlink
      * @param int $viewReference The current viewReference
      *
+     * @throws Exception
+     *
      * @return JsonResponse response
      * @Route("/victoire-dcms/widget/unlink/{id}/{viewReference}", name="victoire_core_widget_unlink", defaults={"_format": "json"}, options={"expose"=true})
-     * @Template()
      */
     public function unlinkAction($id, $viewReference)
     {
@@ -385,6 +392,8 @@ class WidgetController extends Controller
      * Update widget positions accross the view. If moved widget is a Reference, ask to detach the view from template.
      *
      * @param int $viewReference The current viewReference
+     *
+     * @throws Exception
      *
      * @return JsonResponse
      * @Route("/victoire-dcms/widget/updatePosition/{viewReference}", name="victoire_core_widget_update_position", options={"expose"=true})
@@ -441,6 +450,8 @@ class WidgetController extends Controller
      *
      * @param Exception $ex
      *
+     * @throws Exception
+     *
      * @return JsonResponse
      */
     protected function getJsonReponseFromException(Exception $ex)
@@ -477,6 +488,10 @@ class WidgetController extends Controller
 
     /**
      * @param int $referenceId
+     *
+     * @throws \Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException
+     *
+     * @return \Victoire\Bundle\CoreBundle\Entity\View
      */
     protected function getViewByReferenceId($referenceId)
     {
