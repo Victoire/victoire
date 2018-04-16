@@ -16,7 +16,7 @@
    {% if seo.sitemapIndexed %}
       <url>
          <loc>{{ url('victoire_core_page_show', {'url': page.url}) }}</loc>
-         <lastmod>{{ page.publishedAt|date('c') }}</lastmod>
+         <lastmod>{{ page.publishedAt }}</lastmod>
          <changefreq>{{ seo.sitemapChangeFreq }}</changefreq>
          <priority>{{ seo.sitemapPriority }}</priority>
       </url>
