@@ -27,3 +27,13 @@ services:
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 70 }
+
+    #  ================== COMMAND ================== #
+    victoire_sitemap.command.generate:
+        class: Victoire\Bundle\SitemapBundle\Command\GenerateCommand
+        arguments:
+            - '@snc_redis.victoire_client'
+            - '@victoire_sitemap.export.handler'
+            - '%victoire_i18n.available_locales%'
+        tags:
+            - { name: 'console.command' }
