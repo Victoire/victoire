@@ -28,12 +28,22 @@ class SitemapController extends Controller
      */
     public function xmlAction(Request $request)
     {
-        $pages = $this->get('victoire_sitemap.export.handler')->handle(
-            $request->getLocale()
-        );
+        $redis = $this->get('snc_redis.victoire_client');
+        $locale = $request->getLocale();
+        $cacheKey = "sitemap.$locale";
+
+        if ($redis->exists($cacheKey)) {
+            $pages = $redis->get($cacheKey);
+        } else {
+            $export = $this->get('victoire_sitemap.export.handler');
+
+            $pages = $export->serialize(
+                $export->handle($locale)
+            );
+        }
 
         return $this->render('VictoireSitemapBundle:Sitemap:sitemap.xml.twig', [
-            'pages' => $pages,
+            'pages' => json_decode($pages),
         ]);
     }
 
