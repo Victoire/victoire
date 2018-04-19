@@ -1,6 +1,6 @@
 <?php
-namespace Victoire\Bundle\ConfigBundle\Validator;
 
+namespace Victoire\Bundle\ConfigBundle\Validator;
 
 use Symfony\Component\Validator\Constraint;
 

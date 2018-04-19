@@ -59,6 +59,5 @@ class FaviconDumpConfigFileCommand extends ContainerAwareCommand
         } catch (\Exception $e) {
             $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
         }
-
     }
 }

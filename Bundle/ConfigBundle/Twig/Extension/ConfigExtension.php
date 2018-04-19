@@ -15,9 +15,10 @@ class ConfigExtension extends \Twig_Extension implements \Twig_Extension_Globals
     /**
      * Constructor.
      *
-     * @param EntityManager      $entityManager
+     * @param EntityManager $entityManager
      */
-    public function __construct(EntityManager $entityManager) {
+    public function __construct(EntityManager $entityManager)
+    {
         $this->entityManager = $entityManager;
     }
 
@@ -29,7 +30,7 @@ class ConfigExtension extends \Twig_Extension implements \Twig_Extension_Globals
     public function getGlobals()
     {
         return [
-            'globalConfig' => $this->entityManager->getRepository(GlobalConfig::class)->find(1)
+            'globalConfig' => $this->entityManager->getRepository(GlobalConfig::class)->find(1),
         ];
     }
 }

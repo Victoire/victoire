@@ -15,6 +15,7 @@ class FetchAssetsCommand extends ContainerAwareCommand
 {
     /**
      * {@inheritdoc}
+     *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     public function configure()
@@ -47,7 +48,7 @@ class FetchAssetsCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      *
      * @return void

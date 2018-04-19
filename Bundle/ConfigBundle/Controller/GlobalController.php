@@ -24,8 +24,9 @@ class GlobalController extends Controller
     /**
      * Method used to edit global config.
      *
-     * @param Request $request
+     * @param Request             $request
      * @param FaviconConfigDumper $faviconConfigDumper
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/", name="victoire_config_global_edit")
      */
@@ -50,7 +51,7 @@ class GlobalController extends Controller
                 $this->congrat('victoire.config.global.edit.success');
 
                 return new JsonResponse([
-                    'url' => $this->generateUrl('victoire_core_homepage_show'),
+                    'url'     => $this->generateUrl('victoire_core_homepage_show'),
                     'success' => true,
                 ]);
             }
@@ -58,7 +59,7 @@ class GlobalController extends Controller
 
         return new JsonResponse([
             'html' => $this->renderView('VictoireConfigBundle:global:edit.html.twig', [
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ]),
             'success' => !$submited,
         ]);

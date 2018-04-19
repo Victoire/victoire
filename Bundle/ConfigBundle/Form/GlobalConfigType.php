@@ -17,41 +17,40 @@ class GlobalConfigType extends AbstractType
         $builder
             ->add('metaTitlePattern', TextType::class, [
                 'required' => false,
-                'label' => 'globalConfig.form.metaTitlePattern',
-                'attr' => [
-                    'placeholder' => '%page.title%'
-                ]
+                'label'    => 'globalConfig.form.metaTitlePattern',
+                'attr'     => [
+                    'placeholder' => '%page.title%',
+                ],
             ])
             ->add('logo', MediaType::class, [
                 'required' => false,
-                'label' => 'globalConfig.form.logo'
+                'label'    => 'globalConfig.form.logo',
             ])
             ->add('mainColor', TextType::class, [
                 'required' => false,
-                'label' => 'globalConfig.form.mainColor'
+                'label'    => 'globalConfig.form.mainColor',
             ])
             ->add('head', TextareaType::class, [
                 'required' => false,
-                'label' => 'globalConfig.form.head',
-                'attr' => [
-                    'rows' => 8
-                ]
+                'label'    => 'globalConfig.form.head',
+                'attr'     => [
+                    'rows' => 8,
+                ],
             ])
             ->add('organizationJsonLD', TextareaType::class, [
                 'required' => false,
-                'label' => 'globalConfig.form.organizationJsonLD',
-                'attr' => [
-                    'rows' => 8
-                ]
-            ])
-        ;
+                'label'    => 'globalConfig.form.organizationJsonLD',
+                'attr'     => [
+                    'rows' => 8,
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => GlobalConfig::class,
-            'translation_domain' => 'victoire'
-        ));
+        $resolver->setDefaults([
+            'data_class'         => GlobalConfig::class,
+            'translation_domain' => 'victoire',
+        ]);
     }
 }

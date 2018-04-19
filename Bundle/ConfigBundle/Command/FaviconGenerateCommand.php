@@ -3,17 +3,13 @@
 namespace Victoire\Bundle\ConfigBundle\Command;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 use Victoire\Bundle\ConfigBundle\Entity\GlobalConfig;
 use Victoire\Bundle\ConfigBundle\Favicon\FaviconGenerator;
-use Victoire\Bundle\ConfigBundle\Favicon\GenerateFaviconException;
 
 class FaviconGenerateCommand extends ContainerAwareCommand
 {
@@ -59,6 +55,7 @@ class FaviconGenerateCommand extends ContainerAwareCommand
     {
         /** @var EntityManager $entityManager */
         $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
+
         try {
             $output->writeln('<fg=white;bg=cyan;options=bold>Generating Favicon</>');
             $generator = $this->getContainer()->get(FaviconGenerator::class);

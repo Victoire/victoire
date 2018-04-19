@@ -98,7 +98,6 @@ class FeatureContext extends RawMinkContext implements Context, KernelAwareConte
 
     /**
      * @Then /^the meta "(.+)" should be set to "(#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}))"/
-     *
      */
     public function theMetaShouldBeSet($name, $value)
     {
@@ -113,6 +112,7 @@ class FeatureContext extends RawMinkContext implements Context, KernelAwareConte
                 'The text "%s" was not found in the content attribute of the meta[name=%s]".',
                 $value, $name
             );
+
             throw new ExpectationException($message, $this->getSession());
         }
     }

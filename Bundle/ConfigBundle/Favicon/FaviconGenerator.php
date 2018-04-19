@@ -2,11 +2,6 @@
 
 namespace Victoire\Bundle\ConfigBundle\Favicon;
 
-use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -30,10 +25,11 @@ class FaviconGenerator
 
     /**
      * FaviconGenerator constructor.
+     *
      * @param FaviconConfigDumper $faviconConfigDumper
-     * @param string $realFaviconPath
-     * @param string $target
-     * @param string $cwd current working directory for process
+     * @param string              $realFaviconPath
+     * @param string              $target
+     * @param string              $cwd                 current working directory for process
      */
     public function __construct(FaviconConfigDumper $faviconConfigDumper, string $realFaviconPath, string $target, string $cwd)
     {
@@ -98,7 +94,7 @@ class FaviconGenerator
                     )
                 );
             }
-        } catch (FileNotFoundException | ProcessFailedException $e) {
+        } catch (FileNotFoundException |  ProcessFailedException $e) {
             throw $e;
         }
     }

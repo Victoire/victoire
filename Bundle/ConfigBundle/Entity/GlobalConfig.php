@@ -4,12 +4,12 @@ namespace Victoire\Bundle\ConfigBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Victoire\Bundle\ConfigBundle\Validator\Constraints\SemanticalOrganizationJsonLD;
 use Victoire\Bundle\MediaBundle\Entity\Media;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * GlobalConfig
+ * GlobalConfig.
  *
  * @ORM\Table(name="vic_global_config")
  * @ORM\Entity
@@ -65,7 +65,7 @@ class GlobalConfig
     private $organizationJsonLD;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -75,13 +75,13 @@ class GlobalConfig
     }
 
     /**
-     * Set head
+     * Set head.
      *
      * @param string $head
      *
      * @return GlobalConfig
      */
-    public function setHead($head): GlobalConfig
+    public function setHead($head): self
     {
         $this->head = $head;
 
@@ -89,7 +89,7 @@ class GlobalConfig
     }
 
     /**
-     * Get head
+     * Get head.
      *
      * @return string
      */
@@ -99,13 +99,13 @@ class GlobalConfig
     }
 
     /**
-     * Set logo
+     * Set logo.
      *
      * @param Media $logo
      *
      * @return GlobalConfig
      */
-    public function setLogo(Media $logo): GlobalConfig
+    public function setLogo(Media $logo): self
     {
         $this->logo = $logo;
 
@@ -113,7 +113,7 @@ class GlobalConfig
     }
 
     /**
-     * Get logo
+     * Get logo.
      *
      * @return Media
      */
@@ -123,13 +123,13 @@ class GlobalConfig
     }
 
     /**
-     * Set metaTitlePattern
+     * Set metaTitlePattern.
      *
      * @param string $metaTitlePattern
      *
      * @return GlobalConfig
      */
-    public function setMetaTitlePattern($metaTitlePattern): GlobalConfig
+    public function setMetaTitlePattern($metaTitlePattern): self
     {
         $this->metaTitlePattern = $metaTitlePattern;
 
@@ -137,7 +137,7 @@ class GlobalConfig
     }
 
     /**
-     * Get metaTitlePattern
+     * Get metaTitlePattern.
      *
      * @return string
      */
@@ -147,13 +147,13 @@ class GlobalConfig
     }
 
     /**
-     * Set organizationJsonLD
+     * Set organizationJsonLD.
      *
      * @param string $organizationJsonLD
      *
      * @return GlobalConfig
      */
-    public function setOrganizationJsonLD($organizationJsonLD): GlobalConfig
+    public function setOrganizationJsonLD($organizationJsonLD): self
     {
         $this->organizationJsonLD = $organizationJsonLD;
 
@@ -161,7 +161,7 @@ class GlobalConfig
     }
 
     /**
-     * Get organizationJsonLD
+     * Get organizationJsonLD.
      *
      * @return string
      */
@@ -183,7 +183,7 @@ class GlobalConfig
      *
      * @return GlobalConfig
      */
-    public function setMainColor(string $mainColor): GlobalConfig
+    public function setMainColor(string $mainColor): self
     {
         $this->mainColor = $mainColor;
 

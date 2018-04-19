@@ -1,6 +1,6 @@
 <?php
-namespace Victoire\Bundle\ConfigBundle\Validator;
 
+namespace Victoire\Bundle\ConfigBundle\Validator;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -8,10 +8,12 @@ use Symfony\Component\Validator\ConstraintValidator;
 class JsonValidator extends ConstraintValidator
 {
     /**
-     * @param mixed $value
+     * @param mixed      $value
      * @param Constraint $constraint
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function validate($value, Constraint $constraint)
     {
@@ -19,8 +21,9 @@ class JsonValidator extends ConstraintValidator
             if (null !== $value) {
                 $array = json_decode($value, true);
                 if (!is_array($array)) {
-                    throw new \Exception;
+                    throw new \Exception();
                 }
+
                 return $array;
             }
         } catch (\Exception $e) {
@@ -28,6 +31,5 @@ class JsonValidator extends ConstraintValidator
                 ->setParameter('{{ value }}', $value)
                 ->addViolation();
         }
-
     }
 }

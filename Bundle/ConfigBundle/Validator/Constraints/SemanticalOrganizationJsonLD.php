@@ -1,4 +1,5 @@
 <?php
+
 namespace Victoire\Bundle\ConfigBundle\Validator\Constraints;
 
 use Victoire\Bundle\ConfigBundle\Validator\SemanticalOrganizationJsonLDValidator;
