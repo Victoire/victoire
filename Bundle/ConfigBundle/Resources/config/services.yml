@@ -1,0 +1,4 @@
+services:
+    Victoire\Bundle\ConfigBundle\Favicon\FaviconConfigDumper:
+        arguments: ['@twig', '%assetic.read_from%']
+
