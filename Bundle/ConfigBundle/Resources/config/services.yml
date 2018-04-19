@@ -17,6 +17,7 @@ services:
     Victoire\Bundle\ConfigBundle\Favicon\FaviconGenerator:
         arguments:
           - '@Victoire\Bundle\ConfigBundle\Favicon\FaviconConfigDumper'
+          - '%assetic.node.bin%'
           - '%victoire.realFaviconPath%'
           - '%kernel.root_dir%/../web'
           - '%kernel.project_dir%'

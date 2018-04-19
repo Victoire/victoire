@@ -17,6 +17,10 @@ class FaviconGenerator
     /**
      * @var string
      */
+    public $nodePath;
+    /**
+     * @var string
+     */
     private $realFaviconPath;
     /**
      * @var string
@@ -27,12 +31,14 @@ class FaviconGenerator
      * FaviconGenerator constructor.
      *
      * @param FaviconConfigDumper $faviconConfigDumper
+     * @param string              $nodePath
      * @param string              $realFaviconPath
      * @param string              $target
      * @param string              $cwd                 current working directory for process
      */
-    public function __construct(FaviconConfigDumper $faviconConfigDumper, string $realFaviconPath, string $target, string $cwd)
+    public function __construct(FaviconConfigDumper $faviconConfigDumper, string $nodePath, string $realFaviconPath, string $target, string $cwd)
     {
+        $this->nodePath = $nodePath;
         $this->faviconConfigDumper = $faviconConfigDumper;
         $this->realFaviconPath = $realFaviconPath;
         $this->target = $target;
@@ -68,7 +74,8 @@ class FaviconGenerator
                 $fileSystem->copy($configPath, $faviconRequestPath);
             }
             $this->process = new Process(sprintf(
-                '%s generate %s %s %s',
+                '%s %s generate %s %s %s',
+                $this->nodePath,
                 $this->realFaviconPath,
                 $configPath,
                 $faviconRequestPath,
@@ -87,14 +94,14 @@ class FaviconGenerator
                 }
 
                 return $files;
-            } else {
-                throw new GenerateFaviconException(sprintf(
+            }
+            throw new GenerateFaviconException(
+                sprintf(
                         'An issue occured with the real favicon generation, you can dive into the %s file',
                         $faviconRequestPath
                     )
                 );
-            }
-        } catch (FileNotFoundException |  ProcessFailedException $e) {
+        } catch (FileNotFoundException | ProcessFailedException $e) {
             throw $e;
         }
     }
