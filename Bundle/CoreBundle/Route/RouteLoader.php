@@ -41,6 +41,7 @@ class RouteLoader extends Loader
             '@VictoireMediaBundle/Controller/',
             '@VictoirePageBundle/Controller/',
             '@VictoireCoreBundle/Controller/',
+            '@VictoireConfigBundle/Controller/',
             '@VictoireWidgetBundle/Controller/',
             '@VictoireSitemapBundle/Controller/',
         ];
