@@ -2,6 +2,11 @@ parameters:
     victoire.realFaviconPath: 'vendor/victoire/victoire/Bundle/UIBundle/Resources/config/node_modules/cli-real-favicon/real-favicon.js'
 
 services:
+    victoire_config.global_menu_listener:
+        class: Victoire\Bundle\ConfigBundle\Listener\GlobalConfigMenuListener
+        arguments: ["@victoire_core.admin_menu_builder"]
+        tags:
+            - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 70 }
     Victoire\Bundle\ConfigBundle\Favicon\FaviconConfigDumper:
         arguments: ['@twig', '%assetic.read_from%']
     Victoire\Bundle\ConfigBundle\Favicon\FaviconGenerator:
