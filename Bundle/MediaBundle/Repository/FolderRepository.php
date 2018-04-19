@@ -105,7 +105,11 @@ class FolderRepository extends EntityRepository
 
         $folder = $em->getRepository('VictoireMediaBundle:Folder')->findOneBy(['parent' => null]);
         if (!$folder) {
-            throw new EntityNotFoundException('No first top folder found (where parent is NULL)');
+            $folder = new Folder();
+            $folder->setId(1);
+            $folder->setName('Root folder');
+            $em->persist($folder);
+            $em->flush();
         }
 
         return $folder;
