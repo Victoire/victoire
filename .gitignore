@@ -16,3 +16,7 @@
 /Bundle/UIBundle/Resources/public/bower_components/*
 node_modules
 /.idea
+server.log
+.web-server-pid
+/faviconConfig.json
+/faviconRequest.json

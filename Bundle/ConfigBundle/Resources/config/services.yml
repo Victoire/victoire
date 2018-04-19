@@ -1,4 +1,12 @@
+parameters:
+    victoire.realFaviconPath: 'vendor/victoire/victoire/Bundle/UIBundle/Resources/config/node_modules/cli-real-favicon/real-favicon.js'
+
 services:
     Victoire\Bundle\ConfigBundle\Favicon\FaviconConfigDumper:
         arguments: ['@twig', '%assetic.read_from%']
-
+    Victoire\Bundle\ConfigBundle\Favicon\FaviconGenerator:
+        arguments:
+          - '@Victoire\Bundle\ConfigBundle\Favicon\FaviconConfigDumper'
+          - '%victoire.realFaviconPath%'
+          - '%kernel.root_dir%/../web'
+          - '%kernel.project_dir%'
