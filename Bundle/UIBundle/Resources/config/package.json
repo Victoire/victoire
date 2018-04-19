@@ -26,5 +26,8 @@
     "highlight.js": "^9.9.0",
     "node-sass": "^3.10.1",
     "webpack": "^2.2.1"
+  },
+  "dependencies": {
+    "cli-real-favicon": "^0.0.6"
   }
 }

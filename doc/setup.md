@@ -347,7 +347,7 @@ Run the following command to fetch the Victoire assets:
 
 `CAUTION` you need to install bower first
 ```shell
-bin/console victoire:ui:fetchAssets
+bin/console victoire:ui:fetchAssets --force
 ```
 
 #### Dump js routes and translations
