@@ -34,12 +34,19 @@ class GlobalController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $globalConfig = $entityManager->getRepository(GlobalConfig::class)->find(1) ?: new GlobalConfig();
         $form = $this->createForm(GlobalConfigType::class, $globalConfig, []);
+        $initialLogo = $globalConfig->getLogo();
         $form->handleRequest($request);
 
         if ($submited = $form->isSubmitted()) {
             if ($form->isValid()) {
                 $entityManager->persist($globalConfig);
                 $entityManager->flush();
+                if ($initialLogo != $globalConfig->getLogo() && $globalConfig->getLogo() !== null) {
+                    $this->container->get(FaviconGenerator::class)->generate(
+                        $globalConfig,
+                        $this->getParameter('kernel.project_dir').'/faviconConfig.json'
+                    );
+                }
                 $this->congrat('victoire.config.global.edit.success');
 
                 return new JsonResponse([
