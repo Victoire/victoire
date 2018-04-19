@@ -6,9 +6,25 @@
     <link rel="alternate" type="application/rss+xml" title="{{ view.name }}" href="{{ path('victoire_blog_rss', {'id': view.id}) }}"/>
 {% endif %}
 
+<title>
+    {% if globalConfig|default(null) and globalConfig.metaTitlePattern != null %}
+        {{ globalConfig.metaTitlePattern|replace({
+            '%page.id%': view.id,
+            '%page.name%': view.name|striptags,
+            '%page.author%': view.author,
+            '%page.title%': view.seo|default({'metaTitle': view.name|striptags}).metaTitle|striptags,
+            '%page.slug%': view.slug,
+        }) }}
+    {% else %}
+        {# use seo.metaTitle as <title> if exists or view.name if view exists else a static value #}
+        {{ view|default({}).seo|default(
+            {'metaTitle': view|default({}).name|default('Victoire DCMS')|striptags}
+        ).metaTitle|striptags }}
+    {% endif %}
+</title>
+
 {% if view is defined and view.seo is defined and view.seo %}
     <!-- Basics -->
-    {% if view.seo.metaTitle %}<title>{{ view.seo.metaTitle|striptags }}</title>{% endif %}
     {% if view.seo.metaDescription %}<meta name="description" content="{{ view.seo.metaDescription|striptags }}"/>{% endif %}
 
     <!-- Google Authorship -->
@@ -41,6 +57,34 @@
     {% else %}
         {% if view.seo.metaRobotsIndex and view.seo.metaRobotsFollow %}<meta name="robots" content="{{ view.seo.metaRobotsIndex }}, {{ view.seo.metaRobotsFollow }}"/>{% endif %}
     {% endif %}
-{% else %}
-    <title>{{ view.name|default('Victoire DCMS')|striptags }}</title>
 {% endif %}
+
+{% if globalConfig|default(null) %}
+    <!-- GLOBAL CONFIG -->
+    {{ globalConfig.head|raw }}
+    {% if globalConfig.mainColor %}
+        <!-- Microsoft -->
+        <meta name="msapplication-TileColor" content="{{ globalConfig.mainColor }}"/>
+        <!-- Chrome, Firefox OS and Opera -->
+        <meta name="theme-color" content="{{ globalConfig.mainColor }}">
+    {% endif %}
+
+    {% if globalConfig.organizationJsonLD != '' %}
+        <!-- Semantic markup (https://schema.org) -->
+        <script type="application/ld+json">
+            {{ globalConfig.organizationJsonLD|raw }}
+        </script>
+    {% endif %}
+    <!-- END GLOBAL CONFIG -->
+{% endif %}
+
+{% block head_icons %}
+    {% set iconSetVersion = globalConfig ? globalConfig.updatedAt|date('YmdHis') : 1 %}
+    <!-- icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}?version={{ iconSetVersion }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}?version={{ iconSetVersion }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}?version={{ iconSetVersion }}">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}?version={{ iconSetVersion }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?version={{ iconSetVersion }}" />
+    <!-- END icons -->
+{% endblock %}

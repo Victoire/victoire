@@ -7,6 +7,11 @@ services:
         arguments: ["@victoire_core.admin_menu_builder"]
         tags:
             - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 70 }
+    Victoire\Bundle\ConfigBundle\Twig\Extension\ConfigExtension:
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: twig.extension }
     Victoire\Bundle\ConfigBundle\Favicon\FaviconConfigDumper:
         arguments: ['@twig', '%assetic.read_from%']
     Victoire\Bundle\ConfigBundle\Favicon\FaviconGenerator:
