@@ -98,6 +98,7 @@ class FeatureContext extends RawMinkContext implements Context, KernelAwareConte
 
     /**
      * @Then /^the meta "(.+)" should be set to "(#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}))"/
+     * <meta cagoule />
      */
     public function theMetaShouldBeSet($name, $value)
     {

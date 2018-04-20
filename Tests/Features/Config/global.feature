@@ -27,7 +27,10 @@ Feature: Edit the global website configuration
         Then the title should be "Homepage - Victoire"
 
     Scenario: I can set the main color and then the mobile browsers are painted with this color
+        Then I should see "Icons"
+        When I follow "Icons"
         Then I should see "Main color"
+        And I wait 1 second
         When I fill in "Main color" with "#9676a8"
         And I follow "UPDATE"
         And I wait 5 seconds
@@ -44,13 +47,13 @@ Feature: Edit the global website configuration
 
     @alice(MediaFile)
     Scenario: I can set the logo of my website and the favicons are generated
-        Given the response should contain "<link rel=\"icon\" type=\"image/x-icon\" href=\"/favicon.ico?version=1\" />"
+        Given the response should contain "favicon.ico?version=1"
         Then I should see "Icons"
         When I follow "Icons"
         When I attach image with id "1" to victoire field "global_config[logo]"
         And I follow "UPDATE"
         And I wait 15 seconds
-        Then the response should not contain "<link rel=\"icon\" type=\"image/x-icon\" href=\"/favicon.ico?version=1\" />"
+        Then the response should not contain "favicon.ico?version=1"
         #no more version=1 but a version based on the date (version=19700101000000) so it's a bit hard to guess it oO
 
     Scenario: I can add a json+ld definition to be semantically recognized by bots
