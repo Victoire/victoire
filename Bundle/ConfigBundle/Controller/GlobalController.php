@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\ConfigBundle\Entity\GlobalConfig;
-use Victoire\Bundle\ConfigBundle\Favicon\FaviconConfigDumper;
 use Victoire\Bundle\ConfigBundle\Favicon\FaviconGenerator;
 use Victoire\Bundle\ConfigBundle\Form\GlobalConfigType;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
@@ -24,10 +23,10 @@ class GlobalController extends Controller
     /**
      * Method used to edit global config.
      *
-     * @param Request             $request
-     * @param FaviconConfigDumper $faviconConfigDumper
+     * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @Route("/", name="victoire_config_global_edit")
      */
     public function editAction(Request $request)
@@ -38,23 +37,21 @@ class GlobalController extends Controller
         $initialLogo = $globalConfig->getLogo();
         $form->handleRequest($request);
 
-        if ($submited = $form->isSubmitted()) {
-            if ($form->isValid()) {
-                $entityManager->persist($globalConfig);
-                $entityManager->flush();
-                if ($initialLogo != $globalConfig->getLogo() && $globalConfig->getLogo() !== null) {
-                    $this->container->get(FaviconGenerator::class)->generate(
-                        $globalConfig,
-                        $this->getParameter('kernel.project_dir').'/faviconConfig.json'
-                    );
-                }
-                $this->congrat('victoire.config.global.edit.success');
-
-                return new JsonResponse([
-                    'url'     => $this->generateUrl('victoire_core_homepage_show'),
-                    'success' => true,
-                ]);
+        if (($submited = $form->isSubmitted()) && $form->isValid()) {
+            $entityManager->persist($globalConfig);
+            $entityManager->flush();
+            if ($initialLogo !== $globalConfig->getLogo() && $globalConfig->getLogo() !== null) {
+                $this->container->get(FaviconGenerator::class)->generate(
+                    $globalConfig,
+                    $this->getParameter('kernel.project_dir').'/faviconConfig.json'
+                );
             }
+            $this->congrat('victoire.config.global.edit.success');
+
+            return new JsonResponse([
+                'url'     => $this->generateUrl('victoire_core_homepage_show'),
+                'success' => true,
+            ]);
         }
 
         return new JsonResponse([

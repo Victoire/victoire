@@ -27,6 +27,8 @@ class FaviconConfigDumper
     /**
      * @param GlobalConfig $globalConfig
      * @param string       $path         The location where dump the json config file
+     *
+     * @return null|string
      */
     public function dump(GlobalConfig $globalConfig, string $path = 'faviconConfig.json'): ?string
     {
@@ -44,7 +46,7 @@ class FaviconConfigDumper
                 $path, $this->environment->render('VictoireConfigBundle:global:faviconConfig.json.twig', [
                 'globalConfig' => $globalConfig,
                 'webDir'       => $this->webDir,
-            ], $response)
+            ])
             );
 
             return $path;

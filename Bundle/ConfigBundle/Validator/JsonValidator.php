@@ -12,15 +12,13 @@ class JsonValidator extends ConstraintValidator
      * @param Constraint $constraint
      *
      * @throws \Exception
-     *
-     * @return mixed
      */
     public function validate($value, Constraint $constraint)
     {
         try {
             if (null !== $value) {
                 $array = json_decode($value, true);
-                if (!is_array($array)) {
+                if (!\is_array($array)) {
                     throw new \Exception();
                 }
 

@@ -13,9 +13,6 @@ use Victoire\Bundle\ConfigBundle\Favicon\FaviconGenerator;
 
 class FaviconGenerateCommand extends ContainerAwareCommand
 {
-    /** @var EntityManager $entityManager */
-    private $entityManager;
-
     /**
      * {@inheritdoc}
      */
@@ -48,8 +45,6 @@ class FaviconGenerateCommand extends ContainerAwareCommand
      * @param OutputInterface $output
      *
      * @throws \Exception
-     *
-     * @return bool
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
