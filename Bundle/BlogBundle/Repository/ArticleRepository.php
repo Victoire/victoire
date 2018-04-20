@@ -143,4 +143,48 @@ class ArticleRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    /**
+     * Get Article by blog ordered by publication DESC.
+     *
+     * @param Blog $blog
+     *
+     * @return array()
+     */
+    public function getArticles(Blog $blog)
+    {
+        $queryBuilder = $this->getAll(false, $blog)
+            ->getInstance();
+
+        return $queryBuilder
+            ->andWhere('article.status IN (:status)')
+            ->setParameter('status', [
+                PageStatus::PUBLISHED,
+                PageStatus::SCHEDULED,
+                PageStatus::UNPUBLISHED,
+            ])
+            ->orderBy('article.publishedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get articles by blog ordered by creation DESC.
+     *
+     * @param Blog $blog
+     *
+     * @return array()
+     */
+    public function getDrafts(Blog $blog)
+    {
+        $queryBuilder = $this->getAll(false, $blog)
+            ->getInstance();
+
+        return $queryBuilder
+            ->andWhere('article.status = :status')
+            ->setParameter('status', PageStatus::DRAFT)
+            ->orderBy('article.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

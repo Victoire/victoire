@@ -138,6 +138,10 @@
         <source>victoire.blog.nav.articles.label</source>
         <target>Lista de artículos</target>
       </trans-unit>
+      <trans-unit id="5ae71b95cc0e0" resname="victoire.blog.nav.drafts.label">
+        <source>victoire.blog.nav.drafts.label</source>
+        <target>Borradores</target>
+      </trans-unit>
       <trans-unit id="58893b9923598" resname="victoire.blog.nav.settings.label">
         <source>victoire.blog.nav.settings.label</source>
         <target>Configuración</target>
