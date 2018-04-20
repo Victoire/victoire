@@ -1,13 +1,13 @@
 {% trans_default_domain "victoire" %}
 
-{% if blog.articles|length %}
+{% if articles|length %}
 
 <a class="vic-btn vic-btn-success" data-toggle="vic-modal" href="{{ path('victoire_blog_article_new', {'id' : blog.id}) }}">
     {{'modal.blog.list.articlesList.new_article'|trans({}, 'victoire')|raw}}
 </a>
 
 <div id="vic-blog-articleList">
-{% for article in blog.articles if not article.deletedAt %}
+{% for article in articles if not article.deletedAt %}
     {% for translation in article.translations %}
         {% if translation.locale == locale %}
             {% set articleUrl = path('victoire_core_business_page_show_by_id', {

@@ -138,6 +138,10 @@
         <source>victoire.blog.nav.articles.label</source>
         <target>Posts lists</target>
       </trans-unit>
+      <trans-unit id="5ae71b95cd1c1" resname="victoire.blog.nav.drafts.label">
+        <source>victoire.blog.nav.drafts.label</source>
+        <target>Drafts</target>
+      </trans-unit>
       <trans-unit id="58893b9921ff6" resname="victoire.blog.nav.settings.label">
         <source>victoire.blog.nav.settings.label</source>
         <target>Settings</target>

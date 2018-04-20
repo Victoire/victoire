@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\BlogBundle\Form\BlogCategoryType;
 use Victoire\Bundle\BlogBundle\Form\BlogSettingsType;
@@ -47,7 +48,7 @@ class BlogController extends BasePageController
             'locale'             => $locale,
             'blog'               => $blog,
             'currentTab'         => $tab,
-            'tabs'               => ['articles', 'settings', 'category'],
+            'tabs'               => ['articles', 'drafts', 'settings', 'category'],
             'businessProperties' => $blog ? $this->getBusinessProperties($blog) : null,
         ];
         if ($blogRepo->hasMultipleBlog()) {
@@ -262,11 +263,45 @@ class BlogController extends BasePageController
      */
     public function articlesAction(Request $request, BasePage $blog, $articleLocale = null)
     {
+        $articles = $this->getDoctrine()
+            ->getRepository(Article::class)
+            ->getArticles($blog);
+
         return new Response($this->container->get('templating')->render(
             $this->getBaseTemplatePath().':Tabs/_articles.html.twig',
             [
-                'locale' => $articleLocale ? $articleLocale : $request->getLocale(),
-                'blog'   => $blog,
+                'locale'    => $articleLocale ? $articleLocale : $request->getLocale(),
+                'blog'      => $blog,
+                'articles'  => $articles,
+            ]
+        ));
+    }
+
+    /**
+     * List Blog drafts.
+     *
+     * @param Request  $request
+     * @param BasePage $blog
+     *
+     * @Route("/{id}/drafts/{articleLocale}", name="victoire_blog_drafts")
+     * @ParamConverter("blog", class="VictoirePageBundle:BasePage")
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return Response
+     */
+    public function draftsAction(Request $request, BasePage $blog, $articleLocale = null)
+    {
+        $articles = $this->getDoctrine()
+            ->getRepository(Article::class)
+            ->getDrafts($blog);
+
+        return new Response($this->container->get('templating')->render(
+            $this->getBaseTemplatePath().':Tabs/_drafts.html.twig',
+            [
+                'locale'    => $articleLocale ? $articleLocale : $request->getLocale(),
+                'blog'      => $blog,
+                'articles'  => $articles,
             ]
         ));
     }
