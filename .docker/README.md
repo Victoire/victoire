@@ -21,7 +21,11 @@ rsync is provided by https://github.com/EugenMayer/docker-sync
 
 ## Services exposed outside your environment
 
-You can access Victoire via **`127.0.0.1:8000`** . nginx and mailhog respond to any hostname, in case you want to add your own hostname on your `/etc/hosts` 
+You can access Victoire via **`127.0.0.1:8000`**.
+
+And be logged in automatically http://anakin@victoire.io:test@localhost:8000/
+
+nginx and mailhog respond to any hostname, in case you want to add your own hostname on your `/etc/hosts` 
 
 Service|Address
 ------|---------
@@ -34,7 +38,7 @@ You'll need to configure your application to use any services you enabled:
 
 Service|Hostname|Port number
 ------|---------|-----------
-php-fpm|victoire-php-fpm|9000
+php-fpm|victoire-php|9000
 MySQL|victoire-mysql|3306 (default)
 Redis|victoire-redis|6379 (default)
 SMTP (Mailhog)|victoire-mailhog|1025 (default)
@@ -48,4 +52,4 @@ SMTP (Mailhog)|victoire-mailhog|1025 (default)
   * Stop containers: `docker-compose stop`
   * Kill containers: `docker-compose kill`
   * View container logs: `docker-compose logs`
-  * Execute command inside of container: `docker exec -it victoire-php-fpm COMMAND` where `COMMAND` is whatever you want to run. For instance, `/bin/bash` to open a console prompt.
+  * Execute command inside of container: `docker exec -it victoire-php COMMAND` where `COMMAND` is whatever you want to run. For instance, `/bin/bash` to open a console prompt.
