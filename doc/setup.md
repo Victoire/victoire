@@ -54,6 +54,7 @@ class AppKernel extends Kernel
             new Victoire\Bundle\BusinessEntityBundle\VictoireBusinessEntityBundle(),
             new Victoire\Bundle\BusinessPageBundle\VictoireBusinessPageBundle(),
             new Victoire\Bundle\CoreBundle\VictoireCoreBundle(),
+            new Victoire\Bundle\ConfigBundle\VictoireConfigBundle(),
             new Victoire\Bundle\CriteriaBundle\VictoireCriteriaBundle(),
             new Victoire\Bundle\FilterBundle\VictoireFilterBundle(),
             new Victoire\Bundle\FormBundle\VictoireFormBundle(),
@@ -341,11 +342,11 @@ Find others widget [**here**](http://packagist.org/search/?tags=victoire)
 
 ### Prepare Victoire assets
 
-#### Fetch bower assets
+#### Fetch front assets (thanks to bower and yarn)
 
 Run the following command to fetch the Victoire assets:
 
-`CAUTION` you need to install bower first
+`CAUTION` you need to install bower and yarn first
 ```shell
 bin/console victoire:ui:fetchAssets --force
 ```
