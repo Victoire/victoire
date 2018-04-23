@@ -6,9 +6,6 @@ RUN apt-get update \
     && apt-get -y --no-install-recommends install php7.1-mysql php7.1-redis php7.1-xdebug nodejs \
     && npm install -g less@2.7.2 \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* \
-    && curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer \
-    && composer install
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 WORKDIR "/var/www/victoire"
