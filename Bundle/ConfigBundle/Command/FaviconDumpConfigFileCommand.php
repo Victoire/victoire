@@ -2,11 +2,13 @@
 
 namespace Victoire\Bundle\ConfigBundle\Command;
 
+use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Victoire\Bundle\ConfigBundle\Entity\GlobalConfig;
+use Victoire\Bundle\ConfigBundle\Entity\GlobalConfigRepository;
 use Victoire\Bundle\ConfigBundle\Favicon\FaviconConfigDumper;
 
 class FaviconDumpConfigFileCommand extends ContainerAwareCommand
@@ -41,9 +43,13 @@ class FaviconDumpConfigFileCommand extends ContainerAwareCommand
     {
         //Get services
         $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $globalConfig = $entityManager->getRepository(GlobalConfig::class)->find(1);
-
+        /** @var GlobalConfigRepository $globalConfigRepository */
+        $globalConfigRepository = $entityManager->getRepository(GlobalConfig::class);
         try {
+            if (!$globalConfig = $globalConfigRepository->findLast()) {
+                throw new NoResultException();
+            }
+
             $this->getContainer()->get(FaviconConfigDumper::class)->dump(
                 $globalConfig,
                 $input->getArgument('target')

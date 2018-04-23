@@ -12,7 +12,7 @@ use Victoire\Bundle\MediaBundle\Entity\Media;
  * GlobalConfig.
  *
  * @ORM\Table(name="vic_global_config")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Victoire\Bundle\ConfigBundle\Entity\GlobalConfigRepository")
  */
 class GlobalConfig
 {
@@ -69,7 +69,7 @@ class GlobalConfig
      *
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

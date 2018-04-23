@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\ConfigBundle\Entity\GlobalConfig;
 use Victoire\Bundle\ConfigBundle\Favicon\FaviconGenerator;
 use Victoire\Bundle\ConfigBundle\Form\GlobalConfigType;
+use Victoire\Bundle\ConfigBundle\Repository\GlobalConfigRepository;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 
 /**
@@ -32,12 +33,16 @@ class GlobalController extends Controller
     public function editAction(Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $globalConfig = $entityManager->getRepository(GlobalConfig::class)->find(1) ?: new GlobalConfig();
+        /** @var GlobalConfigRepository $globalConfigRepository */
+        $globalConfigRepository = $entityManager->getRepository(GlobalConfig::class);
+        $globalConfig = $globalConfigRepository->findLast() ?: new GlobalConfig();
         $form = $this->createForm(GlobalConfigType::class, $globalConfig, []);
         $initialLogo = $globalConfig->getLogo();
         $form->handleRequest($request);
 
         if (($submited = $form->isSubmitted()) && $form->isValid()) {
+            //cloning the entity will give it a new id in order to invalidate browser cache (in meta.html.twig)
+            $entityManager->clear(GlobalConfig::class);
             $entityManager->persist($globalConfig);
             $entityManager->flush();
             if ($initialLogo !== $globalConfig->getLogo() && $globalConfig->getLogo() !== null) {

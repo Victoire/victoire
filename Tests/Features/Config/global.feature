@@ -47,14 +47,16 @@ Feature: Edit the global website configuration
 
     @alice(MediaFile)
     Scenario: I can set the logo of my website and the favicons are generated
-        Given the response should contain "favicon.ico?version=1"
+        Then the response should contain "favicon.ico?version=0"
+        Then the response should not contain "favicon.ico?version=1"
         Then I should see "Icons"
         When I follow "Icons"
         When I attach image with id "1" to victoire field "global_config[logo]"
         And I follow "UPDATE"
-        And I wait 15 seconds
-        Then the response should not contain "favicon.ico?version=1"
-        #no more version=1 but a version based on the date (version=19700101000000) so it's a bit hard to guess it oO
+        And I wait 10 seconds
+        And I should see "The global configuration has been updated"
+        Then the response should not contain "favicon.ico?version=0"
+        Then the response should contain "favicon.ico?version=1"
 
     Scenario: I can add a json+ld definition to be semantically recognized by bots
         Then I should see "Semantical definition of the organization"

@@ -79,12 +79,11 @@
 {% endif %}
 
 {% block head_icons %}
-    {% set iconSetVersion = globalConfig ? globalConfig.updatedAt|date('YmdHis') : 1 %}
     <!-- icons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}?version={{ iconSetVersion }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}?version={{ iconSetVersion }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}?version={{ iconSetVersion }}">
-    <link rel="manifest" href="{{ asset('site.webmanifest') }}?version={{ iconSetVersion }}">
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?version={{ iconSetVersion }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}?version={{ globalConfig.id|default(0) }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}?version={{ globalConfig.id|default(0) }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}?version={{ globalConfig.id|default(0) }}">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}?version={{ globalConfig.id|default(0) }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?version={{ globalConfig.id|default(0) }}" />
     <!-- END icons -->
 {% endblock %}

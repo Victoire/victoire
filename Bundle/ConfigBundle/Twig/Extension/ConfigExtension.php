@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\ConfigBundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\NoResultException;
 use Victoire\Bundle\ConfigBundle\Entity\GlobalConfig;
 
 /**
@@ -10,7 +11,7 @@ use Victoire\Bundle\ConfigBundle\Entity\GlobalConfig;
  */
 class ConfigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
-    protected $entityManager = null;
+    protected $entityManager;
 
     /**
      * Constructor.
@@ -29,8 +30,10 @@ class ConfigExtension extends \Twig_Extension implements \Twig_Extension_Globals
      */
     public function getGlobals()
     {
+        $globalConfig = $this->entityManager->getRepository(GlobalConfig::class)->findLast() ?: new GlobalConfig();
+
         return [
-            'globalConfig' => $this->entityManager->getRepository(GlobalConfig::class)->find(1),
+            'globalConfig' => $globalConfig,
         ];
     }
 }
