@@ -8,11 +8,11 @@
       </trans-unit>
       <trans-unit id="564432933783129438899" resname="victoire.config.json.invalid">
           <source>victoire.config.json.invalid</source>
-          <target><![CDATA[Une erreur est survenue avec la valeur entrée. Assurez-vous qu'il s'agisse bien de json valide : <a href="http://json.parser.online.fr/">Validateur en ligne</a>]]></target>
+          <target><![CDATA[Une erreur est survenue avec la valeur entrée. Assurez-vous qu'il s'agisse bien de JSON valide : <a href="http://json.parser.online.fr/">Validateur en ligne</a>]]></target>
       </trans-unit>
       <trans-unit id="5644329337838399438899" resname="victoire.config.global.organizationJsonLD.invalid">
           <source>victoire.config.global.organizationJsonLD.invalid</source>
-          <target><![CDATA[Une erreur est survenue avec le json entré. Assurez-vous qu'il s'agisse bien de json-ld valide : <a href="https://json-ld.org/playground/">JSON-LD Playground</a>]]></target>
+          <target><![CDATA[Une erreur est survenue avec le JSON entré. Assurez-vous qu'il s'agisse bien de JSON-LD valide : <a href="https://json-ld.org/playground/">JSON-LD Playground</a>]]></target>
       </trans-unit>
       <trans-unit id="5644329337838499438899" resname="victoire.config.global.organizationJsonLD.missingType">
           <source>victoire.config.global.organizationJsonLD.missingType</source>

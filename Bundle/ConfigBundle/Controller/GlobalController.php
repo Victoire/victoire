@@ -40,7 +40,7 @@ class GlobalController extends Controller
         $initialLogo = $globalConfig->getLogo();
         $form->handleRequest($request);
 
-        if (($submited = $form->isSubmitted()) && $form->isValid()) {
+        if (($submitted = $form->isSubmitted()) && $form->isValid()) {
             //cloning the entity will give it a new id in order to invalidate browser cache (in meta.html.twig)
             $entityManager->clear(GlobalConfig::class);
             $entityManager->persist($globalConfig);
@@ -63,7 +63,7 @@ class GlobalController extends Controller
             'html' => $this->renderView('VictoireConfigBundle:global:edit.html.twig', [
                 'form' => $form->createView(),
             ]),
-            'success' => !$submited,
+            'success' => !$submitted,
         ]);
     }
 }
