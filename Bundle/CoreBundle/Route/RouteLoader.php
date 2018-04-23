@@ -2,17 +2,39 @@
 
 namespace Victoire\Bundle\CoreBundle\Route;
 
+use Monolog\Logger;
 use Symfony\Component\Config\Loader\Loader;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
 class RouteLoader extends Loader
 {
+    /**
+     * @var array
+     */
     protected $widgets;
+    /**
+     * @var Kernel
+     */
+    private $kernel;
+    /**
+     * @var Logger
+     */
+    private $logger;
 
-    public function __construct($widgets)
+    /**
+     * RouteLoader constructor.
+     *
+     * @param array      $widgets
+     * @param Kernel $kernel
+     * @param Logger     $logger
+     */
+    public function __construct($widgets, Kernel $kernel, Logger $logger)
     {
         $this->widgets = $widgets;
+        $this->kernel = $kernel;
+        $this->logger = $logger;
     }
 
     public function load($resource, $type = null)
@@ -31,30 +53,38 @@ class RouteLoader extends Loader
 
     protected function addVictoireRouting(RouteCollection &$collection)
     {
-        $resources = [
-            '@VictoireAnalyticsBundle/Controller/',
-            '@VictoireTemplateBundle/Controller/',
-            '@VictoireTwigBundle/Controller/',
-            '@VictoireBlogBundle/Controller/',
-            '@VictoireBusinessPageBundle/Controller/',
-            '@VictoireSeoBundle/Controller/',
-            '@VictoireMediaBundle/Controller/',
-            '@VictoirePageBundle/Controller/',
-            '@VictoireCoreBundle/Controller/',
-            '@VictoireConfigBundle/Controller/',
-            '@VictoireWidgetBundle/Controller/',
-            '@VictoireSitemapBundle/Controller/',
+        $bundles = [
+            'VictoireAnalyticsBundle',
+            'VictoireTemplateBundle',
+            'VictoireTwigBundle',
+            'VictoireBlogBundle',
+            'VictoireBusinessPageBundle',
+            'VictoireSeoBundle',
+            'VictoireMediaBundle',
+            'VictoirePageBundle',
+            'VictoireCoreBundle',
+            'VictoireConfigBundle',
+            'VictoireWidgetBundle',
+            'VictoireSitemapBundle',
         ];
-        foreach ($resources as $resource) {
-            $importedRoutes = $this->import($resource, 'annotation');
-            $collection->addCollection($importedRoutes);
+
+        foreach ($bundles as $bundle) {
+            try {
+                $this->kernel->getBundle($bundle);
+                $this->logger->addInfo('-> loading routes from '.$bundle);
+                $resource = sprintf('@%s/Controller/', $bundle);
+                $importedRoutes = $this->import($resource, 'annotation');
+                $collection->addCollection($importedRoutes);
+            } catch (\InvalidArgumentException $e) {
+                $this->logger->addAlert($e->getMessage());
+            }
         }
     }
 
     protected function addWidgetsRouting(RouteCollection &$collection)
     {
         foreach ($this->widgets as $widgetParams) {
-            $controllerResource = '@VictoireWidget'.$widgetParams['name'].'Bundle/Controller/';
+            $controllerResource = sprintf('@VictoireWidget%sBundle/Controller/', $widgetParams['name']);
             if ($this->getResolver()->resolve($controllerResource)) {
                 $importedRoutes = $this->import($controllerResource, 'annotation');
                 $collection->addCollection($importedRoutes);
