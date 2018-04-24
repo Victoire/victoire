@@ -95,6 +95,9 @@ framework:
    ...
    translator: { fallbacks: ["%locale%"] }
    serializer: { enable_annotations: true }
+   templating:
+      engines: ['twig']
+
 ```
 
 #### Add some config
