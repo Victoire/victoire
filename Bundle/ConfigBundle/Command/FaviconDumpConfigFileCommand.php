@@ -45,6 +45,7 @@ class FaviconDumpConfigFileCommand extends ContainerAwareCommand
         $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var GlobalConfigRepository $globalConfigRepository */
         $globalConfigRepository = $entityManager->getRepository(GlobalConfig::class);
+
         try {
             if (!$globalConfig = $globalConfigRepository->findLast()) {
                 throw new NoResultException();

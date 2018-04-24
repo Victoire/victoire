@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\ConfigBundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\NoResultException;
 use Victoire\Bundle\ConfigBundle\Entity\GlobalConfig;
 
 /**

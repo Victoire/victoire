@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Victoire\Bundle\ConfigBundle\Entity\GlobalConfig;
 use Victoire\Bundle\ConfigBundle\Favicon\FaviconGenerator;
 use Victoire\Bundle\ConfigBundle\Repository\GlobalConfigRepository;
@@ -55,6 +54,7 @@ class FaviconGenerateCommand extends ContainerAwareCommand
         $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var GlobalConfigRepository $globalConfigRepository */
         $globalConfigRepository = $entityManager->getRepository(GlobalConfig::class);
+
         try {
             if (!$globalConfig = $globalConfigRepository->findLast()) {
                 throw new NoResultException();

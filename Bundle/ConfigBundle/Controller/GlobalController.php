@@ -50,13 +50,13 @@ class GlobalController extends Controller
                 if ($initialLogo !== $globalConfig->getLogo() && $globalConfig->getLogo() !== null) {
                     $this->container->get(FaviconGenerator::class)->generate(
                         $globalConfig,
-                        $this->getParameter('kernel.project_dir') . '/faviconConfig.json'
+                        $this->getParameter('kernel.project_dir').'/faviconConfig.json'
                     );
                 }
                 $this->congrat('victoire.config.global.edit.success');
 
                 return new JsonResponse([
-                    'url' => $this->generateUrl('victoire_core_homepage_show'),
+                    'url'     => $this->generateUrl('victoire_core_homepage_show'),
                     'success' => true,
                 ]);
             }

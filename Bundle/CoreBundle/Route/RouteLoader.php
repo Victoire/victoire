@@ -26,9 +26,9 @@ class RouteLoader extends Loader
     /**
      * RouteLoader constructor.
      *
-     * @param array      $widgets
+     * @param array  $widgets
      * @param Kernel $kernel
-     * @param Logger     $logger
+     * @param Logger $logger
      */
     public function __construct($widgets, Kernel $kernel, Logger $logger)
     {
