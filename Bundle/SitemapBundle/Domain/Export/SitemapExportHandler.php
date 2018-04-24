@@ -82,6 +82,24 @@ class SitemapExportHandler
         return array_merge($pages, $this->getBusinessPages($tree));
     }
 
+    public function serialize($pages)
+    {
+        $data = [];
+
+        foreach ($pages as $page) {
+            $seo = $page->getSeo();
+
+            $data[] = [
+                'url'               => $page->getUrl(),
+                'publishedAt'       => $page->getPublishedAt()->format('c'),
+                'sitemapChangeFreq' => $seo === null ? 'monthly' : $seo->getSitemapChangeFreq(),
+                'sitemapPriority'   => $seo === null ? 0.5 : $seo->getSitemapPriority(),
+            ];
+        }
+
+        return json_encode($data);
+    }
+
     /**
      * Get all VirtualBusinessPage recursively.
      *
