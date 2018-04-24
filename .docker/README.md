@@ -6,7 +6,9 @@ Docker environment
   * Ensure you have the latest `docker engine` installed. Your distribution's package might be a little old, if you encounter problems, do upgrade. See https://docs.docker.com/engine/installation/
   * Ensure you have the latest `docker-compose` installed. See [docs.docker.com/compose/install](https://docs.docker.com/compose/install/)
   
-Once you're done, simply `cd .docker`, then `docker-compose -f docker-compose.yml -f docker-compose.setup.yml up -d`. This will initialise and start all the containers, then leave them running in the background.
+Once you're done, simply `cd .docker`, then `docker-compose -f docker-compose.yml -f docker-compose.setup.yml up`. This will initialise and start all the containers, then leave them running.
+Once the installation is complete, you will see `victoire-setup exited with code 0`.
+
 Later, if you want to reboot the environment without re-setuping the database, redis cache, assets, run just `docker-compose up -d` 
 
 Victoire is securized by default, credentials are anakin@victoire.io / test
