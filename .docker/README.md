@@ -1,19 +1,18 @@
-Docker environment
-===================
+# Docker environment
 
-## Linux
+## Setup
+
+### Linux
 
   * Ensure you have the latest `docker engine` installed. Your distribution's package might be a little old, if you encounter problems, do upgrade. See https://docs.docker.com/engine/installation/
   * Ensure you have the latest `docker-compose` installed. See [docs.docker.com/compose/install](https://docs.docker.com/compose/install/)
   
 Once you're done, simply `cd .docker`, then `docker-compose -f docker-compose.yml -f docker-compose.setup.yml up`. This will initialise and start all the containers, then leave them running.
-Once the installation is complete, you will see `victoire-setup exited with code 0`.
+Once the installation is complete, you will see `victoire-setup exited with code 0`. Press `Ctrl+C` in order to close the containers.
 
 Later, if you want to reboot the environment without re-setuping the database, redis cache, assets, run just `docker-compose up -d` 
-
-Victoire is securized by default, credentials are anakin@victoire.io / test
-  
-## MAC OS
+ 
+### MAC OS
 
 Under MACOS, the docker architecture will work but with poor performances.
 After setup the environment with `docker-compose -f docker-compose.yml -f docker-compose.setup.yml up`, you can use the alternative sync system provided.
@@ -21,11 +20,15 @@ To run it, just use `docker-compose -f docker-compose.yml -f docker-compose-mac.
 
 rsync is provided by https://github.com/EugenMayer/docker-sync
 
-## Services exposed outside your environment
+## Usage
 
-You can access Victoire via **`127.0.0.1:8000`**.
+Victoire is securized by default, credentials are anakin@victoire.io / test
+
+You can access Victoire via the URL http://localhost:8000/
 
 And be logged in automatically http://anakin@victoire.io:test@localhost:8000/
+
+## Services exposed outside your environment
 
 nginx and mailhog respond to any hostname, in case you want to add your own hostname on your `/etc/hosts` 
 
