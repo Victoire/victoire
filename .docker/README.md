@@ -44,14 +44,3 @@ php-fpm|victoire-php|9000
 MySQL|victoire-mysql|3306 (default)
 Redis|victoire-redis|6379 (default)
 SMTP (Mailhog)|victoire-mailhog|1025 (default)
-
-# Docker compose cheatsheet
-
-**Note 1:** you need to cd first to where your docker-compose.yml file lives
-
-  * Start containers in the background: `docker-compose up -d`
-  * Start containers on the foreground: `docker-compose up`. You will see a stream of logs for every container running.
-  * Stop containers: `docker-compose stop`
-  * Kill containers: `docker-compose kill`
-  * View container logs: `docker-compose logs`
-  * Execute command inside of container: `docker exec -it victoire-php COMMAND` where `COMMAND` is whatever you want to run. For instance, `/bin/bash` to open a console prompt.
