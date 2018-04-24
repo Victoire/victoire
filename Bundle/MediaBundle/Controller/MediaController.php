@@ -136,7 +136,7 @@ class MediaController extends Controller
             'full_name' => 'mediabundle_bulkupload[files][]',
         ]);
 
-        return $this->render('@VictoireMedia/Media/bulkUpload.html.twig', [
+        return $this->render('VictoireMediaBundle:Media:bulkUpload.html.twig', [
             'form'   => $formView,
             'folder' => $folder,
         ]);
@@ -192,8 +192,11 @@ class MediaController extends Controller
     public function createAction(Request $request, $folderId, $type)
     {
         $params = $this->createAndRedirect($request, $folderId, $type, 'VictoireMediaBundle_folder_show');
-
-        return $this->render('@VictoireMedia/Media/create.html.twig', $params);
+        if (is_array($params)) {
+            return $this->render('VictoireMediaBundle:Media:create.html.twig', $params);
+        } elseif ($params instanceof RedirectResponse) {
+            return $params;
+        }
     }
 
     /**
@@ -210,8 +213,11 @@ class MediaController extends Controller
     public function createModalAction(Request $request, $folderId, $type)
     {
         $params = $this->createAndRedirect($request, $folderId, $type, 'VictoireMediaBundle_chooser_show_folder');
-
-        return $this->render('@VictoireMedia/Media/create.html.twig', $params);
+        if (is_array($params)) {
+            return $this->render('VictoireMediaBundle:Media:create.html.twig', $params);
+        } elseif ($params instanceof RedirectResponse) {
+            return $params;
+        }
     }
 
     /**

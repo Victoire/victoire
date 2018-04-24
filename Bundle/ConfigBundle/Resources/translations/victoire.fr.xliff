@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+    <body>
+      <trans-unit id="37854038190543594386465" resname="globalConfig.modal.header">
+          <source>globalConfig.modal.header</source>
+          <target>Configuration du site</target>
+      </trans-unit>
+      <trans-unit id="378533381905233594386493" resname="globalConfig.form.tabs.global">
+          <source>globalConfig.form.tabs.global</source>
+          <target>Général</target>
+      </trans-unit>
+      <trans-unit id="378533381905234326493" resname="globalConfig.form.tabs.favicons">
+          <source>globalConfig.form.tabs.favicons</source>
+          <target>Icônes</target>
+      </trans-unit>
+      <trans-unit id="378540381905233594386493" resname="globalConfig.form.metaTitlePattern">
+          <source>globalConfig.form.metaTitlePattern</source>
+          <target>Modèle de génération de la balise META title</target>
+      </trans-unit>
+      <trans-unit id="37854038190523359444493" resname="globalConfig.form.metaTitlePattern.help">
+          <source>globalConfig.form.metaTitlePattern.help</source>
+          <target><![CDATA[
+<div class="v-color--grey-light">
+    <i class="fa fa-info-circle"></i> Plusieurs variables peuvent être utilisées :<br/>
+        <strong><em>%page.title%</em> (Obligatoire)</strong>, <em>%page.id%</em>, <em>%page.name%</em>, <em>%page.author%</em>, <em>%page.slug%</em>
+</div>
+                  ]]></target>
+      </trans-unit>
+      <trans-unit id="94386493378540381905435" resname="globalConfig.form.logo">
+          <source>globalConfig.form.logo</source>
+          <target>Logo</target>
+      </trans-unit>
+      <trans-unit id="94386493378543381905435" resname="globalConfig.form.logo.help">
+          <source>globalConfig.form.logo.help</source>
+          <target><![CDATA[<div class="v-color--grey-light"><i class="fa fa-info-circle"></i> Fond transparent, format carré, 260px mini</div>]]></target>
+      </trans-unit>
+      <trans-unit id="19054359438649337854038" resname="globalConfig.form.mainColor">
+          <source>globalConfig.form.mainColor</source>
+          <target>Couleur principale</target>
+      </trans-unit>
+      <trans-unit id="764389956493378540388" resname="globalConfig.form.mainColor.help">
+          <source>globalConfig.form.mainColor.help</source>
+          <target><![CDATA[<div class="v-color--grey-light"><i class="fa fa-info-circle"></i> La couleur sera utilisée sur mobile pour styliser le navigateur. Format attendu: héxadécimal #0099FF. <a href="https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/" title="En savoir plus sur la personnalisation du navigateur">En savoir plus</a></div>]]></target>
+      </trans-unit>
+      <trans-unit id="40381903785543594386493" resname="globalConfig.form.head">
+          <source>globalConfig.form.head</source>
+          <target>Code à insérer dans la balise HEAD de chaque page</target>
+      </trans-unit>
+      <trans-unit id="64933785403819054359438" resname="globalConfig.form.organizationJsonLD">
+          <source>globalConfig.form.organizationJsonLD</source>
+          <target>Définition sémantique de l'organization</target>
+      </trans-unit>
+      <trans-unit id="4325649337854038199438" resname="globalConfig.form.organizationJsonLD.help">
+          <source>globalConfig.form.organizationJsonLD.help</source>
+          <target><![CDATA[<div class="v-color--grey-light"><i class="fa fa-info-circle"></i> Format Json+LD, uniquement présent sur la page d'accueil. <a href="https://developers.google.com/search/docs/guides/intro-structured-data" title="En savoir plus sur les données structurées">En savoir plus</a></div>]]></target>
+      </trans-unit>
+      <trans-unit id="5644329337838199438540" resname="menu.global_config">
+          <source>menu.global_config</source>
+          <target>Configuration du site</target>
+      </trans-unit>
+      <trans-unit id="5644329337838199438888" resname="victoire.config.global.edit.success">
+          <source>victoire.config.global.edit.success</source>
+          <target>La configuration générale du site a bien été mise à jour</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

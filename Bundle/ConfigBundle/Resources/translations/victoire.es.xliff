@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="es" datatype="plaintext" original="not.available">
+    <body>
+      <trans-unit id="37854038190543594323456" resname="globalConfig.modal.header">
+          <source>globalConfig.modal.header</source>
+          <target state="new">Website configuration</target>
+      </trans-unit>
+      <trans-unit id="378533381905233594386493" resname="globalConfig.form.tabs.global">
+          <source>globalConfig.form.tabs.global</source>
+          <target state="new">Global</target>
+      </trans-unit>
+      <trans-unit id="378533381905234326493" resname="globalConfig.form.tabs.favicons">
+          <source>globalConfig.form.tabs.favicons</source>
+          <target state="new">Icons</target>
+      </trans-unit>
+      <trans-unit id="37854038190543594386493" resname="globalConfig.form.metaTitlePattern">
+          <source>globalConfig.form.metaTitlePattern</source>
+          <target state="new">META title pattern</target>
+      </trans-unit>
+      <trans-unit id="3785403819052333334493" resname="globalConfig.form.metaTitlePattern.help">
+          <source>globalConfig.form.metaTitlePattern.help</source>
+          <target state="new"><![CDATA[
+<div class="v-color--grey-light">
+    <i class="fa fa-info-circle"></i> Some variables can be used :<br/>
+        <em>%page.id%</em>, <em>%page.name%</em>, <em>%page.author%</em>, <em>%page.title%</em>, <em>%page.slug%</em>
+</div>
+                  ]]></target>
+      </trans-unit>
+      <trans-unit id="94386493378540381905435" resname="globalConfig.form.logo">
+          <source>globalConfig.form.logo</source>
+          <target state="new">Icon</target>
+      </trans-unit>
+      <trans-unit id="19054359438649337854038" resname="globalConfig.form.mainColor">
+          <source>globalConfig.form.mainColor</source>
+          <target state="new">Main color</target>
+      </trans-unit>
+      <trans-unit id="764389956493378540388" resname="globalConfig.form.mainColor.help">
+          <source>globalConfig.form.mainColor.help</source>
+          <target state="new"><![CDATA[<a href="https://developers.google.com/web/fundamentals/design-and-ux/browser-customization/"><i class="fa fa-info-circle"></i> The color will be used to stylized the browser. Expected format : hexadecimal #0099FF</a>]]></target>
+      </trans-unit>
+      <trans-unit id="40381903785543594386493" resname="globalConfig.form.head">
+          <source>globalConfig.form.head</source>
+          <target state="new">Code to insert in every page's HEAD section</target>
+      </trans-unit>
+      <trans-unit id="64933785403819054359438" resname="globalConfig.form.organizationJsonLD">
+          <source>globalConfig.form.organizationJsonLD</source>
+          <target state="new">Semantical definition of the organization</target>
+      </trans-unit>
+      <trans-unit id="4325649337854038199438" resname="globalConfig.form.organizationJsonLD.help">
+          <source>globalConfig.form.organizationJsonLD.help</source>
+          <target state="new"><![CDATA[<a href="https://developers.google.com/search/docs/guides/intro-structured-data"><i class="fa fa-info-circle"></i> Learn more</a> (Expected format : Json+LD, will be present in homepage HEAD section)]]></target>
+      </trans-unit>
+      <trans-unit id="5644329337838199438540" resname="menu.global_config">
+          <source>menu.global_config</source>
+          <target state="new">Website configuration</target>
+      </trans-unit>
+      <trans-unit id="5644329337838199438888" resname="victoire.config.global.edit.success">
+          <source>victoire.config.global.edit.success</source>
+          <target state="new">The global configuration has been updated</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

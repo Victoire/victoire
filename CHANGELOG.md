@@ -1,5 +1,22 @@
 # Change Log
 
+## [2.3.34](https://github.com/Victoire/victoire/compare/2.3.33...2.3.34)
+
+- Introduce VictoireGlobalConfigBundle to manage global config :
+  - head code
+  - meta title pattern
+  - favicons
+  - main color
+  - semantical json+ld
+
+by [Leny Bernard](https://github.com/lenybernard)
+
+## [2.3.33](https://github.com/Victoire/victoire/compare/2.3.32...2.3.33)
+
+- remove use of @template annotation
+
+by [Baptiste Foucher](https://github.com/bfoucher)
+
 ## [2.3.32](https://github.com/Victoire/victoire/tree/2.3.32)
 
 - BC break: Require `sensio/framework-extra-bundle:^5.0` that introduce a BC break (from 4.0):

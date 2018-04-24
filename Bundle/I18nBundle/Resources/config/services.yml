@@ -19,6 +19,8 @@ services:
         class: Victoire\Bundle\I18nBundle\Route\I18nRouteLoader
         arguments:
             - '%victoire_core.widgets%'
+            - '@kernel'
+            - '@logger'
             - '@victoire_i18n.locale_resolver'
         tags:
             - { name: routing.loader }

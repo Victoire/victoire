@@ -215,6 +215,8 @@ services:
         class: Victoire\Bundle\CoreBundle\Route\RouteLoader
         arguments:
             - '%victoire_core.widgets%'
+            - '@kernel'
+            - '@logger'
         tags:
             - { name: routing.loader }
 

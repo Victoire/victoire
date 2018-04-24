@@ -1,0 +1,56 @@
+{
+  "masterPicture": "{{ webDir }}{{ globalConfig|default({'logo': {'url': asset('bundles/victoireui/images/logo.png')}}).logo|default({'url': asset('bundles/victoireui/images/logo.png')}).url }}",
+  "iconsPath": "/",
+  "design": {
+    "ios": {
+      "pictureAspect": "noChange",
+      "assets": {
+        "ios6AndPriorIcons": false,
+        "ios7AndLaterIcons": false,
+        "precomposedIcons": false,
+        "declareOnlyDefaultIcon": true
+      }
+    },
+    "desktopBrowser": {},
+    "windows": {
+      "pictureAspect": "whiteSilhouette",
+      "backgroundColor": "{{ globalConfig|default({'mainColor': '#fff'}).mainColor }}",
+      "onConflict": "override",
+      "assets": {
+        "windows80Ie10Tile": false,
+        "windows10Ie11EdgeTiles": {
+          "small": false,
+          "medium": true,
+          "big": false,
+          "rectangle": false
+        }
+      }
+    },
+    "androidChrome": {
+      "pictureAspect": "noChange",
+      "themeColor": "{{ globalConfig|default({'mainColor': '#fff'}).mainColor }}",
+      "manifest": {
+        "display": "standalone",
+        "orientation": "notSet",
+        "onConflict": "override",
+        "declared": true
+      },
+      "assets": {
+        "legacyIcon": false,
+        "lowResolutionIcons": false
+      }
+    },
+    "safariPinnedTab": {
+      "pictureAspect": "silhouette",
+      "themeColor": "{{ globalConfig|default({'mainColor': '#fff'}).mainColor }}"
+    }
+  },
+  "settings": {
+    "compression": 3,
+    "scalingAlgorithm": "Mitchell",
+    "errorOnImageTooSmall": false,
+    "readmeFile": false,
+    "htmlCodeFile": false,
+    "usePathAsIs": false
+  }
+}
