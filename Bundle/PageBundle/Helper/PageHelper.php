@@ -19,6 +19,7 @@ use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
+use Victoire\Bundle\ConfigBundle\Entity\GlobalConfig;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -273,12 +274,14 @@ class PageHelper
             //Determine which layout to use
             $layout = $this->guessBestLayoutForView($view);
         }
+        $globalConfig = $this->entityManager->getRepository(GlobalConfig::class)->findLast() ?: new GlobalConfig();
 
         //Create the response
         $response = $this->container->get('templating')->renderResponse('VictoireCoreBundle:Layout:'.$layout.'.html.twig', [
-            'view'                            => $view,
+            'globalConfig'                    => $globalConfig,
             'victoire_i18n_available_locales' => $this->availableLocales,
             'victoire_twig_responsive'        => $this->twigResponsive,
+            'view'                            => $view,
         ]);
 
         return $response;
