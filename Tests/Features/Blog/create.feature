@@ -63,5 +63,7 @@ Background:
         Then I should see "Blog"
         When I follow "Blog"
         Then I should see "Listes des articles"
+        Then I should see "Brouillons"
+        When I follow "Brouillons"
         And I should see "I'm your father."
         And I should see "Anakin Skywalker"

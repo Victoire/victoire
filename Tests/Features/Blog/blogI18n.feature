@@ -39,9 +39,13 @@ Feature: I can edit multiple blogs in multiples locales
     And I open the hamburger menu
     And I should see "Blog"
     When I follow "Blog"
+    Then I should see "Brouillons"
+    When I follow "Brouillons"
     Then I should see "titre article"
-    And I wait 2 seconds
     When I select "en" from "choose_blog_locale"
+    And I wait 2 seconds
+    Then I should see "Brouillons"
+    When I follow "Brouillons"
     Then I should see "title article"
     When I follow "title article"
     Then I should be on "en/blog-en/article-en-title-article"
@@ -77,7 +81,8 @@ Feature: I can edit multiple blogs in multiples locales
     And I open the hamburger menu
     And I should see "Blog"
     When I follow "Blog"
-    And I wait 2 seconds
+    Then I should see "Brouillons"
+    When I follow "Brouillons"
     When I select "blog 2" from "choose_blog_blog"
     Then I should see "titre2"
 
@@ -102,6 +107,8 @@ Feature: I can edit multiple blogs in multiples locales
     And I open the hamburger menu
     And I should see "Blog"
     When I follow "Blog"
+    Then I should see "Brouillons"
+    When I follow "Brouillons"
     Then I should see "titre"
     And I wait 2 seconds
     When I select "fr" from "choose_blog_locale"
@@ -119,12 +126,18 @@ Feature: I can edit multiple blogs in multiples locales
     And I open the hamburger menu
     And I should see "Blog"
     When I follow "Blog"
+    Then I should see "Brouillons"
+    When I follow "Brouillons"
     And I wait 2 seconds
     Then I should see "titre1"
     When I select "en" from "choose_blog_locale"
     And I wait 1 second
+    Then I should see "Brouillons"
+    When I follow "Brouillons"
     And I should see "title1"
     When I select "fr" from "choose_blog_locale"
     And I wait 3 second
+    Then I should see "Brouillons"
+    When I follow "Brouillons"
     When I select "blog 2 FR" from "choose_blog_blog"
     Then I should see "titre2"
