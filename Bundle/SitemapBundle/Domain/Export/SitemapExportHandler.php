@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\SitemapBundle\Domain\Export;
 
 use Doctrine\ORM\EntityManager;
-use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
@@ -89,24 +88,14 @@ class SitemapExportHandler
         $data = [];
 
         foreach ($pages as $page) {
-            // BusinessTemplate have no getUrl() method
-            if ($page instanceof BusinessTemplate) {
-                continue;
-            }
-
             $seo = $page->getSeo();
 
             $data[] = [
                 'url'               => $page->getUrl(),
+                'publishedAt'       => $page->getPublishedAt() === null ? null : $page->getPublishedAt()->format('c'),
                 'sitemapChangeFreq' => $seo === null ? 'monthly' : $seo->getSitemapChangeFreq(),
                 'sitemapPriority'   => $seo === null ? 0.5 : $seo->getSitemapPriority(),
             ];
-
-            // This data is optional in sitemap, add it only if a publication date is available
-            // see https://www.sitemaps.org/protocol.html#xmlTagDefinitions
-            if (null !== $page->getPublishedAt() and $page->getPublishedAt() instanceof \DateTime) {
-                $data['publishedAt'] = $page->getPublishedAt()->format('c');
-            }
         }
 
         return json_encode($data);
