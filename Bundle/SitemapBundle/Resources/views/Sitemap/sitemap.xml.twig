@@ -17,7 +17,7 @@
       <url>
          <loc>{{ url('victoire_core_page_show', {'url': page.url}) }}</loc>
          <lastmod>{{ page.publishedAt }}</lastmod>
-         {{ if page.publishedAt }}<lastmod>{{ page.publishedAt }}</lastmod>{% endif %}
+         {% if page.publishedAt %}<lastmod>{{ page.publishedAt }}</lastmod>{% endif %}
          <changefreq>{{ seo.sitemapChangeFreq }}</changefreq>
          <priority>{{ seo.sitemapPriority }}</priority>
       </url>
