@@ -133,7 +133,7 @@ class TemplateController extends Controller
      * @param Template $template
      *
      * @return JsonResponse
-     * @Route("/{id}/parametres", name="victoire_template_settings")
+     * @Route("/{id}/parameters", name="victoire_template_settings")
      * @ParamConverter("template", class="VictoireTemplateBundle:Template")
      */
     public function settingsAction(Request $request, $template)
