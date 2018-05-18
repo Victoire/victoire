@@ -131,7 +131,7 @@ class WidgetManager
         $widgets = [$widget];
 
         //parent container ids
-        $containerIds = explode(',',$this->getRequest()->get('containerIds', null));
+        $containerIds = explode(',', $this->getRequest()->get('containerIds', null));
 
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
@@ -151,7 +151,7 @@ class WidgetManager
                     'widgets'         => $widgets,
                     'widget'          => $widget,
                     'forms'           => $forms,
-                    'containerIds'    => json_encode($containerIds)
+                    'containerIds'    => json_encode($containerIds),
                 ]
             ),
         ];
@@ -168,9 +168,11 @@ class WidgetManager
      * @param $position
      * @param $widgetReference
      * @param $quantum
-     * @return array
+     *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * return array
      */
     public function createWidget($mode, $type, $slotId, View $view, $entity, $position, $widgetReference, $quantum)
     {
@@ -179,7 +181,7 @@ class WidgetManager
         $request = $this->getRequest();
 
         //parent container ids
-        $containerIds = explode(',',$request->get('containerIds', null));
+        $containerIds = explode(',', $request->get('containerIds', null));
 
         if ($view instanceof VirtualBusinessPage) {
             $this->virtualToBpTransformer->transform($view);
@@ -260,7 +262,7 @@ class WidgetManager
         $request = $this->getRequest();
 
         //parent container ids
-        $containerIds = explode(',',$request->get('containerIds', null));
+        $containerIds = explode(',', $request->get('containerIds', null));
 
         //the id of the edited widget
         //a new widget might be created in the case of a legacy
@@ -434,7 +436,7 @@ class WidgetManager
         $this->widgetMapManager->delete($view, $widget);
 
         //parent container ids
-        $containerIds = explode(',',$this->getRequest()->get('containerIds', null));
+        $containerIds = explode(',', $this->getRequest()->get('containerIds', null));
 
         //we update the view
         $this->entityManager->persist($view);
@@ -512,15 +514,16 @@ class WidgetManager
     }
 
     /**
-     * force cache invalidation by widget ids
+     * force cache invalidation by widget ids.
      *
      * @param array $widgetIds
+     *
      * @throws \Doctrine\ORM\ORMException
      */
     private function invalidateCacheByIds($widgetIds)
     {
         $widgets = $this->entityManager->getRepository(\Victoire\Bundle\WidgetBundle\Entity\Widget::class)->findById($widgetIds);
-        foreach($widgets as $widget)
+        foreach ($widgets as $widget)
         {
             $this->widgetCache->remove($widget);
         }
