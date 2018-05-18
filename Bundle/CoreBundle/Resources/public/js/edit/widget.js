@@ -48,6 +48,7 @@ $vic(document).on('change', '.v-slot select', function(event) {
 
 $vic(document).on('click', '.v-modal--widget a[data-modal="update"], .v-modal--widget a[data-modal="create"]', function(event) {
     event.preventDefault();
+    var containerIds = $vic(this).parents('.v-modal').find('#v-modal-tab-content-container').data('container-ids');
 
     var forms = [];
     $vic('[data-group="tab-widget-quantum"]').each(function() {
@@ -80,9 +81,10 @@ $vic(document).on('click', '.v-modal--widget a[data-modal="update"], .v-modal--w
             var formData = new FormData($vic(form)[0]);
             var contentType = false;
         }
+        var url = $vic(form).attr('action') + '?containerIds=' + containerIds.toString();
         calls.push($vic.ajax({
             type: $vic(form).attr('method'),
-            url : $vic(form).attr('action'),
+            url : url,
             data        : formData,
             processData : false,
             contentType : contentType
@@ -159,11 +161,11 @@ $vic(document).on('click', 'a#widget-new-tab', function(event) {
 $vic(document).on('click', '.v-modal--widget a.vic-confirmed, .vic-hover-widget-unlink', function(event) {
     event.preventDefault();
     $vic(document).trigger("victoire_widget_delete_presubmit");
-
+    var containerIds = $vic(this).parents('.v-modal').find('#v-modal-tab-content-container').data('container-ids');
         loading(true);
         $vic.ajax({
             type: "GET",
-            url : $vic(this).attr('href')
+            url : $vic(this).attr('href') + '?containerIds=' + containerIds.toString()
         }).done(function(response) {
             if (true === response.success) {
                 if (response.hasOwnProperty("redirect")) {
@@ -188,6 +190,14 @@ function generateNewWidgetUrl(select){
     var slotId = $vic(select).parents('.vic-slot').first().data('name');
     var container = $vic(select).parents('new-widget-button');
 
+    var containerIds = [];
+    //building an array of vic-widget-containers' id
+    //containerIds[0] is the item's id
+    //containerIds[n+1] is the id of the parent container of container n
+    $vic(select).parents('.vic-widget-container').each(function () {
+        containerIds.push($(this).data('id'));
+    });
+
     var position = $vic(container).attr('position');
     var parentWidgetMap = $vic(container).attr('widget-map');
 
@@ -203,7 +213,9 @@ function generateNewWidgetUrl(select){
     }
     if (parentWidgetMap) {
         params['parentWidgetMap'] = parentWidgetMap;
-
+    }
+    if (containerIds) {
+        params['containerIds'] = containerIds.toString();
     }
     return Routing.generate(
         'victoire_core_widget_new',

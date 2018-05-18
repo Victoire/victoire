@@ -31,7 +31,7 @@
 {% endblock modal_body_sidebar %}
 
 {% block modal_body_content %}
-    <div id="v-modal-tab-content-container">
+    <div id="v-modal-tab-content-container" data-container-ids="{{ containerIds|default('') }}">
         {% for key, widget in widgets %}
             {% include "VictoireCoreBundle:Widget:Form/new_partial.html.twig" with {forms: forms[key], widget: widget, classes: classes, id: widgets[key].id ? widgets[key].id : id, quantum: forms[key]['quantum'] }%}
         {% endfor %}

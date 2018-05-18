@@ -34,10 +34,11 @@ class WidgetFormBuilder
      * @param string $slot
      * @param View   $view
      * @param string $entity
+     * @param string $containerIds
      *
      * @return string
      */
-    public function renderNewForm($form, $widget, $slot, View $view, $quantum = null, $entity = null)
+    public function renderNewForm($form, $widget, $slot, View $view, $quantum = null, $entity = null, $containerIds = null)
     {
         //the template displayed is in the widget bundle
         $templateName = $this->container->get('victoire_widget.widget_helper')->getTemplateName('new', $widget);
@@ -51,6 +52,7 @@ class WidgetFormBuilder
                 'entity'  => $entity,
                 'view'    => $view,
                 'quantum' => $quantum,
+                'containerIds' => $containerIds,
             ]
         );
     }
