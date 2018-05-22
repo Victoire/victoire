@@ -523,8 +523,7 @@ class WidgetManager
     private function invalidateCacheByIds($widgetIds)
     {
         $widgets = $this->entityManager->getRepository(\Victoire\Bundle\WidgetBundle\Entity\Widget::class)->findById($widgetIds);
-        foreach ($widgets as $widget)
-        {
+        foreach ($widgets as $widget) {
             $this->widgetCache->remove($widget);
         }
     }
