@@ -137,7 +137,7 @@
 
         {% if app.environment == "test" or app.environment == "domain" or app.environment == "ci" %}
             <script src="/js/fos_js_routes_{{ app.environment }}.js"></script>
-        {% else if app.environment == "prod" %}
+        {% elseif app.environment == "prod" %}
             <script src="/js/fos_js_routes.js"></script>
         {% else %}
             <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
