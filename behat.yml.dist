@@ -4,9 +4,8 @@
 default:
     autoload:
          '': Tests/Features/Context
-
     suites:
-         default:
+         vic:
              paths:
                  - Tests/Features
              contexts:
@@ -18,7 +17,6 @@ default:
                  - Victoire\Tests\Features\Context\JavascriptContext
                  - Victoire\Tests\Features\Context\MinkContext
                  - Knp\FriendlyContexts\Context\TableContext
-
     extensions:
          Behat\Symfony2Extension:
             kernel:
@@ -58,7 +56,6 @@ default:
                      ArticleI18n:        Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article_i18n.yml
                      Article:            Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/article.yml
                      BlogBP:             Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Blog/businessPage.yml
-
                      Mercenary:             Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/mercenary.yml
                      Jedi:                  Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/jedi.yml
                      CharacterTemplates:    Tests/App/src/Acme/AppBundle/DataFixtures/Fixtures/ORM/Character/template.yml

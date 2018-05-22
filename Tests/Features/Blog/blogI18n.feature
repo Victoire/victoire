@@ -43,10 +43,14 @@ Feature: I can edit multiple blogs in multiples locales
     When I am on homepage
     And I should see "Blog"
     When I follow "Blog"
+    Then I should see "Drafts"
+    When I follow "Drafts"
     Then I should see "title article"
     And I wait 2 seconds
     When I select "fr" from "choose_blog_locale"
     And I wait 2 seconds
+    Then I should see "Drafts"
+    When I follow "Drafts"
     Then I should see "titre article"
     When I follow "titre article"
     Then the url should match "/fr/blog-fr/article-fr-titre-article"
@@ -66,9 +70,12 @@ Feature: I can edit multiple blogs in multiples locales
     Then the url should match "/fr/blog-1/article-1-titre"
     And I should see "Blog"
     When I follow "Blog"
+    Then I should see "Brouillons"
+    When I follow "Brouillons"
     Then I should see "titre"
     And I wait 2 seconds
     When I select "blog 2" from "choose_blog_blog"
+    And I wait 2 seconds
     Then I should see "Choisissez votre blog"
     And I should see "Créer un article maintenant"
     When I follow "Créer un article maintenant"
@@ -80,6 +87,8 @@ Feature: I can edit multiple blogs in multiples locales
     Then the url should match "/fr/blog-2/article-2-titre2"
     And I should see "Blog"
     When I follow "Blog"
+    Then I should see "Brouillons"
+    When I follow "Brouillons"
     And I wait 2 seconds
     When I select "blog 2" from "choose_blog_blog"
     Then I should see "titre2"

@@ -146,6 +146,10 @@
         <source>victoire.blog.nav.articles.label</source>
         <target>Listes des articles</target>
       </trans-unit>
+      <trans-unit id="5ae71b95cb925" resname="victoire.blog.nav.drafts.label">
+        <source>victoire.blog.nav.drafts.label</source>
+        <target>Brouillons</target>
+      </trans-unit>
       <trans-unit id="58893b9924c37" resname="victoire.blog.nav.settings.label">
         <source>victoire.blog.nav.settings.label</source>
         <target>Paramètres</target>

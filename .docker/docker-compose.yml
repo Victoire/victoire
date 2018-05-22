@@ -35,19 +35,12 @@ victoire-php:
   container_name: victoire-php
   volumes:
     - ..:/var/www/victoire
-    - ./php-fpm/php-ini-overrides.ini:/etc/php/7.0/fpm/conf.d/99-overrides.ini
+    - ./php-fpm/php-ini-overrides.ini:/etc/php/7.1/fpm/conf.d/99-overrides.ini
   links:
     - victoire-mailhog
     - victoire-mysql
     - victoire-redis
     - hub
-
-composer:
-  restart: 'no'
-  image: composer/composer:php7
-  command: install
-  volumes:
-    - ..:/app
 
 ## BEHAT ##
 

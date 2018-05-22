@@ -3,6 +3,8 @@
 namespace Victoire\Bundle\I18nBundle\Route;
 
 use Gedmo\Sluggable\Util\Urlizer;
+use Monolog\Logger;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Victoire\Bundle\CoreBundle\Route\RouteLoader as BaseRouteLoader;
@@ -13,14 +15,23 @@ use Victoire\Bundle\I18nBundle\Resolver\LocaleResolver;
  */
 class I18nRouteLoader extends BaseRouteLoader
 {
+    /**
+     * @var LocaleResolver
+     */
     protected $localeResolver;
-    protected $urlizer;
 
-    public function __construct($widgets, LocaleResolver $localeResolver)
+    /**
+     * RouteLoader constructor.
+     *
+     * @param array          $widgets
+     * @param Kernel         $kernel
+     * @param Logger         $logger
+     * @param LocaleResolver $localeResolver
+     */
+    public function __construct($widgets, Kernel $kernel, Logger $logger, LocaleResolver $localeResolver)
     {
-        parent::__construct($widgets);
+        parent::__construct($widgets, $kernel, $logger);
         $this->localeResolver = $localeResolver;
-        $this->urlizer = new Urlizer();
     }
 
     /**
@@ -38,7 +49,15 @@ class I18nRouteLoader extends BaseRouteLoader
                     ]
                 );
                 $_route->setHost($_domain);
-                $collection->add($_locale.'__'.$this->urlizer->urlize($_domain, '_').'__'.$_name, $_route);
+                $collection->add(
+                    sprintf(
+                        '%s__%s__%s',
+                        $_locale,
+                        Urlizer::urlize($_domain, '_'),
+                        $_name
+                    ),
+                    $_route
+                );
             }
         }
 

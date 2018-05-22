@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+    <body>
+      <trans-unit id="5644329337838199438899" resname="victoire.config.global.metaTitlePattern.invalid">
+          <source>victoire.config.global.metaTitlePattern.invalid</source>
+          <target state="new"><![CDATA[You need at least <strong>%page.title%</strong>]]></target>
+      </trans-unit>
+      <trans-unit id="564432933783129438899" resname="victoire.config.json.invalid">
+          <source>victoire.config.json.invalid</source>
+          <target state="new"><![CDATA[⚠ An error occured. Be sure it's valid JSON : <a href="http://json.parser.online.fr/">Online JSON validator</a>]]></target>
+      </trans-unit>
+      <trans-unit id="5644329337838399438899" resname="victoire.config.global.organizationJsonLD.invalid">
+          <source>victoire.config.global.organizationJsonLD.invalid</source>
+          <target state="new"><![CDATA[⚠ An error occured. Be sure it's valid JSON-LD : <a href="https://json-ld.org/playground/">JSON-LD Playground</a>]]></target>
+      </trans-unit>
+      <trans-unit id="5644329337838499438899" resname="victoire.config.global.organizationJsonLD.missingType">
+          <source>victoire.config.global.organizationJsonLD.missingType</source>
+          <target state="new"><![CDATA[⚠ Semantical JSON-LD needs type. <a href="http://schema.org/Organization">eg. Organization</a>]]></target>
+      </trans-unit>
+      <trans-unit id="5644329337838599438899" resname="victoire.config.global.organizationJsonLD.invalidContext">
+          <source>victoire.config.global.organizationJsonLD.invalidContext</source>
+          <target state="new"><![CDATA[⚠ Semantical JSON-LD needs context. <a href="https://developers.google.com/search/docs/guides/intro-structured-data">https://schema.org</a>]]></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

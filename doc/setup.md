@@ -7,7 +7,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/victoirecms.svg?style=social&label=Victoirecms)](https://twitter.com/troopersagency) [![Gitter](https://badges.gitter.im/Victoire/victoire.svg)](https://gitter.im/Victoire/victoire?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ```sh
-symfony new tutorial 3.4
+symfony new tutorial 3.4.2
 cd tutorial
 ```
 
@@ -54,6 +54,7 @@ class AppKernel extends Kernel
             new Victoire\Bundle\BusinessEntityBundle\VictoireBusinessEntityBundle(),
             new Victoire\Bundle\BusinessPageBundle\VictoireBusinessPageBundle(),
             new Victoire\Bundle\CoreBundle\VictoireCoreBundle(),
+            new Victoire\Bundle\ConfigBundle\VictoireConfigBundle(),
             new Victoire\Bundle\CriteriaBundle\VictoireCriteriaBundle(),
             new Victoire\Bundle\FilterBundle\VictoireFilterBundle(),
             new Victoire\Bundle\FormBundle\VictoireFormBundle(),
@@ -74,6 +75,8 @@ class AppKernel extends Kernel
         ];
     }
 ```
+I deleted : 
+```new AppBundle\AppBundle(),```
 
 ### Start a redis server
 
@@ -87,20 +90,19 @@ docker run -d -p 6379:6379 --name myAwesomeRedis redis:latest
 ### Config
 
 #### Enable the serializer and translator
+### Add some config
 
 `app/config/config.yml`
 ```yml
 framework:
    ...
-   translator: { fallbacks: ["%locale%"] }
-   serializer: { enable_annotations: true }
-```
+    translator: { fallbacks: ["%locale%"] }
+    serializer: { enable_annotations: true }
+    templating:
+       engines: ['twig']
 
-#### Add some config
-
-`app/config/config.yml`
-```yml
 imports:
+    ...
     - { resource: "@VictoireCoreBundle/Resources/config/config.yml" }
     - { resource: "@VictoireTwigBundle/Resources/config/config.yml" }
 
@@ -155,11 +157,15 @@ victoire_i18n:
 ```
 
 `app/config/security.yml`
+`Replace the current security.yml with this one`
 ```
+# To get started with security, check out the documentation:
 security:
     encoders:
         Victoire\Bundle\UserBundle\Entity\User: bcrypt
     providers:
+        in_memory:
+            memory: ~
         fos_userbundle:
             id: fos_user.user_provider.username
     firewalls:
@@ -185,6 +191,7 @@ security:
 `app/config/services.yml`
 ```
 services:
+    ...
     twig.extension.text:
        class: Twig_Extensions_Extension_Text
        tags:
@@ -234,6 +241,10 @@ fos_js_routing:
 VictoireCoreBundle:
     resource: .
     type: victoire_i18n
+```
+If necessary, generate your missing parameters in parameters.yml:
+```
+composer install
 ```
 
 As it never hurts, let's finish the configuration steps by clearing the cache:
@@ -337,30 +348,31 @@ Updating database schema...
 ```
 Don't worry: it will disapear as soon as you will install some non-official widgets (hosted in the `friendsofvictoire` organization.
 
-Find others widget [**here**](http://packagist.org/search/?tags=victoire)
+Find others widget [**on packagist**](http://packagist.org/search/?tags=victoire)
 
 ### Prepare Victoire assets
 
-#### Fetch bower assets
+#### Fetch front assets (thanks to bower and yarn)
 
 Run the following command to fetch the Victoire assets:
 
-`CAUTION` you need to install bower first
+`CAUTION` you need to install bower and yarn first
 ```shell
-bin/console victoire:ui:fetchAssets
+bin/console victoire:ui:fetchAssets --force
 ```
 
 #### Dump js routes and translations
 
 ```
-php bin/console fos:js-routing:dump -e=dev
-php bin/console bazinga:js-translation:dump -e=dev
+bin/console fos:js-routing:dump -e=dev
+bin/console bazinga:js-translation:dump -e=dev
 ```
 
 #### Dump with assetic
 
 Run the following command to dump assets with assetic library:
 
+`CAUTION` you need to install less first ```npm i -g less```
 ```shell
 bin/console assetic:dump
 ```

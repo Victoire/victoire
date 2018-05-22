@@ -5,6 +5,7 @@ namespace Victoire\Tests\Features\Context;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Mink\Driver\Selenium2Driver;
+use Behat\Mink\Exception\ExpectationException;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Behat\Symfony2Extension\Context\KernelDictionary;
@@ -92,6 +93,28 @@ class FeatureContext extends RawMinkContext implements Context, KernelAwareConte
             $message = sprintf('"%s" is not the title of the page', $title);
 
             throw new \Behat\Mink\Exception\ResponseTextException($message, $this->getSession());
+        }
+    }
+
+    /**
+     * @Then /^the meta "(.+)" should be set to "(#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}))"/
+     * <meta cagoule />
+     */
+    public function theMetaShouldBeSet($name, $value)
+    {
+        $element = $this->assertSession()->elementExists(
+            'css',
+            sprintf('meta[name="%s"]', $name)
+        );
+        $actual = $element->getAttribute('content');
+        $regex = '/'.preg_quote($value, '/').'/ui';
+        if (!preg_match($regex, $actual)) {
+            $message = sprintf(
+                'The text "%s" was not found in the content attribute of the meta[name=%s]".',
+                $value, $name
+            );
+
+            throw new ExpectationException($message, $this->getSession());
         }
     }
 

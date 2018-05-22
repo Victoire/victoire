@@ -12,7 +12,22 @@ Victoire\Bundle\BlogBundle\Entity\Article:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         translations: ["@article_en"]
+    article2:
+        currentLocale: en
+        author: "@anakin"
+        name: "Are you an angel?"
+        description: This is a great article description
+        slug: are-you-an-angel
+        status: draft
+        template: "@template_article"
+        blog: "@blog-jedi-network"
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        translations: ["@article2_en"]
 
 Victoire\Bundle\CoreBundle\Entity\EntityProxy:
     ep_article_i_m_your_father:
         article: "@article"
+    ep_article_are_you_an_angel:
+        article: "@article2"

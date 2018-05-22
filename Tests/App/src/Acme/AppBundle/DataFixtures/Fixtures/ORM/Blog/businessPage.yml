@@ -3,6 +3,10 @@ Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
         name: "Je suis ton père."
         slug: "je-suis-ton-pere"
         locale: fr
+    bep_article_are_you_an_angel_name:
+        name: "Etes-vous un ange?"
+        slug: "etes-vous-un-ange"
+        locale: fr
 
 Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage:
     bep_article_i_m_your_father:
@@ -18,6 +22,16 @@ Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage:
         updatedAt: <dateTime('now')>
         cssUpToDate: false
         translation: ["@bep_article_i_m_your_father_fr_name"]
-
-
-
+    bep_article_are_you_an_angel:
+        currentLocale: en
+        name: "Are you an angel?"
+        author: "@anakin"
+        template: "@template_article"
+        status: drafts
+        parent: "@blog-jedi-network"
+        entityProxy: "@ep_article_are_you_an_angel"
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        cssUpToDate: false
+        translation: ["@bep_article_are_you_an_angel_name"]

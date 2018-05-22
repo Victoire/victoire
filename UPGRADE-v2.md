@@ -1,16 +1,11 @@
-#UPGRADE 2.0
+# UPGRADE v2
 
-##UPGRADE 2.0.0
+## UPGRADE 2.3.34
 
-The 2.0 version cleans the widget edit views.
-To upgrade to this version, you have to refactor your widgets "edit" and "new" templates to use the "form_static" and "form_entity" blocks.
-You don't have to redefine the "picker" div because it's been put outside the block in the parent template.
+To get the new GlobalConfig feature, you just need to declare the `VictoireGlobalConfigBundle` in your `AppKernel`.
 
-## UPGRADE 2.2.0
-You need to execute the following SQL command to upgrade your database.
-```sql
-UPDATE vic_link SET target = '_modal' WHERE target = 'ajax-modal';
-```
+## UPGRADE 2.3.10
+Event listeners and subscribers using `WidgetFormEvents::PRE_CREATE` will now receive `WidgetFormPreCreateEvent` instead of `WidgetFormCreateEvent`.
 
 ## UPGRADE 2.2.18
 You need to execute the following SQL command to upgrade your database.
@@ -20,5 +15,15 @@ UPDATE vic_widget_map SET widget_id = NULL;
 UPDATE vic_widget SET view_id = NULL;
 ```
 
-## UPGRADE 2.3.10
-Event listeners and subscribers using `WidgetFormEvents::PRE_CREATE` will now receive `WidgetFormPreCreateEvent` instead of `WidgetFormCreateEvent`.
+## UPGRADE 2.2.0
+You need to execute the following SQL command to upgrade your database.
+```sql
+UPDATE vic_link SET target = '_modal' WHERE target = 'ajax-modal';
+```
+
+##UPGRADE 2.0.0
+
+The 2.0 version cleans the widget edit views.
+To upgrade to this version, you have to refactor your widgets "edit" and "new" templates to use the "form_static" and "form_entity" blocks.
+You don't have to redefine the "picker" div because it's been put outside the block in the parent template.
+

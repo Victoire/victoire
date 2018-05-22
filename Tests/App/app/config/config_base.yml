@@ -169,6 +169,8 @@ snc_redis:
 
 parameters:
     locale: en
+    victoire.realFaviconPath: 'Bundle/UIBundle/Resources/config/node_modules/cli-real-favicon/real-favicon.js'
+
 
 troopers_alertify:
     contexts:
