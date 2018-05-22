@@ -48,7 +48,7 @@ $vic(document).on('change', '.v-slot select', function(event) {
 
 $vic(document).on('click', '.v-modal--widget a[data-modal="update"], .v-modal--widget a[data-modal="create"]', function(event) {
     event.preventDefault();
-    var containerIds = $vic(this).parents('.v-modal').find('#v-modal-tab-content-container').data('container-ids');
+    var containerIds = $vic(this).parents('.v-modal').find('#v-modal-tab-content-container').data('container-ids') || '';
 
     var forms = [];
     $vic('[data-group="tab-widget-quantum"]').each(function() {
@@ -161,7 +161,7 @@ $vic(document).on('click', 'a#widget-new-tab', function(event) {
 $vic(document).on('click', '.v-modal--widget a.vic-confirmed, .vic-hover-widget-unlink', function(event) {
     event.preventDefault();
     $vic(document).trigger("victoire_widget_delete_presubmit");
-    var containerIds = $vic(this).parents('.v-modal').find('#v-modal-tab-content-container').data('container-ids');
+    var containerIds = $vic(this).parents('.v-modal').find('#v-modal-tab-content-container').data('container-ids') || '';
         loading(true);
         $vic.ajax({
             type: "GET",
