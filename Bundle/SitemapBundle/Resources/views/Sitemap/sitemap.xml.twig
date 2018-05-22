@@ -3,7 +3,7 @@
 {% for page in pages %}
    <url>
       <loc>{{ url('victoire_core_page_show', {'url': page.url}) }}</loc>
-      {{ if page.publishedAt }}<lastmod>{{ page.publishedAt }}</lastmod>{% endif %}
+      {% if page.publishedAt %}<lastmod>{{ page.publishedAt }}</lastmod>{% endif %}
       <changefreq>{{ page.sitemapChangeFreq }}</changefreq>
       <priority>{{ page.sitemapPriority }}</priority>
    </url>
