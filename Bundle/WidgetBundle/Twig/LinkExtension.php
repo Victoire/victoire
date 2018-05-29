@@ -164,20 +164,22 @@ class LinkExtension extends \Twig_Extension
                 $attachedWidget = $parameters[Link::TYPE_WIDGET];
                 $url = '';
 
-                //If Widget's View has an url and Widget is not in the current View, add this url in the link
-                if ($attachedWidget && method_exists($attachedWidget->getWidgetMap()->getView(), 'getUrl')
-                    && (!$this->request || rtrim($this->request->getRequestUri(), '/') != rtrim($url, '/'))
-                ) {
-                    /** @var View $view */
-                    $view = $attachedWidget->getWidgetMap()->getView();
-                    /* @var Widget $attachedWidget */
-                    $locale = $attachedWidget->getLocale($this->request ? $this->request->getLocale() : $this->defaultLocale);
-                    $view->translate($locale);
-                    $url .= $this->router->generate('victoire_core_page_show', ['_locale' => $locale, 'url' => $view->getUrl()], $referenceType);
+                if ($attachedWidget) {
+                    //If Widget's View has an url and Widget is not in the current View, add this url in the link
+                    if (method_exists($attachedWidget->getWidgetMap()->getView(), 'getUrl')
+                        && (!$this->request || rtrim($this->request->getRequestUri(), '/') != rtrim($url, '/'))) {
+                        /** @var View $view */
+                        $view = $attachedWidget->getWidgetMap()->getView();
+                        /* @var Widget $attachedWidget */
+                        $locale = $attachedWidget->getLocale($this->request ? $this->request->getLocale() : $this->defaultLocale);
+                        $view->translate($locale);
+                        $url .= $this->router->generate('victoire_core_page_show', ['_locale' => $locale, 'url' => $view->getUrl()], $referenceType);
+                    }
+
+                    //Add anchor part
+                    $url .= '#widget-'.$attachedWidget->getId();
                 }
 
-                //Add anchor part
-                $url .= '#widget-'.$attachedWidget->getId();
                 break;
             default:
                 $url = $parameters['url'];
