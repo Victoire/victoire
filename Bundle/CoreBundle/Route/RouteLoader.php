@@ -32,6 +32,7 @@ class RouteLoader extends Loader
     protected function addVictoireRouting(RouteCollection &$collection)
     {
         $resources = [
+            '@ViewReferenceBundle/Controller/',
             '@VictoireAnalyticsBundle/Controller/',
             '@VictoireTemplateBundle/Controller/',
             '@VictoireTwigBundle/Controller/',

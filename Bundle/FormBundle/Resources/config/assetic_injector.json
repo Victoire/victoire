@@ -10,7 +10,8 @@
                 "@VictoireFormBundle/Resources/public/components/fontawesome-iconpicker-1.0.0/js/fontawesome-iconpicker.min.js",
                 "@VictoireFormBundle/Resources/public/js/mopabootstrap-collection.js",
                 "@VictoireFormBundle/Resources/public/js/slug.js",
-                "@VictoireFormBundle/Resources/public/js/form.js"
+                "@VictoireFormBundle/Resources/public/js/form.js",
+                "@VictoireFormBundle/Resources/public/js/form-view-reference.js"
             ]
          },
         "stylesheets":
@@ -18,7 +19,8 @@
             "victoire-edit":
             [
                 "@VictoireFormBundle/Resources/public/components/fontawesome-iconpicker-1.0.0/css/fontawesome-iconpicker.min.css",
-                "@VictoireFormBundle/Resources/public/components/smalot-bootstrap-datetimepicker/build/build_standalone.less"
+                "@VictoireFormBundle/Resources/public/components/smalot-bootstrap-datetimepicker/build/build_standalone.less",
+                "bundles/victoirecore/vendor/select2/select2.css"
             ]
          }
     }
