@@ -31,7 +31,7 @@
         "email": "contact@victoire.io"
     },
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.0",
         "a2lix/translation-form-bundle": "^2.1",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-migrations-bundle": "^1.2",
