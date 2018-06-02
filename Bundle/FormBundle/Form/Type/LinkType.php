@@ -122,22 +122,21 @@ class LinkType extends AbstractType
         switch ($linkType) {
             case Link::TYPE_VIEW_REFERENCE:
                 $locale = $locale ?: $this->requestStack->getCurrentRequest()->getLocale();
-                $form->add('viewReference', ChoiceType::class, [
-                    'label'                          => 'form.link_type.view_reference.label',
-                    'required'                       => true,
-                    'attr'                           => ['novalidate' => 'novalidate'],
-                    'placeholder'                    => 'form.link_type.view_reference.blank',
-                    'choices'                        => $this->viewReferenceRepository->getChoices($locale),
-                    'choices_as_values'              => true,
-                    'vic_vic_widget_form_group_attr' => ['class' => 'vic-form-group'],
-                ])->add('locale', ChoiceType::class, [
-                    'label'       => 'form.link_type.locale.label',
-                    'choices'     => array_combine($this->availableLocales, $this->availableLocales),
-                    'attr'        => [
-                        'data-refreshOnChange' => 'true',
-                        'data-target'          => $options['refresh-target'],
-                    ],
-                ]);
+                $choices = $this->viewReferenceRepository->getCachedChoices($locale);
+
+                $form
+                    ->add('viewReference', ViewReferenceType::class, [
+                        'locale'  => $locale,
+                        'choices' => $choices,
+                    ])
+                    ->add('locale', ChoiceType::class, [
+                        'label'       => 'form.link_type.locale.label',
+                        'choices'     => array_combine($this->availableLocales, $this->availableLocales),
+                        'attr'        => [
+                            'data-refreshOnChange' => 'true',
+                            'data-target'          => $options['refresh-target'],
+                        ],
+                    ]);
                 break;
             case Link::TYPE_ROUTE:
                 $form->add('route', null, [
