@@ -141,54 +141,76 @@ class ViewReferenceRepository
     }
 
     /**
-     * get ViewsReferences ordered by hierarchy with a decoractor.
+     * get ViewsReferences ordered by hierarchy with a breadcrumb.
      *
-     * @param string $locale the locale to get views as choices
-     * @param string $refId  the parent to get views as choices
-     * @param int    $depth  how deep we go recursively to get choices tree
+     * @param string $locale      the locale to get views as choices
+     * @param string $parentRefId the parent to get views as choices
+     * @param string $refId       ref to get views as choices
+     * @param int    $depth       how deep we go recursively to get choices tree
+     * @param int    $maxDepth    how deep we go recursively to get choices tree
+     * @param string $parentName  name of parent page
      *
      * @return array
      */
-    public function getChoices($locale, $refId = null, $depth = 0)
+    public function getChoices($locale, $parentRefId = null, $refId = null, $depth = 0, $maxDepth = 10, $parentName = '')
     {
         $viewsReferences = [];
 
-        $decoratorFn = function ($depth, $char0 = '└', $char = '─') {
-            $decorator = $char0;
-            for ($i = 0; $i <= $depth; $i++) {
-                $decorator .= $char;
-            }
-
-            return $decorator;
-        };
-
-        if (null === $refId) {
+        if (null !== $parentRefId) {
             $refsId = $this->repository->getAllBy([
                 'locale' => $locale,
-                'slug'   => '',
+                'parent' => $parentRefId,
+            ]);
+        } elseif (null !== $refId) {
+            $refsId = $this->repository->getAllBy([
+                'locale' => $locale,
+                'id'     => $refId,
             ]);
         } else {
             $refsId = $this->repository->getAllBy([
                 'locale' => $locale,
-                'parent' => $refId,
+                'slug'   => '',
             ]);
         }
+
         $refs = $this->repository->getResults($refsId);
 
         foreach ($refs as $reference) {
             $viewReferenceTransformer = ViewReferenceManager::findTransformerFromElement($reference);
             $viewReference = $viewReferenceTransformer->transform($reference);
+            $name = null;
+
             if ($viewReference->getName() != '') {
-                $decorator = '';
-                if ($depth > 0) {
-                    $decorator = $decoratorFn($depth).' ';
+                $name = $viewReference->getName();
+
+                if ('' !== $parentName) {
+                    $name = $parentName.' › '.$name;
                 }
-                $viewsReferences[$decorator.$viewReference->getName()] = $viewReference->getId();
+
+                $viewsReferences[] = [
+                    'text' => $name,
+                    'id'   => $viewReference->getId(),
+                ];
             }
 
-            $viewsReferences = array_merge($viewsReferences, $this->getChoices($locale, $viewReference->getId(), $depth + 1));
+            if ($depth < $maxDepth) {
+                $viewsReferences = array_merge($viewsReferences, $this->getChoices($locale, $viewReference->getId(), $refId, $depth + 1, $maxDepth, $name));
+            }
         }
 
         return $viewsReferences;
+    }
+
+    /**
+     * get ViewReference.
+     *
+     * @param string $locale the locale to get views as choices
+     * @param string $refId  ref to get views as choices
+     *
+     * @return array
+     */
+    public function getChoiceByLocaleAndRefId($locale, $refId = null)
+    {
+        return $this->getChoices($locale, null, $refId, 0, 0);
     }
 }

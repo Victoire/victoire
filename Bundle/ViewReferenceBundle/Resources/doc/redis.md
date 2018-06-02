@@ -85,4 +85,4 @@ Class Methods:
 - getReferencesByParameters($parameters, $transform = true, $keepChildren = false)
 - getOneReferenceByParameters($parameters, $transform = true, $keepChildren = false)
 - hasReference()
-- getChoices($refId = null, $depth = 0)
+- getChoices($locale, $parentRefId = null, $refId = null, $depth = 0, $maxDepth = 10, $parentName = '')
