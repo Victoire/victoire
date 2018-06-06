@@ -94,9 +94,11 @@ class BlogController extends BasePageController
      */
     public function feedAction(Request $request, Blog $blog)
     {
-        return [
-            'blog' => $blog,
-        ];
+        $articles = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('VictoireBlogBundle:Article')
+            ->getNewest($blog);
+
+        return compact('blog', 'articles');
     }
 
     /**

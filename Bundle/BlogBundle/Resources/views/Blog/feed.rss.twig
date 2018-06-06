@@ -12,7 +12,7 @@
         </image>
         {% endif %}
 
-        {% for article in blog.articles %}<item>
+        {% for article in articles %}<item>
             <title>{{ article.name }}</title>
             <link>{{ vic_business_link(article, null, constant('\\Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface::ABSOLUTE_URL')) }}</link>
             <description>{{ article.description }}</description>

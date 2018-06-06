@@ -187,4 +187,18 @@ class ArticleRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Get the `$limit` newest articles for the blog `$blog`.
+     */
+    public function getNewest(Blog $blog, $limit = 25)
+    {
+        $queryBuilder = $this->getAll(true, $blog);
+
+        $queryBuilder->getInstance()
+            ->addOrderBy('article.publishedAt', 'DESC')
+            ->setMaxResults($limit);
+
+        return $queryBuilder->run();
+    }
 }
