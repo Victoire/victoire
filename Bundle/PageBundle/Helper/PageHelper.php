@@ -172,10 +172,10 @@ class PageHelper
      * Generates a response from a page url.
      * If seo redirect, return target.
      *
-     * @param string $uri
-     * @param string $url
-     * @param        $locale
-     * @param null   $layout
+     * @param string      $uri
+     * @param string      $url
+     * @param             $locale
+     * @param string|null $layout
      *
      * @return Response
      */
@@ -233,8 +233,8 @@ class PageHelper
     /**
      * Generates a response from a page.
      *
-     * @param View $view
-     * @param null $layout
+     * @param View        $view
+     * @param string|null $layout
      *
      * @return Response
      */
