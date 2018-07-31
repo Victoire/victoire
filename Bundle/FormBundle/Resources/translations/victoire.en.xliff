@@ -72,7 +72,7 @@
       </trans-unit>
       <trans-unit id="58893b9979e7b" resname="form.link_type.route_parameters.label">
         <source>form.link_type.route_parameters.label</source>
-        <target>Routing parametres</target>
+        <target>Routing parameters</target>
       </trans-unit>
       <trans-unit id="58893b9979e9c" resname="form.link_type.route_parameters.placeholder">
         <source>form.link_type.route_parameters.placeholder</source>
