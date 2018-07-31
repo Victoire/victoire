@@ -20,11 +20,6 @@ trait WebViewTrait
     protected $seo;
 
     /**
-     * @ORM\OneToMany(targetEntity="Victoire\Bundle\SeoBundle\Entity\PageSeo", mappedBy="redirectTo")
-     */
-    protected $referers;
-
-    /**
      * @ORM\Column(name="status", type="string", nullable=false)
      */
     protected $status = PageStatus::PUBLISHED;
@@ -66,26 +61,6 @@ trait WebViewTrait
     public function getSeo()
     {
         return $this->seo;
-    }
-
-    /**
-     * Get referers.
-     *
-     * @return string
-     */
-    public function getReferers()
-    {
-        return $this->referers;
-    }
-
-    /**
-     * Set the refere.
-     *
-     * @param string $referers
-     */
-    public function setReferers($referers)
-    {
-        $this->referers = $referers;
     }
 
     /**

@@ -18,10 +18,6 @@ interface WebViewInterface
 
     public function getSeo();
 
-    public function getReferers();
-
-    public function setReferers($referers);
-
     public function setStatus($status);
 
     public function getStatus();
