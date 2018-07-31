@@ -210,7 +210,7 @@ class PageHelper
                 if ($result instanceof Redirection) {
                     return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl(
                         $result->getLink()->getParameters()
-                    ));
+                    ), Response::HTTP_MOVED_PERMANENTLY);
                 } elseif ($result->getRedirection()) {
                     return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl(
                         $result->getRedirection()->getLink()->getParameters()
