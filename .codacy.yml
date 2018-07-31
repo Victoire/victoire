@@ -3,3 +3,4 @@ exclude_paths:
   - Bundle/MediaBundle/Resources/public/js/ckeditor/**
   - Bundle/MediaBundle/Resources/public/js/libs/**
   - Bundle/FormBundle/Resources/public/components/**
+  - Bundle/CoreBundle/Resources/public/vendor/**
