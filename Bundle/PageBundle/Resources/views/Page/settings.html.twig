@@ -35,7 +35,9 @@
                             {{ form_widget(form.translations) }}
                         </div>
 
-                        {{ form_row(form.roles) }}
+                        {% if form.roles is defined %}
+                            {{ form_row(form.roles) }}
+                        {% endif %}
                     </div>
 
                     <div class="v-col v-col--xs-12 v-col--md-6">
