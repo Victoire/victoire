@@ -53,7 +53,7 @@ class VictoireMediaExtension extends Extension implements PrependExtensionInterf
         $twigConfig['globals']['mediamanager'] = '@victoire_media.media_manager';
         $container->prependExtensionConfig('twig', $twigConfig);
 
-        $liipConfig = Yaml::parseFile(__DIR__.'/../Resources/config/liip_imagine.yml');
+        $liipConfig = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/liip_imagine.yml'));
         $container->prependExtensionConfig('liip_imagine', $liipConfig['liip_imagine']);
 
         $configs = $container->getExtensionConfig($this->getAlias());
