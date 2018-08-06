@@ -27,8 +27,8 @@ class SitemapExportHandler
     /**
      * SitemapExportHandler constructor.
      *
-     * @param EntityManager $entityManager
-     * @param PageHelper $pageHelper
+     * @param EntityManager           $entityManager
+     * @param PageHelper              $pageHelper
      * @param ViewReferenceRepository $viewReferenceRepo
      */
     public function __construct(
@@ -62,7 +62,7 @@ class SitemapExportHandler
         $tree = $this->viewReferenceRepo->getOneReferenceByParameters(
             [
                 'viewId' => $homepage->getId(),
-                'locale' => $locale
+                'locale' => $locale,
             ],
             true,
             true
@@ -80,7 +80,7 @@ class SitemapExportHandler
 
             return $ids;
         };
-	    $ids = array_unique($getChildrenIds($tree));
+        $ids = array_unique($getChildrenIds($tree));
 
         $pages = $this->entityManager->getRepository(BasePage::class)
             ->getAll(true)
@@ -89,7 +89,7 @@ class SitemapExportHandler
             ->filterByIds($ids)
             ->run();
         /** @var BasePage $page */
-        foreach($pages as $page) {
+        foreach ($pages as $page) {
             $page->translate($locale);
         }
 
@@ -98,7 +98,7 @@ class SitemapExportHandler
 
     public function serialize($pages)
     {
-        $sitemapEntries= [];
+        $sitemapEntries = [];
 
         /** @var BasePage $page */
         foreach ($pages as $page) {
