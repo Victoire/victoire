@@ -320,11 +320,15 @@ class PageHelper
                     ]);
                 $page->setCurrentLocale($viewReference->getLocale());
             } else { //VirtualBusinessPage
-                $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
+                $page = $this->entityManager->getRepository(View::class)
                     ->findOneBy([
                         'id' => $viewReference->getTemplateId(),
                     ]);
+                $page->setCurrentLocale($viewReference->getLocale());
                 if ($entity = $this->findEntityByReference($viewReference)) {
+                    if (method_exists($entity, 'setCurrentLocale')) {
+                        $entity->setCurrentLocale($viewReference->getLocale());
+                    }
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);
                     }

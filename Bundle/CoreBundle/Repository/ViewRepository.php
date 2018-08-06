@@ -84,6 +84,7 @@ class ViewRepository extends NestedTreeRepository
             ->setParameter('pageIds', $pageIds);
 
         $pages = $qb->getQuery()->getResult();
+        $this->clearInstance();
 
         foreach ($pages as $page) {
             $pageId = $page->getId();
@@ -120,6 +121,7 @@ class ViewRepository extends NestedTreeRepository
         $query = $qb->getQuery();
         $view = $query->getOneOrNullResult();
         $view->translate($locale);
+        $this->clearInstance();
 
         return $view;
     }

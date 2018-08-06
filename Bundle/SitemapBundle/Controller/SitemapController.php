@@ -43,7 +43,7 @@ class SitemapController extends Controller
         }
 
         return $this->render('VictoireSitemapBundle:Sitemap:sitemap.xml.twig', [
-            'pages' => json_decode($pages),
+            'pages' => json_decode($pages, true),
         ]);
     }
 

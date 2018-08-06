@@ -4,7 +4,9 @@ namespace Victoire\Bundle\SitemapBundle\Domain\Export;
 
 use Doctrine\ORM\EntityManager;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
+use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
@@ -25,8 +27,8 @@ class SitemapExportHandler
     /**
      * SitemapExportHandler constructor.
      *
-     * @param EntityManager           $entityManager
-     * @param PageHelper              $pageHelper
+     * @param EntityManager $entityManager
+     * @param PageHelper $pageHelper
      * @param ViewReferenceRepository $viewReferenceRepo
      */
     public function __construct(
@@ -58,7 +60,10 @@ class SitemapExportHandler
 
         /** @var ViewReference $tree */
         $tree = $this->viewReferenceRepo->getOneReferenceByParameters(
-            ['viewId' => $homepage->getId()],
+            [
+                'viewId' => $homepage->getId(),
+                'locale' => $locale
+            ],
             true,
             true
         );
@@ -67,26 +72,35 @@ class SitemapExportHandler
 
         $getChildrenIds = function (ViewReference $tree) use (&$getChildrenIds, $ids) {
             foreach ($tree->getChildren() as $child) {
-                $ids[] = $child->getViewId();
-                $ids = array_merge($ids, $getChildrenIds($child));
+                if (null !== $child->getViewId()) {
+                    $ids[] = $child->getViewId();
+                    $ids = array_merge($ids, $getChildrenIds($child));
+                }
             }
 
             return $ids;
         };
+	    $ids = array_unique($getChildrenIds($tree));
 
-        $pages = $this->entityManager->getRepository('VictoirePageBundle:BasePage')
+        $pages = $this->entityManager->getRepository(BasePage::class)
             ->getAll(true)
             ->joinSeo()
-            ->filterByIds($getChildrenIds($tree))
+            ->joinTranslations($locale)
+            ->filterByIds($ids)
             ->run();
+        /** @var BasePage $page */
+        foreach($pages as $page) {
+            $page->translate($locale);
+        }
 
         return array_merge($pages, $this->getBusinessPages($tree));
     }
 
     public function serialize($pages)
     {
-        $data = [];
+        $sitemapEntries= [];
 
+        /** @var BasePage $page */
         foreach ($pages as $page) {
             // BusinessTemplate have no getUrl() method
             if ($page instanceof BusinessTemplate) {
@@ -94,8 +108,7 @@ class SitemapExportHandler
             }
 
             $seo = $page->getSeo();
-
-            $data[] = [
+            $sitemapEntry = [
                 'url'               => $page->getUrl(),
                 'sitemapChangeFreq' => $seo === null ? 'monthly' : $seo->getSitemapChangeFreq(),
                 'sitemapPriority'   => $seo === null ? 0.5 : $seo->getSitemapPriority(),
@@ -103,12 +116,13 @@ class SitemapExportHandler
 
             // This data is optional in sitemap, add it only if a publication date is available
             // see https://www.sitemaps.org/protocol.html#xmlTagDefinitions
-            if (null !== $page->getPublishedAt() and $page->getPublishedAt() instanceof \DateTime) {
-                $data['publishedAt'] = $page->getPublishedAt()->format('c');
+            if (null !== $page->getPublishedAt() && $page->getPublishedAt() instanceof \DateTime) {
+                $sitemapEntry['publishedAt'] = $page->getPublishedAt()->format('Y-m-d');
             }
+            $sitemapEntries[] = $sitemapEntry;
         }
 
-        return json_encode($data);
+        return json_encode($sitemapEntries);
     }
 
     /**
@@ -125,7 +139,7 @@ class SitemapExportHandler
     {
         foreach ($tree->getChildren() as $child) {
             if ($child instanceof BusinessPageReference
-                && $child->getViewNamespace() == 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage'
+                && $child->getViewNamespace() == VirtualBusinessPage::class
             ) {
                 /** @var WebViewInterface $businessPage */
                 $businessPage = $this->pageHelper->findPageByReference($child);
