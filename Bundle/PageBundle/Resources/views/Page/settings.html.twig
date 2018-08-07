@@ -19,10 +19,12 @@
                         {{ form_widget(form.translations) }}
                         {{ form_row(form.parent) }}
                         {{ form_row(form.template) }}
-                        {{ form_row(form.roles) }}
+                        {% if form.roles is defined %}
+                            {{ form_row(form.roles) }}
+                        {% endif %}
 
                         {% if form.locale is defined %}
-                        {{ form_row(form.locale) }}
+                            {{ form_row(form.locale) }}
                         {% endif %}
                     </div>
 
