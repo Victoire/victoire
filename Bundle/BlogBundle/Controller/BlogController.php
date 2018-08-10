@@ -42,7 +42,7 @@ class BlogController extends BasePageController
     {
         /** @var BlogRepository $blogRepo */
         $blogRepo = $this->get('doctrine.orm.entity_manager')->getRepository('VictoireBlogBundle:Blog');
-	    $blog = $blogId ? $blogRepo->find($blogId) : null;
+        $blog = $blogId ? $blogRepo->find($blogId) : null;
         $locale = $request->getLocale();
         $parameters = [
             'locale'             => $locale,
