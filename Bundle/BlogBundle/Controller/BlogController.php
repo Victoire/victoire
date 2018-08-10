@@ -31,7 +31,6 @@ class BlogController extends BasePageController
      * List all Blogs.
      *
      * @Route("/index/{blogId}/{tab}", name="victoire_blog_index", defaults={"blogId" = null, "tab" = "articles"})
-     * @ParamConverter("blog", class="VictoireBlogBundle:Blog", options={"id" = "blogId"})
      *
      * @param Request $request
      *
@@ -39,10 +38,11 @@ class BlogController extends BasePageController
      *
      * @return JsonResponse
      */
-    public function indexAction(Request $request, $blog = null, $tab = 'articles')
+    public function indexAction(Request $request, $blogId = null, $tab = 'articles')
     {
         /** @var BlogRepository $blogRepo */
         $blogRepo = $this->get('doctrine.orm.entity_manager')->getRepository('VictoireBlogBundle:Blog');
+	    $blog = $blogId ? $blogRepo->find($blogId) : null;
         $locale = $request->getLocale();
         $parameters = [
             'locale'             => $locale,
