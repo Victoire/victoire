@@ -173,6 +173,7 @@ class PageHelper
         $page = null;
         if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
             $page = $this->findPageByReference($viewReference);
+
             $this->checkPageValidity($page, ['url' => $url, 'locale' => $locale]);
             $page->setReference($viewReference);
 
@@ -255,7 +256,6 @@ class PageHelper
         } else {
             $type = $view->getType();
         }
-
         $eventName = 'victoire_core.'.$type.'_menu.contextual';
         $this->eventDispatcher->dispatch($eventName, $event);
 
@@ -263,7 +263,6 @@ class PageHelper
             //Determine which layout to use
             $layout = $this->guessBestLayoutForView($view);
         }
-
         //Create the response
         $response = $this->container->get('templating')->renderResponse('VictoireCoreBundle:Layout:'.$layout.'.html.twig', [
             'view' => $view,
@@ -324,11 +323,13 @@ class PageHelper
                     ->findOneBy([
                         'id' => $viewReference->getTemplateId(),
                     ]);
+
                 $page->setCurrentLocale($viewReference->getLocale());
                 if ($entity = $this->findEntityByReference($viewReference)) {
                     if (method_exists($entity, 'setCurrentLocale')) {
                         $entity->setCurrentLocale($viewReference->getLocale());
                     }
+
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);
                     }
