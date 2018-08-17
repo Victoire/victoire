@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\VarDumper\VarDumper;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
@@ -173,6 +174,13 @@ class PageHelper
         $page = null;
         if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
             $page = $this->findPageByReference($viewReference);
+            $page->setCurrentLocale($viewReference->getLocale());
+            if ($entity = $this->findEntityByReference($viewReference)) {
+                if (method_exists($entity, 'setCurrentLocale')) {
+                    $entity->setCurrentLocale($viewReference->getLocale());
+                }
+            }
+
             $this->checkPageValidity($page, ['url' => $url, 'locale' => $locale]);
             $page->setReference($viewReference);
 
@@ -263,7 +271,6 @@ class PageHelper
             //Determine which layout to use
             $layout = $this->guessBestLayoutForView($view);
         }
-
         //Create the response
         $response = $this->container->get('templating')->renderResponse('VictoireCoreBundle:Layout:'.$layout.'.html.twig', [
             'view' => $view,
@@ -324,11 +331,7 @@ class PageHelper
                     ->findOneBy([
                         'id' => $viewReference->getTemplateId(),
                     ]);
-                $page->setCurrentLocale($viewReference->getLocale());
                 if ($entity = $this->findEntityByReference($viewReference)) {
-                    if (method_exists($entity, 'setCurrentLocale')) {
-                        $entity->setCurrentLocale($viewReference->getLocale());
-                    }
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);
                     }
