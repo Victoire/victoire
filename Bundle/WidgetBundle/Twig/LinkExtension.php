@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
+use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -127,7 +128,14 @@ class LinkExtension extends \Twig_Extension
                     ];
 
                     try {
+                        $currentLocale = $this->request->getLocale();
                         $page = $this->pageHelper->findPageByParameters($params);
+                        $page->setCurrentLocale($currentLocale);
+                        if ($page instanceof BusinessPage && $entity = $page->getBusinessEntity()) {
+                            if (method_exists($entity, 'setCurrentLocale')) {
+                                $entity->setCurrentLocale($currentLocale);
+                            }
+                        }
                     } catch (ViewReferenceNotFoundException $e) {
                         $this->logger->error($e->getMessage(), $params);
                         /** @var ErrorPage $page */

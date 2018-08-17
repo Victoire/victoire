@@ -173,12 +173,6 @@ class PageHelper
         $page = null;
         if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
             $page = $this->findPageByReference($viewReference);
-            $page->setCurrentLocale($viewReference->getLocale());
-            if ($entity = $this->findEntityByReference($viewReference)) {
-                if (method_exists($entity, 'setCurrentLocale')) {
-                    $entity->setCurrentLocale($viewReference->getLocale());
-                }
-            }
 
             $this->checkPageValidity($page, ['url' => $url, 'locale' => $locale]);
             $page->setReference($viewReference);
@@ -329,7 +323,13 @@ class PageHelper
                     ->findOneBy([
                         'id' => $viewReference->getTemplateId(),
                     ]);
+
+                $page->setCurrentLocale($viewReference->getLocale());
                 if ($entity = $this->findEntityByReference($viewReference)) {
+                    if (method_exists($entity, 'setCurrentLocale')) {
+                        $entity->setCurrentLocale($viewReference->getLocale());
+                    }
+
                     if ($page instanceof BusinessTemplate) {
                         $page = $this->updatePageWithEntity($page, $entity);
                     }
