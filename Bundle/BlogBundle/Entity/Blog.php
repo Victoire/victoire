@@ -5,6 +5,7 @@ namespace Victoire\Bundle\BlogBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\PageBundle\Entity\PageStatus;
 
 /**
  * PostPage.
@@ -74,7 +75,8 @@ class Blog extends Page
     public function getPublishedArticles()
     {
         return $this->articles->filter(function (Article $article) {
-            return $article->getPublishedAt() <= new \DateTime();
+            return $article->getStatus() === PageStatus::PUBLISHED
+                && $article->getPublishedAt() <= new \DateTime();
         });
     }
 
