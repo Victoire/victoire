@@ -90,6 +90,8 @@ class SitemapExportHandler
             ->run();
         /** @var BasePage $page */
         foreach ($pages as $page) {
+            $page->setCurrentLocale($locale);
+            $this->entityManager->refresh($page);
             $page->translate($locale);
         }
 
