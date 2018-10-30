@@ -2,13 +2,15 @@
 
 namespace Victoire\Tests\Features\Context;
 
+use SebastianBergmann\CodeCoverage;
+use SebastianBergmann\CodeCoverage\Report;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 
 class CoverageContext implements Context
 {
     /**
-     * @var \PHP_CodeCoverage
+     * @var CodeCoverage
      */
     private static $coverage;
 
@@ -16,17 +18,17 @@ class CoverageContext implements Context
     public static function setup()
     {
         if (!self::$coverage) {
-            $filter = new \PHP_CodeCoverage_Filter();
-            $filter->addDirectoryToBlacklist(__DIR__.'/../../../vendor');
+            $filter = new CodeCoverage\Filter();
+            #$filter->addDirectoryToBlacklist(__DIR__.'/../../../vendor');
             $filter->addDirectoryToWhitelist(__DIR__.'/../../../Bundle');
-            self::$coverage = new \PHP_CodeCoverage(null, $filter);
+            self::$coverage = new CodeCoverage\CodeCoverage(null, $filter);
         }
     }
 
     /** @AfterSuite */
     public static function tearDown()
     {
-        $writer = new \PHP_CodeCoverage_Report_HTML();
+        $writer = new Report\Html\Facade();
         $writer->process(self::$coverage, sys_get_temp_dir().'/Victoire/logs/coverage');
     }
 
