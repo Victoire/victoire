@@ -1,0 +1,68 @@
+version: 2
+environment:
+  TZ:
+    Europe/Paris
+jobs:
+  build:
+    docker:
+      - image: troopers/docker-images:ci-victoire
+    environment:
+      DISPLAY: ':99.0'
+    steps:
+      - checkout
+      - run: echo 127.0.0.1 fr.victoire.io >> /etc/hosts
+      - run: echo 127.0.0.1 en.victoire.io >> /etc/hosts
+      - run: service mysql start
+      - run: service redis-server start
+      - run: echo "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));" | mysql
+      - run: cp Tests/Functionnal/app/config/parameters.yml.dist Tests/Functionnal/app/config/parameters.yml
+      - run: echo "memory_limit = 2048M" > /usr/local/etc/php/conf.d/memory.ini
+      - run: echo "always_populate_raw_post_data=-1" > /usr/local/etc/php/conf.d/post_data.ini
+      - run: >
+          if [ -n "${RUN_NIGHTLY_BUILD}" ]; then
+            sed -i 's/^;//' /usr/local/etc/php/conf.d/xdebug.ini
+            echo "xdebug enabled"
+          fi
+      - run: >
+          if [ -z "${RUN_NIGHTLY_BUILD}" ]; then
+            cp behat.yml.dist behat.yml
+            sed -i '/CoverageContext/d' behat.yml
+            echo "CoverageContext disabled"
+          fi
+      - run: npm install less@2.7.2
+      - run: mkdir fails
+      - run: php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php && php composer-setup.php && rm composer-setup.php
+      - run: php composer.phar install --prefer-dist
+      - run: php Tests/Functionnal/bin/console --env=ci doctrine:database:create --no-debug
+      - run: php Tests/Functionnal/bin/console --env=ci doctrine:schema:create --no-debug
+      - run: php Tests/Functionnal/bin/console --env=ci cache:warmup --no-debug
+      - run: php Tests/Functionnal/bin/console --env=domain cache:warmup --no-debug
+      - run: php Tests/Functionnal/bin/console --env=ci victoire:generate:view --no-debug
+      - run: php Tests/Functionnal/bin/console --env=ci assets:install Tests/Functionnal/web --no-debug
+      - run: php Tests/Functionnal/bin/console --env=ci bazinga:js-translation:dump --no-debug
+      - run: php Tests/Functionnal/bin/console --env=ci fos:js:dump --target="Tests/Functionnal/web/js/fos_js_routes_test.js" --no-debug
+      - run: php Tests/Functionnal/bin/console --env=domain fos:js:dump --target="Tests/Functionnal/web/js/fos_js_routes_domain.js" --no-debug
+      - run: php Tests/Functionnal/bin/console --env=ci assetic:dump --no-debug
+      - run: wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.1.jar
+      - run:
+          command: 'java -jar selenium-server-standalone-2.53.1.jar > /dev/null 2>&1'
+          background: true
+      - run:
+          command: 'php Tests/Functionnal/bin/console --env=ci server:run -r Tests/Functionnal/app/config/router_ci.php --no-debug > server.log 2>&1'
+          background: true
+      - run:
+          command: "Xvfb :99 -ac 2>/dev/null"
+          background: true
+      - run: sleep 3 # give xvfb some time to start
+
+      - run: ./vendor/bin/behat --format=pretty
+      - run: wget http://psvcg.coreteks.org/php-semver-checker-git.phar
+      - run: >
+          php php-semver-checker-git.phar suggest --allow-detached -vvv --details --include-before=src --include-after=src | awk '/Suggested semantic version: / {print $4}' | awk '{ print "{\"Suggested semantic version\":\"" $1 "\"}" }' > $CIRCLE_TEST_REPORTS/semver.json
+      - run: >
+          if [ -n "${RUN_NIGHTLY_BUILD}" ]; then
+            mkdir -p cp $CIRCLE_TEST_REPORTS/coverage && cp -R $(php -r "echo sys_get_temp_dir();")/Victoire/logs/coverage $CIRCLE_TEST_REPORTS
+          fi
+
+      - store_artifacts:
+          path: fails
