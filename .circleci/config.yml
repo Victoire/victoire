@@ -45,7 +45,7 @@ jobs:
       - run: php Tests/Functionnal/bin/console --env=ci assetic:dump --no-debug
       - run: wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.1.jar
       - run:
-          command: 'java -jar selenium-server-standalone-2.53.1.jar > /dev/null 2>&1'
+          command: 'java -jar selenium-server-standalone-2.53.1.jar'
           background: true
       - run:
           command: 'php Tests/Functionnal/bin/console --env=ci server:run -r Tests/Functionnal/app/config/router_ci.php --no-debug > server.log 2>&1'
