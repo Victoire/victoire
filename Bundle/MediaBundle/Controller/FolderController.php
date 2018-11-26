@@ -4,7 +4,6 @@ namespace Victoire\Bundle\MediaBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,9 +25,10 @@ class FolderController extends Controller
      * @param int $folderId The folder id
      *
      * @Route("/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_folder_show")
-     * @Template()
      *
-     * @return array
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     *
+     * @return Response
      */
     public function showAction($folderId)
     {
@@ -43,13 +43,13 @@ class FolderController extends Controller
         $subForm = $this->createForm(FolderType::class, $sub, ['folder' => $sub]);
         $editForm = $this->createForm(FolderType::class, $folder, ['folder' => $folder]);
 
-        return [
-            'mediamanager'  => $this->get('victoire_media.media_manager'),
-            'subform'       => $subForm->createView(),
-            'editform'      => $editForm->createView(),
-            'folder'        => $folder,
-            'folders'       => $folders,
-        ];
+        return $this->render('@VictoireMedia/Folder/show.html.twig', [
+            'mediamanager' => $this->get('victoire_media.media_manager'),
+            'subform'      => $subForm->createView(),
+            'editform'     => $editForm->createView(),
+            'folder'       => $folder,
+            'folders'      => $folders,
+        ]);
     }
 
     /**
@@ -80,7 +80,7 @@ class FolderController extends Controller
             $folderId = $parentFolder->getId();
         }
 
-        return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', ['folderId'  => $folderId]));
+        return new RedirectResponse($this->generateUrl('VictoireMediaBundle_folder_show', ['folderId' => $folderId]));
     }
 
     /**
@@ -92,7 +92,6 @@ class FolderController extends Controller
      * @return Response
      * @Route("/subcreate/{folderId}", requirements={"folderId" = "\d+"}, name="VictoireMediaBundle_folder_sub_create")
      * @Method({"GET", "POST"})
-     * @Template()
      */
     public function subCreateAction(Request $request, $folderId)
     {

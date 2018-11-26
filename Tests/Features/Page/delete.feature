@@ -12,6 +12,6 @@ Feature: Delete a page
         When I follow the link containing "DELETE"
         Then I should see "This action will permanently delete this page from the database. This action is irreversible."
         When I press "YES, I WANT TO DELETE IT!"
-        Then I should be on "/en/"
+        Then the url should match "/en/"
         When I am on "/en/english-test"
         Then I should see "404 Not Found"

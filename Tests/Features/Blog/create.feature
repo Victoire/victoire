@@ -14,8 +14,9 @@ Background:
         When I fill in "blog[translations][en][name]" with "The Jedi network"
         And I follow "Create"
         Then I should see "Successfully created page"
-        And I switch to "layout" mode
-        And I should see "New content"
+        And the title should be "The Jedi network"
+        When I switch to "layout" mode
+        Then I should see "New content"
         When I select "Force" from the "1" select of "main_content" slot
         Then I should see "Force side"
         When I fill in "Force side" with "dark"
@@ -36,7 +37,8 @@ Background:
         And I select "First blog template" from "Template"
         And I follow "Create"
         And I wait 5 seconds
-        Then I should be on "/en/the-jedi-network/i-m-your-father"
+        Then the url should match "/en/the-jedi-network/i-m-your-father"
+        And the title should be "I'm your father."
 
     @alice(Blog) @alice(BlogTemplate)
     Scenario: I create a new article with a slug
@@ -53,7 +55,7 @@ Background:
         When I select "First blog template" from "Template"
         And I follow "Create"
         And I wait 5 seconds
-        Then I should be on "/en/the-jedi-network/custom-slug"
+        Then the url should match "/en/the-jedi-network/custom-slug"
 
     @alice(Blog) @alice(Article) @alice(BlogTemplate)
     Scenario: I can view the Article list in the blog management window

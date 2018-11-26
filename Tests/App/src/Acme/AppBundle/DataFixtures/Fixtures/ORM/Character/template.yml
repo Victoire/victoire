@@ -11,10 +11,10 @@ Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
 Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate:
     template_jedi:
         backendName: "Jedi template"
-        businessEntity: @jedi_business_entity
-        author: @anakin
-        template: @template_base
+        businessEntityId: @jedi_business_entity
+        author: "@anakin"
+        template: "@template_base"
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
-        parent: @home
-        translations: [@jedi_character_en, @jedi_character_fr]
+        parent: "@home"
+        translations: ["@jedi_character_en", "@jedi_character_fr"]

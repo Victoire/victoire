@@ -24,60 +24,60 @@ Victoire\Bundle\TwigBundle\Entity\ErrorPage:
     400:
         currentLocale: en
         code: 400
-        template: @template_base
-        author: @anakin
+        template: "@template_base"
+        author: "@anakin"
         name: Mauvaise Requete
         slug: mauvaise-requete
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
-        translations: [@400_trans]
+        translations: ["@400_trans"]
     403:
         currentLocale: en
         code: 403
-        template: @template_base
-        author: @anakin
+        template: "@template_base"
+        author: "@anakin"
         name: Interdit
         slug: erreur403
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
-        translations: [@403_trans]
+        translations: ["@403_trans"]
     404:
         currentLocale: en
         code: 404
-        template: @template_base
-        author: @anakin
+        template: "@template_base"
+        author: "@anakin"
         name: Page introuvable
         slug: erreur404
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
-        translations: [@404_trans]
+        translations: ["@404_trans"]
     500:
         currentLocale: en
         code: 500
-        template: @template_base
-        author: @anakin
+        template: "@template_base"
+        author: "@anakin"
         name: Erreur serveur
         slug: erreur500
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
-        translations: [@500_trans]
+        translations: ["@500_trans"]
     503:
         currentLocale: en
         code: 503
-        template: @template_base
-        author: @anakin
+        template: "@template_base"
+        author: "@anakin"
         name: Service indisponible
         slug: erreur503
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
-        translations: [@503_trans]
+        translations: ["@503_trans"]

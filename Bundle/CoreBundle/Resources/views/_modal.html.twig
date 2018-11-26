@@ -44,4 +44,11 @@
             </div>
         {% endblock modal_footer %}
     </section>
+
+    <script>
+        $vic('#{{ block('modal_container_id') }}').attr('data-modal', "show");
+        $vic('#{{ block('modal_container_id') }}').on('hidden.bs.modal', function () {
+            $vic(this).remove();
+        });
+    </script>
 {% endblock modal_container %}

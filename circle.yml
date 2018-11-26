@@ -7,7 +7,7 @@ machine:
   services:
     - redis
   php:
-    version: 7.0.4
+    version: 7.1.9
 
 checkout:
   post:

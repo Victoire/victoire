@@ -2,7 +2,7 @@ services:
     victoire_widget.widget_content_resolver:
         class: Victoire\Bundle\WidgetBundle\Resolver\WidgetContentResolver
         arguments:
-            - @victoire_widget.widget_content_resolver_chain
+            - "@victoire_widget.widget_content_resolver_chain"
 
     victoire_widget.base_widget_content_resolver:
         class: Victoire\Bundle\WidgetBundle\Resolver\BaseWidgetContentResolver
@@ -13,46 +13,47 @@ services:
 
     victoire_widget.widget_helper:
         class: Victoire\Bundle\WidgetBundle\Helper\WidgetHelper
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     victoire_widget.widget_form_builder:
         class: Victoire\Bundle\WidgetBundle\Builder\WidgetFormBuilder
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
     victoire_widget.widget_renderer:
         class: Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer
         arguments:
-            - @service_container
-            - @victoire_widget.widget_cache
-            - @victoire_widget.widget_helper
-            - @victoire_core.victoire_collector
-            - @victoire_business_page.business_page_helper
+            - "@service_container"
+            - "@victoire_widget.widget_cache"
+            - "@victoire_widget.widget_helper"
+            - "@victoire_core.victoire_collector"
+            - "@victoire_business_page.business_page_helper"
 
     victoire_widget.widget_cache:
         class: Victoire\Bundle\WidgetBundle\Cache\WidgetCache
         arguments:
-            - @snc_redis.victoire_client
-            - @security.authorization_checker
-            - @victoire_widget.widget_helper
+            - "@snc_redis.victoire_client"
+            - "@security.authorization_checker"
+            - "@victoire_widget.widget_helper"
 
     victoire_widget.widget_manager:
         class: Victoire\Bundle\WidgetBundle\Model\WidgetManager
         arguments:
-            - @victoire_widget.widget_helper
-            - @victoire_widget.widget_form_builder
-            - @victoire_widget.widget_content_resolver
-            - @victoire_widget.widget_renderer
-            - @event_dispatcher
-            - @doctrine.orm.entity_manager
-            - @victoire_form.error_helper
-            - @request
-            - @victoire_widget_map.manager
-            - @victoire_widget_map.builder
+            - "@victoire_widget.widget_helper"
+            - "@victoire_widget.widget_form_builder"
+            - "@victoire_widget.widget_content_resolver"
+            - "@victoire_widget.widget_renderer"
+            - "@event_dispatcher"
+            - "@doctrine.orm.entity_manager"
+            - "@victoire_form.error_helper"
+            - "@request_stack"
+            - "@victoire_widget_map.manager"
+            - "@victoire_widget_map.builder"
             - "@victoire_core.helper.business_entity_helper"
-            - @templating
-            - @victoire_page.page_helper
-            - %victoire_core.slots%
-            - @victoire_business_page.transformer.virtual_to_business_page_transformer
+            - "@templating"
+            - "@victoire_page.page_helper"
+            - "%victoire_core.slots%"
+            - "@victoire_business_page.transformer.virtual_to_business_page_transformer"
+            - "%victoire_twig.responsive%"
             - "@victoire_business_entity.cache_reader"
         scope: request
 
@@ -62,7 +63,7 @@ services:
     victoire_widget.widget_content_resolver_chain:
         class: Victoire\Bundle\WidgetBundle\Resolver\Chain\WidgetContentResolverChain
         arguments:
-            - @victoire_widget.widget_helper
+            - "@victoire_widget.widget_helper"
 
     victoire_widget.widget_item_content_resolver_chain:
         class: Victoire\Bundle\WidgetBundle\Resolver\Chain\WidgetItemChain
@@ -70,32 +71,32 @@ services:
     victoire_widget.twig.link_extension:
         class: Victoire\Bundle\WidgetBundle\Twig\LinkExtension
         arguments:
-            - @router
-            - @request_stack
-            - %victoire_seo.analytics%
-            - @victoire_core.helper.business_entity_helper
-            - @victoire_business_page.business_page_helper
-            - @victoire_page.page_helper
-            - @doctrine.orm.entity_manager
-            - @logger
-            - @victoire.repository.error_page
-            - %locale%
-            - %victoire_core.businessTemplates%
+            - "@router"
+            - "@request_stack"
+            - "%victoire_seo.analytics%"
+            - "@victoire_core.helper.business_entity_helper"
+            - "@victoire_business_page.business_page_helper"
+            - "@victoire_page.page_helper"
+            - "@doctrine.orm.entity_manager"
+            - "@logger"
+            - "@victoire.repository.error_page"
+            - "%locale%"
+            - "%victoire_core.businessTemplates%"
         tags:
             - { name: twig.extension }
 
     victoire_widget.widget_style_type:
         class: Victoire\Bundle\WidgetBundle\Form\WidgetStyleType
         arguments:
-            - @kernel
-            - @file_locator
+            - "@kernel"
+            - "@file_locator"
         tags:
             - { name: form.type }
 
     victoire_widget.cache.widget_cache_clearer:
         class: Victoire\Bundle\WidgetBundle\Cache\WidgetCacheClearer
         arguments:
-            - @victoire_widget.widget_cache
+            - "@victoire_widget.widget_cache"
         tags:
             - { name: kernel.cache_clearer }
 

@@ -6,6 +6,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -30,11 +31,16 @@ class VictoireCoreExtension extends Extension
         // We instanciate a new kernel and iterate on all it's bundles to load the victoire_core configs
         $kernel = new \AppKernel('prod', false);
         foreach ($kernel->registerBundles() as $bundle) {
-            $path = $bundle->getPath();
-            $yamlParser = new Yaml($container, $path.'/Resources/config/config.yml');
-            $victoireConfig = $yamlParser->parse($path.'/Resources/config/config.yml');
-            if (is_array($victoireConfig) && array_key_exists('victoire_core', $victoireConfig)) {
-                $config['widgets'] = array_merge($config['widgets'], $victoireConfig['victoire_core']['widgets'] ?: []);
+            try {
+                $filename = sprintf('%s/Resources/config/config.yml', $bundle->getPath());
+                if (file_exists($filename)) {
+                    $value = Yaml::parse(file_get_contents($filename));
+                    if (is_array($value) && array_key_exists('victoire_core', $value)) {
+                        $config['widgets'] = array_merge($config['widgets'], $value['victoire_core']['widgets'] ?: []);
+                    }
+                }
+            } catch (ParseException $e) {
+                throw $e;
             }
         }
 
@@ -72,7 +78,7 @@ class VictoireCoreExtension extends Extension
             'victoire_core.base_paths', $config['base_paths']
         );
         $container->setParameter(
-            'victoire_core.base_paths', $config['base_paths']
+            'victoire_core.entity_finder_regex', $config['entity_finder_regex']
         );
         $container->setParameter(
             'victoire_core.businessTemplates', $config['businessTemplates']

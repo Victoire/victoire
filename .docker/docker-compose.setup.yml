@@ -4,7 +4,6 @@ install:
   container_name: victoire-setup
   command: sh /var/www/victoire/.docker/php-fpm/build.sh
   links:
-    - composer
     - victoire-php
     - victoire-mailhog
     - victoire-mysql

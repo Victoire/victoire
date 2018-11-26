@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -122,7 +123,7 @@ class MenuBuilder
             $request = $this->requestStack->getMasterRequest();
             $this->topMenuItems = [];
             foreach ($this->adaptors as $menuAdaptor) {
-                $menuAdaptor->adaptChildren($this, $this->topMenuItems, null, $request);
+                $menuAdaptor->adaptChildren($this, $this->topMenuItems, null, $this->getRequest());
             }
         }
 
@@ -145,9 +146,17 @@ class MenuBuilder
         $request = $this->requestStack->getMasterRequest();
         $result = [];
         foreach ($this->adaptors as $menuAdaptor) {
-            $menuAdaptor->adaptChildren($this, $result, $parent, $request);
+            $menuAdaptor->adaptChildren($this, $result, $parent, $this->getRequest());
         }
 
         return $result;
+    }
+
+    /**
+     * @return Request
+     */
+    private function getRequest()
+    {
+        return $this->requestStack->getCurrentRequest();
     }
 }

@@ -11,7 +11,7 @@ Feature: Manage jedis
             | Yoda   | bright | 17700         | yoda   |
         Then I should see "Jedi"
         When I follow "Jedi"
-        Then I should be on "/victoire-dcms/backend/jedi/"
+        Then the url should match "/victoire-dcms/backend/jedi/"
         Then I should see "Jedis list"
         Then I should see the following table
             | Name   | Midichlorians | Side   |
@@ -26,14 +26,14 @@ Feature: Manage jedis
         Given I am on "/victoire-dcms/backend/jedi/"
         Then I should see "No result"
         When I follow "New jedi"
-        Then I should be on "/victoire-dcms/backend/jedi/new"
+        Then the url should match "/victoire-dcms/backend/jedi/new"
         And I should see "New Jedi"
         When I fill in "Name" with "Anakin"
         And I fill in "MidiChlorians" with "27700"
         And I fill in "Slug" with "anakin"
         And I select "dark" from "Force side"
         And I press "Create"
-        Then I should be on "/victoire-dcms/backend/jedi/"
+        Then the url should match "/victoire-dcms/backend/jedi/"
         Then I should see "Jedis list"
         Then I should see the following table
             | Name   | Midichlorians | Side |
@@ -52,7 +52,7 @@ Feature: Manage jedis
         And I follow the 1st "Edit" link
         Then I should see "Jedi edit"
         When I press "Delete"
-        Then I should be on "/victoire-dcms/backend/jedi/"
+        Then the url should match "/victoire-dcms/backend/jedi/"
         Then I should see "Jedis list"
         Then I should see the following table
             | Name | Midichlorians | Side   |
@@ -90,4 +90,4 @@ Feature: Manage jedis
         When I submit the widget
         And I wait 5 seconds
         Then I should see "Successfully modified page"
-        And I should be on "/en/dark-vador"
+        And the url should match "/en/dark-vador"

@@ -52,12 +52,4 @@ class FlashExtension extends \Twig_Extension
     {
         return $this->mapping;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'vic_mopa_bootstrap_flash';
-    }
 }

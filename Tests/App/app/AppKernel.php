@@ -47,6 +47,7 @@ class AppKernel extends Kernel
             new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
             new Victoire\Bundle\BusinessEntityBundle\VictoireBusinessEntityBundle(),
             new Victoire\Bundle\BusinessPageBundle\VictoireBusinessPageBundle(),
+            new Victoire\Bundle\ConfigBundle\VictoireConfigBundle(),
             new Victoire\Bundle\FilterBundle\VictoireFilterBundle(),
             new Victoire\Bundle\I18nBundle\VictoireI18nBundle(),
             new Victoire\Bundle\FormBundle\VictoireFormBundle(),
@@ -62,13 +63,17 @@ class AppKernel extends Kernel
             new Victoire\Bundle\ViewReferenceBundle\ViewReferenceBundle(),
             new Victoire\Bundle\WidgetBundle\VictoireWidgetBundle(),
             new Victoire\Bundle\WidgetMapBundle\VictoireWidgetMapBundle(),
-new Victoire\Bundle\ORMBusinessEntityBundle\VictoireORMBusinessEntityBundle(),
-            new Victoire\Bundle\APIBusinessEntityBundle\VictoireAPIBusinessEntityBundle(),            //Victoire minmaltest bundles
+            new Victoire\Bundle\ORMBusinessEntityBundle\VictoireORMBusinessEntityBundle(),
+            new Victoire\Bundle\APIBusinessEntityBundle\VictoireAPIBusinessEntityBundle(),
+
+                //Victoire minmaltest bundles
             new Victoire\Widget\ForceBundle\VictoireWidgetForceBundle(),
             new Victoire\Widget\LightSaberBundle\VictoireWidgetLightSaberBundle(),
-            new Victoire\Widget\ButtonBundle\VictoireWidgetButtonBundle(),
             new Victoire\Widget\TextBundle\VictoireWidgetTextBundle(),
             new Acme\AppBundle\AcmeAppBundle(),
+
+            // dev
+            new Symfony\Bundle\WebServerBundle\WebServerBundle(),
         ],
             $this->getTestBundles()
         );

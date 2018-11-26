@@ -35,39 +35,6 @@ class Article implements BusinessEntityInterface
     private $id;
 
     /**
-     * @deprecated
-     * Title is inherited from Page, just add the BusinessProperty annotation.
-     *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     */
-    private $name;
-
-    /**
-     * @deprecated
-     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
-     */
-    private $slug;
-
-    /**
-     * @deprecated
-     * Description is inherited from Page, just add the BusinessProperty annotation.
-     *
-     * @ORM\Column(name="description", type="text", nullable=true)
-     */
-    private $description;
-
-    /**
-     * @deprecated
-     *
-     * @var string
-     *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\MediaBundle\Entity\Media")
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="CASCADE")
-     * @VIC\BusinessProperty("imageable")
-     */
-    private $image;
-
-    /**
      * @ORM\Column(name="status", type="string", nullable=false)
      */
     protected $status;
@@ -75,7 +42,7 @@ class Article implements BusinessEntityInterface
     /**
      * Categories of the article.
      *
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity="BlogCategory", inversedBy="articles")
      * @ORM\JoinColumn(onDelete="SET NULL")
      * @VIC\BusinessProperty({"textable", "seoable"})
      */
@@ -146,6 +113,13 @@ class Article implements BusinessEntityInterface
     private $deletedAt;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="promoted", type="boolean", nullable=true)
+     */
+    private $promoted = false;
+
+    /**
      * @Gedmo\Locale
      */
     protected $locale;
@@ -201,11 +175,11 @@ class Article implements BusinessEntityInterface
     /**
      * Set category.
      *
-     * @param Category $category
+     * @param BlogCategory $category
      *
      * @return Article
      */
-    public function setCategory(Category $category)
+    public function setCategory(BlogCategory $category)
     {
         $this->category = $category;
     }
@@ -413,7 +387,7 @@ class Article implements BusinessEntityInterface
         setlocale(LC_TIME, 'fr_FR');
 
         if ($this->publishedAt) {
-            return strftime('%d %B %Y', $this->publishedAt->getTimestamp());
+            return $this->publishedAtString = strftime('%d %B %Y', $this->publishedAt->getTimestamp());
         } else {
             return '';
         }
@@ -515,5 +489,25 @@ class Article implements BusinessEntityInterface
     {
         $this->translate($locale, false)->setImage($image);
         $this->mergeNewTranslations();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPromoted()
+    {
+        return $this->promoted;
+    }
+
+    /**
+     * @param bool $promoted
+     *
+     * @return Article
+     */
+    public function setPromoted($promoted)
+    {
+        $this->promoted = $promoted;
+
+        return $this;
     }
 }

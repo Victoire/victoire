@@ -5,7 +5,6 @@
 {% block html_attr %}ng-app="ngApp" lang="{{ app.request.locale|split('_')[0] }}"{% endblock html_attr %}
 {% block title %}Victoire DCMS{% endblock %}
 {% block meta %}{% include 'VictoireSeoBundle::_meta.html.twig' %}{% endblock %}
-{% block head_icons %}<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />{% endblock %}
 
 {% block head_script %}
     <!-- HEAD_SCRIPT -->
@@ -35,6 +34,17 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     {% endif %}
+
+    {% block trans_script %}
+        {% if victoire_i18n_available_locales|default([])|length > 1 or is_granted('ROLE_VICTOIRE') %}
+            {% javascripts
+                "@BazingaJsTranslationBundle/Resources/public/js/translator.min.js"
+                "js/translations/config.js"
+            %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endif %}
+    {% endblock trans_script %}
 {% endblock head_script %}
 
 {% block head_style %}
@@ -44,7 +54,7 @@
     {% endstylesheets %}
 
     {% if is_granted('ROLE_VICTOIRE') or app.request.attributes.get('_route') == 'fos_user_security_login' %}
-        {% stylesheets filter='less, cssrewrite' injector="victoire-edit, alertify-codrops-notification" %}
+        {% stylesheets filter='less, cssrewrite' injector="victoire-edit" %}
             <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
         {% endstylesheets %}
 
@@ -73,20 +83,11 @@
             {{ cms_slot_widgets('main_content') }}
         {% endblock body_content_main %}
     </main>
+    <div id="vic-modal-container"><!-- Modal container --></div>
 {% endblock body_content %}
 
 {% block foot_script %}
     <!-- Script foot includes -->
-    {% if victoire_i18n_available_locales|default([])|length > 1 or is_granted('ROLE_VICTOIRE') %}
-        {% javascripts
-            "@BazingaJsTranslationBundle/Resources/public/js/translator.min.js"
-            "js/translations/config.js" %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-    {% endif %}
-
-    <!-- ==================== -->
-
     {% block foot_script__view %}
         {% block foot_script__view_bootstrap %}
             {% if app.debug %}
@@ -117,7 +118,7 @@
                 <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}
 
-            <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'victoire'}) }}?locales={{ victoire_i18n_available_locales|join(',') }}"></script>
+            <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'victoire'}) }}?locales={{ victoire_i18n_available_locales|default([])|join(',') }}"></script>
 
             <script type="text/javascript">
                 $vic(document).ready(function(){

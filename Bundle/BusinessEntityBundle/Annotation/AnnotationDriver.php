@@ -26,6 +26,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     protected $eventDispatcher;
     protected $widgetHelper;
     protected $paths;
+    protected $regex;
     protected $logger;
 
     /**
@@ -35,6 +36,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
      * @param EventDispatcherInterface $eventDispatcher
      * @param WidgetHelper             $widgetHelper
      * @param array                    $paths           The paths where to search about Entities
+     * @param string                   $regex
      * @param LoggerInterface          $logger
      */
     public function __construct(
@@ -42,12 +44,14 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         EventDispatcherInterface $eventDispatcher,
         $widgetHelper,
         $paths,
+        $regex,
         LoggerInterface $logger
     ) {
         $this->reader = $reader;
         $this->eventDispatcher = $eventDispatcher;
         $this->widgetHelper = $widgetHelper;
         $this->paths = $paths;
+        $this->regex = $regex;
         $this->logger = $logger;
     }
 
@@ -67,7 +71,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         $includedFiles = [];
         foreach ($this->paths as $path) {
             if (!is_dir($path)) {
-                $this->logger->error(sprintf(
+                $this->logger->warning(sprintf(
                     'The given path "%s" seems to be incorrect. You need to edit victoire_core.base_paths configuration.',
                     $path
                 ));
@@ -78,25 +82,63 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                     new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS),
                     \RecursiveIteratorIterator::LEAVES_ONLY
                 ),
-                '/^.+\/Entity\/.+\.php$/i',
+                $this->regex,
                 \RecursiveRegexIterator::GET_MATCH
             );
             foreach ($iterator as $file) {
                 $sourceFile = realpath($file[0]);
-                require_once $sourceFile;
                 $includedFiles[] = $sourceFile;
             }
         }
-        $declared = get_declared_classes();
-        foreach ($declared as $className) {
-            $rc = new \ReflectionClass($className);
-            $sourceFile = $rc->getFileName();
-            if (in_array($sourceFile, $includedFiles) && !$this->isTransient($className)) {
-                $classes[] = $className;
+
+        foreach ($includedFiles as $fileName) {
+            $class = $this->getClassNameFromFile($fileName);
+            if (class_exists($class) && !$this->isTransient($class)) {
+                $classes[] = $class;
             }
         }
 
         return $classes;
+    }
+
+    /**
+     *  get_declared_classes doesn't list anymore all classes since issue #23014 of Symfony
+     *  I suggest using tokenizer. Faster than including or requiring all the files
+     *  Function recovered on http://jarretbyrne.com/2015/06/197/ Thank you to him.
+     *
+     *  @return string
+     */
+    private function getClassNameFromFile($filepath)
+    {
+        $contents = file_get_contents($filepath);
+        $namespace = $class = '';
+        $getting_namespace = $getting_class = false;
+        foreach (token_get_all($contents) as $token) {
+            if (is_array($token) && $token[0] == T_NAMESPACE) {
+                $getting_namespace = true;
+            }
+
+            if (is_array($token) && in_array($token[0], [T_CLASS, T_TRAIT, T_INTERFACE])) {
+                $getting_class = true;
+            }
+
+            if ($getting_namespace === true) {
+                if (is_array($token) && in_array($token[0], [T_STRING, T_NS_SEPARATOR])) {
+                    $namespace .= $token[1];
+                } elseif ($token === ';') {
+                    $getting_namespace = false;
+                }
+            }
+
+            if ($getting_class === true) {
+                if (is_array($token) && $token[0] == T_STRING) {
+                    $class = $token[1];
+                    break;
+                }
+            }
+        }
+
+        return $namespace ? $namespace.'\\'.$class : $class;
     }
 
     /**
@@ -164,6 +206,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 if ($annotationObj instanceof ReceiverPropertyAnnotation && !in_array($class, $receiverPropertiesTypes)) {
                     if (!$annotations[$key]->getTypes()) {
                         $message = $class->name.':$'.$property->name.'" field';
+
                         throw AnnotationException::requiredError('type', 'ReceiverProperty annotation', $message, 'array or string');
                     }
                     foreach ($annotations[$key]->getTypes() as $type) {

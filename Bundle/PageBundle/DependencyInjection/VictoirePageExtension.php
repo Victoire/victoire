@@ -38,10 +38,10 @@ class VictoirePageExtension extends Extension implements PrependExtensionInterfa
         $elasticaConfig = [
             'types' => [
                 'Pages' => [
-                    'serializer'  => [
+                    'serializer' => [
                         'groups' => ['search'],
                     ],
-                    'mappings'    => [
+                    'mappings' => [
                         'translations' => [
                             'type'       => 'nested',
                             'properties' => [

@@ -74,7 +74,7 @@ class BusinessPageBuilder
         $accessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($templateProperties as $property) {
-            if (!in_array($property->getName(), ['id', 'widgetMap', 'slots', 'seo', 'i18n', 'widgets', 'translations']) && !$property->isStatic()) {
+            if (!in_array($property->getName(), ['id', 'widgetMap', 'slots', 'seo', 'i18n', 'widgets', 'translations', 'createdAt', 'updatedAt']) && !$property->isStatic()) {
                 $value = $accessor->getValue($businessTemplate, $property->getName());
                 $setMethod = 'set'.ucfirst($property->getName());
                 if (method_exists($page, $setMethod)) {

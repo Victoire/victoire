@@ -1,0 +1,9 @@
+{% extends 'VictoireCoreBundle:Widget:show.html.twig' %}
+
+{% block content %}
+    {% if excerpt != '' %}
+        <p>{{ content|striptags|truncate(excerpt) }}</p>
+    {% else %}
+        <p>{{ content|nl2br|raw }}</p>
+    {% endif %}
+{% endblock content %}

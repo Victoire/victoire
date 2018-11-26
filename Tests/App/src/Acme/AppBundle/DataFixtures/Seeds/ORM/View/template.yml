@@ -10,9 +10,9 @@ Victoire\Bundle\TemplateBundle\Entity\Template:
         name: Base
         slug: base
         layout: defaultLayout
-        author: @anakin
+        author: "@anakin"
         undeletable: true
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
-        translations: [@template_base_trans]
+        translations: ["@template_base_trans"]

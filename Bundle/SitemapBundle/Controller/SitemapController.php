@@ -4,7 +4,6 @@ namespace Victoire\Bundle\SitemapBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +41,6 @@ class SitemapController extends Controller
      * Show Sitemap as tree and save new order if necessary.
      *
      * @Route("/reorganize", name="victoire_sitemap_reorganize", options={"expose"=true})
-     * @Template()
      *
      * @return JsonResponse
      */
@@ -57,7 +55,7 @@ class SitemapController extends Controller
 
         $basePageRepo = $this->getDoctrine()->getManager()->getRepository('VictoirePageBundle:BasePage');
         $basePages = $basePageRepo
-            ->getAll(true)
+            ->getAll()
             ->joinSeo()
             ->joinSeoTranslations($request->getLocale())
             ->run();

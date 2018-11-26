@@ -58,13 +58,19 @@ services:
         class: Victoire\Bundle\BlogBundle\Form\CategoryType
         tags:
             - { name: form.type }
+    #HIDDENENTITY
+    victoire.form.blog.entity_hidden:
+        class: Victoire\Bundle\BlogBundle\Form\Type\EntityHiddenType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type }
     #ARTICLE
 
     victoire_blog.article.subscriber:
         class: Victoire\Bundle\BlogBundle\Listener\ArticleSubscriber
         arguments:
-            - @victoire_page.user_callable
-            - %victoire_core.user_class%
+            - "@victoire_page.user_callable"
+            - "%victoire_core.user_class%"
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -11 }
 
@@ -72,8 +78,6 @@ services:
         class: Victoire\Bundle\BlogBundle\Form\ArticleType
         arguments:
             - "@doctrine.orm.entity_manager"
-            - "%victoire_i18n.available_locales%"
-            - "@request_stack"
         tags:
             - { name: form.type }
     victoire_blog.article.container.form.type:
@@ -87,8 +91,6 @@ services:
         class: Victoire\Bundle\BlogBundle\Form\ArticleSettingsType
         arguments:
             - "@doctrine.orm.entity_manager"
-            - "%victoire_i18n.available_locales%"
-            - "@request_stack"
         tags:
             - { name: form.type }
 
@@ -108,8 +110,21 @@ services:
 
     victoire_blog.blog_choose.form.type:
         class: Victoire\Bundle\BlogBundle\Form\ChooseBlogType
+        arguments:
+            - '@victoire_blog.blog_repository'
         tags:
             - { name: form.type }
+    victoire_blog.locale_choose.form.type:
+        class: Victoire\Bundle\BlogBundle\Form\ChooseLocaleType
+        arguments:
+            - "%victoire_i18n.available_locales%"
+        tags:
+            - { name: form.type }
+    victoire_blog.blog_repository:
+        class: Victoire\Bundle\BlogBundle\Repository\BlogRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - Victoire\Bundle\BlogBundle\Entity\Blog
 
     victoire_blog.blog_settings.form.type:
         parent: "victoire_core.view.form.type"
@@ -125,9 +140,8 @@ services:
     #CATEGORY FILTER
     victoire_blog.category_filters.form.type:
         class: %victoire_blog_category_filters_form_type_class%
+        parent: victoire_filter_bundle.abstract_base_filter
         arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@request="
             - "@translator"
         tags:
             - { name: form.type }
@@ -136,9 +150,7 @@ services:
     #TAG FILTER
     victoire_blog.tag_filters.form.type:
         class: %victoire_blog_tag_filters_form_type_class%
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@request="
+        parent: victoire_filter_bundle.abstract_base_filter
         tags:
             - { name: form.type }
             - { name: victoire_core.filter }
@@ -146,9 +158,7 @@ services:
     #DATE FILTER
     victoire_blog.date_filters.form.type:
         class: %victoire_blog_date_filters_form_type_class%
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@request="
+        parent: victoire_filter_bundle.abstract_base_filter
         tags:
             - { name: form.type }
             - { name: victoire_core.filter }
@@ -157,10 +167,10 @@ services:
         class: Victoire\Bundle\BlogBundle\Manager\ArticleManager
         arguments:
             - "@doctrine.orm.entity_manager"
-            - @victoire_business_page.business_page_builder
-            - @victoire_business_page.transformer.virtual_to_business_page_transformer
-            - @victoire_page.page_helper
-            - @victoire_view_reference.repository
+            - "@victoire_business_page.business_page_builder"
+            - "@victoire_business_page.transformer.virtual_to_business_page_transformer"
+            - "@victoire_page.page_helper"
+            - "@victoire_view_reference.repository"
 
     #  ==================  Filter listener ================== #
     #

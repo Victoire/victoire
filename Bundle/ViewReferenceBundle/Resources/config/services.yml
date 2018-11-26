@@ -23,13 +23,13 @@ services:
     victoire_view_reference.helper:
         class: Victoire\Bundle\ViewReferenceBundle\Helper\ViewReferenceHelper
         arguments:
-            - @victoire_view_reference.builder
+            - "@victoire_view_reference.builder"
 
     victoire_view_reference.provider:
         class: Victoire\Bundle\ViewReferenceBundle\Provider\ViewReferenceProvider
         arguments:
-            - @victoire_business_page.business_page_helper
-            - @victoire_business_page.business_page_builder
+            - "@victoire_business_page.business_page_helper"
+            - "@victoire_business_page.business_page_builder"
 
     victoire_view_reference.event_subscriber:
         class: Victoire\Bundle\ViewReferenceBundle\EventSubscriber\ViewReferenceSubscriber
@@ -44,30 +44,6 @@ services:
     victoire_view_reference.transformer_chain:
         class: Victoire\Bundle\ViewReferenceBundle\Builder\Chain\ViewReferenceTransformerChain
 
-    #victoire_view_reference.redis.repository:
-    #    class: %victoire_view_reference.redis.repository.class%
-    #    arguments:
-    #        - "@snc_redis.victoire"
-
-#    victoire_view_reference.redis.manager:
-#        class: %victoire_view_reference.redis.manager.class%
-#        arguments:
-#            - "@snc_redis.victoire"
-#
-#    victoire_view_reference.redis.driver:
-#        class: %victoire_view_reference.redis.driver.class%
-#        arguments:
-#            - "@victoire_view_reference.manager"
-#            - "@victoire_view_reference.repository"
-#            - "@victoire_view_reference.transformer_chain"
-#            - "@victoire_view_reference.url.manager"
-#
-#    victoire_view_reference.url.manager:
-#        class: %victoire_view_reference.url.manager.class%
-#        arguments:
-#            - "@victoire_view_reference.redis.repository"
-#            - "@snc_redis.victoire"
-
     victoire_view_reference.listener:
         class: Victoire\Bundle\ViewReferenceBundle\Listener\ViewReferenceListener
         arguments:
@@ -79,50 +55,51 @@ services:
             - { name: kernel.event_subscriber }
 
     victoire_view_reference.transformer.xmlToViewReference:
-        class: %victoire_view_reference.transformer.xmlToViewReference.class%
+        class: "%victoire_view_reference.transformer.xmlToViewReference.class%"
 
     victoire_view_reference.cache_warmer:
-        class: %victoire_view_reference.cache_warmer.class%
+        class: "%victoire_view_reference.cache_warmer.class%"
         arguments:
-            - @victoire_core.view_helper
-            - @victoire_view_reference.repository
-            - @victoire_view_reference.manager
+            - "@victoire_core.view_helper"
+            - "@victoire_view_reference.repository"
+            - "@victoire_view_reference.manager"
+            - "@doctrine.orm.entity_manager"
         tags:
         - { name: kernel.event_listener, event: kernel.request, method: warmUp }
 
     victoire_view_reference.array_transformer.base_page:
-        class: %victoire_view_reference.array_transformer.base_page.class%
+        class: "%victoire_view_reference.array_transformer.base_page.class%"
         tags:
         - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\PageBundle\Entity\BasePage, outputFormat: array }
 
     victoire_view_reference.array_transformer.business_page:
-        class: %victoire_view_reference.array_transformer.business_page.class%
+        class: "%victoire_view_reference.array_transformer.business_page.class%"
         tags:
         - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage, outputFormat: array }
 
     victoire_view_reference.array_transformer.virtual_business_page:
-        class: %victoire_view_reference.array_transformer.business_page.class%
+        class: "%victoire_view_reference.array_transformer.business_page.class%"
         tags:
         - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage, outputFormat: array }
 
     victoire_view_reference.xml_transformer.base_page:
-        class: %victoire_view_reference.xml_transformer.base_page.class%
+        class: "%victoire_view_reference.xml_transformer.base_page.class%"
         tags:
         - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\PageBundle\Entity\BasePage, outputFormat: xml }
 
     victoire_view_reference.xml_transformer.business_page:
-        class: %victoire_view_reference.xml_transformer.business_page.class%
+        class: "%victoire_view_reference.xml_transformer.business_page.class%"
         tags:
         - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage, outputFormat: xml }
 
     victoire_view_reference.xml_transformer.virtual_business_page:
-        class: %victoire_view_reference.xml_transformer.business_page.class%
+        class: "%victoire_view_reference.xml_transformer.business_page.class%"
         tags:
         - { name: victoire_view_reference.transformer, viewNamespace: Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage, outputFormat: xml }
 
 
     victoire_view_reference.redis.manager:
-        class: %victoire_view_reference.redis.manager.class%
+        class: "%victoire_view_reference.redis.manager.class%"
         arguments:
             - "@snc_redis.victoire"
             - "@victoire_view_reference.redis.repository"
@@ -130,21 +107,21 @@ services:
             - { name: view_reference.manager, connector: redis}
 
     victoire_view_reference.redis.repository:
-        class: %victoire_view_reference.redis.repository.class%
+        class: "%victoire_view_reference.redis.repository.class%"
         arguments:
             - "@snc_redis.victoire"
         tags:
             - { name: view_reference.repository, connector: redis}
 
     victoire_view_reference.manager:
-        class: %victoire_view_reference.manager.class%
+        class: "%victoire_view_reference.manager.class%"
         arguments:
             - "@victoire_view_reference.connector.manager"
             - "@victoire_view_reference.connector.repository"
             - "@victoire_view_reference.transformer_chain"
 
     victoire_view_reference.repository:
-        class: %victoire_view_reference.repository.class%
+        class: "%victoire_view_reference.repository.class%"
         arguments:
             - "@victoire_view_reference.connector.repository"
             - "@victoire_view_reference.transformer_chain"

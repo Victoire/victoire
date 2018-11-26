@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -86,9 +87,10 @@ class BusinessTemplateController extends Controller
      * @param Request $request
      * @param int     $id
      *
+     * @throws \Exception
+     *
      * @Route("{id}/create", name="victoire_business_template_create")
      * @Method("POST")
-     * @Template("VictoireBusinessPageBundle:BusinessTemplate:new.html.twig")
      *
      * @return JsonResponse
      */
@@ -132,6 +134,8 @@ class BusinessTemplateController extends Controller
      *
      * @param BusinessTemplate $view The entity
      *
+     * @throws \Exception
+     *
      * @return \Symfony\Component\Form\Form The form
      * @return Form
      */
@@ -158,9 +162,10 @@ class BusinessTemplateController extends Controller
      *
      * @param string $id The id of the businessEntity
      *
+     * @throws \Exception
+     *
      * @Route("/{id}/new", name="victoire_business_template_new")
      * @Method("GET")
-     * @Template()
      *
      * @return JsonResponse The entity and the form
      */
@@ -194,7 +199,6 @@ class BusinessTemplateController extends Controller
      *
      * @Route("/{id}/edit", name="victoire_business_template_edit")
      * @Method("GET")
-     * @Template()
      * @ParamConverter("id", class="VictoireCoreBundle:View")
      *
      * @throws \Exception
@@ -226,6 +230,8 @@ class BusinessTemplateController extends Controller
      *
      * @param BusinessTemplate $view The entity
      *
+     * @throws \Exception
+     *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(BusinessTemplate $view)
@@ -249,7 +255,6 @@ class BusinessTemplateController extends Controller
      *
      * @Route("/{id}", name="victoire_business_template_update")
      * @Method("PUT")
-     * @Template("VictoireBusinessPageBundle:BusinessTemplate:edit.html.twig")
      *
      * @throws \Exception
      *
@@ -335,7 +340,7 @@ class BusinessTemplateController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('victoire_business_template_delete', ['id' => $id]))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', ['label' => 'Delete'])
+            ->add('submit', SubmitType::class, ['label' => 'Delete'])
             ->getForm();
     }
 
@@ -346,11 +351,10 @@ class BusinessTemplateController extends Controller
      *
      * @Route("/listEntities/{id}", name="victoire_business_template_listentities")
      * @ParamConverter("id", class="VictoireBusinessPageBundle:BusinessTemplate")
-     * @Template
      *
-     * @throws Exception
+     * @throws \Exception
      *
-     * @return array|Response The list of items for this template
+     * @return Response The list of items for this template
      */
     public function listEntitiesAction(BusinessTemplate $view)
     {
@@ -358,16 +362,18 @@ class BusinessTemplateController extends Controller
         $bepHelper = $this->get('victoire_business_page.business_page_helper');
 
         //parameters for the view
-        return [
+        return $this->render('@VictoireBusinessPage/BusinessTemplate/listEntities.html.twig', [
             'BusinessTemplate' => $view,
             'items'            => $bepHelper->getEntitiesAllowed($view, $this->get('doctrine.orm.entity_manager')),
-        ];
+        ]);
     }
 
     /**
      * Get an array of business properties by the business entity page pattern.
      *
      * @param BusinessTemplate $view
+     *
+     * @throws \Exception
      *
      * @return array of business properties
      */
@@ -386,7 +392,7 @@ class BusinessTemplateController extends Controller
     /**
      * @param string $id The id of the business entity
      *
-     * @throws Exception If the business entity was not found
+     * @throws \Exception If the business entity was not found
      *
      * @return \Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity
      */

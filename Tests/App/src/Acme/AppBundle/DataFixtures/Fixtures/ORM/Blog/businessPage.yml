@@ -1,21 +1,37 @@
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
+    bep_article_i_m_your_father_fr_name:
+        name: "Je suis ton père."
+        slug: "je-suis-ton-pere"
+        locale: fr
+    bep_article_are_you_an_angel_name:
+        name: "Etes-vous un ange?"
+        slug: "etes-vous-un-ange"
+        locale: fr
+
 Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage:
     bep_article_i_m_your_father:
         currentLocale: en
         name: "I'm your father."
-        author: @anakin
-        template: @template_article
+        author: "@anakin"
+        template: "@template_article"
         status: published
-        parent: @blog-jedi-network
-        entityProxy: @ep_article_i_m_your_father
+        parent: "@blog-jedi-network"
+        entityProxy: "@ep_article_i_m_your_father"
         publishedAt: <dateTime('now')>
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         cssUpToDate: false
-
-
-Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
-    bep_article_i_m_your_father_en_name:
-        name: "I'm your father."
-        slug: "I-m-your-father"
-        locale: fr
-        translatable: @bep_article_i_m_your_father
+        translation: ["@bep_article_i_m_your_father_fr_name"]
+    bep_article_are_you_an_angel:
+        currentLocale: en
+        name: "Are you an angel?"
+        author: "@anakin"
+        template: "@template_article"
+        status: drafts
+        parent: "@blog-jedi-network"
+        entityProxy: "@ep_article_are_you_an_angel"
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        cssUpToDate: false
+        translation: ["@bep_article_are_you_an_angel_name"]

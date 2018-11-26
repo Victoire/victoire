@@ -7,10 +7,6 @@ services:
             - '%kernel.default_locale%'
             - '%victoire_i18n.available_locales%'
 
-    victoire_i18n.translator:
-        class: Victoire\Bundle\I18nBundle\Translation\Translator
-        arguments: ["@service_container", "@translator.selector",{}, {cache_dir:"%kernel.cache_dir%/translations%", debug: "%kernel.debug%"}]
-
     victoire_i18n.locale_subscriber:
         class: Victoire\Bundle\I18nBundle\Subscriber\LocaleSubscriber
         arguments:
@@ -22,14 +18,8 @@ services:
         class: Victoire\Bundle\I18nBundle\Route\I18nRouteLoader
         arguments:
             - '%victoire_core.widgets%'
+            - '@kernel'
+            - '@logger'
             - '@victoire_i18n.locale_resolver'
         tags:
             - { name: routing.loader }
-
-    victoire_i18n.kernelrequest.listener:
-        class: Victoire\Bundle\I18nBundle\Listener\KernelRequestListener
-        arguments:
-            - '@twig'
-            - '%victoire_i18n.available_locales%'
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

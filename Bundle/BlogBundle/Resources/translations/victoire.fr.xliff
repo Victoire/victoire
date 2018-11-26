@@ -54,6 +54,10 @@
         <source>modal.blog.list.articlesList.new_article</source>
         <target><![CDATA[<span class="fa fa-check-circle"></span> Créer un nouvel article]]></target>
       </trans-unit>
+      <trans-unit id="58893b9921dav" resname="modal.blog.list.articlesList.change.parameters">
+        <source>modal.blog.list.articlesList.change.parameters</source>
+        <target>Modifier les paramètres</target>
+      </trans-unit>
       <trans-unit id="58893b9924ab3" resname="modal.blog.list.articlesList.empty.notice">
         <source>modal.blog.list.articlesList.empty.notice</source>
         <target>Vous n'avez pas encore créé d'article dans ce blog. C'est le moment :)</target>
@@ -110,6 +114,14 @@
         <source>blog.form.title.label</source>
         <target>Catégorie</target>
       </trans-unit>
+      <trans-unit id="58893b991fe9a" resname="blog.form.description.label">
+        <source>blog.form.description.label</source>
+        <target>Déscription</target>
+      </trans-unit>
+      <trans-unit id="45698b991fe9a" resname="form.description.vars.label">
+        <source>form.description.vars.label</source>
+        <target>Déscription</target>
+      </trans-unit>
       <trans-unit id="58893b9924bb9" resname="form.article.type.author.label">
         <source>form.article.type.author.label</source>
         <target>Auteur</target>
@@ -126,9 +138,17 @@
         <source>victoire.blog.choose.blog.label</source>
         <target>Choisissez votre blog</target>
       </trans-unit>
+      <trans-unit id="58893b9924c12" resname="victoire.blog.choose.locale.label">
+        <source>victoire.blog.choose.locale.label</source>
+        <target>Choisissez la langue du blog</target>
+      </trans-unit>
       <trans-unit id="58893b9924c24" resname="victoire.blog.nav.articles.label">
         <source>victoire.blog.nav.articles.label</source>
         <target>Listes des articles</target>
+      </trans-unit>
+      <trans-unit id="5ae71b95cb925" resname="victoire.blog.nav.drafts.label">
+        <source>victoire.blog.nav.drafts.label</source>
+        <target>Brouillons</target>
       </trans-unit>
       <trans-unit id="58893b9924c37" resname="victoire.blog.nav.settings.label">
         <source>victoire.blog.nav.settings.label</source>
@@ -241,6 +261,10 @@
       <trans-unit id="58893b9924fbe" resname="form.article.slug.help_block">
         <source>form.article.slug.help_block</source>
         <target>Si ce champ est vide, le slug sera auto-généré</target>
+      </trans-unit>
+      <trans-unit id="4567b9924f85">
+        <source>form.article.type.promoted.label</source>
+        <target>Mettre cette article en avant</target>
       </trans-unit>
     </body>
   </file>

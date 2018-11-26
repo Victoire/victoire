@@ -6,23 +6,51 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Victoire\Bundle\FilterBundle\Domain\FilterFormFieldQueryHandler;
 
+/**
+ * Class BaseFilter.
+ */
 abstract class BaseFilter extends AbstractType implements BaseFilterInterface
 {
+    /**
+     * @var EntityManager
+     */
     protected $entityManager;
-    protected $request;
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
+    /**
+     * @var FilterFormFieldQueryHandler
+     */
+    protected $filterQueryHandler;
 
     /**
-     * @param EntityManager $em
-     * @param Request       $request
+     * BaseFilter constructor.
+     *
+     * @param EntityManager               $entityManager
+     * @param RequestStack                $requestStack
+     * @param FilterFormFieldQueryHandler $filterQueryHandler
      */
-    public function __construct(EntityManager $em, Request $request)
-    {
-        $this->entityManager = $em;
-        $this->request = $request;
+    public function __construct(
+        EntityManager $entityManager,
+        RequestStack $requestStack,
+        FilterFormFieldQueryHandler $filterQueryHandler
+    ) {
+        $this->entityManager = $entityManager;
+        $this->requestStack = $requestStack;
+        $this->filterQueryHandler = $filterQueryHandler;
     }
 
+    /**
+     * @param QueryBuilder $qb
+     * @param array        $parameters
+     *
+     * @return mixed
+     */
     abstract public function buildQuery(QueryBuilder $qb, array $parameters);
 
     /**
@@ -52,6 +80,6 @@ abstract class BaseFilter extends AbstractType implements BaseFilterInterface
      */
     public function getRequest()
     {
-        return $this->request;
+        return $this->requestStack->getCurrentRequest();
     }
 }

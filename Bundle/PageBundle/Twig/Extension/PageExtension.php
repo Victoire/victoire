@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\PageBundle\Twig\Extension;
 
-use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
 use Victoire\Bundle\CoreBundle\Builder\ViewCssBuilder;
@@ -27,22 +26,19 @@ class PageExtension extends \Twig_Extension
      * @param PageHelper         $pageHelper
      * @param CurrentViewHelper  $currentViewHelper
      * @param ViewCssBuilder     $viewCssBuilder
-     * @param EntityManager      $entityManager
      */
     public function __construct(
         BusinessPageHelper $BusinessTemplateHelper,
         Router $router,
         PageHelper $pageHelper,
         CurrentViewHelper $currentViewHelper,
-        ViewCssBuilder $viewCssBuilder,
-        EntityManager $entityManager
+        ViewCssBuilder $viewCssBuilder
     ) {
         $this->BusinessTemplateHelper = $BusinessTemplateHelper;
         $this->router = $router;
         $this->pageHelper = $pageHelper;
         $this->currentViewHelper = $currentViewHelper;
         $this->viewCssBuilder = $viewCssBuilder;
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -66,16 +62,6 @@ class PageExtension extends \Twig_Extension
     public function getFilters()
     {
         return [];
-    }
-
-    /**
-     * get extension name.
-     *
-     * @return string The name
-     */
-    public function getName()
-    {
-        return 'cms_page';
     }
 
     /**

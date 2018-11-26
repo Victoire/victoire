@@ -31,10 +31,10 @@ class ArticleRepository extends EntityRepository
         if ($excludeUnpublished) {
             $this->qb
                 ->andWhere('article.status = :status')
-                ->orWhere('article.status = :scheduled_status AND article.publishedAt > :publicationDate')
+                ->orWhere('article.status = :scheduled_status AND article.publishedAt <= :now')
                 ->setParameter('status', PageStatus::PUBLISHED)
                 ->setParameter('scheduled_status', PageStatus::SCHEDULED)
-                ->setParameter('publicationDate', new \DateTime());
+                ->setParameter('now', new \DateTime());
         }
 
         if (null != $blog) {
@@ -73,11 +73,18 @@ class ArticleRepository extends EntityRepository
         return $this->getInstance()->getQuery()->$method($hydrationMode);
     }
 
+    /**
+     * Use to assemble ArticleList Query with Filter Query.
+     *
+     * @param null $listingQuery
+     *
+     * @return $this
+     */
     public function filterWithListingQuery($listingQuery = null)
     {
         if ($listingQuery) {
-            $dql = $this->createQueryBuilder('a_article')
-                ->leftJoin('a_article.blog', 'blog')
+            $dql = $this->createQueryBuilder('item')
+                ->leftJoin('item.blog', 'blog')
                 ->getDql();
             $dql = $dql.' '.$listingQuery;
             $this->qb
@@ -135,5 +142,49 @@ class ArticleRepository extends EntityRepository
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    /**
+     * Get Article by blog ordered by publication DESC.
+     *
+     * @param Blog $blog
+     *
+     * @return array()
+     */
+    public function getArticles(Blog $blog)
+    {
+        $queryBuilder = $this->getAll(false, $blog)
+            ->getInstance();
+
+        return $queryBuilder
+            ->andWhere('article.status IN (:status)')
+            ->setParameter('status', [
+                PageStatus::PUBLISHED,
+                PageStatus::SCHEDULED,
+                PageStatus::UNPUBLISHED,
+            ])
+            ->orderBy('article.publishedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get articles by blog ordered by creation DESC.
+     *
+     * @param Blog $blog
+     *
+     * @return array()
+     */
+    public function getDrafts(Blog $blog)
+    {
+        $queryBuilder = $this->getAll(false, $blog)
+            ->getInstance();
+
+        return $queryBuilder
+            ->andWhere('article.status = :status')
+            ->setParameter('status', PageStatus::DRAFT)
+            ->orderBy('article.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 }

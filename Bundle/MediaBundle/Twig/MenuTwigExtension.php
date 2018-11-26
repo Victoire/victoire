@@ -45,14 +45,4 @@ class MenuTwigExtension extends \Twig_Extension
     {
         return $this->menuBuilder;
     }
-
-    /**
-     * Get the Twig extension name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'adminmenu_twig_extension';
-    }
 }

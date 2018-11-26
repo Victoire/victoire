@@ -6,12 +6,14 @@ use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\BlogBundle\Entity\Article;
+use Victoire\Bundle\BlogBundle\Entity\ArticleTemplate;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\BlogBundle\Repository\ArticleTemplateRepository;
 use Victoire\Bundle\BlogBundle\Repository\TagRepository;
@@ -45,6 +47,10 @@ class ArticleType extends AbstractType
                 ->create('blog', HiddenType::class, ['label' => 'form.article.blog.label'])
                 ->addModelTransformer($viewToIdTransformer))
             ->add('template')
+            ->add('promoted', CheckboxType::class, [
+                'label'    => 'form.article.type.promoted.label',
+                'required' => false,
+            ])
             ->add('tags', TagsType::class, [
                 'required' => false,
                 'multiple' => true,
@@ -146,7 +152,7 @@ class ArticleType extends AbstractType
      */
     protected function manageCategories($blogId, $form)
     {
-        $categoryRepo = $this->entityManager->getRepository('Victoire\Bundle\BlogBundle\Entity\Category');
+        $categoryRepo = $this->entityManager->getRepository('VictoireBlogBundle:BlogCategory');
 
         if ($blogId) {
             $queryBuilder = $categoryRepo->getOrderedCategories($blogId)->getInstance();
@@ -159,7 +165,7 @@ class ArticleType extends AbstractType
         $form->add('category', HierarchyTreeType::class, [
             'required'      => false,
             'label'         => 'form.article.category.label',
-            'class'         => 'Victoire\\Bundle\\BlogBundle\\Entity\\Category',
+            'class'         => 'Victoire\\Bundle\\BlogBundle\\Entity\\BlogCategory',
             'query_builder' => $queryBuilder,
             'placeholder'   => 'form.article.category.placeholder',
         ]);
@@ -178,8 +184,10 @@ class ArticleType extends AbstractType
                     return $repo->filterByBlog($blog_id)->getInstance();
                 };
                 $form->add('template', null, [
-                    'label'         => 'form.article.type.template.label',
-                    'property'      => 'backendName',
+                    'label'        => 'form.article.type.template.label',
+                    'choice_label' => function (ArticleTemplate $template) {
+                        return $template->getBackendName();
+                    },
                     'required'      => true,
                     'query_builder' => $articleTemplates,
                 ]);

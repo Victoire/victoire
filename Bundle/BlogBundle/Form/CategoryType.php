@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,12 +30,17 @@ class CategoryType extends AbstractType
                 'constraints' => [
                     new \Symfony\Component\Validator\Constraints\NotBlank(),
                 ],
-                'attr'          => [
-                    'class'     => 'vic-blogCategoryWidget-formControl',
+                'attr' => [
+                    'class' => 'vic-blogCategoryWidget-formControl',
                     ],
-
                 ]
             )
+            ->add('description', TextType::class, [
+                'label'         => 'blog.form.description.label',
+                'attr'          => [
+                    'class'     => 'vic-blogCategoryWidget-formControl',
+                ],
+            ])
             ->remove('removeButton');
 
         /*
@@ -42,7 +48,7 @@ class CategoryType extends AbstractType
          */
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function ($event) {
+            function (FormEvent $event) {
                 $entity = $event->getData();
 
                 if ($entity !== null) {
@@ -62,7 +68,7 @@ class CategoryType extends AbstractType
          */
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function ($event) {
+            function (FormEvent $event) {
                 $rawData = $event->getData();
                 if (isset($rawData['children'])) {
                     $addChildren = true;
@@ -86,14 +92,16 @@ class CategoryType extends AbstractType
      */
     protected function addChildrenField($form)
     {
-        $form->add('children', CollectionType::class,
+        $form->add(
+            'children',
+            CollectionType::class,
             [
-                'type'          => self::class,
-                'required'      => false,
-                'allow_add'     => true,
-                'allow_delete'  => true,
-                'prototype'     => true,
-                'by_reference'  => false,
+                'entry_type'   => self::class,
+                'required'     => false,
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'prototype'    => true,
+                'by_reference' => false,
             ]
         );
     }
@@ -106,7 +114,7 @@ class CategoryType extends AbstractType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\Category',
+            'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\BlogCategory',
             'translation_domain' => 'victoire',
 
         ]);

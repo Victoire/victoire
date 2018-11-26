@@ -20,10 +20,5 @@
             <argument>%victoire_i18n.available_locales%</argument>
             <argument>%victoire_i18n.victoire_locale%</argument>
         </service>
-        <service id="victoire_twig.kernelrequest.listener" class="%victoire_twig.kernel_request_listener.class%">
-            <argument type="service" id="twig" />
-            <argument>%victoire_twig.responsive%</argument>
-            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
-        </service>
     </services>
 </container>

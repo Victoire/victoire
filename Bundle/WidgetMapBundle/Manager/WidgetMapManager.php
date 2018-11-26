@@ -7,7 +7,6 @@ use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
-use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 use Victoire\Bundle\WidgetMapBundle\Resolver\WidgetMapChildrenResolver;
 
 class WidgetMapManager
@@ -123,7 +122,7 @@ class WidgetMapManager
     {
         $this->builder->build($view);
 
-        $widgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
+        $widgetMap = $widget->getWidgetMap();
         $slot = $widgetMap->getSlot();
 
         $originalParent = $widgetMap->getParent();
@@ -153,7 +152,7 @@ class WidgetMapManager
             //so we add a new widget map that indicates we delete this widget
             $replaceWidgetMap = new WidgetMap();
             $replaceWidgetMap->setAction(WidgetMap::ACTION_DELETE);
-            $replaceWidgetMap->setWidget($widget);
+            $replaceWidgetMap->addWidget($widget);
             $replaceWidgetMap->setSlot($slot);
             $replaceWidgetMap->setReplaced($widgetMap);
 
@@ -165,7 +164,9 @@ class WidgetMapManager
 
         //Move children WidgetMap for children from other View
         foreach ($widgetMap->getChildren() as $child) {
-            $this->moveWidgetMap($child->getView(), $child, $originalParent, $originalPosition);
+            if ($child->getView() === $view || $child->getView()->getTemplate() === $view) {
+                $this->moveWidgetMap($child->getView(), $child, $originalParent, $originalPosition);
+            }
         }
     }
 

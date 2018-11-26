@@ -1,0 +1,92 @@
+$sitemap-cell-priority: 5.25em;
+$sitemap-cell-indexed: 4.5em;
+$sitemap-cell-delete: 3.125em;
+$sitemap-cell-status: 11.5em;
+$sitemap-line--padding: 0.625em;
+
+.#{$app--prefix}-sitemap {
+}
+
+.#{$app--prefix}-sitemap .#{$app--prefix}-list-group--main {
+  margin-top: 0.5em;
+}
+
+.#{$app--prefix}-sitemap__head {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: $sitemap-cell-delete + $sitemap-line--padding;
+  font-size: rem();
+}
+
+.#{$app--prefix}-sitemap__head-cell {
+}
+
+.#{$app--prefix}-sitemap__head-cell--status {
+  text-align: center;
+  width: $sitemap-cell-status;
+}
+
+.#{$app--prefix}-sitemap__head-cell--priority {
+  width: $sitemap-cell-priority;
+  text-align: center;
+}
+
+.#{$app--prefix}-sitemap__head-cell--indexed {
+  width: $sitemap-cell-indexed;
+  text-align: center;
+}
+
+.#{$app--prefix}-sitemap__cell {
+}
+
+.#{$app--prefix}-sitemap__cell--title {
+  flex-grow: 1;
+  margin-left: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.#{$app--prefix}-sitemap__cell--status {
+  text-align: center;
+  width: $sitemap-cell-priority;
+}
+
+.#{$app--prefix}-sitemap__cell--priority {
+  width: $sitemap-cell-priority;
+  text-align: center;
+}
+
+.#{$app--prefix}-sitemap__cell--indexed {
+  width: $sitemap-cell-indexed;
+  text-align: center;
+}
+
+.#{$app--prefix}-sitemap__interact-wrapper {
+  display: flex;
+}
+
+.#{$app--prefix}-sitemap__cell--delete {
+  width: $sitemap-cell-delete;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.#{$app--prefix}-sitemap .v-list-group__item {
+  padding: 0;
+}
+
+.#{$app--prefix}-sitemap__line {
+  padding: $sitemap-line--padding;
+  display: flex;
+  align-items: center;
+}
+
+$sitemap-nested-list--selector: '.#{$app--prefix}-sitemap .#{$app--prefix}-list-group';
+@for $index from 1 through 6 {
+  $sitemap-nested-list--selector: $sitemap-nested-list--selector + ' .#{$app--prefix}-list-group';
+
+  #{$sitemap-nested-list--selector} .#{$app--prefix}-list-group__item {
+    padding-left: $sitemap-line--padding + ($index * 1em);
+  }
+}

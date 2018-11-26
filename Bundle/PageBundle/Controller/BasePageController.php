@@ -4,8 +4,10 @@ namespace Victoire\Bundle\PageBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Victoire\Bundle\BlogBundle\Entity\Blog;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
@@ -33,6 +35,7 @@ class BasePageController extends Controller
     public function showAction(Request $request, $url = '')
     {
         $response = $this->get('victoire_page.page_helper')->renderPageByUrl(
+            $request->getUri(),
             $url,
             $request->getLocale(),
             $request->isXmlHttpRequest() ? $request->query->get('modalLayout', null) : null
@@ -62,7 +65,9 @@ class BasePageController extends Controller
         }
         $page = $this->get('victoire_page.page_helper')->findPageByParameters($parameters);
 
-        return $this->redirect($this->generateUrl('victoire_core_page_show', array_merge(
+        return $this->redirect($this->generateUrl(
+            'victoire_core_page_show',
+            array_merge(
                 ['url' => $page->getReference()->getUrl()],
                 $request->query->all()
             )
@@ -140,7 +145,7 @@ class BasePageController extends Controller
      *
      * @param Request $request
      *
-     * @return array
+     * @return array|Response
      */
     protected function newPostAction(Request $request)
     {
@@ -211,7 +216,7 @@ class BasePageController extends Controller
      * @param Request  $request
      * @param BasePage $page
      *
-     * @return array
+     * @return array|Response
      */
     protected function settingsPostAction(Request $request, BasePage $page)
     {
@@ -229,7 +234,7 @@ class BasePageController extends Controller
             return $this->getViewReferenceRedirect($request, $page);
         }
 
-        return  [
+        return [
             'success' => false,
             'message' => $this->get('victoire_form.error_helper')->getRecursiveReadableErrors($form),
             'html'    => $this->get('templating')->render(
@@ -257,6 +262,7 @@ class BasePageController extends Controller
             //Throw Exception if Page is undeletable
             if ($page->isUndeletable()) {
                 $message = $this->get('translator')->trans('page.undeletable', [], 'victoire');
+
                 throw new \Exception($message);
             }
 
@@ -300,8 +306,8 @@ class BasePageController extends Controller
         $page->setReference($viewReference);
 
         return [
-            'success'  => true,
-            'url'      => $this->generateUrl(
+            'success' => true,
+            'url'     => $this->generateUrl(
                 'victoire_core_page_show',
                 [
                     '_locale' => $request->getLocale(),

@@ -167,8 +167,7 @@
        <div class="tab-pane" id="properties">
 
            {% form_theme editform 'VictoireMediaBundle:Form:fields.html.twig' %}
-
-       		<form class="form-horizontal properties" action="{{ path('VictoireMediaBundle_folder_show', { 'folderId' : folder.id } ) }}" method="post" {{ form_enctype(editform) }}>
+           {{ form_start(editform, { 'action': path('VictoireMediaBundle_folder_show', { 'folderId' : folder.id } ), 'attr': { 'class': 'form-horizontal properties' } }) }}
                 <div class="prop_wrp">
                     {{ form_widget(editform) }}
                     <div class="input_prop">
@@ -178,8 +177,8 @@
                        	</div>
                     </div>
                 </div>
-            </form>
-        </div>
+           {{ form_end(editform) }}
+       </div>
     </div>
     <!--=========Modals=========-->
     <div id="addsub-modal" class="modal hide fade">

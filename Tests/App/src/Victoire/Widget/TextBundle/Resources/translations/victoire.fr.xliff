@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+    <body>
+      <trans-unit id="58893b8eccddb" resname="modal.form.widget.type.text.label">
+        <source>modal.form.widget.type.text.label</source>
+        <target>Texte brut</target>
+      </trans-unit>
+      <trans-unit id="58893b8eccdeb" resname="widget.text.new.action.label">
+        <source>widget.text.new.action.label</source>
+        <target>Texte brut</target>
+      </trans-unit>
+      <trans-unit id="58893b8eccdf4" resname="widget_text.form.content.label">
+        <source>widget_text.form.content.label</source>
+        <target>Texte</target>
+      </trans-unit>
+      <trans-unit id="58893b8ecce03">
+        <source>widget_text.form.excerpt.label</source>
+        <target>Tronquer le texte</target>
+      </trans-unit>
+      <trans-unit id="58893b8ecce12">
+        <source>widget_text.form.excerpt.placeholder</source>
+        <target>Entrez un nombre ou laissez vide pour désactiver le tronquage</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

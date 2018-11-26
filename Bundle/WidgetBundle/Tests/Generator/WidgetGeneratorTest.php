@@ -41,7 +41,7 @@ class WidgetGeneratorTest extends GeneratorTest
     {
         $generator = new WidgetGenerator();
         $skeletonDirs = [
-            __DIR__.'/../../../../vendor/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle/Resources/skeleton',
+            __DIR__.'/../../../../vendor/sensio/generator-bundle/Resources/skeleton',
             __DIR__.'/../../Resources/skeleton',
         ];
         $generator->setSkeletonDirs($skeletonDirs);

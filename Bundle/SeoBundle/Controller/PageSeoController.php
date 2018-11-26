@@ -4,7 +4,6 @@ namespace Victoire\Bundle\SeoBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,9 +30,10 @@ class PageSeoController extends Controller
      * @param Request $request
      * @param View    $view
      *
+     * @throws \Exception
+     *
      * @Route("/{id}/settings", name="victoire_seo_pageSeo_settings")
      * @Method("GET")
-     * @Template()
      *
      * @return JsonResponse
      */
@@ -59,9 +59,10 @@ class PageSeoController extends Controller
      * @param Request $request
      * @param View    $view
      *
+     * @throws \Exception
+     *
      * @Route("/{id}/settings", name="victoire_seo_pageSeo_settings_post")
      * @Method("POST")
-     * @Template()
      *
      * @return JsonResponse
      */
@@ -124,6 +125,8 @@ class PageSeoController extends Controller
      * @param View          $view
      * @param $novalidate
      *
+     * @throws \Exception
+     *
      * @return array
      */
     private function getNotPersistedSettingsResponse(FormInterface $form, View $view, $novalidate)
@@ -173,6 +176,8 @@ class PageSeoController extends Controller
      * Return BusinessEntity seaoable properties if View is a BusinessTemplate.
      *
      * @param View $view
+     *
+     * @throws \Exception
      *
      * @return array
      */

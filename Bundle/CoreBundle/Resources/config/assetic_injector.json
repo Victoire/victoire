@@ -5,7 +5,7 @@
         {
             "foot":
             [
-                "@VictoireCoreBundle/Resources/public/vendor/jquery.scrollTo/1.4.14/jquery.scrollTo.min.js",
+                "@VictoireCoreBundle/Resources/public/vendor/jquery.scrollTo/2.1.2/jquery.scrollTo.min.js",
                 "@VictoireCoreBundle/Resources/public/js/smooth-scroll.js",
                 "@VictoireCoreBundle/Resources/public/vendor/jquery-unveil/jquery.unveil.js",
                 "@VictoireCoreBundle/Resources/public/js/unveil.js",
@@ -27,10 +27,7 @@
             "victoire-head":
             [
                 "@VictoireCoreBundle/Resources/public/vendor/jquery/1.10.2/jquery-1.10.2.js",
-                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/select2.full.min.js",
-                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/i18n/fr.js",
-                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/i18n/en.js",
-                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/js/i18n/es.js",
+                "@VictoireUIBundle/Resources/public/scripts/vic-intercooler.js",
                 "@VictoireCoreBundle/Resources/public/js/jquery.noConflict.js"
             ],
             "modernizr":
@@ -67,7 +64,11 @@
                 "@VictoireCoreBundle/Resources/style/less/bricks/bricks.less",
                 "@VictoireCoreBundle/Resources/style/less/layouts/layouts.less",
                 "@VictoireCoreBundle/Resources/style/less/ugly.less",
-                "@VictoireCoreBundle/Resources/public/vendor/select2-4.0.3/css/select2.css"
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-default.less",
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-bar.less",
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-attached.less",
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-growl.less",
+                "@VictoireCoreBundle/Resources/public/vendor/codrops-notification/less/ns-style-other.less"
             ]
         }
     }

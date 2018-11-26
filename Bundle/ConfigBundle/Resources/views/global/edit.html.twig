@@ -1,0 +1,71 @@
+{% trans_default_domain "victoire" %}
+{% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+
+{% extends 'VictoireCoreBundle::_modal.html.twig' %}
+{% block modal_container_classes %}{{ parent() }} v-modal--view{% endblock modal_container_classes %}
+
+{% block modal_header_title %}
+    {{'globalConfig.modal.header'|trans({}, 'victoire')}}
+{% endblock modal_header_title %}
+
+{% block modal_body_content %}
+{{ form_start(form, {'attr': {'action': path('victoire_config_global_edit')}}) }}
+    {{ form_errors(form) }}
+    <div class="tabbable">
+        <div class="v-tabs-nav v-tabs-nav--insert">
+            <div class="v-tabs-nav__item">
+                <a class="v-tabs-nav__anchor v-tabs-nav__anchor--active"
+                   data-collapse="show"
+                   href="#global-config-scripts"
+                   data-href="#global-config-scripts"
+                   data-activeclass="v-tabs-nav__anchor--active"
+                >
+                    {{ 'globalConfig.form.tabs.global'|trans}}
+                </a>
+                <a class="v-tabs-nav__anchor"
+                   data-collapse="show"
+                   href="#global-config-favicons"
+                   data-href="#global-config-favicons"
+                   data-activeclass="v-tabs-nav__anchor--active"
+                >
+                    {{ 'globalConfig.form.tabs.favicons'|trans}}
+                </a>
+            </div>
+        </div>
+        <div class="v-tabs-collapses v-tabs-collapses--insert">
+            <div id="global-config-scripts" class="v-collapse" data-flag="v-collapse" data-group="global-config-tabs" data-state="visible">
+                {{ form_row(form.metaTitlePattern) }}
+                {{ 'globalConfig.form.metaTitlePattern.help'|trans|raw }}
+                <div class="v-grid">
+                    <div class="v-col v-col--xs-12 v-col--md-6">
+                        {{ form_row(form.head) }}
+                    </div>
+                    <div class="v-col v-col--xs-12 v-col--md-6">
+                        {{ form_row(form.organizationJsonLD) }}
+                        {{ 'globalConfig.form.organizationJsonLD.help'|trans|raw }}
+                    </div>
+                </div>
+            </div>
+            <div id="global-config-favicons" class="v-collapse" data-flag="v-collapse" data-group="global-config-tabs" data-state="hidden">
+                <div class="v-grid">
+                    <div class="v-col v-col--xs-12 v-col--md-5">
+                        {{ form_row(form.logo) }}
+                        {{ 'globalConfig.form.logo.help'|trans|raw }}
+                    </div>
+                    <div class="v-col v-col--xs-12 v-col--md-7">
+                        {{ form_row(form.mainColor) }}
+                        {{ 'globalConfig.form.mainColor.help'|trans|raw }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+{{ form_end(form) }}
+{% endblock modal_body_content %}
+
+{% block modal_footer_content %}
+    <a href="#" class="v-btn v-btn--success" data-modal="{% block action %}create{% endblock action %}" title="{{ ('modal.button.'~ block('action') ~'.title')|trans({}, 'victoire') }}">
+        {{ 'modal.button.update.title'|trans({}, 'victoire') }}
+    </a>
+{% endblock modal_footer_content %}

@@ -1,4 +1,5 @@
 {% extends 'VictoireCoreBundle::_modal.html.twig' %}
+{% import _self as macros %}
 {% trans_default_domain "victoire" %}
 {% block modal_container_classes %}{{ parent() }} v-modal--view{% endblock modal_container_classes %}
 
@@ -20,11 +21,12 @@
     </div>
 
     <ul class="v-list-group v-list-group--main v-list-group--sm">
-        {{ _self.templatesHierarchy(templates) }}
+        {{ macros.templatesHierarchy(templates) }}
     </ul>
 {% endblock modal_body_content %}
 
 {% macro templatesHierarchy(templates) %}
+    {% import _self as macros %}
     {% for template in templates %}
         <li class="v-list-group__item" id="list_{{ template.id }}">
             <div class="v-flex-grid v-flex-grid--justify-between v-flex-grid--align-center">
@@ -54,7 +56,7 @@
         {% if template.templateInheritors %}
             <li class="v-list-group__sub-list">
                 <ul class="v-list-group">
-                    {{ _self.templatesHierarchy(template.templateInheritors) }}
+                    {{ macros.templatesHierarchy(template.templateInheritors) }}
                 </ul>
             </li>
         {% endif %}

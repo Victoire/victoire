@@ -4,6 +4,7 @@ namespace Victoire\Bundle\PageBundle\Helper;
 
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\Orm\EntityManager;
+use Doctrine\ORM\NoResultException;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,6 +22,7 @@ use Victoire\Bundle\BusinessPageBundle\Builder\BusinessPageBuilder;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
+use Victoire\Bundle\ConfigBundle\Entity\GlobalConfig;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\CoreBundle\Entity\Link;
 use Victoire\Bundle\CoreBundle\Entity\View;
@@ -29,6 +31,10 @@ use Victoire\Bundle\CoreBundle\Helper\CurrentViewHelper;
 use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
+use Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent;
+use Victoire\Bundle\PageBundle\Handler\RedirectionHandler;
+use Victoire\Bundle\SeoBundle\Entity\Error404;
+use Victoire\Bundle\SeoBundle\Entity\Redirection;
 use Victoire\Bundle\SeoBundle\Helper\PageSeoHelper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException;
@@ -39,7 +45,7 @@ use Victoire\Bundle\WidgetMapBundle\Builder\WidgetMapBuilder;
 use Victoire\Bundle\WidgetMapBundle\Warmer\WidgetDataWarmer;
 
 /**
- * Page helper
+ * Class PageHelper.
  * ref: victoire_page.page_helper.
  */
 class PageHelper
@@ -58,9 +64,14 @@ class PageHelper
     protected $businessPageHelper;
     protected $viewReferenceRepository;
     protected $widgetDataWarmer;
+    protected $redirectionHandler;
+    protected $availableLocales;
+    protected $twigResponsive;
     protected $apiBusinessEntityResolver;
 
     /**
+     * PageHelper constructor.
+     *
      * @param BusinessEntityHelper     $businessEntityHelper
      * @param EntityManager            $entityManager
      * @param ViewReferenceHelper      $viewReferenceHelper
@@ -76,6 +87,9 @@ class PageHelper
      * @param BusinessPageHelper       $businessPageHelper
      * @param WidgetDataWarmer         $widgetDataWarmer
      * @param ViewReferenceRepository  $viewReferenceRepository
+     * @param RedirectionHandler       $redirectionHandler
+     * @param $availableLocales
+     * @param $twigResponsive
      */
     public function __construct(
         BusinessEntityHelper $businessEntityHelper,
@@ -93,7 +107,11 @@ class PageHelper
         BusinessPageHelper $businessPageHelper,
         WidgetDataWarmer $widgetDataWarmer,
         ViewReferenceRepository $viewReferenceRepository,
-        APIBusinessEntityResolver $apiBusinessEntityResolver
+        APIBusinessEntityResolver $apiBusinessEntityResolver,
+        ViewReferenceRepository $viewReferenceRepository,
+        RedirectionHandler $redirectionHandler,
+        $availableLocales,
+        $twigResponsive
     ) {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->entityManager = $entityManager;
@@ -111,10 +129,17 @@ class PageHelper
         $this->widgetDataWarmer = $widgetDataWarmer;
         $this->viewReferenceRepository = $viewReferenceRepository;
         $this->apiBusinessEntityResolver = $apiBusinessEntityResolver;
+        $this->redirectionHandler = $redirectionHandler;
+        $this->availableLocales = $availableLocales;
+        $this->twigResponsive = $twigResponsive;
     }
 
     /**
-     * generates a response from parameters.
+     * Generates a response from parameters.
+     *
+     * @param array $parameters
+     *
+     * @throws ViewReferenceNotFoundException
      *
      * @return View
      */
@@ -152,16 +177,17 @@ class PageHelper
     }
 
     /**
-     * generates a response from a page url.
-     * if seo redirect, return target.
+     * Generates a response from a page url.
+     * If seo redirect, return target.
      *
-     * @param string $url
-     * @param        $locale
-     * @param null   $layout
+     * @param string      $uri
+     * @param string      $url
+     * @param             $locale
+     * @param string|null $layout
      *
      * @return Response
      */
-    public function renderPageByUrl($url, $locale, $layout = null)
+    public function renderPageByUrl($uri, $url, $locale, $layout = null)
     {
         $page = null;
         if ($viewReference = $this->viewReferenceRepository->getReferenceByUrl($url, $locale)) {
@@ -181,21 +207,48 @@ class PageHelper
 
             return $this->renderPage($page, $layout);
         } else {
+            try {
+                /** @var Error404 $error404 */
+                $error404 = $this->entityManager->getRepository('VictoireSeoBundle:Error404')->findOneBy(['url' => $uri]);
+                /** @var Redirection $redirection */
+                $redirection = $this->entityManager->getRepository('VictoireSeoBundle:Redirection')->findOneBy(['url' => $uri]);
+
+                $result = $this->redirectionHandler->handleError($redirection, $error404);
+
+                if ($result instanceof Redirection) {
+                    return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl(
+                        $result->getLink()->getParameters()
+                    ), Response::HTTP_MOVED_PERMANENTLY);
+                } elseif ($result->getRedirection()) {
+                    return new RedirectResponse($this->container->get('victoire_widget.twig.link_extension')->victoireLinkUrl(
+                        $result->getRedirection()->getLink()->getParameters()
+                    ));
+                }
+            } catch (NoResultException $e) {
+                $error = new Error404();
+
+                $error->setUrl($uri);
+                $error->setType($this->redirectionHandler->handleErrorExtension(pathinfo($uri, PATHINFO_EXTENSION)));
+
+                $this->entityManager->persist($error);
+                $this->entityManager->flush();
+            }
+
             throw new NotFoundHttpException(sprintf('Page not found (url: "%s", locale: "%s")', $url, $locale));
         }
     }
 
     /**
-     * generates a response from a page.
+     * Generates a response from a page.
      *
-     * @param View $view
-     * @param null $layout
+     * @param View        $view
+     * @param string|null $layout
      *
      * @return Response
      */
     public function renderPage($view, $layout = null)
     {
-        $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view);
+        $event = new PageMenuContextualEvent($view);
 
         //Set currentView and dispatch victoire.on_render_page event with this currentView
         $pageRenderEvent = new PageRenderEvent($view);
@@ -214,7 +267,7 @@ class PageHelper
             $eventName = 'victoire_core.page_menu.contextual';
             if (!$view->getId()) {
                 $eventName = 'victoire_core.business_template_menu.contextual';
-                $event = new \Victoire\Bundle\PageBundle\Event\Menu\PageMenuContextualEvent($view->getTemplate());
+                $event = new PageMenuContextualEvent($view->getTemplate());
             }
             $this->eventDispatcher->dispatch($eventName, $event);
             $type = $view->getBusinessEntity()->getName();
@@ -229,17 +282,21 @@ class PageHelper
             //Determine which layout to use
             $layout = $this->guessBestLayoutForView($view);
         }
+        $globalConfig = $this->entityManager->getRepository(GlobalConfig::class)->findLast() ?: new GlobalConfig();
 
         //Create the response
         $response = $this->container->get('templating')->renderResponse('VictoireCoreBundle:Layout:'.$layout.'.html.twig', [
-            'view' => $view,
+            'globalConfig'                    => $globalConfig,
+            'victoire_i18n_available_locales' => $this->availableLocales,
+            'victoire_twig_responsive'        => $this->twigResponsive,
+            'view'                            => $view,
         ]);
 
         return $response;
     }
 
     /**
-     * populate the page with given entity.
+     * Populate the page with given entity.
      *
      * @param View                    $page
      * @param BusinessEntityInterface $entity

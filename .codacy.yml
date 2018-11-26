@@ -1,0 +1,6 @@
+exclude_paths:
+  - Bundle/CoreBundle/Resources/public/js/vic-intercooler.js
+  - Bundle/MediaBundle/Resources/public/js/ckeditor/**
+  - Bundle/MediaBundle/Resources/public/js/libs/**
+  - Bundle/FormBundle/Resources/public/components/**
+  - Bundle/CoreBundle/Resources/public/vendor/**

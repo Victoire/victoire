@@ -113,7 +113,7 @@ class LinkExtension extends \Twig_Extension
 
         $viewReference = isset($parameters['viewReference']) ? $parameters['viewReference'] : null;
         switch ($parameters['linkType']) {
-            case 'viewReference':
+            case Link::TYPE_VIEW_REFERENCE:
                 if ($viewReference instanceof ViewReference) {
                     $viewReference = $viewReference->getId();
                 }
@@ -125,6 +125,7 @@ class LinkExtension extends \Twig_Extension
                         'id'     => $viewReference,
                         'locale' => $parameters['locale'],
                     ];
+
                     try {
                         $page = $this->pageHelper->findPageByParameters($params);
                     } catch (ViewReferenceNotFoundException $e) {
@@ -132,16 +133,19 @@ class LinkExtension extends \Twig_Extension
                         /** @var ErrorPage $page */
                         $page = $this->errorPageRepository->findOneByCode(404);
                         $linkUrl = $this->router->generate(
-                            'victoire_core_page_show', array_merge([
+                            'victoire_core_page_show',
+                            array_merge([
                             '_locale' => $parameters['locale'],
                             'url'     => $page->getSlug(),
-                        ], $params));
+                        ], $params)
+                        );
                     }
                 }
 
                 if ($page instanceof WebViewInterface) {
                     $linkUrl = $this->router->generate(
-                        'victoire_core_page_show', [
+                        'victoire_core_page_show',
+                        [
                             '_locale' => $parameters['locale'],
                             'url'     => $page->getReference($parameters['locale'])->getUrl(),
                         ],
@@ -153,28 +157,27 @@ class LinkExtension extends \Twig_Extension
                     $url = $linkUrl;
                 }
                 break;
-            case 'route':
+            case Link::TYPE_ROUTE:
                 $url = $this->router->generate($parameters['route'], $parameters['routeParameters'], $referenceType);
                 break;
             case Link::TYPE_WIDGET:
                 $attachedWidget = $parameters[Link::TYPE_WIDGET];
                 $url = '';
-
-                //If Widget's View has an url and Widget is not in the current View, add this url in the link
-                if ($attachedWidget && method_exists($attachedWidget->getWidgetMap()->getView(), 'getUrl')
-                    && (!$this->request || rtrim($this->request->getRequestUri(), '/') != rtrim($url, '/'))
-                ) {
-                    /** @var View $view */
-                    $view = $attachedWidget->getWidgetMap()->getView();
-                    if (!$locale = $attachedWidget->guessLocale()) {
-                        $locale = $this->request ? $this->request->getLocale() : $this->defaultLocale;
+                if ($attachedWidget) {
+                    //If Widget's View has an url and Widget is not in the current View, add this url in the link
+                    if (method_exists($attachedWidget->getWidgetMap()->getView(), 'getUrl')
+                        && (!$this->request || rtrim($this->request->getRequestUri(), '/') != rtrim($url, '/'))) {
+                        /** @var View $view */
+                        $view = $attachedWidget->getWidgetMap()->getView();
+                        /* @var Widget $attachedWidget */
+                        $locale = $attachedWidget->getLocale($this->request ? $this->request->getLocale() : $this->defaultLocale);
+                        $view->translate($locale);
+                        $url .= $this->router->generate('victoire_core_page_show', ['_locale' => $locale, 'url' => $view->getUrl()], $referenceType);
                     }
-                    $view->translate($locale);
-                    $url .= $this->router->generate('victoire_core_page_show', ['_locale' => $locale, 'url' => $view->getUrl()], $referenceType);
+                    //Add anchor part
+                    $url .= '#widget-'.$attachedWidget->getId();
                 }
 
-                //Add anchor part
-                $url .= '#widget-'.$attachedWidget->getId();
                 break;
             default:
                 $url = $parameters['url'];
@@ -314,16 +317,6 @@ class LinkExtension extends \Twig_Extension
         $attr[$label] .= $value;
 
         return $this;
-    }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'victoire_link_extension';
     }
 
     private function formatAttributes($attributes)

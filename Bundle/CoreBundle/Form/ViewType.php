@@ -73,8 +73,10 @@ abstract class ViewType extends AbstractType
             }
             if (!$form->has('template')) {
                 $form->add('template', null, [
-                    'label'         => 'form.view.type.template.label',
-                    'property'      => 'name',
+                    'label'        => 'form.view.type.template.label',
+                    'choice_label' => function ($view) {
+                        return $view->getName();
+                    },
                     'required'      => !$view instanceof Template || $view instanceof BusinessTemplate,
                     'query_builder' => $getAllTemplateWithoutMe,
                 ]);
@@ -124,8 +126,8 @@ abstract class ViewType extends AbstractType
 
         if ($this->authorizationChecker->isGranted('ROLE_VICTOIRE_DEVELOPER')) {
             $builder->add('roles', TextType::class, [
-                'label'             => 'form.page.type.roles.label',
-                'vic_help_block'    => 'form.page.type.roles.help_block',
+                'label'          => 'form.page.type.roles.label',
+                'vic_help_block' => 'form.page.type.roles.help_block',
             ]);
         }
     }

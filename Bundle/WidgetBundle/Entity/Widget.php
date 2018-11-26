@@ -66,6 +66,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     /**
      * @var string
      *
+     * @deprecated
      * @ORM\Column(name="asynchronous", type="boolean", nullable=true)
      */
     protected $asynchronous;
@@ -100,16 +101,6 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      * @var unknown
      */
     protected $entity;
-
-    /**
-     * @deprecated Remove Doctrine mapping and property
-     *
-     * @var string
-     *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\CoreBundle\Entity\View", inversedBy="widgets", cascade={"persist"})
-     * @ORM\JoinColumn(name="view_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    protected $view;
 
     /**
      * @var WidgetMap
@@ -341,9 +332,9 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     {
         $viewId = null;
 
-        $view = $this->getView();
+        $widgetMap = $this->getWidgetMap();
 
-        if ($view !== null) {
+        if ($widgetMap !== null && $view = $widgetMap->getView() !== null) {
             $viewId = $view->getId();
         }
 
@@ -445,17 +436,6 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     }
 
     /**
-     * @deprecated
-     * Get view
-     *
-     * @return string
-     */
-    public function getView()
-    {
-        return $this->view;
-    }
-
-    /**
      * @return [Criteria]
      */
     public function getCriterias()
@@ -506,7 +486,7 @@ class Widget extends BaseWidget implements VictoireQueryInterface
      */
     public function hasCriteriaNamed($criteriaAlias)
     {
-        return $this->criterias->exists(function ($key, $element) use ($criteriaAlias) {
+        return $this->criterias->exists(function ($key, Criteria $element) use ($criteriaAlias) {
             return $criteriaAlias === $element->getName();
         });
     }
@@ -535,12 +515,14 @@ class Widget extends BaseWidget implements VictoireQueryInterface
     public function generateCacheId()
     {
         if (!$this->getCurrentView()) {
-            throw new \Exception(sprintf('Cannot generate an hash for widget %s if currentView is not defined.',
+            throw new \Exception(sprintf(
+                'Cannot generate an hash for widget %s if currentView is not defined.',
                 $this->getId()
             ));
         }
 
-        return sprintf('%s-%s-%s',
+        return sprintf(
+            '%s-%s-%s',
             $this->getId(),
             $this->getUpdatedAt()->getTimestamp(),
             $this->getCurrentView()->getReference()->getId()
@@ -563,5 +545,13 @@ class Widget extends BaseWidget implements VictoireQueryInterface
                 }
             }
         }
+    }
+
+    /**
+     * @param $view
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
     }
 }

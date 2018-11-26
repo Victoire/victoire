@@ -45,14 +45,6 @@ trait StyleSMTrait
     /**
      * @var string
      *
-     * @deprecated
-     * @ORM\Column(name="container_background_sm", type="string", length=255, nullable=true)
-     */
-    protected $containerBackgroundSM;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="container_background_type_sm", type="string", length=255, nullable=true)
      */
     protected $containerBackgroundTypeSM;

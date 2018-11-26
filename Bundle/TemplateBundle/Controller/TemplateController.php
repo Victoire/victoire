@@ -60,7 +60,6 @@ class TemplateController extends Controller
         $template->setReference(new ViewReference($template->getId()));
         $event = new TemplateMenuContextualEvent($template);
 
-        //TODO : il serait bon de faire des constantes pour les noms d'évents
         $eventName = 'victoire_core.'.Template::TYPE.'_menu.contextual';
 
         $this->get('event_dispatcher')->dispatch($eventName, $event);
@@ -70,9 +69,11 @@ class TemplateController extends Controller
         $layout = $template->getLayout().'.html.twig';
 
         $parameters = [
-            'view'   => $template,
-            'id'     => $template->getId(),
-            'locale' => $template->getCurrentLocale(),
+            'view'                            => $template,
+            'id'                              => $template->getId(),
+            'locale'                          => $template->getCurrentLocale(),
+            'victoire_i18n_available_locales' => $this->getParameter('victoire_i18n.available_locales'),
+            'victoire_twig_responsive'        => $this->getParameter('victoire_twig.responsive'),
         ];
 
         $this->get('victoire_widget_map.builder')->build($template);
@@ -99,20 +100,20 @@ class TemplateController extends Controller
      * @Route("/new", name="victoire_template_new")
      * @Configuration\Template()
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $template = new Template();
-        $form = $this->container->get('form.factory')->create(TemplateType::class, $template); //@todo utiliser un service
+        $form = $this->container->get('form.factory')->create(TemplateType::class, $template);
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($request);
         if ($form->isValid()) {
             $em->persist($template);
             $em->flush();
 
             return new JsonResponse([
-                'success'  => true,
-                'url'      => $this->generateUrl('victoire_template_show', ['id' => $template->getId()]),
+                'success' => true,
+                'url'     => $this->generateUrl('victoire_template_show', ['id' => $template->getId()]),
             ]);
         }
 
@@ -133,7 +134,7 @@ class TemplateController extends Controller
      * @param Template $template
      *
      * @return JsonResponse
-     * @Route("/{id}/parametres", name="victoire_template_settings")
+     * @Route("/{id}/parameters", name="victoire_template_settings")
      * @ParamConverter("template", class="VictoireTemplateBundle:Template")
      */
     public function settingsAction(Request $request, $template)
@@ -175,12 +176,12 @@ class TemplateController extends Controller
      * @Configuration\Template()
      * @ParamConverter("template", class="VictoireTemplateBundle:Template")
      */
-    public function editAction(Template $template)
+    public function editAction(Request $request, Template $template)
     {
         $em = $this->getDoctrine()->getManager();
         $form = $this->container->get('form.factory')->create(TemplateType::class, $template);
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($request);
         if ($form->isValid()) {
             $em->persist($template);
             $em->flush();

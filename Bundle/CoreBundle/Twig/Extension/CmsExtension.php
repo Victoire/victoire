@@ -20,7 +20,7 @@ use Victoire\Bundle\WidgetBundle\Resolver\WidgetResolver;
  *
  * service: victoire_core.twig.cms_extension
  */
-class CmsExtension extends \Twig_Extension_Core
+class CmsExtension extends \Twig_Extension
 {
     protected $widgetRenderer;
     protected $authorizationChecker;
@@ -43,8 +43,6 @@ class CmsExtension extends \Twig_Extension_Core
      * @param ViewReferenceRepository $viewReferenceRepository
      * @param \Twig_Environment       $twig
      * @param WidgetResolver          $widgetResolver
-     *
-     * @internal param SecurityContext $securityContext
      */
     public function __construct(
         WidgetRenderer $widgetRenderer,
@@ -96,16 +94,6 @@ class CmsExtension extends \Twig_Extension_Core
     }
 
     /**
-     * get extension name.
-     *
-     * @return string The name
-     */
-    public function getName()
-    {
-        return 'cms';
-    }
-
-    /**
      * render unlink action for a widgetId.
      *
      * @param int $widgetId The widgetId to unlink
@@ -149,6 +137,7 @@ class CmsExtension extends \Twig_Extension_Core
             /* @var \Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap $widgetMap */
             foreach ($currentView->getBuiltWidgetMap()[$slotId] as $widgetMap) {
                 $widget = null;
+
                 try {
                     //get the widget
                     $widget = $this->widgetResolver->resolve($widgetMap);
@@ -304,7 +293,7 @@ class CmsExtension extends \Twig_Extension_Core
     {
         $isGranted = false;
 
-        if ($this->securityContext->isGranted('ROLE_VICTOIRE_DEVELOPER')) {
+        if ($this->authorizationChecker->isGranted('ROLE_VICTOIRE_DEVELOPER')) {
             $isGranted = true;
         }
 

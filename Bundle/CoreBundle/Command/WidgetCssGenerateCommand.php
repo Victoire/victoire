@@ -4,6 +4,7 @@ namespace Victoire\Bundle\CoreBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -70,8 +71,8 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
         }
 
         //Set progress for output
-        $progress = $this->getHelper('progress');
-        $progress->start($output, $limit);
+        $progress = new ProgressBar($output, $limit);
+        $progress->start();
 
         foreach ($views as $view) {
             if ($count >= $limit) {
@@ -97,7 +98,7 @@ class WidgetCssGenerateCommand extends ContainerAwareCommand
             $this->entityManager->flush($view);
 
             $progress->advance();
-            ++$count;
+            $count++;
         }
 
         $progress->finish();

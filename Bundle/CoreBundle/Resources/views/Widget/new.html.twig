@@ -3,8 +3,9 @@
 
 {% block form_container %}
     {% block body %}
-        {{ block('info') }}
-
+        {% if block('info') is defined %}
+            {{ block('info') }}
+        {% endif %}
         {% block form %}
             {% if entity != null %}
                 {% set isVisible = (form.mode.vars.data == widget.mode) or (form.mode.vars.data == constant('MODE_ENTITY', widget) and widget.mode == constant('MODE_STATIC', widget)) %}
@@ -36,20 +37,21 @@
             {% endif %}
         {% endblock form %}
 
-        {{ block('scripts') }}
+        {% if block('scripts') is defined %}
+            {{ block('scripts') }}
+        {% endif %}
     {% endblock body %}
 {% endblock form_container %}
 
 {% block form_base %}
-    {{ block('form_base_start') }}
+
+    {% if block('form_base_start') is defined %}
+        {{ block('form_base_start') }}
+    {% endif %}
 
     {% block form_base_criterias %}{{ form_row(form.criterias) }}{% endblock %}
 
-    {% block form_base_asynchronous %}
-        <div class="v-form-group">
-            {{ form_widget(form.asynchronous) }}
-        </div>
-    {% endblock form_base_asynchronous %}
-
-    {{ block('form_base_end') }}
+    {% if block('form_base_end') is defined %}
+        {{ block('form_base_end') }}
+    {% endif %}
 {% endblock %}

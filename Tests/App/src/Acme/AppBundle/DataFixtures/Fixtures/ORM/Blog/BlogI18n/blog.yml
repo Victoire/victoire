@@ -1,0 +1,40 @@
+Victoire\Bundle\BlogBundle\Entity\Blog:
+    blog:
+        currentLocale: en
+        template: "@template_base"
+        author: "@anakin"
+        parent: "@home"
+        name: The Jedi Network
+        slug: the-jedi-network
+        homepage: false
+        undeletable: false
+        status: published
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        cssUpToDate: false
+
+Victoire\Bundle\BlogBundle\Entity\ArticleTemplate:
+    article_template:
+        backendName: "article template"
+        businessEntityId: article
+        author: "@anakin"
+        template: "@template_base"
+        status: published
+        parent: "@blog"
+        publishedAt: <dateTime('now')>
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        cssUpToDate: false
+
+Victoire\Bundle\I18nBundle\Entity\ViewTranslation:
+    blog_tr:
+        name: blog
+        slug: blog
+        locale: fr
+        translatable: "@blog"
+    article_template_tr:
+        name: article {{item.name}}
+        slug: article-{{item.slug}}
+        locale: fr
+        translatable: "@article_template"

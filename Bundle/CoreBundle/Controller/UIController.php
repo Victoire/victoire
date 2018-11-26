@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\CoreBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,26 +18,14 @@ class UIController extends Controller
      *
      * @param Request $request An HTTP request.
      *
-     * @return array
-     *
      * @Route("/confirm", name="victoire_core_ui_confirm", options={"expose"=true})
-     * @Template
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function confirmAction(Request $request)
     {
-        $confirmCallback = $request->get('confirm_callback');
-        if ($confirmCallback === '') {
-            $confirmCallback = null;
-        }
-
-        return [
-            'title'                => $request->get('title'),
-            'body'                 => $request->get('body'),
-            'id'                   => $request->get('id').'-'.uniqid().'-modal',
-            'cancel_button_class'  => $request->get('cancel_button_class', 'v-btn--framed v-btn--transparent'),
-            'confirm_button_class' => $request->get('confirm_button_class', 'v-btn--danger'),
-            'type'                 => $request->get('type'),
-            'confirmCallback'      => $confirmCallback,
-        ];
+        return $this->render('@VictoireCore/ui/confirm.html.twig', [
+            'id' => $request->get('id').'-'.uniqid().'-modal',
+        ]);
     }
 }

@@ -6,26 +6,37 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface;
-use Victoire\Bundle\BlogBundle\Entity\Category;
+use Victoire\Bundle\BlogBundle\Entity\BlogCategory;
+use Victoire\Bundle\FilterBundle\Domain\FilterFormFieldQueryHandler;
 use Victoire\Bundle\FilterBundle\Filter\BaseFilter;
 
 /**
- * CategoryFilter form type.
+ * Class CategoryFilter.
  */
 class CategoryFilter extends BaseFilter
 {
+    /**
+     * @var TranslatorInterface
+     */
     protected $translator;
 
     /**
-     * @param EntityManager       $entityManager
-     * @param Request             $request
-     * @param TranslatorInterface $translator
+     * CategoryFilter constructor.
+     *
+     * @param EntityManager               $entityManager
+     * @param RequestStack                $requestStack
+     * @param FilterFormFieldQueryHandler $filterQueryHandler
+     * @param TranslatorInterface         $translator
      */
-    public function __construct(EntityManager $entityManager, Request $request, TranslatorInterface $translator)
-    {
-        parent::__construct($entityManager, $request);
+    public function __construct(
+        EntityManager $entityManager,
+        RequestStack $requestStack,
+        FilterFormFieldQueryHandler $filterQueryHandler,
+        TranslatorInterface $translator
+    ) {
+        parent::__construct($entityManager, $requestStack, $filterQueryHandler);
         $this->translator = $translator;
     }
 
@@ -49,7 +60,7 @@ class CategoryFilter extends BaseFilter
             if ($parameter === '') {
                 unset($parameters['category'][$index]);
             } else {
-                $parentCategory = $this->getEntityManager()->getRepository('VictoireBlogBundle:Category')->findOneById($parameter);
+                $parentCategory = $this->getEntityManager()->getRepository('VictoireBlogBundle:BlogCategory')->findOneById($parameter);
                 $childrenArray = array_merge($childrenArray, $this->getCategoryChildrens($parentCategory, []));
             }
         }
@@ -76,7 +87,7 @@ class CategoryFilter extends BaseFilter
         return $qb;
     }
 
-    public function getCategoryChildrens(Category $category, $childrenArray)
+    public function getCategoryChildrens(BlogCategory $category, $childrenArray)
     {
         $childrenArray[] = $category->getId();
         $childrens = $category->getChildren();
@@ -98,9 +109,10 @@ class CategoryFilter extends BaseFilter
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $categories = $this->filterQueryHandler->handle($options['widget'], BlogCategory::class);
 
         //getAll categories
-        $categoryQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Category')->getAll();
+        $categoryQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:BlogCategory')->getAll();
         //getAll published articles
         $articleQb = $this->getEntityManager()->getRepository('VictoireBlogBundle:Article')->getAll(true);
 
@@ -121,7 +133,7 @@ class CategoryFilter extends BaseFilter
         $categoriesChoices = [];
 
         foreach ($categories as $category) {
-            $categoriesChoices[$category->getId()] = $category->getTitle();
+            $categoriesChoices[$category->getTitle()] = $category->getId();
         }
 
         $data = null;
@@ -135,15 +147,18 @@ class CategoryFilter extends BaseFilter
                 $data = $this->getRequest()->query->get('filter')['category_filter']['category'];
             }
         }
+
         $builder
             ->add(
-                'category', ChoiceType::class, [
+                'category',
+                ChoiceType::class,
+                [
                     'label'       => false,
                     'choices'     => $categoriesChoices,
                     'required'    => false,
                     'expanded'    => true,
                     'multiple'    => $options['multiple'],
-                    'empty_value' => $this->translator->trans('blog.category_filter.empty_value.label'),
+                    'placeholder' => $this->translator->trans('blog.category_filter.empty_value.label'),
                     'data'        => $data,
                 ]
             );
@@ -158,7 +173,7 @@ class CategoryFilter extends BaseFilter
      */
     public function getFilters($filters)
     {
-        return $this->getEntityManager()->getRepository('VictoireBlogBundle:Category')->findById($filters['category']);
+        return $this->getEntityManager()->getRepository('VictoireBlogBundle:BlogCategory')->findById($filters['category']);
     }
 
     /**

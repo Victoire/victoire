@@ -1,5 +1,22 @@
 {% trans_default_domain "victoire" %}
 
+{% macro blog_rss_category(blog, categories) %}
+    {% import _self as _links %}
+    {% if categories|length %}
+        <ul>
+            {% for category in categories %}
+                <li>
+                    {% set categoryRssLink = path('victoire_blog_rss', {'id': blog.id, 'category': category.id}) %}
+                    <a href="{{ categoryRssLink }}">{{ category.title }}</a>
+                    {{ _links.blog_rss_category(blog, category.children) }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+
+{% import _self as macro %}
+
 <div class="vic-tab-content vic-modal-tab-content">
     <div class="vic-tab-pane vic-active" id="links">
         <ul>
@@ -8,7 +25,10 @@
             </li>
             <li>
                 <a href="{{ path('victoire_blog_rss', {'id': blog.id}) }}">RSS</a>
+                {{ macro.blog_rss_category(blog, blog.categories) }}
+                </ul>
             </li>
         </ul>
     </div>
 </div>
+

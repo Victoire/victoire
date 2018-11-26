@@ -14,9 +14,7 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\CoreBundle\Controller\VictoireAlertifyControllerTrait;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
-use Victoire\Bundle\WidgetBundle\Form\WidgetStyleType;
 use Victoire\Bundle\WidgetMapBundle\Exception\WidgetMapNotFoundException;
-use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 /**
  * Widget Controller.
@@ -33,12 +31,11 @@ class WidgetController extends Controller
      * @param int     $viewReferenceId
      *
      * @Route("/victoire-dcms-public/widget/show/{id}/{viewReferenceId}", name="victoire_core_widget_show", options={"expose"=true})
-     * @Template()
      * @ParamConverter("id", class="VictoireWidgetBundle:Widget")
      *
      * @throws Exception
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function showAction(Request $request, Widget $widget, $viewReferenceId)
     {
@@ -64,6 +61,8 @@ class WidgetController extends Controller
      *
      * @param string $widgetIds       the widget ids to fetch in json
      * @param int    $viewReferenceId
+     *
+     * @throws \Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException
      *
      * @Route("/victoire-dcms-public/api/widgets/{widgetIds}/{viewReferenceId}", name="victoire_core_widget_apiWidgets", options={"expose"=true})
      *
@@ -141,10 +140,11 @@ class WidgetController extends Controller
      * @param string $slot             The slot where attach the widget
      * @param string $businessEntityId The BusinessEntity::id (can be null if the submitted form is in static mode)
      *
-     * @return JsonResponse
+     * @throws Exception
+     *
+     * @return Response|JsonResponse
      * @Route("/victoire-dcms/widget/create/static/{type}/{viewReference}/{slot}/{quantum}/{position}/{parentWidgetMap}", name="victoire_core_widget_create_static", defaults={"mode":"static", "slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json", "quantum":"a"})
      * @Route("/victoire-dcms/widget/create/{mode}/{type}/{viewReference}/{slot}/{quantum}/{businessEntityId}/{position}/{parentWidgetMap}", name="victoire_core_widget_create", defaults={"slot":null, "businessEntityId":null, "position":null, "parentWidgetMap":null, "_format": "json", "quantum":"a"})
-     * @Template()
      */
     public function createAction($mode, $type, $viewReference, $slot = null, $position = null, $parentWidgetMap = null, $businessEntityId = null, $quantum = null)
     {
@@ -192,11 +192,12 @@ class WidgetController extends Controller
      * @param int    $viewReference    The current view
      * @param string $businessEntityId The BusinessEntity::id (can be null if the submitted form is in static mode)
      *
+     * @throws Exception
+     *
      * @return JsonResponse
      *
      * @Route("/victoire-dcms/widget/edit/{id}/{viewReference}/{mode}/{businessEntityId}", name="victoire_core_widget_edit", options={"expose"=true}, defaults={"quantum":"a", "mode": "static"})
      * @Route("/victoire-dcms/widget/update/{id}/{viewReference}/{mode}/{quantum}/{businessEntityId}", name="victoire_core_widget_update", defaults={"businessEntityId": null, "mode": "static"})
-     * @Template()
      */
     public function editAction(Widget $widget, $viewReference, $mode = Widget::MODE_STATIC, $quantum = null, $businessEntityId = null)
     {
@@ -210,10 +211,10 @@ class WidgetController extends Controller
             $view->setReference($reference);
         }
         $this->get('victoire_core.current_view')->setCurrentView($view);
+
         try {
             $response = new JsonResponse(
                 $this->get('widget_manager')->editWidget(
-                    $this->get('request'),
                     $widget,
                     $view,
                     $quantum,
@@ -231,25 +232,26 @@ class WidgetController extends Controller
     }
 
     /**
-     * @TODO Simplify Action when reorganize with editAction
-     *
      * Stylize a widget.
      *
-     * @param Widget $widget        The widget to stylize
-     * @param int    $viewReference The current view
+     * @param Request $request
+     * @param Widget  $widget
+     * @param int     $viewReference
+     * @param string  $quantum
+     *
+     * @throws Exception
      *
      * @return JsonResponse
      *
-     * @Route("/victoire-dcms/widget/stylize/{id}/{viewReference}", name="victoire_core_widget_stylize", options={"expose"=true})
-     * @Template()
+     * @Route("/victoire-dcms/widget/stylize/{id}/{viewReference}/{quantum}/", name="victoire_core_widget_stylize", defaults={"quantum":"a"}, options={"expose"=true})
      */
-    public function stylizeAction(Request $request, Widget $widget, $viewReference)
+    public function stylizeAction(Request $request, Widget $widget, $viewReference, $quantum = null)
     {
         $view = $this->getViewByReferenceId($viewReference);
         $this->get('victoire_widget_map.builder')->build($view);
 
         try {
-            $widgetView = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view)->getView();
+            $widgetView = $widget->getWidgetMap()->getView();
         } catch (WidgetMapNotFoundException $e) {
             return new JsonResponse([
                 'success' => false,
@@ -264,82 +266,17 @@ class WidgetController extends Controller
         }
 
         $this->get('victoire_core.current_view')->setCurrentView($view);
+
         try {
-            if ($request->getMethod() === 'POST') {
-                $form = $this->get('form.factory')->create(WidgetStyleType::class, $widget, [
-                        'method' => 'POST',
-                        'action' => $this->generateUrl(
-                            'victoire_core_widget_stylize',
-                            [
-                                'id'            => $widget->getId(),
-                                'viewReference' => $viewReference,
-                            ]
-                        ),
-                    ]
-                );
+            $response = $this->get('widget_manager')->editWidgetStyle(
+                $request,
+                $widget,
+                $view,
+                $viewReference,
+                $quantum
+            );
 
-                $form->handleRequest($this->get('request'));
-                if ($request->query->get('novalidate', false) === false && $form->isValid()) {
-                    if ($form->has('deleteBackground') && $form->get('deleteBackground')->getData()) {
-                        // @todo: dynamic responsive key
-                        foreach (['', 'XS', 'SM', 'MD', 'LG'] as $key) {
-                            $widget->{'deleteBackground'.$key}();
-                        }
-                    }
-                    $this->get('doctrine.orm.entity_manager')->flush();
-                    $params = [
-                        'view'        => $view,
-                        'quantum'     => $widget->getQuantum(),
-                        'success'     => true,
-                        'html'        => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
-                        'widgetId'    => $widget->getId(),
-                        'viewCssHash' => $view->getCssHash(),
-                    ];
-                } else {
-                    $template = ($request->query->get('novalidate', false) !== false) ? 'VictoireCoreBundle:Widget/Form/stylize:form.html.twig' : 'VictoireCoreBundle:Widget/Form:stylize.html.twig';
-                    $params = [
-                        'success' => !$form->isSubmitted(),
-                        'html'    => $this->get('templating')->render(
-                            $template,
-                            [
-                                'view'   => $view,
-                                'form'   => $form->createView(),
-                                'widget' => $widget,
-                            ]
-                        ),
-                    ];
-                }
-            } else {
-                $widgets = $widget->getWidgetMap()->getWidgets();
-                $forms = [];
-                foreach ($widgets as $_widget) {
-                    $forms[] = $this->get('form.factory')->create(WidgetStyleType::class, $_widget, [
-                            'method' => 'POST',
-                            'action' => $this->generateUrl(
-                                'victoire_core_widget_stylize',
-                                [
-                                    'id'            => $_widget->getId(),
-                                    'viewReference' => $viewReference,
-                                ]
-                            ),
-                        ]
-                    )->createView();
-                }
-                $params = [
-                    'html' => $this->get('templating')->render(
-                        'VictoireCoreBundle:Widget/Form:stylize.html.twig',
-                        [
-                            'view'    => $view,
-                            'forms'   => $forms,
-                            'widget'  => $widget,
-                            'widgets' => $widgets,
-                            'quantum' => $widget->getQuantum(),
-                        ]
-                    ),
-                ];
-            }
-
-            $response = new JsonResponse($params);
+            $this->congrat($this->get('translator')->trans('victoire.success.message', [], 'victoire'));
         } catch (Exception $ex) {
             $response = $this->getJsonReponseFromException($ex);
         }
@@ -353,13 +290,15 @@ class WidgetController extends Controller
      * @param Widget $widget        The widget to delete
      * @param int    $viewReference The current view
      *
+     * @throws Exception
+     *
      * @return JsonResponse response
      * @Route("/victoire-dcms/widget/delete/{id}/{viewReference}", name="victoire_core_widget_delete", defaults={"_format": "json"})
-     * @Template()
      */
     public function deleteAction(Widget $widget, $viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
+
         try {
             $widgetId = $widget->getId();
             $this->get('widget_manager')->deleteWidget($widget, $view);
@@ -381,13 +320,15 @@ class WidgetController extends Controller
      * @param Widget $widget        The widget to delete
      * @param int    $viewReference The current view
      *
+     * @throws Exception
+     *
      * @return JsonResponse response
      * @Route("/victoire-dcms/widget/delete/quantum/{id}/{viewReference}", name="victoire_core_widget_delete_bulk", defaults={"_format": "json"})
-     * @Template()
      */
     public function deleteBulkAction(Widget $widget, $viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
+
         try {
             $widgets = $widget->getWidgetMap()->getWidgets();
 
@@ -412,13 +353,15 @@ class WidgetController extends Controller
      * @param int $id            The widgetId to unlink
      * @param int $viewReference The current viewReference
      *
+     * @throws Exception
+     *
      * @return JsonResponse response
      * @Route("/victoire-dcms/widget/unlink/{id}/{viewReference}", name="victoire_core_widget_unlink", defaults={"_format": "json"}, options={"expose"=true})
-     * @Template()
      */
     public function unlinkAction($id, $viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
+
         try {
             $this->get('victoire_widget.widget_helper')->deleteById($id);
             $this->get('doctrine.orm.entity_manager')->flush();
@@ -450,12 +393,15 @@ class WidgetController extends Controller
      *
      * @param int $viewReference The current viewReference
      *
+     * @throws Exception
+     *
      * @return JsonResponse
      * @Route("/victoire-dcms/widget/updatePosition/{viewReference}", name="victoire_core_widget_update_position", options={"expose"=true})
      */
     public function updatePositionAction(Request $request, $viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
+
         try {
             //the sorted order for the widgets
             $sortedWidget = $request->get('sorted');
@@ -489,7 +435,7 @@ class WidgetController extends Controller
      * @return JsonResponse
      * @Route("/victoire-dcms/widget/get-available-positions/{viewReference}", name="victoire_core_widget_get_available_positions", options={"expose"=true})
      */
-    public function getAvailablePositionsAction(Request $request, $viewReference)
+    public function getAvailablePositionsAction($viewReference)
     {
         $view = $this->getViewByReferenceId($viewReference);
 
@@ -504,16 +450,17 @@ class WidgetController extends Controller
      *
      * @param Exception $ex
      *
+     * @throws Exception
+     *
      * @return JsonResponse
      */
     protected function getJsonReponseFromException(Exception $ex)
     {
-        //services
-        $securityContext = $this->get('security.context');
+        $authorizationChecker = $this->get('security.authorization_checker');
         $logger = $this->get('logger');
 
         //can we see the debug
-        $isDebugAllowed = $securityContext->isGranted('ROLE_VICTOIRE_PAGE_DEBUG') ? true : $this->get('kernel')->isDebug();
+        $isDebugAllowed = $authorizationChecker->isGranted('ROLE_VICTOIRE_PAGE_DEBUG') ? true : $this->get('kernel')->isDebug();
 
         //whatever is the exception, we log it
         $logger->error($ex->getMessage());
@@ -541,6 +488,10 @@ class WidgetController extends Controller
 
     /**
      * @param int $referenceId
+     *
+     * @throws \Victoire\Bundle\ViewReferenceBundle\Exception\ViewReferenceNotFoundException
+     *
+     * @return \Victoire\Bundle\CoreBundle\Entity\View
      */
     protected function getViewByReferenceId($referenceId)
     {

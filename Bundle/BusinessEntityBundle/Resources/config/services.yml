@@ -15,10 +15,10 @@ services:
     victoire_business_entity.business_entity_subscriber:
         class: "%victoire_business_entity.business_entity_subscriber_class%"
         arguments:
-            - @victoire_business_page.business_page_builder
-            - @victoire_core.helper.business_entity_helper
-            - @victoire_business_page.business_page_helper
-            - @event_dispatcher
+            - "@victoire_business_page.business_page_builder"
+            - "@victoire_core.helper.business_entity_helper"
+            - "@victoire_business_page.business_page_helper"
+            - "@event_dispatcher"
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
@@ -27,7 +27,7 @@ services:
         arguments:
             - "@victoire_core.helper.business_entity_helper"
         tags:
-            - { name: form.type_extension }
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
     victoire_business_entity.warmer:
         class: Victoire\Bundle\BusinessEntityBundle\CacheWarmer\BusinessEntityWarmer
@@ -51,6 +51,7 @@ services:
             - "@event_dispatcher"
             - "@victoire_widget.widget_helper"
             - "%victoire_core.base_paths%"
+            - "%victoire_core.entity_finder_regex%"
             - "@logger"
 
 #  ==================  Provider ================== #

@@ -3,7 +3,7 @@
 namespace Victoire\Bundle\WidgetBundle\Renderer;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\DependencyInjection\Container;
+use Psr\Container\ContainerInterface;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Helper\BusinessPageHelper;
@@ -15,6 +15,7 @@ use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
 use Victoire\Bundle\WidgetBundle\Cache\WidgetCache;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
+use Victoire\Bundle\WidgetMapBundle\Entity\Slot;
 use Victoire\Bundle\WidgetMapBundle\Helper\WidgetMapHelper;
 
 class WidgetRenderer
@@ -40,7 +41,7 @@ class WidgetRenderer
     /**
      * WidgetRenderer constructor.
      *
-     * @param Container          $container
+     * @param ContainerInterface $container
      * @param WidgetCache        $widgetCache
      * @param WidgetHelper       $widgetHelper
      * @param VictoireCollector  $victoireCollector
@@ -48,7 +49,7 @@ class WidgetRenderer
      *
      * @internal param Client $redis
      */
-    public function __construct(Container $container, WidgetCache $widgetCache, WidgetHelper $widgetHelper, VictoireCollector $victoireCollector, BusinessPageHelper $bepHelper)
+    public function __construct(ContainerInterface $container, WidgetCache $widgetCache, WidgetHelper $widgetHelper, VictoireCollector $victoireCollector, BusinessPageHelper $bepHelper)
     {
         $this->container = $container;
         $this->widgetCache = $widgetCache;
@@ -120,8 +121,7 @@ class WidgetRenderer
 
         $dispatcher->dispatch(VictoireCmsEvents::WIDGET_PRE_RENDER, new WidgetRenderEvent($widget));
 
-        $widgetMap = WidgetMapHelper::getWidgetMapByWidgetAndView($widget, $view);
-
+        $widgetMap = $widget->getWidgetMap();
         $directive = '';
         if ($this->container->get('security.authorization_checker')->isGranted('ROLE_VICTOIRE')) {
             $directive = 'widget';

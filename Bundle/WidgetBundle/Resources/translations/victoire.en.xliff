@@ -410,6 +410,14 @@
         <source>widget_layout.form.containerBackground.help_block</source>
         <target>This field is deprecated and will be removed soon. Thank you not to use it.</target>
       </trans-unit>
+      <trans-unit id="58893b9a19c01" resname="widget_layout.form.containerBackgroundType.choices.placeholder">
+        <source>widget_layout.form.containerBackgroundType.choices.placeholder</source>
+        <target>None</target>
+      </trans-unit>
+      <trans-unit id="58893b9a19c10" resname="widget_layout.form.textAlign.choices.placeholder">
+        <source>widget_layout.form.textAlign.choices.placeholder</source>
+        <target>Default</target>
+      </trans-unit>
       <trans-unit id="103" resname="widget_layout.tab.tooltip.STATIC.label">
         <source>widget_layout.tab.tooltip.STATIC.label</source>
         <target>General</target>

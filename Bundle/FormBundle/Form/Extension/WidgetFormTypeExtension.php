@@ -84,17 +84,8 @@ class WidgetFormTypeExtension extends AbstractTypeExtension
             ],
             'vic_widget_vic_checkbox_label' => $this->options['vic_checkbox_label'],
         ]);
-        $resolver->setAllowedValues([
-            'vic_widget_type' => [
-                'inline',
-                '',
-            ],
-            'vic_widget_vic_checkbox_label' => [
-                'label',
-                'widget',
-                'both',
-            ],
-        ]);
+        $resolver->setAllowedValues('vic_widget_type', ['inline', '']);
+        $resolver->setAllowedValues('vic_widget_vic_checkbox_label', ['label', 'widget', 'both']);
     }
 
     /**

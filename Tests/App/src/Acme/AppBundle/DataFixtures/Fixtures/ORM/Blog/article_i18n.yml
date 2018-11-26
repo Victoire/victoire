@@ -3,3 +3,7 @@ Victoire\Bundle\BlogBundle\Entity\ArticleTranslation:
         name: "I'm your father."
         slug: I-m-your-father
         locale: fr
+    article2_en:
+        name: "Are you an angel?"
+        slug: are-you-an-angel
+        locale: fr

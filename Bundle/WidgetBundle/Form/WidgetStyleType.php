@@ -30,7 +30,6 @@ class WidgetStyleType extends AbstractType
         $this->kernel = $kernel;
         $this->fileLocator = $fileLocator;
 
-        //@todo make it dynamic from the global variable (same name) or twig bundle parameter
         $this->victoire_twig_responsive = ['', 'XS', 'SM', 'MD', 'LG'];
     }
 
@@ -46,18 +45,13 @@ class WidgetStyleType extends AbstractType
     {
         $builder
             ->add('containerTag', ChoiceType::class, [
-                'label'             => 'widget_layout.form.containerTag.label',
-                'vic_help_block'    => 'widget_layout.form.containerTag.help_block',
-                'choices'           => array_combine(Widget::$tags, Widget::$tags),
+                'label'          => 'widget_layout.form.containerTag.label',
+                'vic_help_block' => 'widget_layout.form.containerTag.help_block',
+                'choices'        => array_combine(Widget::$tags, Widget::$tags),
             ])
             ->add('containerClass', null, [
                 'label'    => 'widget_layout.form.containerClass.label',
                 'required' => false,
-            ])
-            ->add('containerBackground', null, [
-                'label'          => 'widget_layout.form.containerBackground.label',
-                'vic_help_block' => 'widget_layout.form.containerBackground.help_block',
-                'required'       => false,
             ])
             ->add('vicActiveTab', HiddenType::class, [
                 'required' => false,

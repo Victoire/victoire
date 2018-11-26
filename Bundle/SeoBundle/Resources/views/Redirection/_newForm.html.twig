@@ -1,0 +1,55 @@
+{% trans_default_domain "victoire" %}
+
+{% form_theme form 'VictoireFormBundle:Form:fields.html.twig' %}
+
+<div class="collapse{{ isOpened|default(false) ? ' in' : '' }}" id="new-redirection-form-container">
+    <div class="row vic-p-3">
+        <div class="col-md-12">
+            {{ form_start(form) }}
+            <div class="row vic-mt-1">
+                <div class="col-md-12">
+                    {{ form_errors(form) }}
+                </div>
+            </div>
+            <div class="row vic-mb-1 vic-mb-2">
+                <div class="col-md-12">
+                    {{ form_widget(form.url) }}
+                    {{ form_errors(form.url) }}
+                </div>
+            </div>
+            <div class="row vic-mb-1">
+                <div class="col-md-12">
+                    {{ form_widget(form.link) }}
+                    {{ form_errors(form.link) }}
+                </div>
+            </div>
+            <div class="row vic-mb-1">
+                <div class="col-md-12">
+                    <div class="vic-float-right">
+                        <input
+                            id="new_redirection_form_submit"
+                            type="submit"
+                            value="{{ 'victoire.redirection.new.form.submit.label'|trans }}"
+                            class="vic-btn vic-btn-default vic-bg-green vic-text-white"
+                        >
+                    </div>
+                </div>
+            </div>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+
+{% if icTrigger is defined %}
+    <span
+        v-ic-get-from="{{ icTrigger.url }}"
+        v-ic-target="{{ icTrigger.target }}"
+        v-ic-swap-style="append"
+        v-ic-trigger-on="load">
+    </span>
+{% endif %}
+
+<script>
+    eval("VicIntercooler.processNodes($vic('#vic-modal-container'));")
+</script>

@@ -5,13 +5,12 @@ namespace Victoire\Bundle\CoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
-use Victoire\Bundle\TemplateBundle\Entity\Template;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
-use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 /**
@@ -29,7 +28,7 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
  */
 abstract class View
 {
-    use \Gedmo\Timestampable\Traits\TimestampableEntity;
+    use TimestampableEntity;
     use Translatable;
 
     /**
@@ -146,19 +145,6 @@ abstract class View
     protected $cssHash;
 
     /**
-     * @deprecated
-     * @ORM\Column(name="widget_map", type="array")
-     */
-    protected $widgetMap = [];
-
-    /**
-     * @var string
-     *
-     * @ORM\OneToMany(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget", mappedBy="view", cascade={"persist", "remove"})
-     * @ORM\OrderBy({"id" = "ASC"})
-     */
-    protected $widgets;
-    /**
      * @var bool
      *
      * @ORM\Column(name="cssUpToDate", type="boolean")
@@ -245,7 +231,7 @@ abstract class View
      *
      * @param View $parent
      */
-    public function setParent(View $parent = null)
+    public function setParent(self $parent = null)
     {
         $this->parent = $parent;
         if ($parent && !($this instanceof VirtualBusinessPage)) {
@@ -307,7 +293,7 @@ abstract class View
      *
      * @param View $child
      */
-    public function addChild(View $child)
+    public function addChild(self $child)
     {
         $this->children[] = $child;
     }
@@ -317,7 +303,7 @@ abstract class View
      *
      * @param View $child
      */
-    public function removeChild(View $child)
+    public function removeChild(self $child)
     {
         $this->children->removeElement($child);
     }
@@ -712,33 +698,11 @@ abstract class View
     }
 
     /**
-     * @deprecated
-     * Get widgetMap
-     *
-     * @return widgetMap
-     */
-    public function getWidgetMap()
-    {
-        return $this->widgetMap;
-    }
-
-    /**
-     * @deprecated
-     * Get widgets
-     *
-     * @return string
-     */
-    public function getWidgets()
-    {
-        return $this->widgets;
-    }
-
-    /**
      * @param View $view
      *
      * @return bool
      */
-    public function isTemplateOf(View $view)
+    public function isTemplateOf(self $view)
     {
         while ($_view = $view->getTemplate()) {
             if ($this === $_view) {

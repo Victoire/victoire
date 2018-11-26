@@ -1,0 +1,10 @@
+{% trans_default_domain "victoire" %}
+
+<div id="redirection-{{ redirection.id }}-item-container">
+    <div class="row">
+        {% include '@VictoireSeo/Redirection/_item.html.twig' %}
+    </div>
+    <div class="row collapse{{ isOpened|default(false) ? ' in' : '' }}" id="collapse-form-{{ redirection.id }}"><hr>
+        {% include '@VictoireSeo/Redirection/_form.html.twig' %}
+    </div>
+</div>

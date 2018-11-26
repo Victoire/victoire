@@ -1,7 +1,7 @@
 # System Requirements
 
 * A webserver like Apache or Nginx
-* PHP from 5.5.9
+* PHP from 7.1
     * [JSON extension](http://php.net/manual/book.json.php) needs to be enabled
     * [ctype extension](http://php.net/manual/book.ctype.php) needs to be enabled
     * php.ini recommended settings
@@ -17,13 +17,13 @@
 
 | Name                                 | Version      | Comment                     |
 | -------------------------------------|--------------|---------------------------- |
-| php                                  | >=5.4        | Traits                      |
+| php                                  | >=7.1        |                             |
 | a2lix/translation-form-bundle        | ^2.1         | Stable version start at 2.1 |
 | doctrine/doctrine-fixtures-bundle    | ^2.2         | Stable version start at 2.2 |
 | doctrine/doctrine-migrations-bundle  | ^1.1         | Framework 2.3               |
-| doctrine/orm                         | ^2.5         |                             |
+| doctrine/orm                         | ^2.5,<2.6    | Bug with 2.6 version        |
 | friendsofsymfony/jsrouting-bundle    | ^1.0 or ^2.0 |                             |
-| friendsofsymfony/user-bundle         | ~2.0@dev     | 2.0 is not yet stable       |
+| friendsofsymfony/user-bundle         | ~2.0         |                             |
 | incenteev/composer-parameter-handler | ^2.0         |                             |
 | jms/serializer-bundle                | ^1.0         |                             |
 | knplabs/gaufrette                    | ^0.1         |                             |
@@ -37,12 +37,12 @@
 | stof/doctrine-extensions-bundle      | ~1.2         |                             |
 | symfony/assetic-bundle               | ~2.3         |                             |
 | symfony/monolog-bundle               | ~2.4 or ~3.0 |                             |
-| symfony/symfony                      | ^2.8         |                             |
+| symfony/symfony                      | ^3.4         | Latest LTS                  |
 | symfony/swiftmailer-bundle           | ^2.3         |                             |
 | troopers/alertify-bundle             | ^3.0         |                             |
 | troopers/assetic-injector-bundle     | ^1.0         |                             |
 | twig/extensions                      | ~1.0         |                             |
-| twig/twig                            | ~1.0         |                             |
+| twig/twig                            | ~2.0         |                             |
 | victoire/text-widget                 | ~2.0         |                             |
 | victoire/button-widget               | ~2.0         |                             |
 | willdurand/js-translation-bundle     | ^2.5         |                             |

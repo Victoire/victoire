@@ -144,7 +144,7 @@ class WidgetDataWarmer
                 ) {
                     //If target Entity is not null, treat it
                     if ($targetEntity = $this->accessor->getValue($entity, $association['fieldName'])) {
-                        $associatedEntities[$targetClass]['id'][] = new AssociatedEntityToWarm(
+                        $associatedEntities[$targetClass]['id']['unsorted']['entitiesToWarm'][] = new AssociatedEntityToWarm(
                             AssociatedEntityToWarm::TYPE_MANY_TO_ONE,
                             $entity,
                             $association['fieldName'],
@@ -168,8 +168,14 @@ class WidgetDataWarmer
                             $getter = 'get'.ucwords($association['fieldName']);
                             $entity->$getter()->setDirty(false);
                             $entity->$getter()->setInitialized(true);
+                            $orderByToken = 'unsorted';
 
-                            $associatedEntities[$targetClass][$association['mappedBy']][] = new AssociatedEntityToWarm(
+                            if (isset($association['orderBy'])) {
+                                $orderByToken = implode($association['orderBy']);
+                                $associatedEntities[$targetClass][$association['mappedBy']][$orderByToken]['orderBy'] = $association['orderBy'];
+                            }
+
+                            $associatedEntities[$targetClass][$association['mappedBy']][$orderByToken]['entitiesToWarm'][] = new AssociatedEntityToWarm(
                                 AssociatedEntityToWarm::TYPE_ONE_TO_MANY,
                                 $entity,
                                 $association['fieldName'],
@@ -205,45 +211,55 @@ class WidgetDataWarmer
         $newEntities = [];
 
         foreach ($repositories as $repositoryName => $findMethods) {
-            foreach ($findMethods as $findMethod => $associatedEntitiesToWarm) {
+            foreach ($findMethods as $findMethod => $groupedBySortAssociatedEntitiesToWarm) {
+                foreach ($groupedBySortAssociatedEntitiesToWarm as $orderByToken => $groupedAssociatedEntitiesToWarm) {
+                    $associatedEntitiesToWarm = $groupedAssociatedEntitiesToWarm['entitiesToWarm'];
 
-                //Extract ids to search
-                $idsToSearch = array_map(function ($associatedEntityToWarm) {
-                    return $associatedEntityToWarm->getEntityId();
-                }, $associatedEntitiesToWarm);
+                    //Extract ids to search
+                    $idsToSearch = array_map(function ($associatedEntityToWarm) {
+                        return $associatedEntityToWarm->getEntityId();
+                    }, $associatedEntitiesToWarm);
 
-                //Find by id for ManyToOne associations based on target entity id
-                //Find by mappedBy value for OneToMany associations based on owner entity id
-                $foundEntities = $this->em->getRepository($repositoryName)->findBy([
-                    $findMethod => array_values($idsToSearch),
-                ]);
+                    $orderBy = [];
+                    if ($orderByToken !== 'unsorted') {
+                        foreach ($groupedAssociatedEntitiesToWarm['orderBy'] as $orderAttribut => $order) {
+                            $orderBy[$orderAttribut] = $order;
+                        }
+                    }
 
-                /* @var AssociatedEntityToWarm[] $associatedEntitiesToWarm */
-                foreach ($associatedEntitiesToWarm as $associatedEntityToWarm) {
-                    foreach ($foundEntities as $foundEntity) {
-                        if ($associatedEntityToWarm->getType() === AssociatedEntityToWarm::TYPE_MANY_TO_ONE
-                            && $foundEntity->getId() === $associatedEntityToWarm->getEntityId()
-                        ) {
-                            $inheritorEntity = $associatedEntityToWarm->getInheritorEntity();
-                            $inheritorPropertyName = $associatedEntityToWarm->getInheritorPropertyName();
-                            $this->accessor->setValue($inheritorEntity, $inheritorPropertyName, $foundEntity);
-                            continue;
-                        } elseif ($associatedEntityToWarm->getType() === AssociatedEntityToWarm::TYPE_ONE_TO_MANY
-                            && $this->accessor->getValue($foundEntity, $findMethod) === $associatedEntityToWarm->getInheritorEntity()
-                        ) {
-                            $inheritorEntity = $associatedEntityToWarm->getInheritorEntity();
-                            $inheritorPropertyName = $associatedEntityToWarm->getInheritorPropertyName();
+                    //Find by id for ManyToOne associations based on target entity id
+                    //Find by mappedBy value for OneToMany associations based on owner entity id
+                    $foundEntities = $this->em->getRepository($repositoryName)->findBy([
+                        $findMethod => array_values($idsToSearch),
+                    ], $orderBy);
 
-                            //Don't use Collection getter directly and override Collection
-                            //default behaviour to avoid useless query
-                            $getter = 'get'.ucwords($inheritorPropertyName);
-                            $inheritorEntity->$getter()->add($foundEntity);
-                            $inheritorEntity->$getter()->setDirty(false);
-                            $inheritorEntity->$getter()->setInitialized(true);
+                    /* @var AssociatedEntityToWarm[] $associatedEntitiesToWarm */
+                    foreach ($associatedEntitiesToWarm as $associatedEntityToWarm) {
+                        foreach ($foundEntities as $foundEntity) {
+                            if ($associatedEntityToWarm->getType() === AssociatedEntityToWarm::TYPE_MANY_TO_ONE
+                                && $foundEntity->getId() === $associatedEntityToWarm->getEntityId()
+                            ) {
+                                $inheritorEntity = $associatedEntityToWarm->getInheritorEntity();
+                                $inheritorPropertyName = $associatedEntityToWarm->getInheritorPropertyName();
+                                $this->accessor->setValue($inheritorEntity, $inheritorPropertyName, $foundEntity);
+                                continue;
+                            } elseif ($associatedEntityToWarm->getType() === AssociatedEntityToWarm::TYPE_ONE_TO_MANY
+                                && $this->accessor->getValue($foundEntity, $findMethod) === $associatedEntityToWarm->getInheritorEntity()
+                            ) {
+                                $inheritorEntity = $associatedEntityToWarm->getInheritorEntity();
+                                $inheritorPropertyName = $associatedEntityToWarm->getInheritorPropertyName();
 
-                            //Store new entities to warm if necessary
-                            $newEntities[] = $foundEntity;
-                            continue;
+                                //Don't use Collection getter directly and override Collection
+                                //default behaviour to avoid useless query
+                                $getter = 'get'.ucwords($inheritorPropertyName);
+                                $inheritorEntity->$getter()->add($foundEntity);
+                                $inheritorEntity->$getter()->setDirty(false);
+                                $inheritorEntity->$getter()->setInitialized(true);
+
+                                //Store new entities to warm if necessary
+                                $newEntities[] = $foundEntity;
+                                continue;
+                            }
                         }
                     }
                 }

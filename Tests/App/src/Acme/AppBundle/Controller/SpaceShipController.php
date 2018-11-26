@@ -7,6 +7,7 @@ use Acme\AppBundle\Form\Type\SpaceShipType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Victoire\Bundle\CoreBundle\Controller\BackendController;
 
@@ -41,7 +42,7 @@ class SpaceShipController extends BackendController
      *
      * @Route("/", name="acme_app_spaceship_create")
      * @Method("POST")
-     * @Template("AcmeAppBundle:SpaceShip:new.html.twig")
+     * @Template("AcmeAppBundle:space_ship:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -77,7 +78,7 @@ class SpaceShipController extends BackendController
             'method' => 'POST',
         ]);
 
-        $form->add('submit', 'submit', ['label' => 'acme.app.spaceship.form.button.create']);
+        $form->add('submit', SubmitType::class, ['label' => 'acme.app.spaceship.form.button.create']);
 
         return $form;
     }
@@ -166,7 +167,7 @@ class SpaceShipController extends BackendController
             'method' => 'PUT',
         ]);
 
-        $form->add('submit', 'submit', ['label' => 'acme.app.spaceship.form.button.update']);
+        $form->add('submit', SubmitType::class, ['label' => 'acme.app.spaceship.form.button.update']);
 
         return $form;
     }
@@ -176,7 +177,7 @@ class SpaceShipController extends BackendController
      *
      * @Route("/{id}", name="acme_app_spaceship_update")
      * @Method("PUT")
-     * @Template("AcmeAppBundle:SpaceShip:edit.html.twig")
+     * @Template("AcmeAppBundle:space_ship:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -245,7 +246,7 @@ class SpaceShipController extends BackendController
         ])
             ->setAction($this->generateUrl('acme_app_spaceship_delete', ['id' => $id]))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', ['label' => 'acme.app.spaceship.form.button.delete'])
+            ->add('submit', SubmitType::class, ['label' => 'acme.app.spaceship.form.button.delete'])
             ->getForm();
     }
 }

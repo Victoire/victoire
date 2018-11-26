@@ -1,5 +1,5 @@
 {% set hasStyle = 0 %}
-{% for style in ['containerWidth', 'containerHeight', 'containerMargin', 'containerPadding', 'textAlign', 'containerBackground',
+{% for style in ['containerWidth', 'containerHeight', 'containerMargin', 'containerPadding', 'textAlign',
                  'containerBackgroundType', 'containerBackgroundImage', 'containerBackgroundRepeat',
                  'containerBackgroundPosition', 'containerBackgroundSize', 'containerBackgroundOverlay',
                  'containerBackgroundColor'] %}
@@ -30,7 +30,6 @@
             'padding': attribute(widget, 'containerPadding' ~ responsive|upper),
             'position': attribute(widget, 'containerBackgroundOverlay' ~ responsive|upper) ? 'relative',
             'textAlign': attribute(widget, 'textAlign' ~ responsive|upper),
-            'backgroundOld': attribute(widget, 'containerBackground' ~ responsive|upper),
             'bgType': attribute(widget, 'containerBackgroundType' ~ responsive|upper),
             'bgImage': attribute(widget, 'containerBackgroundImage' ~ responsive|upper),
             'bgRepeat': attribute(widget, 'containerBackgroundRepeat' ~ responsive|upper),

@@ -1,6 +1,6 @@
 imports:
-    - { resource: @VictoireCoreBundle/Resources/config/config.yml }
-    - { resource: @VictoireTwigBundle/Resources/config/config.yml }
+    - { resource: "@VictoireCoreBundle/Resources/config/config.yml" }
+    - { resource: "@VictoireTwigBundle/Resources/config/config.yml" }
 
 monolog:
     handlers:
@@ -25,7 +25,6 @@ framework:
     default_locale:  "en"
     translator:      { fallback: "en" }
     trusted_hosts:   ~
-    trusted_proxies: ~
     session:
         handler_id:  ~
         name: victoire
@@ -38,7 +37,7 @@ framework:
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"
-    strict_variables: "%kernel.debug%"
+    strict_variables: true
 
 # Assetic Configuration
 assetic:
@@ -52,7 +51,7 @@ assetic:
                 - "/usr/lib/node_modules"
                 - "%kernel.root_dir%/../../../node_modules"
                 - "/usr/local/lib/node_modules"
-            apply_to: "\.less$"
+            apply_to: \.less$
 
 # Doctrine Configuration
 doctrine:
@@ -113,7 +112,7 @@ security:
             pattern: ^/login*
             form_login:
                 provider:        fos_userbundle
-                csrf_provider:   form.csrf_provider
+                csrf_token_generator:   security.csrf.token_manager
                 failure_path: /login
                 check_path: /login_check
                 default_target_path: /
@@ -139,6 +138,7 @@ victoire_core:
         - "%kernel.root_dir%/../src"
         - "%kernel.root_dir%/../../../Bundle/BlogBundle"
         - "%kernel.root_dir%/../../../vendor/victoire"
+    entity_finder_regex: '/^.+\/Entity\/.+\.php$/i' #(optional) required for a non standard installation
     business_entity_debug: false
 
 services:
@@ -169,6 +169,8 @@ snc_redis:
 
 parameters:
     locale: en
+    victoire.realFaviconPath: 'Bundle/UIBundle/Resources/config/node_modules/cli-real-favicon/real-favicon.js'
+
 
 troopers_alertify:
     contexts:

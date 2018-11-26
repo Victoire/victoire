@@ -13,7 +13,6 @@ use Doctrine\ORM\QueryBuilder;
 use FOS\UserBundle\Model\UserInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
@@ -82,6 +81,7 @@ class QueryHelper
         //test that there is a business entity name
         if ($businessEntityId === null || $businessEntityId === '') {
             $containerId = $containerEntity->getId();
+
             throw new \Exception('The container entity ['.$containerId.'] does not have any businessEntityId.');
         }
 
@@ -192,11 +192,7 @@ class QueryHelper
         }
 
         if (strpos($query, ':currentUser') !== false && is_object($this->getCurrentUser())) {
-            if (is_object($this->getCurrentUser())) {
-                $itemsQueryBuilder->setParameter('currentUser', $this->getCurrentUser()->getId());
-            } else {
-                throw new AccessDeniedException();
-            }
+            $itemsQueryBuilder->setParameter('currentUser', $this->getCurrentUser()->getId());
         }
 
         return $itemsQueryBuilder;

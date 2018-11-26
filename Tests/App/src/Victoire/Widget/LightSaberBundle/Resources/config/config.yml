@@ -1,7 +1,7 @@
 victoire_core:
     widgets:
         LightSaber:
-            class: "Victoire\\Widget\\LightSaberBundle\\Entity\\WidgetLightSaber"
+            class: Victoire\Widget\LightSaberBundle\Entity\WidgetLightSaber
             name: LightSaber
             
 jms_translation:

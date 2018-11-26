@@ -35,6 +35,9 @@ services:
             - "@victoire_widget_map.widget_data_warmer"
             - "@victoire_view_reference.repository"
             - "@victoire_api_business_entity.resolver.api_business_entity_resolver"
+            - "@victoire_page.handler.redirection"
+            - "%victoire_i18n.available_locales%"
+            - "%victoire_twig.responsive%"
 
     ####################################################################################################################
     # Security voter
@@ -108,3 +111,12 @@ services:
         parent: victoire_view_reference.base_view_reference.builder
         tags:
             - { name: victoire_view_reference.view_reference.builder, view: Victoire\Bundle\PageBundle\Entity\Page }
+
+    ####################################################################################################################
+    # Helper
+    ####################################################################################################################
+
+    victoire_page.handler.redirection:
+        class: Victoire\Bundle\PageBundle\Handler\RedirectionHandler
+        arguments:
+            - "@doctrine.orm.entity_manager"

@@ -63,16 +63,6 @@ class WidgetMap
     protected $widgets;
 
     /**
-     * @deprecated Remove Doctrine mapping and property
-     *
-     * @var Widget
-     *
-     * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\WidgetBundle\Entity\Widget")
-     * @ORM\JoinColumn(name="widget_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $widget;
-
-    /**
      * @ORM\ManyToOne(targetEntity="\Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap", inversedBy="substitutes")
      * @ORM\JoinColumn(name="replaced_id", referencedColumnName="id")
      */
@@ -116,6 +106,11 @@ class WidgetMap
      * @ORM\Column(name="slot", type="string", length=255, nullable=true)
      */
     protected $slot;
+
+    public function __toString()
+    {
+        return (string) $this->id;
+    }
 
     public function __construct()
     {
@@ -367,7 +362,7 @@ class WidgetMap
     /**
      * @param null|WidgetMap $parent
      */
-    public function setParent(WidgetMap $parent = null)
+    public function setParent(self $parent = null)
     {
         if ($this->parent) {
             $this->parent->removeChild($this);
@@ -447,7 +442,7 @@ class WidgetMap
     /**
      * @param WidgetMap $substitute
      */
-    public function addSubstitute(WidgetMap $substitute)
+    public function addSubstitute(self $substitute)
     {
         $this->substitutes->add($substitute);
     }
@@ -458,29 +453,5 @@ class WidgetMap
     public function setSubstitutes($substitutes)
     {
         $this->substitutes = $substitutes;
-    }
-
-    /**
-     * @deprecated
-     *
-     * @return Widget
-     */
-    public function getWidget()
-    {
-        return $this->widget;
-    }
-
-    /**
-     * @deprecated
-     *
-     * @param Widget $widget
-     *
-     * @return WidgetMap
-     */
-    public function setWidget(Widget $widget = null)
-    {
-        $this->widget = $widget;
-
-        return $this;
     }
 }

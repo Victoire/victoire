@@ -1,4 +1,4 @@
-<div class="v-collapse" id="widget-{{ id }}-tab-pane" data-flag="v-collapse" data-group="tab-widget-quantum" data-quantum="{{ quantum }}" {% if forms.active is defined and forms.active == true %}data-state="visible"{% endif %}>
+<div class="v-collapse" id="widget-{{ id }}-tab-pane" data-flag="v-collapse" data-group="tab-widget-quantum" data-quantum="{{ quantum }}" {% if forms.active is defined and forms.active %}data-state="visible"{% endif %}>
     {% if widget.id and widget.widgetMap.view != view %}
         {% embed "VictoireUIBundle:Bricks:alert.html.twig" with { theme: "warning" } %}
             {% block body %}
