@@ -66,7 +66,7 @@ class WidgetManager
      * @param RequestStack                     $requestStack
      * @param WidgetMapManager                 $widgetMapManager
      * @param WidgetMapBuilder                 $widgetMapBuilder
-     * @param BusinessEntityHelper                  $businessEntityHelper
+     * @param BusinessEntityHelper             $businessEntityHelper
      * @param EngineInterface                  $templating
      * @param PageHelper                       $pageHelper
      * @param array                            $slots
@@ -231,9 +231,9 @@ class WidgetManager
     /**
      * Edit a widget.
      *
-     * @param Widget  $widget
-     * @param View    $currentView
-     * @param string  $businessEntityName The entity name is used to know which form to submit
+     * @param Widget $widget
+     * @param View   $currentView
+     * @param string $businessEntityName The entity name is used to know which form to submit
      *
      * @return template
      */
