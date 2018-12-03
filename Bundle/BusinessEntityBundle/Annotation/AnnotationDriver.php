@@ -9,9 +9,6 @@ use Doctrine\ORM\Mapping\Driver\AnnotationDriver as DoctrineAnnotationDriver;
 use Doctrine\ORM\Mapping\MappingException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -28,7 +25,6 @@ class AnnotationDriver extends DoctrineAnnotationDriver
     public $reader;
     protected $eventDispatcher;
     protected $widgetHelper;
-    protected $paths;
     protected $regex;
     protected $logger;
 
@@ -47,18 +43,14 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         EventDispatcherInterface $eventDispatcher,
         $widgetHelper,
         $paths,
-        $regex,
         LoggerInterface $logger
     ) {
-
-        parent::__construct($reader, $paths);
         $this->reader = $reader;
         $this->eventDispatcher = $eventDispatcher;
         $this->widgetHelper = $widgetHelper;
         $this->paths = $paths;
         $this->logger = $logger;
     }
-
     /**
      * Get all class names.
      *
@@ -75,7 +67,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         $includedFiles = [];
         foreach ($this->paths as $path) {
             if (!is_dir($path)) {
-                $this->logger->warning(sprintf(
+                $this->logger->error(sprintf(
                     'The given path "%s" seems to be incorrect. You need to edit victoire_core.base_paths configuration.',
                     $path
                 ));
@@ -86,22 +78,23 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                     new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS),
                     \RecursiveIteratorIterator::LEAVES_ONLY
                 ),
-                $this->regex,
+                '/^.+\/Entity\/.+\.php$/i',
                 \RecursiveRegexIterator::GET_MATCH
             );
             foreach ($iterator as $file) {
                 $sourceFile = realpath($file[0]);
+                require_once $sourceFile;
                 $includedFiles[] = $sourceFile;
             }
         }
-
-        foreach ($includedFiles as $fileName) {
-            $class = $this->getClassNameFromFile($fileName);
-            if (class_exists($class) && !$this->isTransient($class)) {
-                $classes[] = $class;
+        $declared = get_declared_classes();
+        foreach ($declared as $className) {
+            $rc = new \ReflectionClass($className);
+            $sourceFile = $rc->getFileName();
+            if (in_array($sourceFile, $includedFiles) && !$this->isTransient($className)) {
+                $classes[] = $className;
             }
         }
-
         return $classes;
     }
 
