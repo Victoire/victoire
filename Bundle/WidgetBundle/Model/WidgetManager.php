@@ -45,7 +45,6 @@ class WidgetManager
      */
     protected $requestStack;
     protected $widgetMapManager;
-    protected $cacheReader;
     protected $businessEntityHelper;
     protected $templating;
     protected $pageHelper;
@@ -66,7 +65,6 @@ class WidgetManager
      * @param RequestStack                     $requestStack
      * @param WidgetMapManager                 $widgetMapManager
      * @param WidgetMapBuilder                 $widgetMapBuilder
-     * @param BusinessEntityCacheReader        $cacheReader
      * @param EngineInterface                  $templating
      * @param PageHelper                       $pageHelper
      * @param array                            $slots
@@ -90,8 +88,8 @@ class WidgetManager
         VirtualToBusinessPageTransformer $virtualToBpTransformer,
         array $twigResponsive
     ) {
-        $this->widgetFormBuilder = $widgetFormBuilder;
         $this->widgetHelper = $widgetHelper;
+        $this->widgetFormBuilder = $widgetFormBuilder;
         $this->widgetContentResolver = $widgetContentResolver;
         $this->widgetRenderer = $widgetRenderer;
         $this->eventDispatcher = $eventDispatcher;
@@ -111,6 +109,7 @@ class WidgetManager
     /**
      * new widget.
      *
+     * @param string $mode
      * @param string $type
      * @param string $slot
      * @param View   $view
@@ -122,7 +121,7 @@ class WidgetManager
     {
         $quantum = $this->widgetFormBuilder->convertToString($quantum);
 
-        $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
+        $widget = $this->widgetHelper->newWidgetInstance($type, $mode);
         $widgets = [$widget];
 
         /** @var BusinessEntity[] $classes */
