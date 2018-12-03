@@ -2,23 +2,10 @@
 
 namespace Victoire\Bundle\CoreBundle\DataTransformer;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class JsonToArrayTransformer implements DataTransformerInterface
 {
-    /**
-     * @var ObjectManager
-     */
-    private $om;
-
-    /**
-     * constructor.
-     */
-    public function __construct()
-    {
-    }
-
     /**
      * Transforms a php array into json array.
      *

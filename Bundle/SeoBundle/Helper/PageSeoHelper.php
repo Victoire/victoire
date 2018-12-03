@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\SeoBundle\Helper;
 
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessPage;
@@ -88,10 +89,11 @@ class PageSeoHelper
                     foreach ($businessProperties as $businessProperty) {
                         //parse of seo attributes
                         foreach ($this->pageSeoAttributes as $seoAttribute) {
-                            $value = $this->getEntityAttributeValue($pageSeo, $seoAttribute);
+                            $accessor = new PropertyAccessor();
+                            $value = $accessor->getValue($pageSeo, $seoAttribute);
                             // we only update value if its a string and (if its a VBP or its a BP where value is not defined)
                             if (is_string($value) && ($page instanceof VirtualBusinessPage || ($page instanceof BusinessPage && $value == null))) {
-                                $value = $this->parameterConverter->setBusinessPropertyInstance(
+                                $value = $this->parameterConverter->convertFromEntity(
                                     $value,
                                     $businessProperty,
                                     $entity
@@ -103,23 +105,6 @@ class PageSeoHelper
                 }
             }
         }
-    }
-
-    /**
-     * Get the content of an attribute of an entity given.
-     *
-     * @param \Victoire\Bundle\SeoBundle\Entity\PageSeo $entity
-     * @param string                                    $field
-     *
-     * @return mixed
-     */
-    protected function getEntityAttributeValue($entity, $field)
-    {
-        $functionName = 'get'.ucfirst($field);
-
-        $fieldValue = call_user_func([$entity, $functionName]);
-
-        return $fieldValue;
     }
 
     /**

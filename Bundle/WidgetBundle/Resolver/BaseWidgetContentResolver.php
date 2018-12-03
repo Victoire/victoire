@@ -4,13 +4,28 @@ namespace Victoire\Bundle\WidgetBundle\Resolver;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
+use Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver;
 use Victoire\Bundle\QueryBundle\Helper\QueryHelper;
 use Victoire\Bundle\WidgetBundle\Model\Widget;
 
 class BaseWidgetContentResolver
 {
+    /**
+     * @var QueryHelper
+     */
     protected $queryHelper;
+
+    /**
+     * @var EntityManager
+     */
     protected $entityManager;
+
+    /**
+     * @var APIBusinessEntityResolver
+     */
+    protected $apiResolver;
 
     /**
      * Get the static content of the widget.
@@ -82,12 +97,15 @@ class BaseWidgetContentResolver
     {
         $parameters = $this->getWidgetStaticContent($widget);
 
-        $entity = $this->getWidgetQueryBuilder($widget)
-                        ->setMaxResults(1)
-                        ->getQuery()
-                        ->getOneOrNullResult();
+        if (APIBusinessEntity::TYPE === $widget->getEntityProxy()->getBusinessEntity()->getType()) {
+            $entity = $this->apiResolver->getBusinessEntities($widget->getEntityProxy()->getBusinessEntity());
+        } else {
+            $entity = $this->getWidgetQueryBuilder($widget)
+                            ->setMaxResults(1)
+                            ->getQuery()
+                            ->getOneOrNullResult();
+        }
 
-        $fields = $widget->getFields();
         $this->populateParametersWithWidgetFields($widget, $entity, $parameters);
 
         return $parameters;
@@ -118,10 +136,14 @@ class BaseWidgetContentResolver
         //parse the field
         foreach ($fields as $widgetField => $field) {
             //get the value of the field
-            if ($entity !== null) {
-                $attributeValue = $entity->getEntityAttributeValue($field);
+            if (null !== $entity) {
+                $attributeValue = null;
+                if (null !== $field) {
+                    $accessor = new PropertyAccessor();
+                    $attributeValue = $accessor->getValue($entity, $field);
+                }
             } else {
-                $attributeValue = $widget->getBusinessEntityId().' -> '.$field;
+                $attributeValue = $widget->getBusinessEntityName().' -> '.$field;
             }
 
             $parameters[$widgetField] = $attributeValue;
@@ -144,5 +166,13 @@ class BaseWidgetContentResolver
     public function setEntityManager(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
+    }
+
+    /**
+     * @param APIBusinessEntityResolver $resolver
+     */
+    public function setApiBusinessEntityResolver(APIBusinessEntityResolver $resolver)
+    {
+        $this->apiResolver = $resolver;
     }
 }

@@ -1,8 +1,7 @@
-@mink:selenium2 @alice(Page) @alice(User) @reset-schema
+@alice(Page) @alice(User) @reset-schema
 Feature: Manage jedis
 
     Background:
-        Given I maximize the window
         And I am on homepage
 
     Scenario: I can list jedis
@@ -59,12 +58,14 @@ Feature: Manage jedis
             | Name | Midichlorians | Side   |
             | Yoda | 17700         | bright |
 
+    @mink:selenium2
     Scenario: I can rename the url of a jedi
+        Given I maximize the window
         And the following Jedis:
             | name   | side | midiChlorians | slug   |
             | Anakin | dark | 27700         | anakin |
         And the following BusinessTemplate:
-            | currentLocale | name                         | backendName  | slug                       | businessEntityId | parent | template |
+            | currentLocale | name                         | backendName  | slug                       | businessEntity   | parent | template |
             | en            | Jedi profile - {{item.name}} | Jedi profile | jedi-profile-{{item.slug}} | jedi             | home   | base     |
         And I wait 2 seconds
         And I am on "/en/jedi-profile-anakin"

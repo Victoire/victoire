@@ -50,6 +50,7 @@ services:
             - "@victoire_view_reference.builder"
             - "@victoire_view_reference.manager"
             - "@doctrine.orm.entity_manager"
+            - "@victoire_business_entity.resolver.business_entity_resolver"
         tags:
             - { name: kernel.event_subscriber }
 

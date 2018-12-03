@@ -3,6 +3,7 @@
 namespace Victoire\Bundle\BusinessPageBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
 
 /**
@@ -29,7 +30,7 @@ class BusinessTemplateRepository extends EntityRepository
      */
     public function findPagePatternByBusinessEntity(BusinessEntity $businessEntity)
     {
-        return $this->getPagePatternByBusinessEntity($businessEntity->getId())
+        return $this->getPagePatternByBusinessEntity($businessEntity)
             ->getQuery()
             ->getResult();
     }
@@ -37,15 +38,15 @@ class BusinessTemplateRepository extends EntityRepository
     /**
      * get the pagePatterns for the business entity query.
      *
-     * @param string $businessEntityId
+     * @param BusinessEntity $businessEntity
      *
      * @return QueryBuilder
      */
-    public function getPagePatternByBusinessEntity($businessEntityId)
+    public function getPagePatternByBusinessEntity($businessEntity)
     {
         return $this->createQueryBuilder('BusinessTemplate')
-            ->where('BusinessTemplate.businessEntityId = :entityId')
-            ->setParameter(':entityId', $businessEntityId)
+            ->where('BusinessTemplate.businessEntity = :businessEntity')
+            ->setParameter(':businessEntity', $businessEntity)
             ->orderBy('BusinessTemplate.updatedAt', 'ASC');
     }
 

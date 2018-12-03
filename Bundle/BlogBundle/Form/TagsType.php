@@ -38,7 +38,7 @@ class TagsType extends AbstractType
         $view->vars['enable_creation'] = $options['enable_creation'];
         $view->vars['tags'] = [];
         foreach ($view->vars['choices'] as $choice) {
-            $view->vars['tags'][$choice->data->getId()] = $choice->data->__toString();
+            $view->vars['tags'][$choice->data->getId()] = (string) $choice->data;
         }
 
         if ($view->vars['multiple']) {

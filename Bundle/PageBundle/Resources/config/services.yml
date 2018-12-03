@@ -12,6 +12,7 @@ services:
             - "%victoire_core.user_class%"
             - "@victoire_view_reference.builder"
             - "@victoire_view_reference.repository"
+            - "@victoire_api_business_entity.resolver.api_business_entity_resolver"
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: -11 }
 

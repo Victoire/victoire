@@ -5,16 +5,13 @@
         {
             "victoire-edit":
             [
-                "@VictoireBlogBundle/Resources/public/js/blog.js",
-                "@VictoireCoreBundle/Resources/public/vendor/select2/select2.min.js",
-                "@VictoireCoreBundle/Resources/public/vendor/select2/select2_locale_fr.js"
+                "@VictoireBlogBundle/Resources/public/js/blog.js"
             ]
         },
         "stylesheets":
         {
             "victoire-edit":
             [
-                "bundles/victoirecore/vendor/select2/select2.css",
                 "@VictoireBlogBundle/Resources/public/less/blog.less"
             ]
         }

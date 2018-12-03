@@ -29,7 +29,9 @@ class ArrayToViewReferenceTransformer implements DataTransformerInterface
         $viewReference = new $className();
         foreach ($array as $prop => $value) {
             $methodName = 'set'.ucfirst($prop);
-            $viewReference->$methodName((string) $value);
+            if (method_exists($viewReference, $methodName)) {
+                $viewReference->$methodName((string) $value);
+            }
         }
 
         return $viewReference;
@@ -48,7 +50,9 @@ class ArrayToViewReferenceTransformer implements DataTransformerInterface
         $array = [];
         foreach ($this->properties as $prop) {
             $methodName = 'get'.ucfirst($prop->getName());
-            $array[$prop->getName()] = $viewReference->$methodName();
+            if (method_exists($viewReference, $methodName)) {
+                $array[$prop->getName()] = $viewReference->$methodName();
+            }
         }
 
         return $array;

@@ -146,8 +146,6 @@ class BusinessEntitySubscriber implements EventSubscriber
                     }
 
                     if ($businessPage && !$scheduledForRemove) {
-                        $oldSlug = $businessPage->getSlug();
-                        $newSlug = $entity->getSlug();
                         $businessPage->setName($virtualBusinessPage->getName());
                         $businessPage->setSlug($virtualBusinessPage->getSlug());
 
@@ -202,8 +200,9 @@ class BusinessEntitySubscriber implements EventSubscriber
         }
 
         foreach ($this->flushedBusinessTemplates as $entity) {
-            $businessEntityId = $entity->getBusinessEntityId();
-            $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
+            $em = $eventArgs->getEntityManager();
+            $businessEntityId = $entity->getBusinessEntityName();
+            $businessEntity = $eventArgs->getEntityManager()->getRepository('VictoireBusinessEntityBundle:BusinessEntity')->findOneBy(['name' => $businessEntityId]);
             //find all entities
             $entities = $this->businessPageHelper->getEntitiesAllowed($entity, $em);
             // Generate a viewReference for each BT translation

@@ -4,7 +4,6 @@ namespace Victoire\Bundle\BusinessEntityBundle\Security\Voter;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 
 /**
  * This class decides yes or no if the user is granted to do some action on a given entity.
@@ -12,16 +11,13 @@ use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 class BusinessEntityOwnerVoter extends Voter
 {
     private $userClass;
-    private $businessEntityHelper;
 
     /**
      * @param $userClass
-     * @param BusinessEntityHelper $businessEntityHelper
      */
-    public function __construct($userClass, BusinessEntityHelper $businessEntityHelper)
+    public function __construct($userClass)
     {
         $this->userClass = $userClass;
-        $this->businessEntityHelper = $businessEntityHelper;
     }
 
     /**

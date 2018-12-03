@@ -4,8 +4,6 @@ namespace Victoire\Bundle\MediaBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
-use Victoire\Bundle\MediaBundle\Entity\Folder;
-use Victoire\Bundle\MediaBundle\Entity\Media;
 
 /**
  * The Media Menu Adaptor.
@@ -50,15 +48,15 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
         $allRoutes = array_merge($createRoutes, $mediaRoutes);
 
         if (is_null($parent)) {
-            /* @var Folder[] $galleries */
+            /* @var \Victoire\Bundle\MediaBundle\Entity\Folder[] $galleries */
             $galleries = $this->em->getRepository('VictoireMediaBundle:Folder')->getAllFolders();
             $currentId = $request->get('folderId');
 
             if (isset($currentId)) {
-                /* @var Folder $currentFolder */
+                /* @var \Victoire\Bundle\MediaBundle\Entity\Folder $currentFolder */
                 $currentFolder = $this->em->getRepository('VictoireMediaBundle:Folder')->findOneById($currentId);
             } elseif (in_array($request->attributes->get('_route'), $mediaRoutes)) {
-                /* @var Media $media */
+                /* @var \Victoire\Bundle\MediaBundle\Entity\Media $media */
                 $media = $this->em->getRepository('VictoireMediaBundle:Media')->getMedia($request->get('mediaId'));
                 $currentFolder = $media->getFolder();
             } elseif (in_array($request->attributes->get('_route'), $createRoutes)) {
@@ -85,8 +83,8 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                     if ($currentFolder->getId() == $folder->getId()) {
                         $menuitem->setActive(true);
                     } else {
-                        foreach ($parents as $parent) {
-                            if ($parent->getId() == $folder->getId()) {
+                        foreach ($parents as $_parent) {
+                            if ($_parent->getId() == $folder->getId()) {
                                 $menuitem->setActive(true);
                                 break;
                             }
@@ -97,14 +95,14 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
             }
         } elseif ('VictoireMediaBundle_folder_show' == $parent->getRoute()) {
             $parentRouteParams = $parent->getRouteparams();
-            /* @var Folder $parentFolder */
+            /* @var \Victoire\Bundle\MediaBundle\Entity\Folder $parentFolder */
             $parentFolder = $this->em->getRepository('VictoireMediaBundle:Folder')->findOneById($parentRouteParams['folderId']);
-            /* @var Folder[] $galleries */
+            /* @var \Victoire\Bundle\MediaBundle\Entity\Folder[] $galleries */
             $galleries = $parentFolder->getChildren();
             $currentId = $request->get('folderId');
 
             if (isset($currentId)) {
-                /* @var Folder $currentFolder */
+                /* @var \Victoire\Bundle\MediaBundle\Entity\Folder $currentFolder */
                 $currentFolder = $this->em->getRepository('VictoireMediaBundle:Folder')->findOneById($currentId);
             } elseif (in_array($request->attributes->get('_route'), $mediaRoutes)) {
                 $media = $this->em->getRepository('VictoireMediaBundle:Media')->getMedia($request->get('mediaId'));
@@ -116,7 +114,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 }
             }
 
-            /* @var Folder[] $parentGalleries */
+            /* @var \Victoire\Bundle\MediaBundle\Entity\Folder[] $parentGalleries */
             $parentGalleries = null;
             if (isset($currentFolder)) {
                 $parentGalleries = $currentFolder->getParents();

@@ -4,9 +4,11 @@ namespace Victoire\Bundle\BusinessPageBundle\Helper;
 
 use Doctrine\DBAL\Schema\View;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Victoire\Bundle\BusinessEntityBundle\Converter\ParameterConverter;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity;
+use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityInterface;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 use Victoire\Bundle\BusinessEntityBundle\Helper\BusinessEntityHelper;
 use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
@@ -34,10 +36,11 @@ class BusinessPageHelper
      * @param ParameterConverter      $parameterConverter
      * @param UrlBuilder              $urlBuilder
      */
-    public function __construct(QueryHelper $queryHelper, ViewReferenceRepository $viewReferenceRepository, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder)
+    public function __construct(QueryHelper $queryHelper, ViewReferenceRepository $viewReferenceRepository, EntityRepository $businessEntityRepository, BusinessEntityHelper $businessEntityHelper, ParameterConverter $parameterConverter, UrlBuilder $urlBuilder)
     {
         $this->queryHelper = $queryHelper;
         $this->viewReferenceRepository = $viewReferenceRepository;
+        $this->businessEntityRepository = $businessEntityRepository;
         $this->businessEntityHelper = $businessEntityHelper;
         $this->parameterConverter = $parameterConverter;
         $this->urlBuilder = $urlBuilder;
@@ -99,9 +102,15 @@ class BusinessPageHelper
      */
     public function getEntitiesAllowed(BusinessTemplate $businessTemplate, EntityManager $em)
     {
-        return $this->getEntitiesAllowedQueryBuilder($businessTemplate, $em)
-            ->getQuery()
-            ->getResult();
+        $businessEntity = $businessTemplate->getBusinessEntity();
+        if ($businessEntity->getType() === ORMBusinessEntity::TYPE) {
+            return $this->getEntitiesAllowedQueryBuilder($businessTemplate, $em)
+                ->getQuery()
+                ->getResult();
+        }
+        if ($businessEntity->getType() === APIBusinessEntity::TYPE) {
+            return $this->apiBusinessEntityResolver->getBusinessEntities($businessEntity);
+        }
     }
 
     /**
@@ -143,7 +152,7 @@ class BusinessPageHelper
         $seoBusinessProps = $businessEntity->getBusinessPropertiesByType('seoable');
 
         //the business properties are the identifier and the seoables properties
-        $businessProperties = array_merge($businessProperties, $seoBusinessProps);
+        $businessProperties = array_merge($businessProperties->toArray(), $seoBusinessProps->toArray());
 
         return $businessProperties;
     }
@@ -153,7 +162,7 @@ class BusinessPageHelper
      *
      * @param BusinessTemplate $businessTemplate
      *
-     * @return int The position
+     * @return array The position
      */
     public function getIdentifierPositionInUrl(BusinessTemplate $businessTemplate)
     {
@@ -166,9 +175,9 @@ class BusinessPageHelper
         // preg_match_all('/\{\%\s*([^\%\}]*)\s*\%\}|\{\{\s*([^\}\}]*)\s*\}\}/i', $url, $matches);
 
         //the business property link to the page
-        $businessEntityId = $businessTemplate->getBusinessEntityId();
+        $businessEntityId = $businessTemplate->getBusinessEntityName();
 
-        $businessEntity = $this->businessEntityHelper->findById($businessEntityId);
+        $businessEntity = $this->businessEntityRepository->findBy(['name' => $businessEntityId]);
 
         //the business properties usable in a url
         $businessProperties = $businessEntity->getBusinessPropertiesByType('businessParameter');
@@ -195,39 +204,45 @@ class BusinessPageHelper
     /**
      * Guess the best pattern to represent given reflectionClass.
      *
-     * @param \ReflectionClass $refClass
-     * @param int              $entityId
-     * @param EntityManager    $em
-     * @param string           $originalRefClassName When digging into parentClass, we do not have to forget originalClass to be able to get reference after all
+     * @param int           $entity
+     * @param EntityManager $em
+     * @param string        $originalRefClassName When digging into parentClass, we do not have to forget originalClass to be able to get reference after all
      *
      * @throws \Exception
      *
      * @return View
      */
-    public function guessBestPatternIdForEntity($refClass, $entityId, $em, $originalRefClassName = null)
+    public function guessBestPatternIdForEntity($entity, $em, $originalRefClassName = null)
     {
+        $entityId = $entity->getId();
         $templateId = null;
-        $refClassName = $em->getClassMetadata($refClass->name)->name;
-
         $viewReference = null;
-        if (!$originalRefClassName) {
-            $originalRefClassName = $refClassName;
-        }
+        $businessEntity = null;
+        $refClass = null;
+        if (is_array($entity) && array_key_exists('_businessEntity', $entity)) {
+            $businessEntity = $entity['_businessEntity'];
+        } elseif ($entity instanceof BusinessEntityInterface) {
+            $refClass = new \ReflectionClass($entity);
+            $refClassName = $em->getClassMetadata($refClass->name)->name;
 
-        $businessEntity = $this->businessEntityHelper->findByEntityClassname($refClassName);
+            if (!$originalRefClassName) {
+                $originalRefClassName = $refClassName;
+            }
+
+            $businessEntity = $this->businessEntityHelper->findByEntityClassname($refClassName);
+        }
 
         if ($businessEntity) {
             $parameters = [
                 'entityId'        => $entityId,
-                'entityNamespace' => $originalRefClassName,
+                'businessEntity'  => $businessEntity->getId(),
             ];
             $viewReference = $this->viewReferenceRepository->getOneReferenceByParameters($parameters);
         }
 
         if (!$viewReference) {
-            $parentRefClass = $refClass->getParentClass();
-            if ($parentRefClass) {
-                $templateId = $this->guessBestPatternIdForEntity($parentRefClass, $entityId, $em, $originalRefClassName);
+            if ($refClass && $parentRefClass = $refClass->getParentClass()) {
+                $templateId = $this->guessBestPatternIdForEntity($parentRefClass, $em, $originalRefClassName);
             } else {
                 throw new \Exception(sprintf('Cannot find a BusinessTemplate that can display the requested BusinessEntity ("%s", "%s".)', $refClassName, $entityId));
             }
