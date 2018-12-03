@@ -790,6 +790,7 @@ class VictoireContext extends RawMinkContext
                 return;
             }
         }
+
         throw new \Exception(sprintf('Value "%s" not found for "%s"', $value, $field));
     }
 
@@ -806,6 +807,7 @@ class VictoireContext extends RawMinkContext
             }
             sleep(1);
         }
+
         throw new \Exception(sprintf('Results are not load after "%d" seconds.', $time));
     }
 
