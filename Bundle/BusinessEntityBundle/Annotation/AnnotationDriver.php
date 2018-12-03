@@ -51,6 +51,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
         $this->paths = $paths;
         $this->logger = $logger;
     }
+
     /**
      * Get all class names.
      *
@@ -95,6 +96,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 $classes[] = $className;
             }
         }
+
         return $classes;
     }
 
@@ -163,6 +165,7 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 if ($annotationObj instanceof ReceiverPropertyAnnotation && !in_array($class, $receiverPropertiesTypes)) {
                     if (!$annotations[$key]->getTypes()) {
                         $message = $class->name.':$'.$property->name.'" field';
+
                         throw AnnotationException::requiredError('type', 'ReceiverProperty annotation', $message, 'array or string');
                     }
                     foreach ($annotations[$key]->getTypes() as $type) {
