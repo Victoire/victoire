@@ -1,0 +1,3 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: config_base.yml }
