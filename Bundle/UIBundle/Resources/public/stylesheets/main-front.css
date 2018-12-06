@@ -3237,7 +3237,8 @@ body.victoire-ui {
 .v-drop[id^="tooltip-quantum"],
 .v-drop[id^="style-anchor-drop"],
 .v-drop[id^="seo-mode-drop"],
-.v-drop[id^="business-entity-drop"] {
+.v-drop[id^="business-entity-drop"],
+.select2-container--open .select2-dropdown {
   z-index: 1540; }
 
 @media (min-width: 768px) {

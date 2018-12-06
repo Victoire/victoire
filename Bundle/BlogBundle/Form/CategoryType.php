@@ -53,7 +53,6 @@ class CategoryType extends AbstractType
 
                 if ($entity !== null) {
                     $nbChildren = count($entity->getChildren());
-
                     if ($nbChildren > 0) {
                         $form = $event->getForm();
                         $this->addChildrenField($form);

@@ -28,6 +28,12 @@ You can access Victoire via the URL http://localhost:8000/
 
 And be logged in automatically http://anakin@victoire.io:test@localhost:8000/
 
+## Tests ##
+
+Selenium is packed in the docker-compose configuration. To run a test, you can execute `docker exec -it victoire-php /var/www/victoire/vendor/bin/behat -c /var/www/victoire/.docker/php-fpm/behat.yml`
+
+Sometimes, the chrome container can't start with this error: "Waiting xvfb". It is probable that the X99 lock file is not deleted, just run `docker exec -it docker_chrome_1 rm /tmp/.X99-lock` and try to compose up again
+
 ## Services exposed outside your environment
 
 nginx and mailhog respond to any hostname, in case you want to add your own hostname on your `/etc/hosts` 

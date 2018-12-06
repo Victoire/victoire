@@ -2,6 +2,7 @@
 
 namespace Victoire\Bundle\BusinessEntityBundle\Converter;
 
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessProperty;
 
 /**
@@ -13,7 +14,6 @@ class ParameterConverter
     /**
      * Replace the code string with the value of the entity attribute.
      *
-     * @param string           $string
      * @param BusinessProperty $businessProperty
      * @param object           $entity
      *
@@ -21,21 +21,36 @@ class ParameterConverter
      *
      * @return string The updated string
      */
-    public function setBusinessPropertyInstance($string, BusinessProperty $businessProperty, $entity)
+    public function convertFromEntity($url, BusinessProperty $businessProperty, $entity)
     {
         //test parameters
         if ($entity === null) {
             throw new \Exception('The parameter entity can not be null');
         }
-
         //the attribute to set
-        $entityProperty = $businessProperty->getEntityProperty();
-
-        //the string to replace
-        $stringToReplace = '{{item.'.$entityProperty.'}}';
+        $entityProperty = $businessProperty->getName();
 
         //the value of the attribute
-        $attributeValue = $entity->getEntityAttributeValue($entityProperty);
+        $accessor = new PropertyAccessor();
+        $attributeValue = $accessor->getValue($entity, $entityProperty);
+
+        return $this->convert($url, 'item.'.$entityProperty, $attributeValue);
+    }
+
+    /**
+     * Replace the code string with the value of the entity attribute.
+     *
+     * @param string $entityProperty
+     * @param string $attributeValue
+     *
+     * @throws \Exception
+     *
+     * @return string The updated string
+     */
+    public function convert($url, $entityProperty, $attributeValue)
+    {
+        //the string to replace
+        $stringToReplace = '{{'.$entityProperty.'}}';
 
         //we provide a default value
         if ($attributeValue === null) {
@@ -43,8 +58,6 @@ class ParameterConverter
         }
 
         //we replace the string
-        $string = str_replace($stringToReplace, $attributeValue, $string);
-
-        return $string;
+        return str_replace($stringToReplace, $attributeValue, $url);
     }
 }

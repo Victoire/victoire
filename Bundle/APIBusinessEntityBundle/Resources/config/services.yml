@@ -1,0 +1,26 @@
+services:
+    victoire_core.entity.api_business_entity_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Victoire\Bundle\APIBusinessEntityBundle\Entity\ORMBusinessEntity
+
+    victoire_api_business_entity.resolver.api_business_entity_resolver:
+        class: Victoire\Bundle\APIBusinessEntityBundle\Resolver\APIBusinessEntityResolver
+        arguments:
+          - "@victoire_business_entity.converter.parameter_converter"
+          - "@victoire_api_business_entity.chain.api_authentication_chain"
+        tags:
+            - { name: victoire_business_entity.resolver, type: "api" }
+
+    victoire_api_business_entity.chain.api_authentication_chain:
+        class: Victoire\Bundle\APIBusinessEntityBundle\Chain\ApiAuthenticationChain
+
+    victoire_api_business_entity.authentication.get_parameter_authentication_handler:
+        class: Victoire\Bundle\APIBusinessEntityBundle\Authentication\GetParameterAuthenticationHandler
+        tags:
+          - { name: victoire_api_business_entity.api_authentication }
+    victoire_api_business_entity.authentication.header_authentication_handler:
+        class: Victoire\Bundle\APIBusinessEntityBundle\Authentication\HeaderAuthenticationHandler
+        tags:
+          - { name: victoire_api_business_entity.api_authentication }

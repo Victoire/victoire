@@ -262,12 +262,12 @@ class PageHelper
                 $event = new PageMenuContextualEvent($view->getTemplate());
             }
             $this->eventDispatcher->dispatch($eventName, $event);
-            $type = $view->getBusinessEntityId();
+            $type = $view->getBusinessEntityName();
         } else {
             $type = $view->getType();
         }
 
-        $eventName = 'victoire_core.'.$type.'_menu.contextual';
+        $eventName = 'victoire_core.'.strtolower($type).'_menu.contextual';
         $this->eventDispatcher->dispatch($eventName, $event);
 
         if (null === $layout) {
@@ -333,6 +333,9 @@ class PageHelper
                     ->findOneBy([
                         'id' => $viewReference->getViewId(),
                     ]);
+                $entity = $this->container->get('victoire_business_entity.resolver.business_entity_resolver')->getBusinessEntity($page->getEntityProxy());
+                $page->getEntityProxy()->setEntity($entity);
+
                 $page->setCurrentLocale($viewReference->getLocale());
             } else { //VirtualBusinessPage
                 $page = $this->entityManager->getRepository('VictoireCoreBundle:View')
@@ -349,6 +352,13 @@ class PageHelper
                         }
                         $this->pageSeoHelper->updateSeoByEntity($page, $entity);
                     }
+                    $entityProxy = new EntityProxy();
+                    $entityProxy->setRessourceId($entity->getId());
+                    $entityProxy->setBusinessEntity($this->entityManager->getRepository('VictoireORMBusinessEntityBundle:ORMBusinessEntity')
+                        ->findOneByClass($viewReference->getEntityNamespace()));
+                    $entityProxy->setEntity($entity);
+
+                    $page->setEntityProxy($entityProxy);
                 }
             }
         } elseif ($viewReference instanceof ViewReference) {
@@ -402,9 +412,12 @@ class PageHelper
                 throw new AccessDeniedException('You are not allowed to see this page');
             }
         } elseif ($page instanceof BusinessPage) {
-            $entity = $page->getBusinessEntity();
-            if (!$entity->isVisibleOnFront() && !$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
-                throw new NotFoundHttpException('The BusinessPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
+            if ($entity = $page->getBusinessEntity()) {
+                if (!$entity->isVisibleOnFront() && !$this->authorizationChecker->isGranted('ROLE_VICTOIRE')) {
+                    throw new NotFoundHttpException('The BusinessPage for '.get_class($entity).'#'.$entity->getId().' is not visible on front.');
+                }
+            } else {
+                throw new NotFoundHttpException('The BusinessPage has no related entity.');
             }
             if (!$page->getId()) {
                 $entityAllowed = $this->businessPageHelper->isEntityAllowed($page->getTemplate(), $entity, $this->entityManager);

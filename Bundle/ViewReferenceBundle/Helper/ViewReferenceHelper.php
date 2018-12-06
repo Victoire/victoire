@@ -31,14 +31,14 @@ class ViewReferenceHelper
 
     /**
      * @param View  $view
-     * @param mixed $entity
+     * @param mixed $entityId
      *
      * @return string
      */
     public static function generateViewReferenceId(View $view, $entity = null)
     {
         $id = $view->getId();
-        if ($view instanceof BusinessPage) {
+        if ($view instanceof BusinessPage && $view->getEntity()) {
             $id = $view->getTemplate()->getId();
             $entity = $view->getBusinessEntity();
         } elseif (!$view instanceof WebViewInterface) {
@@ -49,15 +49,16 @@ class ViewReferenceHelper
         if ($entity) {
             $refId .= '_'.$entity->getId();
         }
-        if ($view->getCurrentLocale() != '') {
-            $refId .= '_'.$view->getCurrentLocale();
+        /** @var string $currentLocale */
+        if ('' != $currentLocale = $view->getCurrentLocale()) {
+            $refId .= '_'.$currentLocale;
         }
 
         return $refId;
     }
 
     /**
-     * @param [] $tree
+     * @param WebViewInterface[] $tree
      */
     public function buildViewReferenceRecursively($tree, EntityManager $entityManager, $isRoot = true)
     {

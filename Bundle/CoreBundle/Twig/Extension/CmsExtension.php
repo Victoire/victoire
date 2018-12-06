@@ -14,7 +14,6 @@ use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetBundle\Entity\Widget;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 use Victoire\Bundle\WidgetBundle\Resolver\WidgetResolver;
-use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 /**
  * CmsExtension extends Twig with view capabilities.
@@ -135,7 +134,7 @@ class CmsExtension extends \Twig_Extension
         if ($currentView && !empty($currentView->getBuiltWidgetMap()[$slotId])) {
             //parse the widget maps
 
-            /* @var WidgetMap $widgetMap */
+            /* @var \Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap $widgetMap */
             foreach ($currentView->getBuiltWidgetMap()[$slotId] as $widgetMap) {
                 $widget = null;
 
@@ -261,7 +260,7 @@ class CmsExtension extends \Twig_Extension
 
         if ($view instanceof BusinessTemplate || $view instanceof BusinessPage) {
             //are we using the same business entity
-            if ($formEntityName === $view->getBusinessEntityId()) {
+            if ($formEntityName === $view->getBusinessEntityName()) {
                 $isBusinessEntityAllowed = true;
             }
         }

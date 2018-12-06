@@ -48,6 +48,8 @@ class AppKernel extends Kernel
             new Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
+
             //Victoire bundles
             new Victoire\Bundle\AnalyticsBundle\VictoireAnalyticsBundle(),
             new Victoire\Bundle\BlogBundle\VictoireBlogBundle(),
@@ -144,7 +146,13 @@ victoire_core:
     business_entity_debug: true
     layouts:
         defaultLayout: "Default layout"
-        
+    # Here you need to list all folders containing your BusinessEntities
+    # Remove friendsofvictoire if you don't need it
+    base_paths:
+        - "%kernel.root_dir%/../src"
+        - "%kernel.root_dir%/../vendor/victoire/victoire/Bundle/BlogBundle"
+        - "%kernel.root_dir%/../vendor/friendsofvictoire"
+
 #if you need i18n
 victoire_i18n:
     available_locales:
@@ -315,7 +323,7 @@ There are some fixtures in `vendor/victoire/victoire/Tests/App/src/Acme/AppBundl
 ### Add the wanted widgets:
 
 ```sh
-    composer require victoire/text-widget victoire/button-widget victoire/image-widget ...
+    composer require victoire/text-widget victoire/button-widget victoire/image-widget victoire/render-widget victoire/breadcrumb-widget ...
 ```
 
 Don't forget to enable these widget in the AppKernel. To keep the previous example:
@@ -366,6 +374,16 @@ bin/console victoire:ui:fetchAssets --force
 ```
 bin/console fos:js-routing:dump -e=dev
 bin/console bazinga:js-translation:dump -e=dev
+```
+
+#### Dump JS Translation File
+
+Victoire uses [BazingaJsTranslationBundle](https://github.com/willdurand/BazingaJsTranslationBundle) to 
+make translations available in the JS based Frontend. 
+
+To dump the needed file run:
+```shell
+php app/console bazinga:js-translation:dump
 ```
 
 #### Dump with assetic

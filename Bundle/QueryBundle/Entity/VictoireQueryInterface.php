@@ -12,7 +12,7 @@ interface VictoireQueryInterface
 
     public function setOrderBy($orderBy);
 
-    public function getBusinessEntityId();
+    public function getBusinessEntityName();
 
-    public function setBusinessEntityId($businessEntityId);
+    public function setBusinessEntityName($businessEntityName);
 }

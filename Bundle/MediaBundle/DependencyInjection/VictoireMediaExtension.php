@@ -29,7 +29,7 @@ class VictoireMediaExtension extends Extension implements PrependExtensionInterf
         $processor = new Processor();
         $configuration = new Configuration();
 
-        $config = $processor->processConfiguration($configuration, $configs);
+        $processor->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 

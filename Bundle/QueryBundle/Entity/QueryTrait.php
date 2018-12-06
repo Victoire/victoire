@@ -29,7 +29,12 @@ trait QueryTrait
      * @var string
      * @ORM\Column(name="business_entity_id", type="string", nullable=true)
      */
-    protected $businessEntityId;
+    protected $businessEntityName;
+    /**
+     * @ORM\ManyToOne(targetEntity="Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntity", cascade={"persist"})
+     * @ORM\JoinColumn(name="related_business_entity_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $businessEntity;
 
     /**
      * Get query.
@@ -72,22 +77,43 @@ trait QueryTrait
     }
 
     /**
-     * Get businessEntityId.
+     * Get businessEntityName.
+     *
+     * @return int
+     */
+    public function getOldBusinessEntityName()
+    {
+        return $this->businessEntityName;
+    }
+
+    /**
+     * Get businessEntityName.
+     *
+     * @return int
+     */
+    public function getBusinessEntityName()
+    {
+        return $this->businessEntityName;
+    }
+
+    /**
+     * @deprecated
+     * Proxy to get businessEntityName.
      *
      * @return int
      */
     public function getBusinessEntityId()
     {
-        return $this->businessEntityId;
+        return $this->getBusinessEntityName();
     }
 
     /**
-     * Set businessEntityId.
+     * Set businessEntityName.
      *
-     * @param string $businessEntityId The business entity name
+     * @param string $businessEntityName The business entity name
      */
-    public function setBusinessEntityId($businessEntityId)
+    public function setBusinessEntityName($businessEntityName)
     {
-        $this->businessEntityId = $businessEntityId;
+        $this->businessEntityName = $businessEntityName;
     }
 }

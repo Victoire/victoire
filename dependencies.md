@@ -6,7 +6,6 @@
     * [ctype extension](http://php.net/manual/book.ctype.php) needs to be enabled
     * php.ini recommended settings
         * short_open_tag = Off
-        * magic_quotes_gpc = Off
         * register_globals = Off
         * session.auto_start = Off
         * date.timezone should be configured

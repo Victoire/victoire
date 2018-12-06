@@ -1,3 +1,6 @@
 imports:
     - { resource: parameters.yml }
     - { resource: config_base.yml }
+
+web_profiler:
+    toolbar: true

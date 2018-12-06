@@ -106,7 +106,7 @@ class Blog extends Page
     /**
      * Set categories.
      *
-     * @param string $categories
+     * @param array $categories
      *
      * @return Blog
      */
