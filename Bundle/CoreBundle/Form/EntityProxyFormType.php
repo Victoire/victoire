@@ -12,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Victoire\Bundle\APIBusinessEntityBundle\Entity\APIBusinessEntity;
 use Victoire\Bundle\CoreBundle\Form\Field\APISelect2Type;
 use Victoire\Bundle\ORMBusinessEntityBundle\Entity\ORMBusinessEntity;
 use Victoire\Bundle\WidgetBundle\Model\Widget;

@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\BusinessPageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Victoire\Bundle\BusinessEntityBundle\Entity\BusinessEntityInterface;
 use Victoire\Bundle\CoreBundle\Entity\EntityProxy;
 use Victoire\Bundle\PageBundle\Entity\Page;
 
