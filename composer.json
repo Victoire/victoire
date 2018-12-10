@@ -41,7 +41,7 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/serializer-bundle": "^1.0",
         "knplabs/gaufrette": "^0.1",
-        "knplabs/doctrine-behaviors": "^1.1, <1.5",
+        "knplabs/doctrine-behaviors": "1.4.0",
         "knplabs/knp-menu-bundle": "^2.1",
         "liip/imagine-bundle": "^1.4",
         "predis/predis": "^1.1",
