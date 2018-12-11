@@ -32,7 +32,7 @@
     },
     "require": {
         "php": ">=7.1",
-        "a2lix/translation-form-bundle": "^2.1",
+        "a2lix/translation-form-bundle": "2.4.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-migrations-bundle": "^1.2",
         "doctrine/orm": "^2.5,<2.6",
