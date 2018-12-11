@@ -1,0 +1,94 @@
+image: troopers/docker-images:ci-victoire 
+
+variables:
+  GIT_SUBMODULE_STRATEGY: normal
+  DISPLAY: ':99.0'
+
+stages:
+  - install
+  - tests
+
+install:
+  stage: install
+  before_script:
+    - service mysql start
+    - service redis-server start
+  script:
+    - npm install less@2.7.2
+    - echo "memory_limit = 2048M" > /usr/local/etc/php/conf.d/memory.ini
+    - php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php && php composer-setup.php && rm composer-setup.php
+    - php composer.phar install --prefer-dist
+    - mkdir fails
+    - wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar -O vendor/selenium.jar
+    - cp Tests/App/app/config/parameters.yml.dist Tests/App/app/config/parameters.yml
+    - php Tests/App/bin/console --env=ci assets:install Tests/App/web --no-debug
+    - php Tests/App/bin/console --env=ci bazinga:js-translation:dump --no-debug
+    - php Tests/App/bin/console --env=ci fos:js:dump --target="Tests/App/web/js/fos_js_routes_test.js" --no-debug
+    - php Tests/App/bin/console --env=domain fos:js:dump --target="Tests/App/web/js/fos_js_routes_domain.js" --no-debug
+    - php Tests/App/bin/console --env=ci assetic:dump --no-debug
+  tags:
+    - victoire
+  artifacts:
+    paths:
+      - fails
+      - vendor
+      - Tests/App/web
+
+.behat: &behat
+  stage: tests
+  dependencies:
+    - install
+  before_script:
+    - service mysql start
+    - service redis-server start
+    - echo 127.0.0.1 fr.victoire.io >> /etc/hosts
+    - echo 127.0.0.1 en.victoire.io >> /etc/hosts
+    - Xvfb :99 -ac &>/dev/null &
+    - echo "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));" | mysql
+    - echo "always_populate_raw_post_data=-1" > /usr/local/etc/php/conf.d/post_data.ini
+    - |
+        if [ -n "${RUN_NIGHTLY_BUILD}" ]; then
+          sed -i 's/^;//' /usr/local/etc/php/conf.d/xdebug.ini
+          echo "xdebug enabled"
+        fi
+    - |
+        if [ -z "${RUN_NIGHTLY_BUILD}" ]; then
+          cp behat.yml.dist behat.yml
+          sed -i '/CoverageContext/d' behat.yml
+          echo "CoverageContext disabled"
+        fi
+    - cp Tests/App/app/config/parameters.yml.dist Tests/App/app/config/parameters.yml
+    - php Tests/App/bin/console --env=ci doctrine:database:create --no-debug
+    - php Tests/App/bin/console --env=ci doctrine:schema:create --no-debug
+    - php Tests/App/bin/console --env=ci cache:warmup --no-debug
+    - php Tests/App/bin/console --env=domain cache:warmup --no-debug
+    - php Tests/App/bin/console --env=ci victoire:generate:view --no-debug
+    - java -jar vendor/selenium.jar &> /dev/null &
+    - nohup php Tests/App/bin/console --env=ci server:run 127.0.0.1:8000 -q -r Tests/App/app/config/router_ci.php -d ./Tests/App/web &
+  script:
+    - ci/src/parallel-behat vendor/bin/behat Tests/Features/
+  tags:
+  - victoire
+  artifacts:
+    paths:
+      - Tests/App/var/logs
+      - fails
+      - composer.lock
+    expire_in: 24 hrs
+    when: on_failure
+
+behat:1:
+  <<: *behat
+
+behat:2:
+  <<: *behat
+
+behat:3:
+  <<: *behat
+
+behat:4:
+  <<: *behat
+
+behat:5:
+  <<: *behat
+
