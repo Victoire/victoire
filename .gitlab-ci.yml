@@ -75,6 +75,7 @@ install:
       - Tests/App/var/logs
       - fails
       - composer.lock
+      - web
     expire_in: 24 hrs
     when: on_failure
 
