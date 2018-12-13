@@ -14,8 +14,7 @@ Feature: Business Domain Strategy
         When I follow "New spaceship"
         Then the url should match "/victoire-dcms/backend/spaceship/new"
         And I should see "New Spaceship"
-        When I wait 6 second
-        And I follow the tab "FR"
+        When I follow the tab "FR"
         And I fill in "space_ship[translations][fr][name]" with "Le Faucon Millénium"
         And I follow the tab "EN"
         And I fill in "space_ship[translations][en][name]" with "Millenium Falcon"
@@ -25,7 +24,6 @@ Feature: Business Domain Strategy
         When I am on "/en/spaceship-millenium-falcon"
         Then I should see "Millenium Falcon"
         When I am on "victoire-dcms/backend/spaceship/1/edit"
-        And I wait 6 second
         When I follow the tab "FR"
         And I fill in "space_ship[translations][fr][name]" with "Le X-Wing"
         And I fill in "space_ship[translations][fr][slug]" with "le-x-wing"
