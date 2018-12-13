@@ -388,13 +388,10 @@ class VictoireContext extends RawMinkContext
     public function iFollowTheTab($name, $timeout = 10000)
     {
         $element = $this->findOrRetry($this->getPage(), 'xpath', sprintf('descendant-or-self::a[contains(@class, "v-tabs-nav__anchor") and contains(normalize-space(text()), "%s")]', $name));
-        $newStyle = true;
 
         // @TODO When the new styleguide is completly integrated, remove.
         if (null === $element) {
             $element = $this->findOrRetry($this->getPage(), 'xpath', sprintf('descendant-or-self::a[@data-toggle="vic-tab" and normalize-space(text()) = "%s"]', $name));
-            $newStyle = false;
-
         }
 
         if (null === $element || $timeout <= 0) {
@@ -404,11 +401,6 @@ class VictoireContext extends RawMinkContext
         }
 
         $element->click();
-
-        if (true === $newStyle && !$element->hasClass('v-tabs-nav__anchor--active')) {
-            $this->getSession()->wait(100);
-            $this->iFollowTheTab($name, $timeout-100);
-        }
     }
 
     /**
