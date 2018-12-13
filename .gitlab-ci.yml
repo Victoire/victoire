@@ -18,16 +18,11 @@ stages:
     - echo 127.0.0.1 fr.victoire.io >> /etc/hosts
     - echo 127.0.0.1 en.victoire.io >> /etc/hosts
     - echo "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));" | mysql
-    - wget https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-linux64.tar.gz
-    - tar -xvzf geckodriver-v0.23.0-linux64.tar.gz
-    - mv ./geckodriver /usr/bin/geckodriver
-    - chmod +x /usr/bin/geckodriver
-    - curl http://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar > /selenium-server-standalone-3.141.59.jar
-    - java -jar /selenium-server-standalone-3.141.59.jar &> /dev/null &
+    - java -jar /selenium-server-standalone-2.53.0.jar &> /dev/null &
     - cp Tests/App/app/config/parameters.yml.dist Tests/App/app/config/parameters.yml
     - ENV=ci make install
     - ENV=domain make install
-    - ENV=ci nohup make start &
+    - ENV=ci nohup make start &>/dev/null &
   script:
     - ci/src/parallel-behat vendor/bin/behat Tests/Features/
   tags:
