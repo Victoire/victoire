@@ -21,6 +21,7 @@ install:
     - mkdir fails
     - wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar -O vendor/selenium.jar
     - cp Tests/App/app/config/parameters.yml.dist Tests/App/app/config/parameters.yml
+    - (cd Bundle/UIBundle/Resources/config/ && bower install --allow-root)
     - php Tests/App/bin/console --env=ci assets:install Tests/App/web --no-debug
     - php Tests/App/bin/console --env=ci bazinga:js-translation:dump --no-debug
     - php Tests/App/bin/console --env=ci fos:js:dump --target="Tests/App/web/js/fos_js_routes_test.js" --no-debug
