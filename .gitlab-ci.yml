@@ -18,7 +18,8 @@ stages:
     - echo 127.0.0.1 fr.victoire.io >> /etc/hosts
     - echo 127.0.0.1 en.victoire.io >> /etc/hosts
     - echo "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));" | mysql
-    - java -jar /selenium-server-standalone-2.53.0.jar &> /dev/null &
+    - curl http://selenium-release.storage.googleapis.com/3.9/selenium-server-standalone-3.9.1.jar > /selenium-server-standalone-3.9.1.jar
+    - java -jar /selenium-server-standalone-3.9.1.jar &> /dev/null &
     - cp Tests/App/app/config/parameters.yml.dist Tests/App/app/config/parameters.yml
     - ENV=ci make install
     - ENV=domain make install
