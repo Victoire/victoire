@@ -44,5 +44,6 @@ Feature: Create a seo
         When I follow the tab "FR"
         And I select "Advanced" from the collapse menu
         And I uncheck the 2nd "Indexed URL" checkbox
+        And I select "0.9" from "page_seo[translations][fr][sitemapPriority]"
         And I follow the link containing "UPDATE"
         Then I should see "SEO parameters successfully updated"
