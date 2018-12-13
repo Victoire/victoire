@@ -7,6 +7,7 @@ doctrine:
         metadata_cache_driver: redis
         query_cache_driver: redis
 
+
 snc_redis:
     clients:
         doctrine:

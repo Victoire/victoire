@@ -2,6 +2,6 @@ parameters:
     secret: "s3cr3t"
     dbname: "victoire"
     dbuser: "root"
-    dbpassword: ''
+    dbpassword: ""
     dbhost: "127.0.0.1"
     redis-dns: "redis://127.0.0.1"

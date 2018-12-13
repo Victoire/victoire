@@ -1,4 +1,4 @@
-image: troopers/docker-images:ci-victoire 
+image: madangel/victoire-test:latest
 
 variables:
   GIT_SUBMODULE_STRATEGY: normal
@@ -12,6 +12,7 @@ stages:
   before_script:
     - mkdir fails
     - service mysql start
+    - mysqladmin -u root password ''
     - service redis-server start
     - Xvfb :99 -ac &>/dev/null &
     - echo 127.0.0.1 fr.victoire.io >> /etc/hosts
@@ -21,7 +22,7 @@ stages:
     - cp Tests/App/app/config/parameters.yml.dist Tests/App/app/config/parameters.yml
     - ENV=ci make install
     - ENV=domain make install
-    - nohup ENV=ci make start &
+    - ENV=ci nohup make start &
   script:
     - ci/src/parallel-behat vendor/bin/behat Tests/Features/
   tags:

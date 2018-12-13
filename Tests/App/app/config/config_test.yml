@@ -1,3 +1,9 @@
 imports:
     - { resource: parameters.yml }
     - { resource: config_base.yml }
+
+doctrine:
+    dbal:
+        host: null
+        port: null
+        unix_socket: '/var/run/mysqld/mysqld.sock'
