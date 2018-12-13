@@ -1,0 +1,51 @@
+image: troopers/docker-images:ci-victoire 
+
+variables:
+  GIT_SUBMODULE_STRATEGY: normal
+  DISPLAY: ':99.0'
+
+stages:
+  - tests
+
+.behat: &behat
+  stage: tests
+  before_script:
+    - mkdir fails
+    - service mysql start
+    - service redis-server start
+    - Xvfb :99 -ac &>/dev/null &
+    - echo 127.0.0.1 fr.victoire.io >> /etc/hosts
+    - echo 127.0.0.1 en.victoire.io >> /etc/hosts
+    - echo "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));" | mysql
+    - java -jar /selenium-server-standalone-2.53.0.jar &> /dev/null &
+    - cp Tests/App/app/config/parameters.yml.dist Tests/App/app/config/parameters.yml
+    - ENV=ci make install
+    - ENV=domain make install
+    - nohup ENV=ci make start &
+  script:
+    - ci/src/parallel-behat vendor/bin/behat Tests/Features/
+  tags:
+    - victoire
+  artifacts:
+    paths:
+      - Tests/App/var/logs
+      - fails
+      - composer.lock
+    expire_in: 48 hrs
+    when: on_failure
+
+behat:1:
+  <<: *behat
+
+behat:2:
+  <<: *behat
+
+behat:3:
+  <<: *behat
+
+behat:4:
+  <<: *behat
+
+behat:5:
+  <<: *behat
+

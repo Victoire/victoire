@@ -1,7 +1,7 @@
 parameters:
     secret: "s3cr3t"
     dbname: "victoire"
-    dbuser: "ubuntu"
-    dbpassword: ~
+    dbuser: "root"
+    dbpassword: ''
     dbhost: "127.0.0.1"
-    redis-dns: "redis://localhost"
+    redis-dns: "redis://127.0.0.1"
