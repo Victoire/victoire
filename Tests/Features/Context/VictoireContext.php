@@ -385,7 +385,7 @@ class VictoireContext extends RawMinkContext
      *
      * @throws ResponseTextException
      */
-    public function iFollowTheTab($name, $timeout = 10000)
+    public function iFollowTheTab($name)
     {
         $element = $this->findOrRetry($this->getPage(), 'xpath', sprintf('descendant-or-self::a[contains(@class, "v-tabs-nav__anchor") and contains(normalize-space(text()), "%s")]', $name));
 
@@ -394,7 +394,7 @@ class VictoireContext extends RawMinkContext
             $element = $this->findOrRetry($this->getPage(), 'xpath', sprintf('descendant-or-self::a[@data-toggle="vic-tab" and normalize-space(text()) = "%s"]', $name));
         }
 
-        if (null === $element || $timeout <= 0) {
+        if (null === $element) {
             $message = sprintf('Element not found in the page after 10 seconds"');
 
             throw new ResponseTextException($message, $this->getSession());
