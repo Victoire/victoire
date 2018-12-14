@@ -32,7 +32,7 @@
     },
     "require": {
         "php": ">=7.1",
-        "a2lix/translation-form-bundle": "^2.1",
+        "a2lix/translation-form-bundle": "2.4.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-migrations-bundle": "^1.2",
         "doctrine/orm": "^2.5,<2.6",
@@ -41,7 +41,7 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/serializer-bundle": "^1.0",
         "knplabs/gaufrette": "^0.1",
-        "knplabs/doctrine-behaviors": "^1.1",
+        "knplabs/doctrine-behaviors": "1.4.0",
         "knplabs/knp-menu-bundle": "^2.1",
         "liip/imagine-bundle": "^1.4",
         "predis/predis": "^1.1",

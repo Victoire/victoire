@@ -17,7 +17,7 @@ Feature: Create new redirection
     And I wait 1 second
     Then I fill in "seo_bundle_redirection[link][url]" with "http://localhost:8000/app_ci.php/fr/"
     And I press the "Create" button
-    And I wait 1 second
+    And I wait 3 second
     Then I should see text matching "Redirection successfully created!"
     # TODO: there is 5 elements instead of 4 due to a bug with Javascript
     And the list "redirections-list-container" should contain 5 elements
