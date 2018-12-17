@@ -276,8 +276,8 @@ VALUES
 	(5, NULL, 1, NULL, NULL, NULL, NULL, 0, 1, 0, 2, 4, 1, NULL, 1, NULL, '2017-01-01 00:00:00', '2017-01-01 00:00:00', 'errorpage', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 500),
 	(6, NULL, 1, NULL, NULL, NULL, NULL, 0, 1, 0, 2, 5, 1, NULL, 1, NULL, '2017-01-01 00:00:00', '2017-01-01 00:00:00', 'errorpage', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 503),
 	(7, NULL, 1, NULL, NULL, NULL, NULL, 0, 1, 0, 80, 6, 1, '9895a77faa19f0078ff4e2c5808e1bc4321d5b2f', 1, NULL, '2017-01-01 00:00:00', '2017-05-21 11:15:04', 'page', NULL, NULL, NULL, NULL, NULL, 'published', '2017-01-01 00:00:00', 1, NULL, NULL),
-	(8, 7, 1, 1, NULL, NULL, NULL, 2, 76, 1, 77, 6, 0, NULL, 0, NULL, '2017-05-21 20:30:44', '2017-05-21 20:30:44', 'blog', NULL, NULL, NULL, NULL, NULL, 'published', NULL, NULL, NULL, NULL),
-	(9, 7, 1, 1, NULL, NULL, NULL, 3, 78, 1, 79, 6, 0, '886e010d9b4f9cd648efb6a6cf838d1d02ee943e', 1, NULL, '2017-05-21 20:33:22', '2017-05-21 21:12:06', 'blog', NULL, NULL, NULL, NULL, NULL, 'published', NULL, NULL, NULL, NULL);
+	(8, 7, 1, 1, NULL, NULL, NULL, 2, 76, 1, 77, NULL, 0, NULL, 0, NULL, '2017-05-21 20:30:44', '2017-05-21 20:30:44', 'blog', NULL, NULL, NULL, NULL, NULL, 'published', NULL, NULL, NULL, NULL),
+	(9, 7, 1, 1, NULL, NULL, NULL, 3, 78, 1, 79, NULL, 0, '886e010d9b4f9cd648efb6a6cf838d1d02ee943e', 1, NULL, '2017-05-21 20:33:22', '2017-05-21 21:12:06', 'blog', NULL, NULL, NULL, NULL, NULL, 'published', NULL, NULL, NULL, NULL);
 
 INSERT INTO `vic_view_translations` (`id`, `translatable_id`, `name`, `slug`, `locale`)
 VALUES
@@ -300,7 +300,7 @@ VALUES
 
 INSERT INTO `vic_media_folders` (`id`, `parent_id`, `name`, `created_at`, `updated_at`, `rel`, `internal_name`, `deleted`)
 VALUES
-	(1, NULL, '/', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, 0);
+	(1, NULL, '/', '2017-01-01 00:00:00', '2017-01-01 00:00:00', NULL, NULL, 0);
 ```
 
 ### Generate view references
