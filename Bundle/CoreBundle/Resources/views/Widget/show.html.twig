@@ -1,4 +1,5 @@
 {% trans_default_domain "victoire" %}
+
 <{{ containerTag }} class="v-widget {{ cms_widget_extra_css_class(widget) }} {{ containerClass }}" id="widget-{{ widget.id }}">
     {% if (is_granted('ROLE_VICTOIRE') and widget.widgetMap.view.id == currentView.id) or is_granted('ROLE_VICTOIRE_DEVELOPER') %}
         <a class="v-widget__overlay">
