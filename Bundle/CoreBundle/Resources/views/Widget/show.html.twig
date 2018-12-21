@@ -1,7 +1,6 @@
 {% trans_default_domain "victoire" %}
-
 <{{ containerTag }} class="v-widget {{ cms_widget_extra_css_class(widget) }} {{ containerClass }}" id="widget-{{ widget.id }}">
-    {% if is_granted('ROLE_VICTOIRE') %}
+    {% if (is_granted('ROLE_VICTOIRE') and widget.widgetMap.view.id == currentView.id) or is_granted('ROLE_VICTOIRE_DEVELOPER') %}
         <a class="v-widget__overlay">
             <svg class="v-widget__overlay-icon v-widget__overlay-icon--edit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
                 <rect width="80" height="80" fill="currentColor" transform="rotate(-90 40 40)" rx="40" fill-rule="evenodd"/>
