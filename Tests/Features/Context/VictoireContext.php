@@ -132,6 +132,18 @@ class VictoireContext extends RawMinkContext
         $this->minkContext->setMinkParameter('base_url', $url);
     }
 
+
+    /**
+     * @Given I login as Victoire default user
+     */
+    public function iLoginAsVictoireDefaultUser()
+    {
+        $this->getSession()->getDriver()->stop();
+        $baseUrl = $this->minkContext->getMinkParameter('base_url');
+        $url = str_replace('anakin@victoire.io:test', 'luke@victoire.io:test', $baseUrl);
+        $this->minkContext->setMinkParameter('base_url', $url);
+    }
+
     /**
      * @Given /^I visit homepage through domain "([^"]*)"$/
      */
@@ -472,6 +484,23 @@ class VictoireContext extends RawMinkContext
         // ok, let's hover it
         $element->mouseOver();
         $element->click();
+    }
+
+    /**
+     * @Given /^I can't edit an "([^"]*)" widget$/
+     * @Given /^I can't edit the "([^"]*)" widget$/
+     */
+    public function iCantEditTheWidget($widgetType)
+    {
+        $selector = sprintf('.v-widget--%s > a.v-widget__overlay', strtolower($widgetType));
+
+        $element = $this->getPage()->find('css',$selector);
+
+        // errors must not pass silently
+        if (null !== $element) {
+            throw new \InvalidArgumentException(sprintf('The CSS selector for editing the widget "%s" has been found : "%s"', $widgetType , $selector));
+        }
+
     }
 
     /**

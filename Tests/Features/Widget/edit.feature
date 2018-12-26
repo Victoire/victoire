@@ -87,3 +87,36 @@ Feature: Edit a widget
         Given I am on "/en/victoire-dcms/business-template/show/4"
         Then I should see "The dark side of the force"
 
+    Scenario: I can't edit the original widget from a child page as non Victoire developper
+        Given the following Jedis:
+            | name   | side | midiChlorians | slug   |
+            | Anakin | dark | 20000         | anakin |
+        Given the following WidgetMap:
+            | view                       | action | slot         |
+            | jedi-profile-{{item.slug}} | create | main_content |
+        Given the following WidgetForce:
+            | widgetMap                  | side |
+            | jedi-profile-{{item.slug}} | dark |
+        Given I login as Victoire default user
+        And I am on "/en/jedi-profile-anakin"
+        Then I should see "The dark side of the force"
+        When I switch to "edit" mode
+        And I can't edit the "Force" widget
+
+    Scenario: I can edit the widget from current page as Victoire default user
+        Given I login as Victoire default user
+        Given the following WidgetMap:
+            | view | action | slot         |
+            | home | create | main_content |
+        Given the following WidgetForce:
+            | widgetMap | side |
+            | home      | dark |
+        Then I am on the homepage
+        And I should see "The dark side of the force"
+        When I switch to "edit" mode
+        And I edit the "Force" widget
+        And I wait 3 seconds
+        When I fill in "Force side" with "light"
+        And I submit the widget
+        Given I am on the homepage
+        Then I should see "light side"
