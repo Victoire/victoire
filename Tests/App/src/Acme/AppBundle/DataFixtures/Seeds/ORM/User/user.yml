@@ -22,3 +22,16 @@ Victoire\Bundle\UserBundle\Entity\User:
         locale: en
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
+    luke:
+        username: luke@victoire.io
+        email: luke@victoire.io
+        plainPassword: test
+        firstname: Luke
+        lastname: Skywalker
+        enabled: true
+        locale: en
+        createdAt: <dateTime('now')>
+        updatedAt: <dateTime('now')>
+        roles:
+            ROLE_ADMIN: ROLE_ADMIN
+            ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE
