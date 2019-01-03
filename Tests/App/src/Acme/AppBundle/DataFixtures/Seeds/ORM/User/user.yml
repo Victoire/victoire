@@ -33,5 +33,4 @@ Victoire\Bundle\UserBundle\Entity\User:
         createdAt: <dateTime('now')>
         updatedAt: <dateTime('now')>
         roles:
-            ROLE_ADMIN: ROLE_ADMIN
-            ROLE_VICTOIRE_DEVELOPER: ROLE_VICTOIRE
+            - ROLE_VICTOIRE
