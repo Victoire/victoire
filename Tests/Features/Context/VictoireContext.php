@@ -122,14 +122,25 @@ class VictoireContext extends RawMinkContext
     }
 
     /**
+     * @Given I change default user
+     * @Given I use :email as default user
+     * @param string $email
+     * @param string $password
+     */
+    public function iChangeDefaultLoginUser($email = 'luke@victoire.io', $password = 'test')
+    {
+        $this->getSession()->getDriver()->stop();
+        $baseUrl = $this->minkContext->getMinkParameter('base_url');
+        $url = str_replace('anakin@victoire.io:test', sprintf('%s:%s', $email, $password), $baseUrl);
+        $this->minkContext->setMinkParameter('base_url', $url);
+    }
+
+    /**
      * @Given I login as visitor
      */
     public function iLoginAsVisitor()
     {
-        $this->getSession()->getDriver()->stop();
-        $baseUrl = $this->minkContext->getMinkParameter('base_url');
-        $url = str_replace('anakin@victoire.io:test', 'z6po@victoire.io:test', $baseUrl);
-        $this->minkContext->setMinkParameter('base_url', $url);
+        $this->iChangeDefaultLoginUser('z6po@victoire.io');
     }
 
     /**
@@ -137,10 +148,7 @@ class VictoireContext extends RawMinkContext
      */
     public function iLoginAsVictoireDefaultUser()
     {
-        $this->getSession()->getDriver()->stop();
-        $baseUrl = $this->minkContext->getMinkParameter('base_url');
-        $url = str_replace('anakin@victoire.io:test', 'luke@victoire.io:test', $baseUrl);
-        $this->minkContext->setMinkParameter('base_url', $url);
+        $this->iChangeDefaultLoginUser('luke@victoire.io');
     }
 
     /**
