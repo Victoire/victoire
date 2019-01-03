@@ -124,6 +124,7 @@ class VictoireContext extends RawMinkContext
     /**
      * @Given I change default user
      * @Given I use :email as default user
+     *
      * @param string $email
      * @param string $password
      */
