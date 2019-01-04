@@ -1,7 +1,6 @@
 liip_imagine:
     #cache_prefix: uploads/cache
     driver: gd
-    data_loader: filesystem
     #cache: no_cache
     #data_root: %kernel.root_dir%/../web
     #formats : ['jpg', 'jpeg','png', 'gif', 'bmp']
