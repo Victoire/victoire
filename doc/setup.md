@@ -237,6 +237,9 @@ fos_user_resetting:
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+    
 #Needs to be the last
 VictoireCoreBundle:
     resource: .
