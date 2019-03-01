@@ -32,8 +32,8 @@ class PageSeoTranslation
     /**
      * @var string
      *
-     * @ORM\Column(name="meta_description", type="string", length=255, nullable=true)
-     * @Assert\Length(max = 230)
+     * @ORM\Column(name="meta_description", type="string", length=320, nullable=true)
+     * @Assert\Length(max = 320)
      */
     protected $metaDescription;
 
