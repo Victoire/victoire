@@ -80,6 +80,13 @@ class SitemapExportHandler
             ->filterByIds($getChildrenIds($tree))
             ->run();
 
+        /** @var BasePage $page */
+        foreach ($pages as $page) {
+            $page->setCurrentLocale($locale);
+            $this->entityManager->refresh($page);
+            $page->translate($locale);
+        }
+
         return array_merge($pages, $this->getBusinessPages($tree));
     }
 
