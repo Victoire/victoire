@@ -79,7 +79,7 @@ class ViewRepository extends NestedTreeRepository
             }
         }
 
-        $qb = $this->createQueryBuilder($this->mainAlias);
+        $qb = $this->getInstance();
         $qb->andWhere($this->mainAlias.'.id IN (:pageIds)')
             ->setParameter('pageIds', $pageIds);
 
@@ -110,7 +110,7 @@ class ViewRepository extends NestedTreeRepository
     public function findOneByHomepage($locale = 'fr')
     {
         //the query builder
-        $qb = $this->createQueryBuilder($this->mainAlias);
+        $qb = $this->getInstance();
         $qb
             ->where($this->mainAlias.'.homepage = true')
             ->andWhere($this->mainAlias.'.status = :status')
