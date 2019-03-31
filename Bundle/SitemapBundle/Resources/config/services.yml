@@ -37,3 +37,8 @@ services:
             - '%victoire_i18n.available_locales%'
         tags:
             - { name: 'console.command' }
+
+    Victoire\Bundle\SitemapBundle\Command\ClearCommand:
+        parent: Victoire\Bundle\SitemapBundle\Command\GenerateCommand
+        tags:
+            - { name: 'console.command' }
