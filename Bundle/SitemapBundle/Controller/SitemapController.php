@@ -34,10 +34,10 @@ class SitemapController extends Controller
 
         $pages = $redis->get($cacheKey);
         if ($pages === null) {
-            $export = $this->get('victoire_sitemap.export.handler');
+            $exportHandler = $this->get('victoire_sitemap.export.handler');
 
-            $pages = $export->serialize(
-                $export->handle($locale)
+            $pages = $exportHandler->serialize(
+                $exportHandler->handle($locale)
             );
         }
 

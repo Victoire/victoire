@@ -3,7 +3,9 @@
 namespace Victoire\Bundle\SitemapBundle\Domain\Export;
 
 use Doctrine\ORM\EntityManager;
+use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
+use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\BusinessPageReference;
@@ -52,12 +54,12 @@ class SitemapExportHandler
      */
     public function handle($locale)
     {
-        $homepage = $this->entityManager->getRepository('VictoirePageBundle:BasePage')
+        $homepage = $this->entityManager->getRepository(Page::class)
             ->findOneByHomepage($locale);
 
         /** @var ViewReference $tree */
         $tree = $this->viewReferenceRepo->getOneReferenceByParameters(
-            ['viewId' => $homepage->getId()],
+            ['viewId' => $homepage->getId(), 'locale' => $locale],
             true,
             true
         );
@@ -66,21 +68,23 @@ class SitemapExportHandler
 
         $getChildrenIds = function (ViewReference $tree) use (&$getChildrenIds, $ids) {
             foreach ($tree->getChildren() as $child) {
-                $ids[] = $child->getViewId();
-                $ids = array_merge($ids, $getChildrenIds($child));
+                if (null !== $child->getViewId()) {
+                    $ids[] = $child->getViewId();
+                    $ids = array_merge($ids, $getChildrenIds($child));
+                }
             }
 
             return array_unique($ids);
         };
-
-        $pages = $this->entityManager->getRepository('VictoirePageBundle:BasePage')
+        $ids = $getChildrenIds($tree);
+        $pages = $this->entityManager->getRepository(Page::class)
             ->getAll(true)
             ->joinSeo()
             ->joinSeoTranslations($locale)
-            ->filterByIds($getChildrenIds($tree))
+            ->filterByIds($ids)
             ->run();
 
-        /** @var BasePage $page */
+        /** @var Page $page */
         foreach ($pages as $page) {
             $page->setCurrentLocale($locale);
             $this->entityManager->refresh($page);
@@ -92,7 +96,7 @@ class SitemapExportHandler
 
     public function serialize($pages)
     {
-        $data = [];
+        $sitemapEntries = [];
 
         foreach ($pages as $page) {
             // BusinessTemplate have no getUrl() method
@@ -101,20 +105,21 @@ class SitemapExportHandler
             }
             $seo = $page->getSeo();
 
-            $data[] = [
+            $sitemapEntry = [
                 'url'               => $page->getUrl(),
                 'sitemapChangeFreq' => $seo === null ? 'monthly' : $seo->getSitemapChangeFreq(),
                 'sitemapPriority'   => $seo === null ? 0.5 : $seo->getSitemapPriority(),
             ];
-
             // This data is optional in sitemap, add it only if a publication date is available
             // see https://www.sitemaps.org/protocol.html#xmlTagDefinitions
-            if (null !== $page->getPublishedAt() and $page->getPublishedAt() instanceof \DateTime) {
-                $data['publishedAt'] = $page->getPublishedAt()->format('c');
+            if (null !== $page->getPublishedAt() && $page->getPublishedAt() instanceof \DateTime) {
+                $sitemapEntry['publishedAt'] = $page->getPublishedAt()->format('Y-m-d');
             }
+
+            $sitemapEntries[] = $sitemapEntry;
         }
 
-        return json_encode($data);
+        return json_encode($sitemapEntries);
     }
 
     /**
@@ -131,7 +136,7 @@ class SitemapExportHandler
     {
         foreach ($tree->getChildren() as $child) {
             if ($child instanceof BusinessPageReference
-                && $child->getViewNamespace() == 'Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage'
+                && $child->getViewNamespace() == VirtualBusinessPage::class
             ) {
                 /** @var WebViewInterface $businessPage */
                 $businessPage = $this->pageHelper->findPageByReference($child);
