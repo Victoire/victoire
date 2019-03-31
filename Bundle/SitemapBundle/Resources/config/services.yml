@@ -29,8 +29,8 @@ services:
             - { name: kernel.event_listener, event: victoire_core.build_menu, method: addGlobal, priority: 70 }
 
     #  ================== COMMAND ================== #
-    victoire_sitemap.command.generate:
-        class: Victoire\Bundle\SitemapBundle\Command\GenerateCommand
+
+    Victoire\Bundle\SitemapBundle\Command\GenerateCommand:
         arguments:
             - '@snc_redis.victoire_client'
             - '@victoire_sitemap.export.handler'

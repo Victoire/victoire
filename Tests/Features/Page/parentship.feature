@@ -1,5 +1,5 @@
 @mink:selenium2 @alice(Page) @reset-schema
-Feature: Manage sitemap
+Feature: Manage page parentship
 
     Background:
         Given I maximize the window
