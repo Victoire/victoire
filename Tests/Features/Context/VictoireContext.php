@@ -873,15 +873,9 @@ class VictoireContext extends RawMinkContext
      */
     public function iRunTheSitemapGenerationCommand()
     {
-        $phpFinder = new PhpExecutableFinder();
-        if (false === $php = $phpFinder->find()) {
-            throw new \RuntimeException('Unable to find the PHP executable.');
-        }
-        $phpBin = $php;
         $process = new Process(null);
-
         $process->setWorkingDirectory($this->getContainer()->getParameter('kernel.root_dir').'/..');
-        $process->setCommandLine($phpBin.' bin/console victoire:sitemap:generate --env=ci');
+        $process->setCommandLine(self::getPhpBin().' bin/console victoire:sitemap:generate --env=ci');
         $process->start();
         $process->wait();
         $process->mustRun();
@@ -892,15 +886,9 @@ class VictoireContext extends RawMinkContext
      */
     public function iRunSitemapClearCommandFile()
     {
-        $phpFinder = new PhpExecutableFinder();
-        if (false === $php = $phpFinder->find()) {
-            throw new \RuntimeException('Unable to find the PHP executable.');
-        }
-        $phpBin = $php;
         $process = new Process(null);
-
         $process->setWorkingDirectory($this->getContainer()->getParameter('kernel.root_dir').'/..');
-        $process->setCommandLine($phpBin.' bin/console victoire:sitemap:clear --env=ci');
+        $process->setCommandLine(self::getPhpBin().' bin/console victoire:sitemap:clear --env=ci');
         $process->start();
         $process->wait();
         $process->mustRun();
@@ -911,17 +899,20 @@ class VictoireContext extends RawMinkContext
      */
     public function iRunViewReferenceGenerationCommandFile()
     {
+        $process = new Process(null);
+        $process->setWorkingDirectory($this->getContainer()->getParameter('kernel.root_dir').'/..');
+        $process->setCommandLine(self::getPhpBin().' bin/console victoire:viewReference:generate --env=ci');
+        $process->start();
+        $process->wait();
+        $process->mustRun();
+    }
+
+    protected static function getPhpBin() {
         $phpFinder = new PhpExecutableFinder();
         if (false === $php = $phpFinder->find()) {
             throw new \RuntimeException('Unable to find the PHP executable.');
         }
-        $phpBin = $php;
-        $process = new Process(null);
 
-        $process->setWorkingDirectory($this->getContainer()->getParameter('kernel.root_dir').'/..');
-        $process->setCommandLine($phpBin.' bin/console victoire:viewReference:generate --env=ci');
-        $process->start();
-        $process->wait();
-        $process->mustRun();
+        return $php;
     }
 }
