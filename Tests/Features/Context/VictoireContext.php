@@ -907,7 +907,8 @@ class VictoireContext extends RawMinkContext
         $process->mustRun();
     }
 
-    protected static function getPhpBin() {
+    protected static function getPhpBin()
+    {
         $phpFinder = new PhpExecutableFinder();
         if (false === $php = $phpFinder->find()) {
             throw new \RuntimeException('Unable to find the PHP executable.');
