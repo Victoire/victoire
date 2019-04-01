@@ -253,6 +253,9 @@ class WidgetManager
         if ($requestMethod === 'POST') {
             //the widget view
             $widgetView = $widget->getWidgetMap()->getView();
+            if ($currentView instanceof VirtualBusinessPage) {
+                $this->virtualToBpTransformer->transform($currentView);
+            }
 
             //we only copy the widget if the view of the widget is not the current view
             if ($widgetView !== $currentView) {
