@@ -3,7 +3,6 @@
 namespace Victoire\Bundle\SitemapBundle\Domain\Export;
 
 use Doctrine\ORM\EntityManager;
-use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\PageBundle\Entity\BasePage;
@@ -95,8 +94,7 @@ class SitemapExportHandler
         $items = array_merge($pages, $this->getBusinessPages($tree));
         usort(
             $items,
-            function ($a, $b)
-            {
+            function ($a, $b) {
                 return strcmp($a->getUrl(), $b->getUrl());
             }
         );
