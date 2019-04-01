@@ -16,6 +16,7 @@ use Victoire\Bundle\BusinessPageBundle\Entity\BusinessTemplate;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Exception\IdentifierNotDefinedException;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
+use Victoire\Bundle\PageBundle\Entity\PageStatus;
 use Victoire\Bundle\ViewReferenceBundle\Builder\ViewReferenceBuilder;
 
 /**
@@ -272,6 +273,9 @@ class BusinessPageBuilder
         $page->setSlug($pageSlug);
         $page->setName($pageName);
         $page->setReference($this->viewReferenceBuilder->buildViewReference($page, $em));
+        if (false === $entity->isVisibleOnFront()) {
+            $page->setStatus(PageStatus::UNPUBLISHED);
+        }
 
         return $page;
     }

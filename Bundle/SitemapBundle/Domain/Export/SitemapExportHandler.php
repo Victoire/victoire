@@ -148,8 +148,10 @@ class SitemapExportHandler
             ) {
                 /** @var WebViewInterface $businessPage */
                 $businessPage = $this->pageHelper->findPageByReference($child);
-                $businessPage->setReference($child);
-                $businessPages[] = $businessPage;
+                if ($businessPage->isPublished()) {
+                    $businessPage->setReference($child);
+                    $businessPages[] = $businessPage;
+                }
             }
             $businessPages = $this->getBusinessPages($child, $businessPages);
         }
