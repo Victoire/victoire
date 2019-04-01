@@ -77,6 +77,7 @@ class ArticleManager
         //Transform VBP into BP
         $this->virtualToBusinessPageTransformer->transform($page);
         $page->setParent($article->getBlog());
+        $page->setStatus($article->getStatus());
 
         $this->entityManager->persist($page);
         $this->entityManager->flush();
