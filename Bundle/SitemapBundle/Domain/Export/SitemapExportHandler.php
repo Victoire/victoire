@@ -3,8 +3,10 @@
 namespace Victoire\Bundle\SitemapBundle\Domain\Export;
 
 use Doctrine\ORM\EntityManager;
+use Victoire\Bundle\BlogBundle\Entity\Article;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
 use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
+use Victoire\Bundle\PageBundle\Entity\BasePage;
 use Victoire\Bundle\PageBundle\Entity\Page;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
@@ -77,7 +79,7 @@ class SitemapExportHandler
             return array_unique($ids);
         };
         $ids = $getChildrenIds($tree);
-        $pages = $this->entityManager->getRepository(Page::class)
+        $pages = $this->entityManager->getRepository(BasePage::class)
             ->getAll(true)
             ->joinSeo()
             ->joinSeoTranslations($locale)
@@ -90,8 +92,16 @@ class SitemapExportHandler
             $this->entityManager->refresh($page);
             $page->translate($locale);
         }
+        $items = array_merge($pages, $this->getBusinessPages($tree));
+        usort(
+            $items,
+            function ($a, $b)
+            {
+                return strcmp($a->getUrl(), $b->getUrl());
+            }
+        );
 
-        return array_merge($pages, $this->getBusinessPages($tree));
+        return $items;
     }
 
     public function serialize($pages)
@@ -136,7 +146,7 @@ class SitemapExportHandler
     {
         foreach ($tree->getChildren() as $child) {
             if ($child instanceof BusinessPageReference
-                && $child->getViewNamespace() == VirtualBusinessPage::class
+                && $child->getViewNamespace() === VirtualBusinessPage::class
             ) {
                 /** @var WebViewInterface $businessPage */
                 $businessPage = $this->pageHelper->findPageByReference($child);
