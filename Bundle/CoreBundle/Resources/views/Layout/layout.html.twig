@@ -16,6 +16,7 @@
     {% if is_granted('ROLE_VICTOIRE') %}
         <script type="text/javascript">
             var adminLocale = '{{ app.user.locale }}';
+            if (adminLocale == '') console.warn('Please define a value (fr, en, es) for your user\'s locale property in db');
         </script>
         {% javascripts injector="victoire-head, modernizr" %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
