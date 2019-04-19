@@ -116,9 +116,14 @@ class WidgetCache
 
     private function generateHash(Widget $widget)
     {
+        $roleHash = '';
+        array_map(function ($role) use (&$roleHash) {
+            $roleHash .= $this->authorizationChecker->isGranted($role) ? $role : '';
+        }, ['ROLE_VICTOIRE_DEVELOPER', 'ROLE_VICTOIRE', 'ROLE_VICTOIRE_BLOG', 'ROLE_VICTOIRE_LEFTNAVBAR', 'ROLE_VICTOIRE_BET', 'ROLE_VICTOIRE_PAGE_DEBUG', 'ROLE_VICTOIRE_STYLE']);
+
         return sprintf('%s-%s',
             $widget->generateCacheId(),
-            (string) $this->authorizationChecker->isGranted('ROLE_VICTOIRE')
+            md5($roleHash)
         );
     }
 }
