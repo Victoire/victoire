@@ -8259,7 +8259,7 @@ h1 small a:hover,h2 small a:hover,h3 small a:hover,h4 small a:hover,h5 small a:h
 }
 
 .thumbnails .del {
-   background:url("../img/icons/remove.png") no-repeat;
+   background:url("/bundles/victoiremedia/img/icons/remove.png") no-repeat;
    display:block;
    text-indent:-9999px;
    width:19px;
@@ -8366,7 +8366,7 @@ h1 small a:hover,h2 small a:hover,h3 small a:hover,h4 small a:hover,h5 small a:h
 
 .map-list table tbody tr td:first-child {
    width:500px;
-   background:url("../img/icons/folder2.png") 14px center no-repeat;
+   background:url("/bundles/victoiremedia/img/icons/folder2.png") 14px center no-repeat;
    padding-left:40px;
 }
 
@@ -8400,7 +8400,7 @@ h1 small a:hover,h2 small a:hover,h3 small a:hover,h4 small a:hover,h5 small a:h
 }
 
 .input_media .preview {
-   background:#eee url("../img/icons/pic.png") center center no-repeat;
+   background:#eee url("/bundles/victoiremedia/img/icons/pic.png") center center no-repeat;
    box-shadow:inset 0 1px 3px rgba(0,0,0,0.1);
    float:left;
    border-radius:3px;
@@ -9168,7 +9168,7 @@ div.dp-popup td.disabled {
    width:12px;
    height:13px;
    font-size:1px;
-   background:url("../img/icons/chosen-sprite.png") right top no-repeat;
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") right top no-repeat;
 }
 
 .chzn-container-single .chzn-single abbr:hover {
@@ -9189,7 +9189,7 @@ div.dp-popup td.disabled {
 }
 
 .chzn-container-single .chzn-single div b {
-   background:url("../img/icons/chosen-sprite.png") no-repeat 0 0;
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat 0 0;
    display:block;
    width:100%;
    height:100%;
@@ -9204,13 +9204,13 @@ div.dp-popup td.disabled {
 }
 
 .chzn-container-single .chzn-search input {
-   background:#fff url("../img/icons/chosen-sprite.png") no-repeat 100% -22px;
-   background:url("../img/icons/chosen-sprite.png") no-repeat 100% -22px,-webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, #eee), color-stop(15%, #fff));
-   background:url("../img/icons/chosen-sprite.png") no-repeat 100% -22px,-webkit-linear-gradient(top, #eee 1%, #fff 15%);
-   background:url("../img/icons/chosen-sprite.png") no-repeat 100% -22px,-moz-linear-gradient(top, #eee 1%, #fff 15%);
-   background:url("../img/icons/chosen-sprite.png") no-repeat 100% -22px,-o-linear-gradient(top, #eee 1%, #fff 15%);
-   background:url("../img/icons/chosen-sprite.png") no-repeat 100% -22px,-ms-linear-gradient(top, #eee 1%, #fff 15%);
-   background:url("../img/icons/chosen-sprite.png") no-repeat 100% -22px,linear-gradient(top, #eee 1%, #fff 15%);
+   background:#fff url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat 100% -22px;
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat 100% -22px,-webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, #eee), color-stop(15%, #fff));
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat 100% -22px,-webkit-linear-gradient(top, #eee 1%, #fff 15%);
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat 100% -22px,-moz-linear-gradient(top, #eee 1%, #fff 15%);
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat 100% -22px,-o-linear-gradient(top, #eee 1%, #fff 15%);
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat 100% -22px,-ms-linear-gradient(top, #eee 1%, #fff 15%);
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat 100% -22px,linear-gradient(top, #eee 1%, #fff 15%);
    margin:1px 0;
    padding:4px 20px 4px 5px;
    outline:0;
@@ -9319,7 +9319,7 @@ div.dp-popup td.disabled {
    width:12px;
    height:13px;
    font-size:1px;
-   background:url("../img/icons/chosen-sprite.png") right top no-repeat;
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") right top no-repeat;
 }
 
 .chzn-container-multi .chzn-choices .search-choice .search-choice-close:hover {
@@ -9419,11 +9419,11 @@ div.dp-popup td.disabled {
 }
 
 .chzn-container .chzn-results-scroll-down span {
-   background:url("../img/icons/chosen-sprite.png") no-repeat -4px -3px;
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat -4px -3px;
 }
 
 .chzn-container .chzn-results-scroll-up span {
-   background:url("../img/icons/chosen-sprite.png") no-repeat -22px -3px;
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat -22px -3px;
 }
 
 .chzn-container-active .chzn-single {
@@ -9535,13 +9535,13 @@ div.dp-popup td.disabled {
 }
 
 .chzn-rtl .chzn-search input {
-   background:#fff url("../img/icons/chosen-sprite.png") no-repeat -38px -22px;
-   background:url("../img/icons/chosen-sprite.png") no-repeat -38px -22px,-webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, #eee), color-stop(15%, #fff));
-   background:url("../img/icons/chosen-sprite.png") no-repeat -38px -22px,-webkit-linear-gradient(top, #eee 1%, #fff 15%);
-   background:url("../img/icons/chosen-sprite.png") no-repeat -38px -22px,-moz-linear-gradient(top, #eee 1%, #fff 15%);
-   background:url("../img/icons/chosen-sprite.png") no-repeat -38px -22px,-o-linear-gradient(top, #eee 1%, #fff 15%);
-   background:url("../img/icons/chosen-sprite.png") no-repeat -38px -22px,-ms-linear-gradient(top, #eee 1%, #fff 15%);
-   background:url("../img/icons/chosen-sprite.png") no-repeat -38px -22px,linear-gradient(top, #eee 1%, #fff 15%);
+   background:#fff url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat -38px -22px;
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat -38px -22px,-webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, #eee), color-stop(15%, #fff));
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat -38px -22px,-webkit-linear-gradient(top, #eee 1%, #fff 15%);
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat -38px -22px,-moz-linear-gradient(top, #eee 1%, #fff 15%);
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat -38px -22px,-o-linear-gradient(top, #eee 1%, #fff 15%);
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat -38px -22px,-ms-linear-gradient(top, #eee 1%, #fff 15%);
+   background:url("/bundles/victoiremedia/img/icons/chosen-sprite.png") no-repeat -38px -22px,linear-gradient(top, #eee 1%, #fff 15%);
    padding:4px 5px 4px 20px;
    direction:rtl;
 }
@@ -9934,7 +9934,7 @@ input[type="file"] {
    text-indent:-9999px;
    width:15px;
    height:26px;
-   background:url("../img/icons/del.png") 50% 50% no-repeat;
+   background:url("/bundles/victoiremedia/img/icons/del.png") 50% 50% no-repeat;
 }
 
 .pp-new .row-fluid .template-block .pp .edit a.del:hover {
@@ -9951,7 +9951,7 @@ input[type="file"] {
 }
 
 .pp-new .row-fluid .template-block .pp .edit a.del:hover span {
-   background-image:url("../img/icons/del_h.png");
+   background-image:url("/bundles/victoiremedia/img/icons/del_h.png");
 }
 
 .pp-new .row-fluid .template-block .pp .edit a.editor {
@@ -10002,7 +10002,7 @@ input[type="file"] {
 
 .pp-new .sortable .pp h6 {
    padding-left:35px;
-   background:#f9f9f9 url("../img/icons/drag.png") 10px 5px no-repeat;
+   background:#f9f9f9 url("/bundles/victoiremedia/img/icons/drag.png") 10px 5px no-repeat;
    -webkit-transition:background-image 0.3s ease-in-out;
    -moz-transition:background-image 0.3s ease-in-out;
    -o-transition:background-image 0.3s ease-in-out;
@@ -10010,7 +10010,7 @@ input[type="file"] {
 }
 
 .pp-new .sortable .pp:hover h6 {
-   background-image:url("../img/icons/drag_a.png");
+   background-image:url("/bundles/victoiremedia/img/icons/drag_a.png");
 }
 
 .pp-new .region-disabled {
