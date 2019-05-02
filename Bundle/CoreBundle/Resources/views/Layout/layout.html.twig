@@ -53,6 +53,9 @@
     {% stylesheets filter='less, cssrewrite' injector="head" %}
         <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
     {% endstylesheets %}
+    {% stylesheets injector="print" %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="print" />
+    {% endstylesheets %}
 
     {% if is_granted('ROLE_VICTOIRE') or app.request.attributes.get('_route') == 'fos_user_security_login' %}
         {% stylesheets filter='less, cssrewrite' injector="victoire-edit" %}
