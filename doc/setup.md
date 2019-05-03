@@ -23,7 +23,7 @@ composer require victoire/victoire twig/twig:~2.0
 
 Register the following bundles in the `AppKernel`:
 
-`app/config/AppKernel.php`
+`app/AppKernel.php`
 ```php
 <?php
 use Symfony\Component\HttpKernel\Kernel;
