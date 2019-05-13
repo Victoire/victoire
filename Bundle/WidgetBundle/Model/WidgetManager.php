@@ -172,7 +172,7 @@ class WidgetManager
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      *
-     * return array
+     * @return array
      */
     public function createWidget($mode, $type, $slotId, View $view, $entity, $position, $widgetReference, $quantum)
     {
