@@ -72,8 +72,14 @@ $vic(document).on('click', '.v-widget__overlay', function(event) {
             var route = 'victoire_core_widget_edit';
         }
 
-        var id = $vic(this).parents('.vic-widget-container').first().data('id');
-        var url = Routing.generate(route, {'id': id, 'viewReference': viewReferenceId, _locale: locale});
+        var containerIds = [];
+        //building an array of vic-widget-containers' id
+        //containerIds[0] is the item's id
+        //containerIds[n+1] is the id of the parent container of container n
+        $vic(this).parents('.vic-widget-container').each(function () {
+            containerIds.push($(this).data('id'));
+        });
+        var url = Routing.generate(route, {'id': containerIds[0], 'viewReference': viewReferenceId, _locale: locale, 'containerIds':containerIds.toString()});
         openModal(url);
     } else {
         console.error('You only should click on this in edit or style mode !');

@@ -21,6 +21,7 @@ use Victoire\Bundle\CoreBundle\VictoireCmsEvents;
 use Victoire\Bundle\FormBundle\Helper\FormErrorHelper;
 use Victoire\Bundle\PageBundle\Helper\PageHelper;
 use Victoire\Bundle\WidgetBundle\Builder\WidgetFormBuilder;
+use Victoire\Bundle\WidgetBundle\Cache\WidgetCache;
 use Victoire\Bundle\WidgetBundle\Helper\WidgetHelper;
 use Victoire\Bundle\WidgetBundle\Renderer\WidgetRenderer;
 use Victoire\Bundle\WidgetBundle\Resolver\WidgetContentResolver;
@@ -51,6 +52,7 @@ class WidgetManager
     protected $slots;
     protected $virtualToBpTransformer;
     protected $twigResponsive;
+    protected $widgetCache;
 
     /**
      * construct.
@@ -70,6 +72,8 @@ class WidgetManager
      * @param PageHelper                       $pageHelper
      * @param array                            $slots
      * @param VirtualToBusinessPageTransformer $virtualToBpTransformer
+     * @param array                            $twigResponsive
+     * @param WidgetCache                      $widgetCache
      */
     public function __construct(
         WidgetHelper $widgetHelper,
@@ -87,7 +91,8 @@ class WidgetManager
         PageHelper $pageHelper,
         $slots,
         VirtualToBusinessPageTransformer $virtualToBpTransformer,
-        array $twigResponsive
+        array $twigResponsive,
+        WidgetCache $widgetCache
     ) {
         $this->widgetFormBuilder = $widgetFormBuilder;
         $this->widgetHelper = $widgetHelper;
@@ -105,6 +110,7 @@ class WidgetManager
         $this->slots = $slots;
         $this->virtualToBpTransformer = $virtualToBpTransformer;
         $this->twigResponsive = $twigResponsive;
+        $this->widgetCache = $widgetCache;
     }
 
     /**
@@ -124,6 +130,9 @@ class WidgetManager
         $widget = $this->widgetHelper->newWidgetInstance($type, $view, $slot, $mode);
         $widgets = [$widget];
 
+        //parent container ids
+        $containerIds = explode(',', $this->getRequest()->get('containerIds', null));
+
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
         $forms = $this->widgetFormBuilder->renderNewQuantumForms($slot, $view, $widgets, $widget, $classes, $position, $parentWidgetMap, $quantum);
@@ -142,6 +151,7 @@ class WidgetManager
                     'widgets'         => $widgets,
                     'widget'          => $widget,
                     'forms'           => $forms,
+                    'containerIds'    => json_encode($containerIds),
                 ]
             ),
         ];
@@ -155,17 +165,23 @@ class WidgetManager
      * @param string $slotId
      * @param View   $view
      * @param string $entity
-     * @param string $type
+     * @param $position
+     * @param $widgetReference
+     * @param $quantum
      *
-     * @throws \Exception
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      *
-     * @return Template
+     * @return array
      */
     public function createWidget($mode, $type, $slotId, View $view, $entity, $position, $widgetReference, $quantum)
     {
         //services
         $formErrorHelper = $this->formErrorHelper;
         $request = $this->getRequest();
+
+        //parent container ids
+        $containerIds = explode(',', $request->get('containerIds', null));
 
         if ($view instanceof VirtualBusinessPage) {
             $this->virtualToBpTransformer->transform($view);
@@ -207,6 +223,9 @@ class WidgetManager
 
             $this->widgetMapBuilder->build($view);
 
+            //force cache invalidation for the element's containers
+            $this->invalidateCacheByIds($containerIds);
+
             //get the html for the widget
             $htmlWidget = $this->widgetRenderer->renderContainer($widget, $view);
 
@@ -241,6 +260,9 @@ class WidgetManager
         /** @var BusinessEntity[] $classes */
         $classes = $this->cacheReader->getBusinessClassesForWidget($widget);
         $request = $this->getRequest();
+
+        //parent container ids
+        $containerIds = explode(',', $request->get('containerIds', null));
 
         //the id of the edited widget
         //a new widget might be created in the case of a legacy
@@ -279,6 +301,9 @@ class WidgetManager
                 $this->entityManager->persist($currentView);
                 $this->entityManager->flush();
 
+                //force cache invalidation for the element's containers
+                $this->invalidateCacheByIds($containerIds);
+
                 $response = [
                     'view'        => $currentView,
                     'success'     => true,
@@ -315,6 +340,7 @@ class WidgetManager
                         'forms'           => $forms,
                         'widgets'         => $widgets,
                         'widget'          => $widget,
+                        'containerIds'    => json_encode($containerIds),
                     ]
                 ),
             ];
@@ -412,10 +438,16 @@ class WidgetManager
         //update the view deleting the widget
         $this->widgetMapManager->delete($view, $widget);
 
+        //parent container ids
+        $containerIds = explode(',', $this->getRequest()->get('containerIds', null));
+
         //we update the view
         $this->entityManager->persist($view);
 
         $this->entityManager->flush();
+
+        //force cache invalidation for the element's containers
+        $this->invalidateCacheByIds($containerIds);
     }
 
     /**
@@ -482,5 +514,20 @@ class WidgetManager
     private function getRequest()
     {
         return $this->requestStack->getCurrentRequest();
+    }
+
+    /**
+     * force cache invalidation by widget ids.
+     *
+     * @param array $widgetIds
+     *
+     * @throws \Doctrine\ORM\ORMException
+     */
+    private function invalidateCacheByIds($widgetIds)
+    {
+        $widgets = $this->entityManager->getRepository(\Victoire\Bundle\WidgetBundle\Entity\Widget::class)->findById($widgetIds);
+        foreach ($widgets as $widget) {
+            $this->widgetCache->remove($widget);
+        }
     }
 }
