@@ -7,7 +7,7 @@ use Gaufrette\Filesystem;
 use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
-use Symfony\Component\HttpFoundation\File\MimeType\FileBinaryMimeTypeGuesser;
+use Symfony\Component\HttpFoundation\File\MimeType\FileinfoMimeTypeGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Victoire\Bundle\MediaBundle\Entity\Media;
@@ -41,8 +41,7 @@ class FileHandler extends AbstractMediaHandler
     public function __construct()
     {
         $this->fileSystem = new Filesystem(new \Gaufrette\Adapter\Local('uploads/media/', true));
-        //we use a specific symfony mimetypeguesser because de default (FileinfoMimeTypeGuesser) is unable to recognize MS documents
-        $this->mimeTypeGuesser = new FileBinaryMimeTypeGuesser();
+        $this->mimeTypeGuesser = new FileinfoMimeTypeGuesser();
         $this->urlizer = new Urlizer();
     }
 
