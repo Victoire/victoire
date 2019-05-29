@@ -126,19 +126,23 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
         $reference = $this->repository->findById($id);
         $locale = $this->repository->findValueForId('locale', $id);
         $url = '';
-        // while the reference has a slug
-        while (isset($reference['slug']) && $reference['slug'] != '') {
-            // Build url
-            if ($url != '') {
-                $url = $reference['slug'].'/'.$url;
-            } else {
-                $url = $reference['slug'];
-            }
-            // Set reference with the parent
-            if ($parentId = $reference['parent']) {
-                $reference = $this->repository->findById($parentId);
-            } else {
-                $reference = [];
+        if (null !== $reference['permalink'] && '' !== $reference['permalink']) {
+            $url = $reference['permalink'];
+        } else {
+            // while the reference has a slug (parent loop)
+            while (isset($reference['slug']) && $reference['slug'] != '') {
+                // Build url
+                if ($url != '') {
+                    $url = $reference['slug'] . '/' . $url;
+                } else {
+                    $url = $reference['slug'];
+                }
+                // Set reference with the parent
+                if ($parentId = $reference['parent']) {
+                    $reference = $this->repository->findById($parentId);
+                } else {
+                    $reference = [];
+                }
             }
         }
         // set the new url
