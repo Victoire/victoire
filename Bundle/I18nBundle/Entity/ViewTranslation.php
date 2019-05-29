@@ -35,6 +35,15 @@ class ViewTranslation
     /**
      * @var string
      *
+     * @Assert\NotBlank()
+     * @ORM\Column(name="permalink", type="string", length=255, nullable=true)
+     * @Serializer\Groups({"search"})
+     */
+    protected $permalink;
+
+    /**
+     * @var string
+     *
      * @Gedmo\Slug(handlers={
      *     @Gedmo\SlugHandler(class="Victoire\Bundle\BusinessEntityBundle\Handler\TwigSlugHandler"
      * )},fields={"name"}, updatable=false, unique=false)
@@ -68,6 +77,30 @@ class ViewTranslation
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get permalink.
+     *
+     * @return string
+     */
+    public function getPermalink()
+    {
+        return $this->permalink;
+    }
+
+    /**
+     * Set permalink.
+     *
+     * @param string $permalink
+     *
+     * @return View
+     */
+    public function setPermalink($permalink)
+    {
+        $this->permalink = $permalink;
 
         return $this;
     }

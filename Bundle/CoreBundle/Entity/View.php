@@ -766,6 +766,17 @@ abstract class View
         $this->mergeNewTranslations();
     }
 
+    public function getPermalink()
+    {
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getPermalink');
+    }
+
+    public function setPermalink($permalink, $locale = null)
+    {
+        $this->translate($locale, false)->setPermalink($permalink);
+        $this->mergeNewTranslations();
+    }
+
     /**
      * @return array
      */
