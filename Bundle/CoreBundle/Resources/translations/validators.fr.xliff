@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+    <body>
+      <trans-unit id="564432933783321f38899" resname="victoire.permalink.invalid">
+          <source>victoire.permalink.invalid</source>
+          <target>Le lien permanent est déjà utilisé.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

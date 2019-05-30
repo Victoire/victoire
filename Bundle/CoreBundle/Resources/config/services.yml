@@ -14,7 +14,16 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
+#  ==================  Validator ================== #
+    Victoire\Bundle\CoreBundle\Validator\UniquePermalinkValidator:
+        arguments:
+            - "@victoire_view_reference.repository"
+            - "@request_stack"
+        tags:
+            - { name: 'validator.constraint_validator', alias: 'victoire.validator.view.permalink_unique' }
+
 #  ==================  MENU ================== #
+
     victoire_core.admin_menu_builder:
         class: Victoire\Bundle\CoreBundle\Menu\MenuBuilder
         arguments: [ '@knp_menu.factory', '@security.authorization_checker' ]
