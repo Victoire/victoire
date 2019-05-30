@@ -120,9 +120,9 @@ abstract class ViewType extends AbstractType
                         'field_type' => UrlvalidatedType::class,
                     ];
                     $translationOptions['fields']['permalink'] = [
-                        'label'      => 'form.page.type.permalink.label',
-                        'field_type' => UrlvalidatedType::class,
-                        'parentUrl' => '',
+                        'label'       => 'form.page.type.permalink.label',
+                        'field_type'  => UrlvalidatedType::class,
+                        'parentUrl'   => '',
                         'allow_empty' => true,
                     ];
                 }

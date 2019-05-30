@@ -133,7 +133,7 @@ class ViewReferenceRedisManager implements ViewReferenceConnectorManagerInterfac
             while (isset($reference['slug']) && $reference['slug'] != '') {
                 // Build url
                 if ($url != '') {
-                    $url = $reference['slug'] . '/' . $url;
+                    $url = $reference['slug'].'/'.$url;
                 } else {
                     $url = $reference['slug'];
                 }

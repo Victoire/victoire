@@ -14,8 +14,9 @@ class UniquePermalinkValidator extends ConstraintValidator
 
     /**
      * PermalinkValidator constructor.
+     *
      * @param ViewReferenceRepository $viewReferenceRepository
-     * @param RequestStack $requestStack
+     * @param RequestStack            $requestStack
      */
     public function __construct(ViewReferenceRepository $viewReferenceRepository, RequestStack $requestStack)
     {
@@ -24,9 +25,8 @@ class UniquePermalinkValidator extends ConstraintValidator
     }
 
     /**
-     * @param View $view
+     * @param View       $view
      * @param Constraint $constraint
-     *
      */
     public function validate($view, Constraint $constraint)
     {
