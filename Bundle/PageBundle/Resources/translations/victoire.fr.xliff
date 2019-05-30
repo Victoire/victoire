@@ -48,7 +48,11 @@
         </trans-unit>
         <trans-unit id="58893b99ed74d" resname="form.page.type.slug.label">
             <source>form.page.type.slug.label</source>
-            <target>URL</target>
+            <target>Slug</target>
+        </trans-unit>
+        <trans-unit id="58893322ed74d" resname="form.page.type.permalink.label">
+            <source>form.page.type.permalink.label</source>
+            <target>Permalink</target>
         </trans-unit>
         <trans-unit id="58893b99ed756" resname="form.page.type.status.label">
             <source>form.page.type.status.label</source>

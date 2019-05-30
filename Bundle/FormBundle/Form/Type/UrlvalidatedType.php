@@ -41,6 +41,9 @@ class UrlvalidatedType extends AbstractType
         }
 
         $parentUrl = $page->getParent() ? $page->getParent()->getUrl() : '';
+        if (isset($options['parentUrl'])) {
+            $parentUrl = $options['parentUrl'];
+        }
         $url = $this->router->generate('victoire_core_page_show', ['url' => $parentUrl, '_locale' => $locale], Router::ABSOLUTE_URL);
         $view->vars['base_url'] = $url;
 
@@ -49,6 +52,7 @@ class UrlvalidatedType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setDefined('parentUrl');
         parent::configureOptions($resolver);
     }
 
