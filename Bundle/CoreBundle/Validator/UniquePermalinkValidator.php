@@ -5,6 +5,7 @@ namespace Victoire\Bundle\CoreBundle\Validator;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Victoire\Bundle\CoreBundle\Entity\WebViewInterface;
 use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 
@@ -33,15 +34,17 @@ class UniquePermalinkValidator extends ConstraintValidator
      */
     public function validate($view, Constraint $constraint)
     {
-        $viewReference = $this->viewReferenceRepository->getReferenceByUrl(
-            $this->urlBuilder->buildUrl($view),
-            $this->requestStack->getCurrentRequest()->getLocale()
-        );
+        if ($view instanceof WebViewInterface) {
+            $viewReference = $this->viewReferenceRepository->getReferenceByUrl(
+                $this->urlBuilder->buildUrl($view),
+                $this->requestStack->getCurrentRequest()->getLocale()
+            );
 
-        if ($viewReference && $viewReference->getViewId() != $view->getId()) {
-            $this->context->buildViolation('victoire.url.alreadyInUse')
-                ->atPath('permalink')
-                ->addViolation();
+            if ($viewReference && $viewReference->getViewId() != $view->getId()) {
+                $this->context->buildViolation('victoire.url.alreadyInUse')
+                    ->atPath('permalink')
+                    ->addViolation();
+            }
         }
     }
 }
