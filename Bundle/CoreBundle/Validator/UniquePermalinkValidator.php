@@ -17,9 +17,10 @@ class UniquePermalinkValidator extends ConstraintValidator
 
     /**
      * UniquePermalinkValidator constructor.
+     *
      * @param ViewReferenceRepository $viewReferenceRepository
-     * @param RequestStack $requestStack
-     * @param UrlBuilder $urlBuilder
+     * @param RequestStack            $requestStack
+     * @param UrlBuilder              $urlBuilder
      */
     public function __construct(ViewReferenceRepository $viewReferenceRepository, RequestStack $requestStack, UrlBuilder $urlBuilder)
     {
@@ -34,9 +35,9 @@ class UniquePermalinkValidator extends ConstraintValidator
      */
     public function validate($view, Constraint $constraint)
     {
-        if ($view instanceof WebViewInterface) {
+        if ($view instanceof WebViewInterface && ($url = $this->urlBuilder->buildUrl($view)) != '') {
             $viewReference = $this->viewReferenceRepository->getReferenceByUrl(
-                $this->urlBuilder->buildUrl($view),
+                $url,
                 $this->requestStack->getCurrentRequest()->getLocale()
             );
 
