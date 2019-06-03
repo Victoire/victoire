@@ -22,7 +22,7 @@ function displaySlugIcons(inputSlug, slug, allowEmpty){
         }
     }else{
         if (allowEmpty && slug != 'undefined') {
-            correctSlugIcon.removeClass('v-hidden');
+            correctSlugIcon.addClass('v-hidden');
             notCorrectSlugIcon.addClass('v-hidden');
         } else {
             correctSlugIcon.addClass('v-hidden');

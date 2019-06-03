@@ -8,6 +8,7 @@ class ViewReference
     protected $locale;
     protected $name;
     protected $slug;
+    protected $permalink;
     /**
      * @var string built by ViewReferenceCacheRepo
      */
@@ -119,6 +120,22 @@ class ViewReference
     public function setSlug($slug)
     {
         $this->slug = $slug;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPermalink()
+    {
+        return $this->permalink;
+    }
+
+    /**
+     * @param mixed $permalink
+     */
+    public function setPermalink($permalink)
+    {
+        $this->permalink = $permalink;
     }
 
     /**

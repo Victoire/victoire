@@ -53,7 +53,7 @@ class ViewReferenceRepository
      * @param $url
      * @param $locale
      *
-     * @return mixed|null
+     * @return ViewReference|null
      */
     public function getReferenceByUrl($url, $locale)
     {

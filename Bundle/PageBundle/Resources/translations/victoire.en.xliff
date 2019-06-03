@@ -38,9 +38,13 @@
             <source>modal.form.template.settings.title</source>
             <target><![CDATA[Template settings <strong>%templateName%</strong>]]></target>
         </trans-unit>
-        <trans-unit id="58893b99eaf9e" resname="form.page.type.slug.label">
+        <trans-unit id="58893b544f9e" resname="form.page.type.slug.label">
             <source>form.page.type.slug.label</source>
-            <target>URL</target>
+            <target>Slug</target>
+        </trans-unit>
+        <trans-unit id="58893b99eaf9e" resname="form.page.type.permalink.label">
+            <source>form.page.type.permalink.label</source>
+            <target>Permalink</target>
         </trans-unit>
         <trans-unit id="58893b99eb008" resname="form.page.type.status.label">
             <source>form.page.type.status.label</source>

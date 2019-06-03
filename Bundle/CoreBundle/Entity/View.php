@@ -10,6 +10,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Victoire\Bundle\BusinessPageBundle\Entity\VirtualBusinessPage;
+use Victoire\Bundle\CoreBundle\Validator\Constraints as Assert;
 use Victoire\Bundle\ViewReferenceBundle\ViewReference\ViewReference;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
@@ -25,6 +26,7 @@ use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
  * )
  * @ORM\Table("vic_view")
  * @ORM\HasLifecycleCallbacks
+ * @Assert\UniquePermalink()
  */
 abstract class View
 {
@@ -763,6 +765,17 @@ abstract class View
     public function setSlug($slug, $locale = null)
     {
         $this->translate($locale, false)->setSlug($slug);
+        $this->mergeNewTranslations();
+    }
+
+    public function getPermalink()
+    {
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(null, false), 'getPermalink');
+    }
+
+    public function setPermalink($permalink, $locale = null)
+    {
+        $this->translate($locale, false)->setPermalink($permalink);
         $this->mergeNewTranslations();
     }
 
