@@ -16,9 +16,10 @@ class UniquePermalinkValidator extends ConstraintValidator
 
     /**
      * UniquePermalinkValidator constructor.
+     *
      * @param ViewReferenceRepository $viewReferenceRepository
-     * @param RequestStack $requestStack
-     * @param UrlBuilder $urlBuilder
+     * @param RequestStack            $requestStack
+     * @param UrlBuilder              $urlBuilder
      */
     public function __construct(ViewReferenceRepository $viewReferenceRepository, RequestStack $requestStack, UrlBuilder $urlBuilder)
     {
