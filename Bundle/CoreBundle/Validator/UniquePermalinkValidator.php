@@ -30,17 +30,15 @@ class UniquePermalinkValidator extends ConstraintValidator
      */
     public function validate($view, Constraint $constraint)
     {
-        if ($view->getPermalink() != '' && $view->getPermalink() != null) {
-            $viewReference = $this->viewReferenceRepository->getReferenceByUrl(
-                $view->getPermalink(),
-                $this->requestStack->getCurrentRequest()->getLocale()
-            );
+        $viewReference = $this->viewReferenceRepository->getReferenceByUrl(
+            $view->getPermalink(),
+            $this->requestStack->getCurrentRequest()->getLocale()
+        );
 
-            if ($viewReference && $viewReference->getViewId() != $view->getId()) {
-                $this->context->buildViolation('victoire.permalink.invalid')
-                    ->atPath('permalink')
-                    ->addViolation();
-            }
+        if ($viewReference && $viewReference->getViewId() != $view->getId()) {
+            $this->context->buildViolation('victoire.url.alreadyInUse')
+                ->atPath('permalink')
+                ->addViolation();
         }
     }
 }

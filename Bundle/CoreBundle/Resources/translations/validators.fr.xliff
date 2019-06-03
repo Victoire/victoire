@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fr" datatype="plaintext" original="not.available">
     <body>
-      <trans-unit id="564432933783321f38899" resname="victoire.permalink.invalid">
-          <source>victoire.permalink.invalid</source>
-          <target>Le lien permanent est déjà utilisé.</target>
+      <trans-unit id="564432933783321f38899" resname="victoire.url.alreadyInUse">
+          <source>victoire.url.alreadyInUse</source>
+          <target>L'url est déjà utilisée.</target>
       </trans-unit>
     </body>
   </file>
