@@ -23,9 +23,13 @@ class UrlBuilder
         if (!(method_exists($view, 'isHomepage') && $view->isHomepage())) {
             $slug = [$view->getSlug()];
         }
-
-        //get the slug of the parents
-        $url = $this->getParentSlugs($view, $slug);
+        // if permalink is set
+        if ($view->getPermalink() != null && $view->getPermalink() != '') {
+            $url = [$view->getPermalink()];
+        } else {
+            //get the slug of the parents
+            $url = $this->getParentSlugs($view, $slug);
+        }
 
         //reorder the list of slugs
         $url = array_reverse($url);

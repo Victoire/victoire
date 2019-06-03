@@ -19,6 +19,7 @@ services:
         arguments:
             - "@victoire_view_reference.repository"
             - "@request_stack"
+            - "@victoire_core.url_builder"
         tags:
             - { name: 'validator.constraint_validator', alias: 'victoire.validator.view.permalink_unique' }
 

@@ -54,4 +54,8 @@ interface WebViewInterface
     public function isHomepage();
 
     public function setHomepage($homepage);
+
+    public function getPermalink();
+
+    public function setPermalink($permalink);
 }

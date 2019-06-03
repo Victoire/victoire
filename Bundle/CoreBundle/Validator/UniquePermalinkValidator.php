@@ -5,23 +5,26 @@ namespace Victoire\Bundle\CoreBundle\Validator;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Victoire\Bundle\CoreBundle\Helper\UrlBuilder;
 use Victoire\Bundle\ViewReferenceBundle\Connector\ViewReferenceRepository;
 
 class UniquePermalinkValidator extends ConstraintValidator
 {
     private $viewReferenceRepository;
     private $requestStack;
+    private $urlBuilder;
 
     /**
-     * PermalinkValidator constructor.
-     *
+     * UniquePermalinkValidator constructor.
      * @param ViewReferenceRepository $viewReferenceRepository
-     * @param RequestStack            $requestStack
+     * @param RequestStack $requestStack
+     * @param UrlBuilder $urlBuilder
      */
-    public function __construct(ViewReferenceRepository $viewReferenceRepository, RequestStack $requestStack)
+    public function __construct(ViewReferenceRepository $viewReferenceRepository, RequestStack $requestStack, UrlBuilder $urlBuilder)
     {
         $this->viewReferenceRepository = $viewReferenceRepository;
         $this->requestStack = $requestStack;
+        $this->urlBuilder = $urlBuilder;
     }
 
     /**
@@ -31,7 +34,7 @@ class UniquePermalinkValidator extends ConstraintValidator
     public function validate($view, Constraint $constraint)
     {
         $viewReference = $this->viewReferenceRepository->getReferenceByUrl(
-            $view->getPermalink(),
+            $this->urlBuilder->buildUrl($view),
             $this->requestStack->getCurrentRequest()->getLocale()
         );
 

@@ -46,12 +46,12 @@ Feature: Create a page
         And I submit the widget
         And I wait 5 seconds
         Then the url should match "/en/anakin-skywalker/luke-skywalker"
-        And I should see "The permalink is already in use"
+        And I should see "The url is already in use"
         When I fill in "page_settings_translations_en_permalink" with "contact"
         And I submit the widget
         And I wait 5 seconds
         Then the url should match "/en/anakin-skywalker/luke-skywalker"
-        And I should see "The permalink is already in use"
+        And I should see "The url is already in use"
         Then I fill in "page_settings_translations_en_permalink" with "amazing-luke-skywalker"
         And I submit the widget
         And I wait 5 seconds
