@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\MediaBundle\Helper\File;
 
-use Gaufrette\Adapter\Local;
 use Gaufrette\Filesystem;
 use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Component\HttpFoundation\File\File;
