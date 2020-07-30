@@ -61,12 +61,12 @@ class ViewCssBuilder
 
         foreach ($widgets as $widget) {
             $style = $this->container->get('templating')->render(
-            'VictoireCoreBundle:Widget:style/style.html.twig',
-            [
-                'widget'                   => $widget,
-                'victoire_twig_responsive' => $this->victoireTwigResponsive,
-            ]
-        );
+                'VictoireCoreBundle:Widget:style/style.html.twig',
+                [
+                    'widget'                   => $widget,
+                    'victoire_twig_responsive' => $this->victoireTwigResponsive,
+                ]
+            );
             $css .= trim($style);
         }
 

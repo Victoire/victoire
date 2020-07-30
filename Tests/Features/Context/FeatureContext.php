@@ -35,7 +35,8 @@ class FeatureContext extends RawMinkContext implements Context, KernelAwareConte
             throw new UnsupportedDriverActionException(
                 'You need to tag the scenario with '.
                 '"@mink:symfony2". Using the profiler is not '.
-                'supported by %s', $driver
+                'supported by %s',
+                $driver
             );
         }
 
@@ -111,7 +112,8 @@ class FeatureContext extends RawMinkContext implements Context, KernelAwareConte
         if (!preg_match($regex, $actual)) {
             $message = sprintf(
                 'The text "%s" was not found in the content attribute of the meta[name=%s]".',
-                $value, $name
+                $value,
+                $name
             );
 
             throw new ExpectationException($message, $this->getSession());

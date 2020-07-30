@@ -120,11 +120,11 @@ class RemoteSlideHandler extends AbstractMediaHandler
     public function getAddUrlFor(array $params = [])
     {
         return [
-                'slide' => [
-                        'path'   => 'VictoireMediaBundle_folder_slidecreate',
-                        'params' => [
-                                'folderId' => $params['folderId'],
-                        ],
+            'slide' => [
+                'path'   => 'VictoireMediaBundle_folder_slidecreate',
+                'params' => [
+                    'folderId' => $params['folderId'],
+                ],
                 ],
         ];
     }
@@ -186,9 +186,9 @@ class RemoteSlideHandler extends AbstractMediaHandler
     public function getAddFolderActions()
     {
         return [
-                self::TYPE => [
-                    'type' => self::TYPE,
-                    'name' => 'media.slide.add', ],
-                ];
+            self::TYPE => [
+                'type' => self::TYPE,
+                'name' => 'media.slide.add', ],
+            ];
     }
 }

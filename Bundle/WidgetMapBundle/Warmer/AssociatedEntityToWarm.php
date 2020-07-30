@@ -27,7 +27,8 @@ class AssociatedEntityToWarm
         $inheritorEntity = null,
         $inheritorPropertyName = null,
         $entityId = null,
-        $mappedBy = null)
+        $mappedBy = null
+    )
     {
         $this->type = $type;
         $this->inheritorEntity = $inheritorEntity;

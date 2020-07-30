@@ -39,7 +39,8 @@ class BusinessEntityOwnerVoter extends Voter
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
         return $token->getUser() instanceof $this->userClass
-            && ($token->getUser()->hasRole('ROLE_VICTOIRE')
+            && (
+                $token->getUser()->hasRole('ROLE_VICTOIRE')
                 || $token->getUser()->hasRole('ROLE_VICTOIRE_DEVELOPER')
                 || $subject->getAuthor() === $token->getUser()
             );
