@@ -13,7 +13,7 @@ use Victoire\Bundle\TemplateBundle\Entity\Template;
 
 class WidgetCssGenerateCommand extends ContainerAwareCommand
 {
-    /** @var EntityManager $entityManager */
+    /** @var EntityManager */
     private $entityManager;
 
     /**

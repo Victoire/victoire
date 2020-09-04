@@ -25,7 +25,9 @@ class FilterCompilerPass implements CompilerPassInterface
             );
 
             foreach ($taggedServices as $id => $attributes) {
-                $definition->addMethodCall('addFilter', [
+                $definition->addMethodCall(
+                    'addFilter',
+                    [
                         new Reference($id),
                     ]
                 );

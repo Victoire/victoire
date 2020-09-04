@@ -23,13 +23,19 @@ class WidgetTextType extends WidgetType
         parent::buildForm($builder, $options);
 
         if ($options['mode'] == Widget::MODE_STATIC || $options['mode'] === null) {
-            $builder->add('content', null, [
+            $builder->add(
+                'content',
+                null,
+                [
                     'label'    => 'widget_text.form.content.label',
                     'required' => true,
                 ]
             );
         } else {
-            $builder->add('excerpt', null, [
+            $builder->add(
+                'excerpt',
+                null,
+                [
                     'label' => 'widget_text.form.excerpt.label',
                     'attr'  => [
                         'placeholder' => 'widget_text.form.excerpt.placeholder',
