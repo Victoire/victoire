@@ -43,7 +43,8 @@ class WidgetController extends Controller
             $view = $this->get('victoire_page.page_helper')->findPageByParameters(['id' => $viewReferenceId]);
             $this->get('victoire_widget_map.builder')->build($view);
             $this->get('victoire_core.current_view')->setCurrentView($view);
-            $response = new JsonResponse([
+            $response = new JsonResponse(
+                [
                     'html'    => $this->get('victoire_widget.widget_renderer')->render($widget, $view),
                     'update'  => 'vic-widget-'.$widget->getId().'-container',
                     'success' => true,
@@ -303,7 +304,8 @@ class WidgetController extends Controller
             $widgetId = $widget->getId();
             $this->get('widget_manager')->deleteWidget($widget, $view);
 
-            return new JsonResponse([
+            return new JsonResponse(
+                [
                     'success'  => true,
                     'message'  => $this->get('translator')->trans('victoire_widget.delete.success', [], 'victoire'),
                     'widgetId' => $widgetId,
@@ -336,7 +338,8 @@ class WidgetController extends Controller
                 $this->get('widget_manager')->deleteWidget($widget, $view);
             }
 
-            return new JsonResponse([
+            return new JsonResponse(
+                [
                     'success' => true,
                     'message' => $this->get('translator')->trans('victoire_widget.delete.success', [], 'victoire'),
                 ]
@@ -375,14 +378,14 @@ class WidgetController extends Controller
                     ->getOneReferenceByParameters(['viewId' => $view->getId()]);
 
                 $redirect = $this->generateUrl('victoire_core_page_show', [
-                        'url' => $viewReference->getUrl(),
-                    ]);
+                    'url' => $viewReference->getUrl(),
+                ]);
             }
 
             return new JsonResponse([
-                    'success'  => true,
-                    'redirect' => $redirect,
-                ]);
+                'success'  => true,
+                'redirect' => $redirect,
+            ]);
         } catch (Exception $ex) {
             return $this->getJsonReponseFromException($ex);
         }

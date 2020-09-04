@@ -313,22 +313,22 @@ class AnnotationDriver extends DoctrineAnnotationDriver
                 foreach ($annotations as $key => $annotationObj) {
                     if ($annotationObj instanceof Column && $annotationObj->nullable === false) {
                         throw new Exception(sprintf(
-                                'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence must have "nullable=true" for ORM\Column annotation',
-                                $refProperty->name,
-                                $refProperty->class
-                            ));
+                            'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence must have "nullable=true" for ORM\Column annotation',
+                            $refProperty->name,
+                            $refProperty->class
+                        ));
                     } elseif ($annotationObj instanceof NotBlank) {
                         throw new Exception(sprintf(
-                                'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence can not use NotBlank annotation',
-                                $refProperty->name,
-                                $refProperty->class
-                            ));
+                            'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence can not use NotBlank annotation',
+                            $refProperty->name,
+                            $refProperty->class
+                        ));
                     } elseif ($annotationObj instanceof NotNull) {
                         throw new Exception(sprintf(
-                                'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence can not use NotNull annotation',
-                                $refProperty->name,
-                                $refProperty->class
-                            ));
+                            'Property "%s" in class "%s" has a @ReceiverProperty annotation and by consequence can not use NotNull annotation',
+                            $refProperty->name,
+                            $refProperty->class
+                        ));
                     } elseif ($annotationObj instanceof ReceiverPropertyAnnotation && $annotationObj->isRequired()) {
                         $receiverProperty->setRequired(true);
                     }

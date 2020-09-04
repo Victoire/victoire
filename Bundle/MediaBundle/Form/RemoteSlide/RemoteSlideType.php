@@ -38,7 +38,7 @@ class RemoteSlideType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-                'data_class' => 'Victoire\Bundle\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper',
+            'data_class' => 'Victoire\Bundle\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper',
         ]);
     }
 }

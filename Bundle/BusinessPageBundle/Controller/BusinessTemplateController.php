@@ -57,15 +57,15 @@ class BusinessTemplateController extends Controller
         }
 
         return new JsonResponse([
-                'html' => $this->container->get('templating')->render(
-                    'VictoireBusinessPageBundle:BusinessEntity:index.html.twig',
-                    [
-                        'businessEntities'  => $businessEntities,
-                        'BusinessTemplates' => $BusinessTemplates,
-                    ]
-                ),
-                'success' => true,
-            ]);
+            'html' => $this->container->get('templating')->render(
+                'VictoireBusinessPageBundle:BusinessEntity:index.html.twig',
+                [
+                    'businessEntities'  => $businessEntities,
+                    'BusinessTemplates' => $BusinessTemplates,
+                ]
+            ),
+            'success' => true,
+        ]);
     }
 
     /**
