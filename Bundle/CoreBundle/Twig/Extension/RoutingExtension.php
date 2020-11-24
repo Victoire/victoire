@@ -74,11 +74,15 @@ class RoutingExtension extends BaseRoutingExtension
                 ]);
                 $errorPage = $this->errorPageRepository->findOneByCode(404);
                 $parameters['url'] = $this->generator->generate(
-                    'victoire_core_page_show', array_merge([
-                        '_locale' => $requestLocale,
-                        'url'     => $errorPage ? $errorPage->getSlug() : '',
-                    ], $parameters
-                ));
+                    'victoire_core_page_show',
+                    array_merge(
+                        [
+                            '_locale' => $requestLocale,
+                            'url'     => $errorPage ? $errorPage->getSlug() : '',
+                        ],
+                        $parameters
+                    )
+                );
             }
 
             $name = 'victoire_core_page_show';

@@ -22,10 +22,10 @@ trait VictoireAlertifyControllerTrait
         }
 
         $content = array_merge($content, [
-                'context' => 'victoire',
-                'layout'  => 'growl',
-                'effect'  => 'jelly',
-            ]);
+            'context' => 'victoire',
+            'layout'  => 'growl',
+            'effect'  => 'jelly',
+        ]);
         $this->container->get('alertify')->alert($content, $type);
     }
 

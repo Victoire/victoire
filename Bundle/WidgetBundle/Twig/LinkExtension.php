@@ -135,9 +135,9 @@ class LinkExtension extends \Twig_Extension
                         $linkUrl = $this->router->generate(
                             'victoire_core_page_show',
                             array_merge([
-                            '_locale' => $parameters['locale'],
-                            'url'     => $page->getSlug(),
-                        ], $params)
+                                '_locale' => $parameters['locale'],
+                                'url'     => $page->getSlug(),
+                            ], $params)
                         );
                     }
                 }

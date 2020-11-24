@@ -105,10 +105,10 @@ class FaviconGenerator
 
             throw new GenerateFaviconException(
                 sprintf(
-                        'An issue occured with the real favicon generation, you can dive into the %s file',
-                        $faviconRequestPath
-                    )
-                );
+                    'An issue occured with the real favicon generation, you can dive into the %s file',
+                    $faviconRequestPath
+                )
+            );
         } catch (FileNotFoundException | ProcessFailedException $e) {
             throw $e;
         }

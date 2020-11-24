@@ -60,12 +60,12 @@ class MediaController extends Controller
         $showTemplate = $mediaManager->getHandler($media)->getShowTemplate($media);
 
         return $this->render($showTemplate, [
-                'handler'      => $handler,
-                'mediamanager' => $this->get('victoire_media.media_manager'),
-                'editform'     => $form->createView(),
-                'media'        => $media,
-                'helper'       => $helper,
-                'folder'       => $folder, ]);
+            'handler'      => $handler,
+            'mediamanager' => $this->get('victoire_media.media_manager'),
+            'editform'     => $form->createView(),
+            'media'        => $media,
+            'helper'       => $helper,
+            'folder'       => $folder, ]);
     }
 
     /**
