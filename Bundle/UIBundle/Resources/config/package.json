@@ -23,7 +23,7 @@
     "gulp-size": "^2.1.0",
     "gulp-sourcemaps": "^2.1.1",
     "gulp-util": "^3.0.8",
-    "highlight.js": "^9.9.0",
+    "highlight.js": "^10.1.2",
     "node-sass": "^3.10.1",
     "webpack": "^2.2.1"
   },
