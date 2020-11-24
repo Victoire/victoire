@@ -45,7 +45,9 @@ class MenuBuilder
      */
     public function initTopNavbar()
     {
-        $this->topNavbar = $this->factory->createItem('root', [
+        $this->topNavbar = $this->factory->createItem(
+            'root',
+            [
                 'childrenAttributes' => [
                     'id'    => 'v-navbar-top',
                     'class' => 'v-menu',
@@ -63,7 +65,9 @@ class MenuBuilder
      */
     public function initBottomLeftNavbar()
     {
-        $this->bottomLeftNavbar = $this->factory->createItem('root', [
+        $this->bottomLeftNavbar = $this->factory->createItem(
+            'root',
+            [
                 'childrenAttributes' => [
                     'id' => 'v-footer-navbar-bottom-left',
                 ],
@@ -105,7 +109,9 @@ class MenuBuilder
      */
     public function initBottomRightNavbar()
     {
-        $this->bottomRightNavbar = $this->factory->createItem('root', [
+        $this->bottomRightNavbar = $this->factory->createItem(
+            'root',
+            [
                 'childrenAttributes' => [
                     'id' => 'v-footer-navbar-bottom-right',
                 ],
@@ -146,7 +152,9 @@ class MenuBuilder
      */
     public function initFloatActionNavbar()
     {
-        $this->floatActionNavbar = $this->factory->createItem('root', [
+        $this->floatActionNavbar = $this->factory->createItem(
+            'root',
+            [
                 'childrenAttributes' => [
                     'id' => 'v-float-container',
                 ],

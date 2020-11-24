@@ -76,7 +76,8 @@ class ViewReferenceManager
     {
         // Transform the viewReference in array
         $arrayTransformer = $this->transformer->getViewReferenceTransformer(
-            $viewReference->getViewNamespace(), 'array'
+            $viewReference->getViewNamespace(),
+            'array'
         );
         $referenceArray = $arrayTransformer->reverseTransform($viewReference);
         // Remove old url if exist

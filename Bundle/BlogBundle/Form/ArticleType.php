@@ -210,9 +210,9 @@ class ArticleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-                'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\Article',
-                'translation_domain' => 'victoire',
-                'cascade_validation' => true,
-            ]);
+            'data_class'         => 'Victoire\Bundle\BlogBundle\Entity\Article',
+            'translation_domain' => 'victoire',
+            'cascade_validation' => true,
+        ]);
     }
 }

@@ -519,7 +519,8 @@ class VictoireContext extends RawMinkContext
     {
         $element = $this->getPage()->find(
             'xpath',
-            sprintf('//*[normalize-space(text()) = "%s"][preceding::*[normalize-space(text()) = "%s"]]',
+            sprintf(
+                '//*[normalize-space(text()) = "%s"][preceding::*[normalize-space(text()) = "%s"]]',
                 $textAfter,
                 $textBefore
             )
@@ -783,14 +784,17 @@ class VictoireContext extends RawMinkContext
     {
         $page = $this->getPage();
 
-        $nodes = $page->findAll('xpath',
-            sprintf('descendant-or-self::ul[contains(@id, "%s")]//li',
+        $nodes = $page->findAll(
+            'xpath',
+            sprintf(
+                'descendant-or-self::ul[contains(@id, "%s")]//li',
                 $listId
             )
         );
 
         if (count($nodes) != $number) {
-            $message = sprintf('There is %d element(s) corresponding to "%s", %d expected.',
+            $message = sprintf(
+                'There is %d element(s) corresponding to "%s", %d expected.',
                 count($nodes),
                 $listId,
                 $number

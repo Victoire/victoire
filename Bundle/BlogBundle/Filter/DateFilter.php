@@ -106,14 +106,16 @@ class DateFilter extends BaseFilter
                             self::class => [
                                 'year' => $options['widget']->getDefaultValue(),
                             ],
-                        'listing' => $options['widget']->getListing()->getId(),
+                            'listing' => $options['widget']->getListing()->getId(),
                         ],
                     ]
                 );
             }
             $builder
                 ->add(
-                    'year', ChoiceType::class, [
+                    'year',
+                    ChoiceType::class,
+                    [
                         'label'       => false,
                         'choices'     => $years,
                         'required'    => false,

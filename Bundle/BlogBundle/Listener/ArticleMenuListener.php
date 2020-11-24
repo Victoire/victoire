@@ -38,7 +38,8 @@ class ArticleMenuListener implements MenuListenerInterface
 
         $bottomRightNavbar = $this->menuBuilder->getBottomRightNavbar();
 
-        $bottomRightNavbar->addChild('menu.page.settings',
+        $bottomRightNavbar->addChild(
+            'menu.page.settings',
             [
                 'route'           => 'victoire_blog_article_settings',
                 'routeParameters' => [

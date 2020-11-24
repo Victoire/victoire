@@ -50,7 +50,7 @@ class FolderType extends AbstractType
 
                     return $qb;
                 },
-        ]);
+            ]);
     }
 
     /**
