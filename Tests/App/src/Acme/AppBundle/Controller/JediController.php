@@ -242,8 +242,8 @@ class JediController extends BackendController
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(null, [
-                'translation_domain' => 'victoire',
-            ])
+            'translation_domain' => 'victoire',
+        ])
             ->setAction($this->generateUrl('acme_app_jedi_delete', ['id' => $id]))
             ->setMethod('DELETE')
             ->add('submit', SubmitType::class, ['label' => 'acme.app.jedi.form.button.delete'])

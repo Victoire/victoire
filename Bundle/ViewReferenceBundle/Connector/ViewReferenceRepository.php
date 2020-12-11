@@ -41,7 +41,8 @@ class ViewReferenceRepository
         $referenceId = ViewReferenceHelper::generateViewReferenceId($view);
         $reference = $this->getOneReferenceByParameters(['id' => $referenceId], false);
         $transformer = $this->transformer->getViewReferenceTransformer(
-            (string) $reference['viewNamespace'], 'array'
+            (string) $reference['viewNamespace'],
+            'array'
         );
 
         return  $transformer->transform($reference);
@@ -66,7 +67,8 @@ class ViewReferenceRepository
         $ref = $this->repository->findById($refId);
         // Transform the reference into a viewReference
         $transformer = $this->transformer->getViewReferenceTransformer(
-            (string) $ref['viewNamespace'], 'array'
+            (string) $ref['viewNamespace'],
+            'array'
         );
 
         return $transformer->transform($ref);

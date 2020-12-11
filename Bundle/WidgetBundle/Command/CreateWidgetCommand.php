@@ -48,7 +48,8 @@ class CreateWidgetCommand extends GenerateBundleCommand
                 new InputOption('cache', '', InputOption::VALUE_NONE, 'Use redis cache to store widgets until next modification'),
             ])
             ->setDescription('Generate a new widget')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 The <info>victoire:generate:widget</info> command helps you to generate new widgets.
 
 By default, the command interacts with the developer to tweak the generation.

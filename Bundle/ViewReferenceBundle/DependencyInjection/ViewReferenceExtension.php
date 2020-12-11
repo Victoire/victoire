@@ -26,10 +26,12 @@ class ViewReferenceExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter(
-            'victoire_view_reference.cache.path', $config['cache_path']
+            'victoire_view_reference.cache.path',
+            $config['cache_path']
         );
         $container->setParameter(
-            'victoire_view_reference.connector.type', $config['connector_type']
+            'victoire_view_reference.connector.type',
+            $config['connector_type']
         );
     }
 }

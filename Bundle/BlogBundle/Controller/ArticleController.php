@@ -204,7 +204,9 @@ class ArticleController extends Controller
 
         $response = [
             'success' => true,
-            'url'     => $this->generateUrl('victoire_core_page_show', [
+            'url'     => $this->generateUrl(
+                'victoire_core_page_show',
+                [
                     'url' => $blogViewReference->getUrl(),
                 ]
             ),
