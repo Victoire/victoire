@@ -38,7 +38,7 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
                 'locale'       => 'fr_FR',
                 'persist_once' => false,
             ]
-    );
+        );
 
         $manager->flush();
     }
@@ -51,9 +51,9 @@ class LoadFixtureData extends AbstractFixture implements ContainerAwareInterface
     public function gender()
     {
         $genders = [
-        'male',
-        'female',
-    ];
+            'male',
+            'female',
+        ];
 
         return $genders[array_rand($genders)];
     }

@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\SitemapBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -126,8 +125,13 @@ class SitemapController extends Controller
      */
     protected function createSitemapPriorityType(BasePage $page, PageSeo $pageSeo)
     {
-        $form = $this->createForm(SitemapPriorityPageSeoType::class, $pageSeo, [
-                'action' => $this->generateUrl('victoire_sitemap_changePriority', [
+        $form = $this->createForm(
+            SitemapPriorityPageSeoType::class,
+            $pageSeo,
+            [
+                'action' => $this->generateUrl(
+                    'victoire_sitemap_changePriority',
+                    [
                         'id' => $page->getId(),
                     ]
                 ),

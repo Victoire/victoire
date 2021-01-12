@@ -106,7 +106,8 @@ class WidgetCache
 
     protected function generateBusinessEntityHash(Widget $widget)
     {
-        return sprintf('%s--%s-%s-%s',
+        return sprintf(
+            '%s--%s-%s-%s',
             $widget->generateCacheId(),
             $widget->getEntity()->getId(),
             $widget->getEntity()->getUpdatedAt()->getTimestamp(),
@@ -121,7 +122,8 @@ class WidgetCache
             $roleHash .= $this->authorizationChecker->isGranted($role) ? $role : '';
         }, ['ROLE_VICTOIRE_DEVELOPER', 'ROLE_VICTOIRE', 'ROLE_VICTOIRE_BLOG', 'ROLE_VICTOIRE_LEFTNAVBAR', 'ROLE_VICTOIRE_BET', 'ROLE_VICTOIRE_PAGE_DEBUG', 'ROLE_VICTOIRE_STYLE']);
 
-        return sprintf('%s-%s',
+        return sprintf(
+            '%s-%s',
             $widget->generateCacheId(),
             md5($roleHash)
         );

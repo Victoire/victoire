@@ -24,25 +24,29 @@ class FetchAssetsCommand extends ContainerAwareCommand
 
         $this
             ->setName('victoire:ui:fetchAssets')
-            ->addArgument('victoireUIConfigPath',
+            ->addArgument(
+                'victoireUIConfigPath',
                 InputArgument::OPTIONAL,
                 'The victoire vendor path',
                 'vendor/victoire/victoire/Bundle/UIBundle/Resources/config'
             )
-            ->addArgument('bowerPath',
+            ->addArgument(
+                'bowerPath',
                 InputArgument::OPTIONAL,
                 'The bower path',
                 'bower'
             )
-            ->addArgument('yarnPath',
+            ->addArgument(
+                'yarnPath',
                 InputArgument::OPTIONAL,
                 'The yarn path',
                 'yarn'
             )
-            ->addOption('force',
+            ->addOption(
+                'force',
                 null,
                 InputOption::VALUE_NONE,
-            'If dependencies are installed, it reinstalls all installed components. It also forces installation even when there are non-bower directories with the same name in the components directory. Also bypasses the cache and overwrites to the cache anyway.'
+                'If dependencies are installed, it reinstalls all installed components. It also forces installation even when there are non-bower directories with the same name in the components directory. Also bypasses the cache and overwrites to the cache anyway.'
             )
             ->setDescription('Fetch every assets (with bower and npm)');
     }

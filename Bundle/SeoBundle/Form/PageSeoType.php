@@ -9,7 +9,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Victoire\Bundle\FormBundle\Form\Type\LinkType;
 use Victoire\Bundle\MediaBundle\Form\Type\MediaType;
-use Victoire\Bundle\SeoBundle\Entity\PageSeo;
 use Victoire\Bundle\SeoBundle\Entity\PageSeoTranslation;
 
 class PageSeoType extends AbstractType
@@ -77,20 +76,20 @@ class PageSeoType extends AbstractType
                         ],
                     ],
                     'twitterCard' => [
-                            'field_type' => ChoiceType::class,
-                            'label'      => 'form.pageSeo.twitterCard.label',
-                            'choices'    => [
-                                'form.pageSeo.twitterCard.summary.label'             => 'summary',
-                                'form.pageSeo.twitterCard.summary_large_image.label' => 'summary_large_image',
-                                'form.pageSeo.twitterCard.photo.label'               => 'photo',
-                                'form.pageSeo.twitterCard.app.label'                 => 'app',
-                                'form.pageSeo.twitterCard.player.label'              => 'player',
-                                'form.pageSeo.twitterCard.product.label'             => 'product',
-                            ],
-                            'choices_as_values' => true,
-                            'preferred_choices' => ['summary'],
-                            'vic_help_block'    => 'form.pageSeo.twitterCard.vic_help_block',
+                        'field_type' => ChoiceType::class,
+                        'label'      => 'form.pageSeo.twitterCard.label',
+                        'choices'    => [
+                            'form.pageSeo.twitterCard.summary.label'             => 'summary',
+                            'form.pageSeo.twitterCard.summary_large_image.label' => 'summary_large_image',
+                            'form.pageSeo.twitterCard.photo.label'               => 'photo',
+                            'form.pageSeo.twitterCard.app.label'                 => 'app',
+                            'form.pageSeo.twitterCard.player.label'              => 'player',
+                            'form.pageSeo.twitterCard.product.label'             => 'product',
                         ],
+                        'choices_as_values' => true,
+                        'preferred_choices' => ['summary'],
+                        'vic_help_block'    => 'form.pageSeo.twitterCard.vic_help_block',
+                    ],
                     'twitterUrl' => [
                         'label' => 'form.pageSeo.twitterUrl.label',
                         'attr'  => [

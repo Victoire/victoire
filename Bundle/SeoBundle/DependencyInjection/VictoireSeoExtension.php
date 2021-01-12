@@ -29,7 +29,8 @@ class VictoireSeoExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter(
-            'victoire_seo.analytics', $config['analytics']
+            'victoire_seo.analytics',
+            $config['analytics']
         );
     }
 }
