@@ -17,29 +17,29 @@ class JediType extends AbstractType
     {
         $builder
             ->add('name', null, [
-                    'label' => 'acme.app.jedi.form.name.label',
-                ])
+                'label' => 'acme.app.jedi.form.name.label',
+            ])
             ->add('midiChlorians', null, [
-                    'label' => 'acme.app.jedi.form.midiChlorians.label',
-                ])
+                'label' => 'acme.app.jedi.form.midiChlorians.label',
+            ])
             ->add('side', ChoiceType::class, [
-                    'label'             => 'acme.app.jedi.form.side.label',
-                    'choices_as_values' => true,
-                    'choices'           => [
-                        'acme.app.jedi.form.side.choice.both'   => 'both',
-                        'acme.app.jedi.form.side.choice.dark'   => 'dark',
-                        'acme.app.jedi.form.side.choice.bright' => 'bright',
-                    ],
-                ])
+                'label'             => 'acme.app.jedi.form.side.label',
+                'choices_as_values' => true,
+                'choices'           => [
+                    'acme.app.jedi.form.side.choice.both'   => 'both',
+                    'acme.app.jedi.form.side.choice.dark'   => 'dark',
+                    'acme.app.jedi.form.side.choice.bright' => 'bright',
+                ],
+            ])
             ->add('slug', null, [
-                    'label' => 'acme.app.jedi.form.slug.label',
-                ])
+                'label' => 'acme.app.jedi.form.slug.label',
+            ])
             ->add('createdAt', null, [
-                    'label' => 'acme.app.jedi.form.createdAt.label',
-                ])
+                'label' => 'acme.app.jedi.form.createdAt.label',
+            ])
             ->add('updatedAt', null, [
-                    'label' => 'acme.app.jedi.form.updatedAt.label',
-                ])
+                'label' => 'acme.app.jedi.form.updatedAt.label',
+            ])
             ->remove('proxy')
             ->remove('visibleOnFront');
     }
@@ -52,9 +52,9 @@ class JediType extends AbstractType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-                'data_class'         => 'Acme\AppBundle\Entity\Jedi',
-                'widget'             => 'Force',
-                'translation_domain' => 'victoire',
-            ]);
+            'data_class'         => 'Acme\AppBundle\Entity\Jedi',
+            'widget'             => 'Force',
+            'translation_domain' => 'victoire',
+        ]);
     }
 }

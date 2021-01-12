@@ -45,11 +45,13 @@ class BusinessPageBuilder
      * @param ParameterConverter   $parameterConverter
      * @param EntityProxyProvider  $entityProxyProvider
      */
-    public function __construct(BusinessEntityHelper $businessEntityHelper,
+    public function __construct(
+        BusinessEntityHelper $businessEntityHelper,
         UrlBuilder $urlBuilder,
         ParameterConverter $parameterConverter,
         EntityProxyProvider $entityProxyProvider,
-        ViewReferenceBuilder $viewReferenceBuilder)
+        ViewReferenceBuilder $viewReferenceBuilder
+    )
     {
         $this->businessEntityHelper = $businessEntityHelper;
         $this->urlBuilder = $urlBuilder;

@@ -67,7 +67,8 @@ class BusinessPageMenuListener implements MenuListenerInterface
         $bottomRightNavbar = $this->menuBuilder->getBottomRightNavbar();
 
         //if there is a template, we add the link in the top bar
-        $bottomRightNavbar->addChild('menu.page.settings',
+        $bottomRightNavbar->addChild(
+            'menu.page.settings',
             [
                 'route'           => 'victoire_business_template_edit',
                 'routeParameters' => ['id' => $event->getPage()->getId()],
@@ -76,7 +77,8 @@ class BusinessPageMenuListener implements MenuListenerInterface
                 ],
             ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
-        $bottomRightNavbar->addChild('menu.page.seoSettings',
+        $bottomRightNavbar->addChild(
+            'menu.page.seoSettings',
             [
                 'route'           => 'victoire_seo_pageSeo_settings',
                 'routeParameters' => ['id' => $event->getPage()->getId()],

@@ -26,7 +26,8 @@ class VictoireTwigExtension extends Extension
         $loader->load('services.xml');
 
         $container->setParameter(
-            'victoire_twig.responsive', $config['responsive']
+            'victoire_twig.responsive',
+            $config['responsive']
         );
     }
 }

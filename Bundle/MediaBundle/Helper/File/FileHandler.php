@@ -2,7 +2,6 @@
 
 namespace Victoire\Bundle\MediaBundle\Helper\File;
 
-use Gaufrette\Adapter\Local;
 use Gaufrette\Filesystem;
 use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Component\HttpFoundation\File\File;
@@ -207,9 +206,9 @@ class FileHandler extends AbstractMediaHandler
     public function getAddFolderActions()
     {
         return [
-                self::TYPE => [
-                        'type' => self::TYPE,
-                        'name' => 'media.file.add', ],
+            self::TYPE => [
+                'type' => self::TYPE,
+                'name' => 'media.file.add', ],
         ];
     }
 }

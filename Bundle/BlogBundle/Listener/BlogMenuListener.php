@@ -66,7 +66,7 @@ class BlogMenuListener implements MenuListenerInterface
             [
                 'route'           => 'victoire_blog_article_new',
                 'routeParameters' => ['id' => $event->getPage()->getId()],
-                ]
+            ]
         )->setLinkAttribute('data-toggle', 'vic-modal');
     }
 
