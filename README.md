@@ -6,8 +6,10 @@
 [![CircleCI](https://circleci.com/gh/Victoire/victoire.svg?style=shield)](https://circleci.com/gh/Victoire/victoire)
 [![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/Victoire/Victoire.svg)](https://scrutinizer-ci.com/g/Victoire/victoire/)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/92a98a39-8fa0-4e3c-b90d-e56d4c8f89b3/mini.png)](https://insight.sensiolabs.com/projects/92a98a39-8fa0-4e3c-b90d-e56d4c8f89b3)
-[![Dependency Status](https://www.versioneye.com/php/victoire:victoire/badge.svg)](https://www.versioneye.com/php/victoire:victoire)
-[![Features in Progress](https://badge.waffle.io/Victoire/victoire.svg?label=In%20Progress&title=In%20Progress)](http://waffle.io/Victoire/victoire)
+
+## Warning
+
+Victoire is not supported anymore.
 
 ## Overview
 
@@ -31,7 +33,7 @@ We define a raw roadmap [here](https://docs.google.com/spreadsheets/d/1MTdt5ZsGN
 Victoire is an open-source, community driven project.
 We are keen on getting your participation for the development of this product and every help is more than welcome, regardless of your mastering level.
 
-To do so, please have a look at our [project management board](http://waffle.io/Victoire/victoire) where all the Victoire's ecosystem (Core & Widgets) is managed.
+To do so, please have a look at our [organisation](https://github.com/Victoire) where all the Victoire's ecosystem (Core & Widgets) is managed.
 
 You can follow the relative questions on [StackOverflow](http://stackoverflow.com/questions/tagged/victoire).
 
