@@ -24,14 +24,17 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, [
-                'label'       => 'blog.form.title.label',
-                'required'    => true,
-                'constraints' => [
-                    new \Symfony\Component\Validator\Constraints\NotBlank(),
-                ],
-                'attr' => [
-                    'class' => 'vic-blogCategoryWidget-formControl',
+            ->add(
+                'title',
+                TextType::class,
+                [
+                    'label'       => 'blog.form.title.label',
+                    'required'    => true,
+                    'constraints' => [
+                        new \Symfony\Component\Validator\Constraints\NotBlank(),
+                    ],
+                    'attr' => [
+                        'class' => 'vic-blogCategoryWidget-formControl',
                     ],
                 ]
             )

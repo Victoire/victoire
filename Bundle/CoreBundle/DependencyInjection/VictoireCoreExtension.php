@@ -45,46 +45,59 @@ class VictoireCoreExtension extends Extension
         }
 
         $container->setParameter(
-            'victoire_core.cache_dir', $config['cache_dir']
+            'victoire_core.cache_dir',
+            $config['cache_dir']
         );
         $container->setParameter(
-            'victoire_core.business_entity_debug', $config['business_entity_debug']
+            'victoire_core.business_entity_debug',
+            $config['business_entity_debug']
         );
         if (array_key_exists('templates', $config)) {
             $container->setParameter(
-                'victoire_core.templates', $config['templates']
+                'victoire_core.templates',
+                $config['templates']
             );
         } else {
             $container->setParameter(
-                'victoire_core.templates', ''
+                'victoire_core.templates',
+                ''
             );
         }
         $container->setParameter(
-            'victoire_core.widgets', $config['widgets']
+            'victoire_core.widgets',
+            $config['widgets']
         );
         $container->setParameter(
-            'victoire_core.layouts', $config['layouts']
+            'victoire_core.layouts',
+            $config['layouts']
         );
         $container->setParameter(
-            'victoire_core.modal_layouts', $config['modal_layouts']
+            'victoire_core.modal_layouts',
+            $config['modal_layouts']
         );
         $container->setParameter(
-            'victoire_core.slots', $config['slots']
+            'victoire_core.slots',
+            $config['slots']
         );
         $container->setParameter(
-            'victoire_core.user_class', $config['user_class']
+            'victoire_core.user_class',
+            $config['user_class']
         );
         $container->setParameter(
-            'victoire_core.base_paths', $config['base_paths']
+            'victoire_core.base_paths',
+            $config['base_paths']
         );
         $container->setParameter(
-            'victoire_core.entity_finder_regex', $config['entity_finder_regex']
+            'victoire_core.entity_finder_regex',
+            $config['entity_finder_regex']
         );
         $container->setParameter(
-            'victoire_core.businessTemplates', $config['businessTemplates']
+            'victoire_core.businessTemplates',
+            $config['businessTemplates']
         );
         $container->setParameter(
-            'victoire_core.domain_name', $config['domain_name']
+            'victoire_core.domain_name',
+            $config['domain_name']
         );
     }
 }

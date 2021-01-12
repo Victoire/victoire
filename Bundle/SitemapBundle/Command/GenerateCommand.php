@@ -55,10 +55,12 @@ class GenerateCommand extends Command
         if ($locale != 'all') {
             //validate the given locale is a valid locale
             if (!array_search($locale, $locales)) {
-                throw new \Exception(sprintf(
-                        'The given locale %s doesn\'t exist (%s)',
-                        $locale,
-                        implode($locales))
+                throw new \Exception(
+                    sprintf(
+                    'The given locale %s doesn\'t exist (%s)',
+                    $locale,
+                    implode($locales)
+                )
                 );
             }
             $locales = [$locale];

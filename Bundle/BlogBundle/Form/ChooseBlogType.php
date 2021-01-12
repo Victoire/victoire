@@ -54,7 +54,7 @@ class ChooseBlogType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($currentLocale, $currentBlog, $localesNb, $blogsNb) {
+            function (FormEvent $event) use ($currentLocale, $currentBlog) {
                 $data = $event->getData();
                 $event->setData([
                     'locale' => $data['locale'] !== null ? $data['locale'] : $currentLocale,
@@ -67,7 +67,7 @@ class ChooseBlogType extends AbstractType
         if ($localesNb > 1 && $blogsNb > 1) {
             $builder->addEventListener(
                 FormEvents::PRE_SUBMIT,
-                function (FormEvent $event) use ($currentLocale, $currentBlog, $blogsNb, $localesNb) {
+                function (FormEvent $event) use ($currentLocale, $currentBlog, $localesNb) {
                     $data = $event->getData();
                     $currentLocale = $data['locale'] !== null ? $data['locale'] : $currentLocale;
                     $availableBlogs = $localesNb > 1 ? $this->blogRepository->getBlogsForLocale($currentLocale) : $this->blogRepository->findAll();
@@ -96,7 +96,9 @@ class ChooseBlogType extends AbstractType
             ];
         }
 
-        $builder->add('locale', $localesNb > 1 ? ChoiceType::class : HiddenType::class,
+        $builder->add(
+            'locale',
+            $localesNb > 1 ? ChoiceType::class : HiddenType::class,
             array_merge(
                 [
                     'label' => 'victoire.blog.choose.locale.label',
@@ -135,7 +137,9 @@ class ChooseBlogType extends AbstractType
             ];
         }
 
-        $builder->add('blog', $blogsNb > 1 ? ChoiceType::class : EntityHiddenType::class,
+        $builder->add(
+            'blog',
+            $blogsNb > 1 ? ChoiceType::class : EntityHiddenType::class,
             array_merge(
                 [
                     'label' => 'victoire.blog.choose.blog.label',

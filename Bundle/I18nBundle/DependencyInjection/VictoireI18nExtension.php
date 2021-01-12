@@ -28,19 +28,24 @@ class VictoireI18nExtension extends Extension implements PrependExtensionInterfa
         $loader->load('services.yml');
 
         $container->setParameter(
-            'victoire_i18n.available_locales', $config['available_locales']
+            'victoire_i18n.available_locales',
+            $config['available_locales']
         );
         $container->setParameter(
-            'victoire_i18n.locale_pattern_table', $config['locale_pattern_table']
+            'victoire_i18n.locale_pattern_table',
+            $config['locale_pattern_table']
         );
         $container->setParameter(
-            'victoire_i18n.victoire_locale', $config['victoire_locale']
+            'victoire_i18n.victoire_locale',
+            $config['victoire_locale']
         );
         $container->setParameter(
-            'victoire_i18n.users_locale.domains', $config['users_locale_domains']
+            'victoire_i18n.users_locale.domains',
+            $config['users_locale_domains']
         );
         $container->setParameter(
-            'victoire_i18n.locale_pattern', $config['locale_pattern']
+            'victoire_i18n.locale_pattern',
+            $config['locale_pattern']
         );
     }
 
