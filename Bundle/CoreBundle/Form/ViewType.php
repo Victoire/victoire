@@ -97,7 +97,10 @@ abstract class ViewType extends AbstractType
                     };
                 }
 
-                $form->add('parent', null, [
+                $form->add(
+                    'parent',
+                    null,
+                    [
                         'class'         => 'Victoire\Bundle\PageBundle\Entity\BasePage',
                         'label'         => 'form.view.type.parent.label',
                         'query_builder' => $getAllPageWithoutMe,

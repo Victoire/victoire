@@ -235,13 +235,13 @@ class BlogController extends BasePageController
 
         return new Response(
             $this->container->get('templating')->render(
-                    $this->getBaseTemplatePath().':Tabs/_category.html.twig',
-                    [
-                        'blog'               => $blog,
-                        'form'               => $form->createView(),
-                        'businessProperties' => $businessProperties,
-                    ]
-                )
+                $this->getBaseTemplatePath().':Tabs/_category.html.twig',
+                [
+                    'blog'               => $blog,
+                    'form'               => $form->createView(),
+                    'businessProperties' => $businessProperties,
+                ]
+            )
         );
     }
 

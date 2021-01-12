@@ -21,11 +21,11 @@ class WidgetLightSaberType extends WidgetType
     {
         $builder
             ->add('length', null, [
-                    'label' => 'widget_lightsaber.form.length.label',
+                'label' => 'widget_lightsaber.form.length.label',
             ])->add('crystal', null, [
-                    'label' => 'widget_lightsaber.form.crystal.label',
+                'label' => 'widget_lightsaber.form.crystal.label',
             ])->add('color', null, [
-                    'label' => 'widget_lightsaber.form.color.label',
+                'label' => 'widget_lightsaber.form.color.label',
             ]);
         parent::buildForm($builder, $options);
     }

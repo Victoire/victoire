@@ -24,7 +24,7 @@ class WidgetItemChain
         $newWidgetItem = [
             'class' => $classname,
             'name'  => $name,
-            ];
+        ];
         $this->widgetItems[$name] = $newWidgetItem;
     }
 
