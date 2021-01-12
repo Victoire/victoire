@@ -91,7 +91,8 @@ class ViewRepository extends NestedTreeRepository
                 $viewReferences,
                 function ($e) use ($pageId) {
                     return $e->getViewId() == $pageId;
-                });
+                }
+            );
             if (!empty($viewReference[0])) {
                 $page->setCurrentLocale($viewReference[0]->getLocale());
             }

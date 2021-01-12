@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Victoire\Bundle\CoreBundle\Entity\View;
 use Victoire\Bundle\WidgetMapBundle\Entity\WidgetMap;
 
 class WidgetMapOverwriteValidationCommand extends ContainerAwareCommand

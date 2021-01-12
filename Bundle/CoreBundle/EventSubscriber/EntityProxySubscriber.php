@@ -49,10 +49,11 @@ class EntityProxySubscriber implements EventSubscriber
             if ($metadatas->name === 'Victoire\Bundle\CoreBundle\Entity\EntityProxy') {
                 foreach (self::$cacheReader->getBusinessClasses() as $entity) {
                     if (!$metadatas->hasAssociation($entity->getId())) {
-                        $metadatas->mapOneToOne([
-                            'fieldName'    => $entity->getId(),
-                            'targetEntity' => $entity->getClass(),
-                            'cascade'      => ['persist'],
+                        $metadatas->mapOneToOne(
+                            [
+                                'fieldName'    => $entity->getId(),
+                                'targetEntity' => $entity->getClass(),
+                                'cascade'      => ['persist'],
                             ]
                         );
                         $metadatas->associationMappings[$entity->getId()]['joinColumns'][0]['onDelete'] = 'CASCADE';
