@@ -253,7 +253,8 @@ class WidgetFormBuilder
             $formUrl = $router->generate($action, $actionParams);
         } else {
             $viewReference = $this->container->get('victoire_core.current_view')->getCurrentView()->getReference();
-            $formUrl = $router->generate('victoire_core_widget_update',
+            $formUrl = $router->generate(
+                'victoire_core_widget_update',
                 [
                     'id'               => $widget->getId(),
                     'viewReference'    => $viewReference->getId(),

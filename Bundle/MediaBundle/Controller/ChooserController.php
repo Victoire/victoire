@@ -71,15 +71,15 @@ class ChooserController extends Controller
         }
 
         return $this->render('@VictoireMedia/Chooser/chooserShowFolder.html.twig', [
-                'mediamanager' => $mediaHandler,
-                'handler'      => $handler,
-                'folder'       => $folder,
-                'folders'      => $folders,
-                'forms'        => [
-                    'fileform'  => $this->createTypeFormView($mediaHandler, FileType::class),
-                    'videoform' => $this->createTypeFormView($mediaHandler, RemoteVideoType::class),
-                    'slideform' => $this->createTypeFormView($mediaHandler, RemoteSlideType::class),
-                ],
+            'mediamanager' => $mediaHandler,
+            'handler'      => $handler,
+            'folder'       => $folder,
+            'folders'      => $folders,
+            'forms'        => [
+                'fileform'  => $this->createTypeFormView($mediaHandler, FileType::class),
+                'videoform' => $this->createTypeFormView($mediaHandler, RemoteVideoType::class),
+                'slideform' => $this->createTypeFormView($mediaHandler, RemoteSlideType::class),
+            ],
         ]);
     }
 
