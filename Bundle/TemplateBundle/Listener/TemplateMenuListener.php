@@ -35,7 +35,8 @@ class TemplateMenuListener implements MenuListenerInterface
         $template = $event->getTemplate();
 
         //this contextual menu appears only for template
-        $menuBottomRight->addChild('menu.template.settings',
+        $menuBottomRight->addChild(
+            'menu.template.settings',
             [
                 'route'           => 'victoire_template_settings',
                 'routeParameters' => ['id' => $template->getId()],

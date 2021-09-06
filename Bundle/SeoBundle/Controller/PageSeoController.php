@@ -106,9 +106,12 @@ class PageSeoController extends Controller
      */
     private function createSettingsForm(PageSeo $pageSeo, View $view)
     {
-        return $this->get('form.factory')->create(PageSeoType::class, $pageSeo,
+        return $this->get('form.factory')->create(
+            PageSeoType::class,
+            $pageSeo,
             [
-                'action' => $this->get('router')->generate('victoire_seo_pageSeo_settings_post',
+                'action' => $this->get('router')->generate(
+                    'victoire_seo_pageSeo_settings_post',
                     [
                         'id' => $view->getId(),
                     ]

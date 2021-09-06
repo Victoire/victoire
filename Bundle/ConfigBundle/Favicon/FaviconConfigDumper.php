@@ -43,10 +43,11 @@ class FaviconConfigDumper
 
         try {
             $fileSystem->dumpFile(
-                $path, $this->environment->render('VictoireConfigBundle:global:faviconConfig.json.twig', [
-                'globalConfig' => $globalConfig,
-                'webDir'       => $this->webDir,
-            ])
+                $path,
+                $this->environment->render('VictoireConfigBundle:global:faviconConfig.json.twig', [
+                    'globalConfig' => $globalConfig,
+                    'webDir'       => $this->webDir,
+                ])
             );
 
             return $path;

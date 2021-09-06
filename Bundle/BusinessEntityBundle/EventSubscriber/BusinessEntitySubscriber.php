@@ -37,10 +37,10 @@ class BusinessEntitySubscriber implements EventSubscriber
      * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(
-        BusinessPageBuilder          $businessPageBuilder,
-        BusinessEntityHelper         $businessEntityHelper,
-        BusinessPageHelper           $businessPageHelper,
-        EventDispatcherInterface     $dispatcher
+        BusinessPageBuilder $businessPageBuilder,
+        BusinessEntityHelper $businessEntityHelper,
+        BusinessPageHelper $businessPageHelper,
+        EventDispatcherInterface $dispatcher
     ) {
         $this->businessPageBuilder = $businessPageBuilder;
         $this->businessEntityHelper = $businessEntityHelper;
