@@ -12,7 +12,7 @@ use Doctrine\ORM\QueryBuilder;
  */
 trait StateFullRepositoryTrait
 {
-    /** @var QueryBuilder $qb */
+    /** @var QueryBuilder */
     protected $qb;
 
     /**

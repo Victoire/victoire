@@ -50,7 +50,8 @@ class RedirectionController extends Controller
 
         /** @var Redirection[] $redirection */
         foreach ($redirections as $redirection) {
-            $forms[$redirection->getId()] = $this->getRedirectionForm($redirection,
+            $forms[$redirection->getId()] = $this->getRedirectionForm(
+                $redirection,
                 sprintf('#redirection-%d-item-container', $redirection->getId())
             )->createView();
         }

@@ -27,7 +27,8 @@ class WidgetItemPass implements CompilerPassInterface
             foreach ($taggedServices as $id => $attributes) {
                 foreach ($attributes as $attribute) {
                     $definition->addMethodCall(
-                        'addWidgetItem', [new Reference($id)]
+                        'addWidgetItem',
+                        [new Reference($id)]
                     );
                 }
             }
